@@ -11,9 +11,17 @@ from typing import List
 def isSelfCrossing(x: List[int]) -> bool:
     b = c = d = e = f = 0  # a, b, c, d, e, f consecutive moves
     for a in x:
-        if d >= b > 0 and (a >= c or a + e>= c and b + f >= d):
+        if d >= b > 0 and (a >= c or a >= c-e >= 0 and f >= d-b):
+            # The directions of the line doesn't matter so long as there is a 90 degree counter-clockwise turn between
+            # 2 lines
             # Cross a from the left: d >= b and a >= c
-            # Cross a from the right: d >= b and a + e >= c and b + f >= d
+            # Cross a from the right: d >= b and b + f >= d and c >= e and a + e >= c
             return True
         b, c, d, e, f = a, b, c, d, e
     return False
+
+assert isSelfCrossing([2,1,1,2])
+assert not isSelfCrossing([3,3,3,2,1,1])
+assert not isSelfCrossing([1,2,2,3,4])
+assert isSelfCrossing([1,1,2,1,1])
+assert not isSelfCrossing([1,2,2,3,4])
