@@ -24,17 +24,17 @@ class StreamChecker:
         return any('#' in node for node in self.possible_list)
 
 
-streamChecker = StreamChecker(["cd","f","kl"]); # init the dictionary.
+streamChecker = StreamChecker(["cd","f","kl"])# init the dictionary.
 assert not streamChecker.query('a');          # return false
 assert not streamChecker.query('b');          # return false
 assert not streamChecker.query('c');          # return false
-assert streamChecker.query('d');          # return true, because 'cd' is in the wordlist
+assert streamChecker.query('d');              # return true, because 'cd' is in the wordlist
 assert not streamChecker.query('e');          # return false
-assert streamChecker.query('f');          # return true, because 'f' is in the wordlist
+assert streamChecker.query('f');              # return true, because 'f' is in the wordlist
 assert not streamChecker.query('g');          # return false
 assert not streamChecker.query('h');          # return false
 assert not streamChecker.query('i');          # return false
 assert not streamChecker.query('j');          # return false
 assert not streamChecker.query('k');          # return false
-assert streamChecker.query('l');          # return true, because 'kl' is in the wordlist
+assert streamChecker.query('l');              # return true, because 'kl' is in the wordlist
 
