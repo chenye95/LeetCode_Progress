@@ -26,7 +26,7 @@ class LinkedList:
         self.head = head
 
     @staticmethod
-    def create_linked_list(node_lists) -> LinkedList:
+    def create_linked_list(node_lists: List[Any]) -> LinkedList:
         current_node = None
         head = None
         for node_x in node_lists:
