@@ -16,13 +16,12 @@ def mergeKLists(lists: List[ListNode]) -> ListNode:
         elif next_node is not None:
             current_node.next = ListNode(next_node.val)
             current_node = current_node.next
-        if next_node is not None:
-            if next_node is None or next_node.next is None:
-                heapq.heappush(current_heap, (float("inf"), next_i, None))
-            else:
-                heapq.heappush(current_heap, (next_node.next.val, next_i, next_node.next))
-        else:
+        if next_node is None:
             current_node = None
+        elif next_node.next is None:
+            heapq.heappush(current_heap, (float("inf"), next_i, None))
+        else:
+            heapq.heappush(current_heap, (next_node.next.val, next_i, next_node.next))
     return head
 
 test_cases = [([[1, 4, 5], [1, 3, 4], [2, 6]], [1, 1, 2, 3, 4, 4, 5, 6]),
