@@ -52,14 +52,14 @@ class BinaryTree:
 
     def height(self) -> int:
         """
-        :return: the maximum height of the tree
+        :return: the maximum height of the node
         :rtype: int
         """
         return get_height(self.root)
 
     def print_tree(self, filler=None) -> List[List[Any]]:
         """
-        Returns a 2D representation of the tree
+        Returns a 2D representation of the node
         :param filler: Default filler for empty cells
         :return: List[List[Node.val]]
         """
