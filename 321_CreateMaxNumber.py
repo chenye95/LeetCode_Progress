@@ -4,7 +4,6 @@ Given two arrays of length m and n with digits 0-9 representing two numbers.
 Create the maximum number of length k <= m + n from digits of the two.
 The relative order of the digits from the same array must be preserved. Return an array of the k digits.
 """
-from __future__ import annotations
 from typing import List
 
 def maxNumber(nums1: List[int], nums2: List[int], k: int) -> List[int]:

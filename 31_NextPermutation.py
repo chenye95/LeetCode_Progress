@@ -39,4 +39,4 @@ for case_i in test_cases:
             assert nums == case_i[j + 1]
         else:
             assert nums == case_i[0]
-
+    print()
