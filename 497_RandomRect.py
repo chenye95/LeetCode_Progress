@@ -17,13 +17,10 @@ class RandomPointNonOverlappingRectangles:
         diff = randint(0, self.map[-1]-1)
         rect_i = bisect_right(self.map, diff)
         x1, y1, x2, y2 = self.rectangles[rect_i]
-        if rect_i > 0:
-            dy, dx = divmod(diff - self.map[rect_i-1], (x2 - x1 + 1))
-        else:
-            dy, dx = divmod(diff, (x2 - x1 + 1))
+        dy, dx = divmod(diff - self.map[rect_i-1], (x2 - x1 + 1)) if rect_i > 0 else divmod(diff, (x2 - x1 + 1))
         return x1 + dx, y1 + dy
 
-test_cases = [[[-2, -2, -1, -1], [1, 0, 3, 0]]] # [[1,1,5,5]],
+test_cases = [[[-2, -2, -1, -1], [1, 0, 3, 0]], [[1,1,5,5]],]
 for rectangles in test_cases:
     rand_gen = RandomPointNonOverlappingRectangles(rectangles)
     n_cycles = 100000
