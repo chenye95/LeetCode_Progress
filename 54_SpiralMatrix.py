@@ -5,13 +5,12 @@ def spiralOrder(matrix: List[List[int]]) -> List[int]:
     return_list = []
     if not matrix:
         return []
-    width = len(matrix[0])
     upper_bound, lower_bound = 0, len(matrix) - 1
-    left_bound, right_bound = 0, width - 1
+    left_bound, right_bound = 0, len(matrix[0]) - 1
     while upper_bound < lower_bound and left_bound <= right_bound:
-        return_list.extend(matrix[upper_bound][upper_bound:width-upper_bound])
-        return_list.extend([row[right_bound] for row in matrix[upper_bound+1:lower_bound]])
-        tmp_list = matrix[lower_bound][upper_bound:width-upper_bound]
+        return_list.extend(matrix[upper_bound][upper_bound:right_bound + 1])
+        return_list.extend([row[right_bound] for row in matrix[upper_bound + 1:lower_bound]])
+        tmp_list = matrix[lower_bound][upper_bound:right_bound + 1]
         tmp_list.reverse()
         return_list.extend(tmp_list)
         if left_bound < right_bound:
@@ -21,7 +20,7 @@ def spiralOrder(matrix: List[List[int]]) -> List[int]:
         lower_bound -= 1
         right_bound -= 1
     if upper_bound == lower_bound:
-        return_list.extend(matrix[upper_bound][upper_bound:width - upper_bound])
+        return_list.extend(matrix[upper_bound][upper_bound:right_bound + 1])
     return return_list
 
 

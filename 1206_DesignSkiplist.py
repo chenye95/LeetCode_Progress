@@ -31,12 +31,12 @@ class Skiplist:
     def add(self, num: int) -> None:
         current_node = self.lists[-1][0]
         current_level = len(self.lists) - 1
-        stack = []
+        stack = [None] * len(self.lists)
         while current_level >= 0:
             while current_node.next is not None and current_node.next.value < num:
                 current_node = current_node.next
             if current_node.next is None or current_node.next.value > num:
-                stack.append(current_node)
+                stack[len(self.lists) - 1 - current_level] = current_node
                 current_node = current_node.down
                 current_level = current_level - 1
             else:  # current_node.next == num and num exists in lists
