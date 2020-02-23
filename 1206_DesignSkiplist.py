@@ -112,7 +112,7 @@ class Skiplist:
         return erased
 
 test = Skiplist()
-N = 10000
+N = 50000
 assert not test.search(N)
 for i in range(N):
     test.add(i)
