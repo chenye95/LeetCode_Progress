@@ -4,11 +4,15 @@ Design a Skiplist without using any built-in libraries.
 A Skiplist is a data structure that takes O(log(n)) time to add, erase and search. Comparing with treap and red-black
 tree which has the same function and performance, the code length of Skiplist can be comparatively short and the idea
 behind Skiplists are just simple linked lists.
+
+- 0 <= num, target <= 20000
+- At most 50000 calls will be made to search, add, and erase.
 """
 from random import random
+from datetime import datetime
 
 class SkipListNode:
-    def __init__(self, value=-1, count=0, next=None, down=None):
+    def __init__(self, value=-1, count=1, next=None, down=None):
         self.value = value
         self.count = count
         self.next = next
@@ -16,7 +20,7 @@ class SkipListNode:
 
 class Skiplist:
     def __init__(self, initial_levels=4):
-        self.lists = [[SkipListNode(count=1), 0] for i in range(initial_levels)]
+        self.lists = [[SkipListNode(), 0] for i in range(initial_levels)]
         for current_head, next_head in zip(self.lists[:-1], self.lists[1:]):
             next_head[0].down = current_head[0]
         self.split_threshold = 20
@@ -42,9 +46,7 @@ class Skiplist:
         stack = [None] * len(self.lists)
         while current_node:
             if current_node.next is None or current_node.value < num < current_node.next.value:
-                if current_node is None:
-                    print("weird")
-                stack[len(self.lists) - 1 - current_level] = current_node
+                stack[len(self.lists) - 1 - current_level] = current_node # FIFO
                 current_node = current_node.down
                 current_level -= 1
             elif current_node.next.value == num:
@@ -64,7 +66,6 @@ class Skiplist:
         while proceed:
             current_level_prev = stack.pop()
             added_node = SkipListNode(value=num,
-                                      count=1,
                                       next=current_level_prev.next,
                                       down=prev_level_added)
             current_level_prev.next = added_node
@@ -78,18 +79,16 @@ class Skiplist:
 
     def add_new_level(self) -> None:
         top_level_node = self.lists[-1][0]
-        new_level_head = SkipListNode(count=1,
-                                      down=top_level_node)
+        new_level_head = SkipListNode(down=top_level_node)
         new_level_node = new_level_head
         new_level_counter = 0
         while top_level_node.next is not None:
             top_level_node = top_level_node.next
             if random() < self.proceed_threshold:
-                tmp_node = SkipListNode(value=top_level_node.value,
-                                        count=top_level_node.count,
-                                        down=top_level_node)
-                new_level_node.next = tmp_node
-                new_level_node = tmp_node
+                new_level_node.next = SkipListNode(value=top_level_node.value,
+                                                   count=top_level_node.count,
+                                                   down=top_level_node)
+                new_level_node = new_level_node.next
                 new_level_counter += 1
         self.lists.append([new_level_head, new_level_counter])
 
@@ -111,22 +110,46 @@ class Skiplist:
                 current_node = current_node.next
         return erased
 
+previous_time_stamp = datetime.now()
 test = Skiplist()
-N = 50000
+N = 10000
 assert not test.search(N)
+print("Test Add Operations")
 for i in range(N):
     test.add(i)
     test.add(i)
     # print("Added %d" % i)
+current_time_stamp = datetime.now()
+print("\tDuration", current_time_stamp - previous_time_stamp)
+print("Test Search Operations")
 for i in range(N):
     assert test.search(i)
+previous_time_stamp = current_time_stamp
+current_time_stamp = datetime.now()
+print("\tDuration", current_time_stamp - previous_time_stamp)
+print("Test First Erase Operations")
 for i in range(N):
     assert test.erase(i)
+previous_time_stamp = current_time_stamp
+current_time_stamp = datetime.now()
+print("\tDuration", current_time_stamp - previous_time_stamp)
+print("Confirm First Erase Operations")
 for i in range(N):
     assert test.search(i)
+previous_time_stamp = current_time_stamp
+current_time_stamp = datetime.now()
+print("\tDuration", current_time_stamp - previous_time_stamp)
+print("Test Second Erase Operations")
 for i in range(N):
     assert test.erase(i)
     assert not test.search(i)
+previous_time_stamp = current_time_stamp
+current_time_stamp = datetime.now()
+print("\tDuration", current_time_stamp - previous_time_stamp)
+print("Confirm Second Erase Operations")
 for i in range(N):
     assert not test.search(i)
+previous_time_stamp = current_time_stamp
+current_time_stamp = datetime.now()
+print("\tDuration", current_time_stamp - previous_time_stamp)
 assert not test.search(N)

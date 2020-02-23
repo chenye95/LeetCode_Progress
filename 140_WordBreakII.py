@@ -6,8 +6,6 @@ Note:
 - The same word in the dictionary may be reused multiple times in the segmentation.
 - You may assume the dictionary does not contain duplicate words.
 """
-
-
 from typing import List
 
 
