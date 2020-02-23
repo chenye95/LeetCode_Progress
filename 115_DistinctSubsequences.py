@@ -9,7 +9,7 @@ def numDistinct(s: str, t: str) -> int:
     if not s or len(s) < len(t):
         return 0
 
-    # Matching if t[t_i] is matched up with s[s_i]
+    # Sub problem with t[:t_i] and s[:s_i] if t[t_i] is matched up with s[s_i]
     dp = [[0] * (len(s)) for _ in range(len(t))]
 
     for t_i in range(len(t)):
