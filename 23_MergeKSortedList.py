@@ -1,6 +1,8 @@
-from typing import List
-from _Linked_List import ListNode, LinkedList
 import heapq
+from typing import List
+
+from _Linked_List import ListNode, LinkedList
+
 
 def mergeKLists(lists: List[ListNode]) -> ListNode:
     current_heap = [(lists[i].val, i, lists[i]) for i in range(len(lists)) if lists[i] is not None]
@@ -23,6 +25,7 @@ def mergeKLists(lists: List[ListNode]) -> ListNode:
         else:
             heapq.heappush(current_heap, (next_node.next.val, next_i, next_node.next))
     return head
+
 
 test_cases = [([[1, 4, 5], [1, 3, 4], [2, 6]], [1, 1, 2, 3, 4, 4, 5, 6]),
               ([[1, 4], [2, 4]], [1, 2, 4, 4]),
