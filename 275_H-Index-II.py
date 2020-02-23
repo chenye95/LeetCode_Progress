@@ -5,10 +5,11 @@ a function to compute the researcher's h-index.
 According to the definition of h-index on Wikipedia: "A scientist has index h if h of his/her N papers have at least h
  citations each, and the other N − h papers have no more than h citations each."
 """
-from typing import List
 from bisect import bisect_left
-from timeit import Timer
 from functools import partial
+from timeit import Timer
+from typing import List
+
 
 def hIndex(citations: List[int]) -> int:
     if not citations:
@@ -34,6 +35,7 @@ def hIndexBisect(citations: List[int]) -> int:
             return n - key <= citations[key]
     index = bisect_left(Range(), True, 0, n)
     return n - index if index < n else 0
+
 
 assert(hIndex([1,1,2,3,4,5,7])) == 3
 assert(hIndex([1, 2])) == 1

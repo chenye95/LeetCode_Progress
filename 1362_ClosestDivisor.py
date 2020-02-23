@@ -16,4 +16,6 @@ def closestDivisors(num: int) -> List[int]:
             return [a, (num + 2) // a]
 
 
-
+test_cases = [(8, [3, 3]), (123, [5, 25]), (999, [25, 40])]
+for input, output in test_cases:
+    assert closestDivisors(input) == output

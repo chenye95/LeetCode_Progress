@@ -24,10 +24,15 @@ def maxSlidingWindow(nums: List[int], k: int) -> List[int]:
 assert maxSlidingWindow(nums=[1, 3, -1, -3, 5, 3, 6, 7], k=3) == [3, 3, 5, 5, 6, 7]
 
 from random import randint
+from datetime import datetime
 
-for _ in range(10):
-    N = 1000
+for i in range(10):
+    N = 10000
     k = randint(2, 20)
     nums = [randint(-100, 100) for _ in range(N)]
     out = [max(nums[i:i + k]) for i in range(N - k + 1)]
-    assert maxSlidingWindow(nums, k) == out
+    start_time = datetime.now()
+    calculated_output = maxSlidingWindow(nums, k)
+    end_time = datetime.now()
+    assert calculated_output == out
+    print("Cycle %d" % i, end_time - start_time)
