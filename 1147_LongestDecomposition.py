@@ -11,9 +11,13 @@ def longestDecomposition(text: str) -> int:
     for l in range(1, len(text) // 2 + 1):
         if text[:l] == text[-l:]:
             return 2 + longestDecomposition(text[l:len(text)-l])
+    return 1
 
 
 test_cases = [("ghiabcdefhelloadamhelloabcdefghi", 7),
               ("merchant", 1),
               ("antaprezatepzapreanta", 11),
               ]
+
+for input, output in test_cases:
+    assert longestDecomposition(input) == output
