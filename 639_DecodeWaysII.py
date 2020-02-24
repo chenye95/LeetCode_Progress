@@ -11,7 +11,6 @@ Given the encoded message containing digits and the character '*', return the to
 Also, since the answer may be very large, you should return the output mod 10^9 + 7.
 
 """
-
 def numDecodings(s: str) -> int:
     M = 10**9 + 7
     ways = [0] * (len(s) + 1)
@@ -34,9 +33,6 @@ def numDecodings(s: str) -> int:
                 ways[point_i] = (ways[point_i] + 2 * ways[point_i-2]) % M if s[i] <= '6' \
                     else (ways[point_i] + ways[point_i-2]) % M
     return ways[-1]
-
-
-
 
 
 assert(numDecodings("*") == 9)
