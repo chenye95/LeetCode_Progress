@@ -5,6 +5,7 @@ class RollingCounter:
     def __init__(self, n: int):
         self.n = n
         self.counter = [0] * n
+        self.has_next = True
 
     def printCurrentState(self):
         pass
@@ -13,17 +14,21 @@ class RollingCounter:
         pass
 
     def enumerate(self):
+        while self.has_next:
+            self.printCurrentState()
+            self.__next__()
+
+    def __next__(self):
         counter_pointer = 0
         while counter_pointer < self.n:
-            self.printCurrentState()
-            counter_pointer = 0
-            while counter_pointer < self.n:
-                self.counter[counter_pointer] += 1
-                if self.rollCondition():
-                    self.counter[counter_pointer] = 0
-                else:
-                    break
+            self.counter[counter_pointer] += 1
+            if self.rollCondition():
+                self.counter[counter_pointer] = 0
                 counter_pointer += 1
+            else:
+                break
+        self.has_next = counter_pointer < self.n
+
 
 class CountingPennies(RollingCounter):
     def __init__(self, values: List[int], denominations: List[str], target: int):
