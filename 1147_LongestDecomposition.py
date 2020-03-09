@@ -6,8 +6,8 @@ Return the largest possible k such that there exists a_1, a_2, ..., a_k such tha
 - For all 1 <= i <= k,  a_i = a_{k+1 - i}.
 """
 def longestDecomposition(text: str) -> int:
-    if not text:
-        return 0
+    if len(text) <= 1:
+        return len(text)
     for l in range(1, len(text) // 2 + 1):
         if text[:l] == text[-l:]:
             return 2 + longestDecomposition(text[l:len(text)-l])

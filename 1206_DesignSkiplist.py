@@ -8,8 +8,9 @@ behind Skiplists are just simple linked lists.
 - 0 <= num, target <= 20000
 - At most 50000 calls will be made to search, add, and erase.
 """
-from random import random
 from datetime import datetime
+from random import random
+
 
 class SkipListNode:
     def __init__(self, value=-1, count=1, next=None, down=None):
@@ -109,6 +110,7 @@ class Skiplist:
             else:
                 current_node = current_node.next
         return erased
+
 
 previous_time_stamp = datetime.now()
 test = Skiplist()

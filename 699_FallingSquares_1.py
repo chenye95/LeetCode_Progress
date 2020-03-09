@@ -93,7 +93,8 @@ from datetime import datetime, timedelta
 total_runs = 1000
 cumulative_time = timedelta()
 for i in range(total_runs):
-    print("Test %d" % i)
+    if i % 100 == 0:
+        print("Test %d" % i)
     N = randint(1, 1000)
     input = []
     for _ in range(N):
