@@ -12,5 +12,6 @@ def superPow(a: int, b: List[int]) -> int:
         return_val = (return_val ** 10) * (a ** b_i) % mod_int
     return return_val
 
+
 assert superPow(a=2, b=[1, 0]) == 1024
 assert superPow(a=2, b=[3]) == 8

@@ -1,3 +1,6 @@
+"""
+Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
+"""
 def IntToEnglish(num: int) -> str:
     """
     :param num: Positive Integer, less than a trillion
@@ -35,6 +38,7 @@ def IntToEnglish(num: int) -> str:
                 ret_str = IntToEnglishHelper(three_dig) + current_splitter
     return ret_str
 
+
 def EnglishToInt(num: str) -> int:
     splitters = {'Thousand': 10**3, 'Million': 10**6, 'Billion': 10**9, 'Trillion': 10**12}
     trans_map = {'One': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5,
@@ -55,6 +59,7 @@ def EnglishToInt(num: str) -> int:
         else:
             remainder += trans_map[part]
     return ret_val + remainder
+
 
 test_cases = (1234567, 1230567, 1000567, 1000700, 1000067, 123, 1000, 1020345000900)
 for num in test_cases:

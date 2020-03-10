@@ -2,7 +2,6 @@
 Given a blacklist B containing unique integers from [0, N), write a function to return a uniform random integer from
 [0, N) which is NOT in B.
 """
-from collections import Counter
 from random import randint
 from typing import List
 
@@ -20,6 +19,8 @@ class RandomPickBlackList:
         return self.mapping.get(i, i)
 
 
+from collections import Counter
+
 test_cases = [(10, [3, 4, 6, 5, 3])]
 n_cycles = 100000
 for case in test_cases:
@@ -31,4 +32,3 @@ for case in test_cases:
         assert c not in blacklist and 0 <= c < N
         num_list.append(c)
     print(Counter(num_list))
-

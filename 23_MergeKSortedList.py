@@ -1,10 +1,13 @@
+"""
+Merge k sorted linked lists and return it as one sorted list. Analyze and describe its complexity.
+"""
 import heapq
-from typing import List
+from typing import List, Union
 
 from _Linked_List import ListNode, LinkedList
 
 
-def mergeKLists(lists: List[ListNode]) -> ListNode:
+def mergeKLists(lists: List[ListNode]) -> Union[ListNode, None]:
     current_heap = [(lists[i].val, i, lists[i]) for i in range(len(lists)) if lists[i] is not None]
     if not current_heap:
         return None

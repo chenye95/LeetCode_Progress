@@ -9,7 +9,6 @@ Write a function strongPasswordChecker(s), that takes a string s as input, and r
 make s a strong password. If s is already strong, return 0.
 Insertion, deletion or replace of any one character are all considered as one change.
 """
-
 def strongPasswordChecker(s: str) -> int:
     missing_types = 3
     if any('A' <= c <= 'Z' for c in s): missing_types -= 1

@@ -7,6 +7,7 @@ citations each, and the other N − h papers have no more than h citations each.
 """
 from typing import List
 
+
 def hIndex(citations: List[int]) -> int:
     h_index = 0
     n = len(citations)
@@ -19,5 +20,6 @@ def hIndex(citations: List[int]) -> int:
             else:
                 h_index += 1
     return h_index
+
 
 assert(hIndex([3,0,6,1,5])) == 3

@@ -4,8 +4,9 @@ Given an array nums, we call (i, j) an important reverse pair if i < j and nums[
 You need to return the number of important reverse pairs in the given array.
 """
 from bisect import bisect_left
-from typing import List
 from copy import deepcopy
+from typing import List
+
 
 class BIT_Solution:
     def query(self, bit: List[int], tree_idx: int) -> int:
@@ -29,6 +30,7 @@ class BIT_Solution:
             count += self.query(BIT_array, bisect_left(nums_sorted, nums[i] * 2 + 1) + 1)
             self.update(BIT_array, bisect_left(nums_sorted, nums[i]) + 1, 1)
         return count
+
 
 class MergeSort_Solution():
     def merge(self, nums: List[int], start_inclusive: int, mid_inclusive_in_left: int, end_inclusive: int) -> None:
@@ -68,6 +70,7 @@ class MergeSort_Solution():
 
     def reversePairs(self, nums: List[int]) -> int:
         return self.merge_sort_count(nums, 0, len(nums) - 1)
+
 
 solution_class = BIT_Solution()
 test_cases = [([3, 2, 1], 1),

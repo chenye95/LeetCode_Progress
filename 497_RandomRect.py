@@ -2,10 +2,11 @@
 Given a list of non-overlapping axis-aligned rectangles rectangles, write a function pick which randomly and uniformly picks
 an integer point in the space covered by the rectangles.
 """
-from typing import List
+from bisect import bisect_right
 from itertools import accumulate
 from random import randint
-from bisect import bisect_right
+from typing import List
+
 
 class RandomPointNonOverlappingRectangles:
 
@@ -18,7 +19,8 @@ class RandomPointNonOverlappingRectangles:
         rect_i = bisect_right(self.map, diff)
         x1, y1, x2, y2 = self.rectangles[rect_i]
         dy, dx = divmod(diff - self.map[rect_i-1], (x2 - x1 + 1)) if rect_i > 0 else divmod(diff, (x2 - x1 + 1))
-        return x1 + dx, y1 + dy
+        return [x1 + dx, y1 + dy]
+
 
 test_cases = [[[-2, -2, -1, -1], [1, 0, 3, 0]], [[1,1,5,5]],]
 for rectangles in test_cases:

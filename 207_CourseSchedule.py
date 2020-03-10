@@ -28,10 +28,11 @@ def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
     while running_deque:
         completed = running_deque.popleft()
         can_do += 1
-        for next_course in enable_courses[completed]:
-            unfinished_prerequisites[next_course] -= 1
-            if unfinished_prerequisites[next_course] == 0:
-                running_deque.append(next_course)
+        new_course: int
+        for new_course in enable_courses[completed]:
+            unfinished_prerequisites[new_course] -= 1
+            if unfinished_prerequisites[new_course] == 0:
+                running_deque.append(new_course)
 
     return can_do == numCourses
 

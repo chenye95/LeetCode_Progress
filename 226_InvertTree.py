@@ -1,10 +1,12 @@
 """
 Invert a binary tree Left and Right
 """
+from typing import Union
+
 from _Binary_Tree import TreeNode, BinaryTree
 
 
-def invertTree(root: TreeNode) -> TreeNode:
+def invertTree(root: TreeNode) -> Union[TreeNode, None]:
     if root is None:
         return None
     right = invertTree(root.right) if root.right is not None else None

@@ -4,6 +4,7 @@ disjoint intervals.
 """
 from typing import List
 
+
 class SummaryRange:
     def __init__(self):
         """
@@ -35,6 +36,7 @@ class SummaryRange:
 
     def getIntervals(self) -> List[List[int]]:
         return self.intervals
+
 
 test_cases = [[(1, [[1, 1]]),
                (3, [[1, 1], [3, 3]]),

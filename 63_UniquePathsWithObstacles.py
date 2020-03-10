@@ -26,6 +26,6 @@ def uniquePathsWithObstacles(obstacleGrid: List[List[int]]) -> int:
     return path_count[-1][-1]
 
 
-# assert uniquePathsWithObstacles([[0]]) == 1
+assert uniquePathsWithObstacles([[0]]) == 1
 assert uniquePathsWithObstacles([[0, 0, 0], [0, 1, 0], [0, 0, 0]]) == 2
 assert uniquePathsWithObstacles([[1]]) == 0

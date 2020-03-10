@@ -9,12 +9,13 @@ Given a mountain array mountainArr, return the minimum index such that mountainA
 If such an index doesn't exist, return -1.
 """
 from typing import List
+
+
 class MountainArray:
     def __init__(self, array: List[int]):
         self.array = array
         self.call_time = 0
         self.max_call = 100
-
 
     def get(self, index: int) -> int:
         self.call_time += 1
@@ -23,6 +24,7 @@ class MountainArray:
 
     def length(self) -> int:
         return len(self.array)
+
 
 class Solution:
     def findPeak(self, mountain_arr: MountainArray) -> int:
@@ -65,6 +67,7 @@ class Solution:
     def findInMountainArray(self, target: int, mountain_arr: MountainArray) -> int:
         peak_index = self.findPeak(mountain_arr)
         return self.findTarget(mountain_arr, peak_index, target)
+
 
 SolutionClass = Solution()
 assert SolutionClass.findInMountainArray(mountain_arr=MountainArray([1,2,3,4,5,3,1]), target=3) == 2

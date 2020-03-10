@@ -30,6 +30,7 @@ def isNumber(s: str) -> bool:
     else:
         return isNumberHelper(proc_s)
 
+
 assert isNumber("0")
 assert isNumber(" 0.1 ")
 assert not isNumber("abc")

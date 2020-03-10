@@ -2,8 +2,8 @@
 Given an array of words and a width maxWidth, format the text such that each line has exactly maxWidth characters
 and is fully (left and right) justified.
 """
-from __future__ import annotations
-from typing import List, Any
+from typing import List
+
 
 def fullJustify(words: List[str], maxWidth: int) -> List[str]:
     scanner = 0
@@ -43,6 +43,7 @@ def fullJustify(words: List[str], maxWidth: int) -> List[str]:
     current_line += ' ' * (maxWidth - len(current_line))
     output_lines.append(current_line)
     return output_lines
+
 
 print(fullJustify(words = ["This", "is", "an", "example", "of", "text", "justification.",], maxWidth = 16))
 print(fullJustify(words = ["What","must","be","acknowledgment","shall","be"], maxWidth = 16))

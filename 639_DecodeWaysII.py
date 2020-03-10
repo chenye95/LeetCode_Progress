@@ -38,5 +38,3 @@ def numDecodings(s: str) -> int:
 assert(numDecodings("*") == 9)
 assert(numDecodings("2*9") == 16)
 assert(numDecodings("1*") == 18)
-
-

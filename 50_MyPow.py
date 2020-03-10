@@ -11,4 +11,5 @@ def myPow(x: float, n: int) -> float:
     else:
         return myPow(x * x, n // 2)
 
-print(myPow(x=2.0, n=10))
+
+assert myPow(x=2.0, n=10) == 1024.0

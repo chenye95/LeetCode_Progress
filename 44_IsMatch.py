@@ -3,8 +3,6 @@ Given an input string (s) and a pattern (p), implement wildcard pattern matching
 - '?' Matches any single character.
 = '*' Matches any sequence of characters (including the empty sequence).
 """
-
-
 def isMatch(s: str, p: str) -> bool:
     dp_memory = [[False] * (len(s) + 1) for _ in range(len(p) + 1)]
     dp_memory[0][0] = True

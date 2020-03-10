@@ -20,6 +20,7 @@ def isSelfCrossing(x: List[int]) -> bool:
         b, c, d, e, f = a, b, c, d, e
     return False
 
+
 assert isSelfCrossing([2,1,1,2])
 assert not isSelfCrossing([3,3,3,2,1,1])
 assert not isSelfCrossing([1,2,2,3,4])

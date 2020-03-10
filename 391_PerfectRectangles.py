@@ -4,12 +4,12 @@ Given N axis-aligned rectangles where N > 0, determine if they all together form
 Each rectangle is represented as a bottom-left point and a top-right point. For example, a unit square is represented
 as [1,1,2,2]. (coordinate of bottom-left point is (1, 1) and top-right point is (2, 2)).
 """
-from typing import List
 from collections import defaultdict
+from typing import List
 
 
 def isRectangleCover(rectangles: List[List[int]]) -> bool:
-    def mergeIntervals(intervals: List[int]) -> List[List[int]]:
+    def mergeIntervals(intervals: List[List[int]]) -> List[List[int]]:
         return_list = []
         intervals.sort()
         for interval in intervals:
@@ -39,6 +39,7 @@ def isRectangleCover(rectangles: List[List[int]]) -> bool:
                 return False
 
     return True
+
 
 assert isRectangleCover(rectangles = [
   [1,1,3,3],

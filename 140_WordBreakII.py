@@ -27,4 +27,5 @@ def wordBreak(s: str, wordDict: List[str]) -> List[str]:
         return memory[i]
     return split_into_sentences(0)
 
-print(wordBreak(s = "catsanddog", wordDict = ["cat", "cats", "and", "sand", "dog"]))
+
+assert wordBreak(s="catsanddog", wordDict=["cat", "cats", "and", "sand", "dog"]) == ['cat sand dog', 'cats and dog']

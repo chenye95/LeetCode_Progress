@@ -1,55 +1,44 @@
 """
 Under a grammar given below, strings can represent a set of lowercase words.  Let's use R(expr) to denote the set of 
 words the expression represents.
+
+Formally, the 3 rules for our grammar:
+(1) For every lowercase letter x, we have R(x) = {x}
+(2) For expressions e_1, e_2, ... , e_k with k >= 2, we have R({e_1,e_2,...}) = R(e_1) ∪ R(e_2) ∪ ...
+(3) For expressions e_1 and e_2, we have R(e_1 + e_2) = {a + b for (a, b) in R(e_1) × R(e_2)}, where + denotes
+concatenation, and × denotes the cartesian product.
+
+Given an expression representing a set of words under the given grammar, return the sorted list of words that the
+expression represents.
 """
 from typing import List
-from copy import deepcopy
+
 
 def braceExpansionII(expression: str) -> List[str]:
-    if not expression:
-        return []
-
-    stack = []
-    current_expressions = set()
-    last_operator = current_str = None
+    stack, current_brace, current_comma = [], [], []
     for c in expression:
-        if 'a' <= c <= 'z':
-            current_str = c if current_str is None else current_str + c
-        else:
-            if current_str:
-                if last_operator == ',' or not current_expressions:
-                    current_expressions.add(current_str)
-                else:
-                    current_expressions = set([curr + current_str for curr in current_expressions])
-                current_str = None
-            if c == ',' or c == '{':
-                stack.append((c, deepcopy(current_expressions)))
-                current_expressions = set()
-                last_operator = c
-            else:  # c == '}'
-                while stack[-1][0] == ',':
-                    last_operator, previous_expressions = stack.pop()
-                    if previous_expressions is not None:
-                        current_expressions = current_expressions.union(previous_expressions)
-                last_operator, previous_expressions = stack.pop()
-                if previous_expressions:
-                    current_expressions = set([prev + curr for prev in previous_expressions
-                                                           for curr in current_expressions])
-                last_operator = c
+        if c.isalpha():
+            current_comma = [preceding + c for preceding in current_comma or ["", ]]
+        elif c == "{":
+            stack.append(current_brace)
+            stack.append(current_comma)
+            current_brace, current_comma = [], []
+        elif c == "}":
+            precede_brace = stack.pop()
+            current_comma = [prev + cur for cur in current_brace + current_comma for prev in precede_brace or ["", ]]
+            current_brace = stack.pop()
+        elif c == ",":
+            current_brace += current_comma
+            current_comma = []
+    return sorted(set(current_brace + current_comma))
 
-    if 'a' <= expression[-1] <= 'z':
-        if current_expressions:
-            current_expressions = set([curr + current_str for curr in current_expressions])
-        else:
-            current_expressions = set([current_str])
-    return sorted(list(current_expressions))
 
-test_cases = [#("{a,b}{c,{d,e}}", ["ac","ad","ae","bc","bd","be"]),
-              #("{{a,z},a{b,c},{ab,z}}", ["a","ab","ac","z"]),
-              #("{ab,cd}{e,f}", ["abe", "abf", "cde", "cdf"]),
-              #("{a,b}c{d,e}f", ["acdf","acef","bcdf","bcef"]),
-              #("abcd", "abcd"),
+test_cases = [("{a,b}{c,{d,e}}", ["ac", "ad", "ae", "bc", "bd", "be"]),
+              ("{{a,z},a{b,c},{ab,z}}", ["a", "ab", "ac", "z"]),
+              ("{ab,cd}{e,f}", ["abe", "abf", "cde", "cdf"]),
+              ("{a,b}c{d,e}f", ["acdf", "acef", "bcdf", "bcef"]),
+              ("abcd", ["abcd", ]),
               ("{{a,{x,ia,o},w},er,a{x,ia,o}w}", ["a","aiaw","aow","axw","er","ia","o","w","x"])]
 
 for test_input, test_output in test_cases:
-    assert braceExpansionII(test_input) == test_output
+    assert braceExpansionII(test_input) == test_output, test_input

@@ -18,3 +18,9 @@ def compareVersion(version1: str, version2: str) -> int:
             return 1
         i += 1
     return 0
+
+
+assert compareVersion(version1='0.1', version2='1.1') == -1
+assert compareVersion(version1='1.0.1', version2='1') == 1
+assert compareVersion(version1="7.5.2.4", version2="7.5.3") == -1
+assert compareVersion(version1="1.01", version2="1.001") == 0

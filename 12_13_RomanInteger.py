@@ -30,6 +30,7 @@ def IntToRoman(num: int) -> str:
         remainder -= 1
     return roman_int
 
+
 def RomanToInt(s: str) -> int:
     trans_map = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
     int_val = 0
@@ -41,6 +42,7 @@ def RomanToInt(s: str) -> int:
         int_val += will_add
         prev_added = will_add
     return int_val
+
 
 assert IntToRoman(3) == "III"
 assert IntToRoman(4) == "IV", IntToRoman(4)

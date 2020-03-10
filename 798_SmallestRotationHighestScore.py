@@ -11,6 +11,7 @@ there are multiple answers, return the smallest such index K.
 """
 from typing import List
 
+
 def bestRotation(A: List[int]) -> int:
     """
     Interval Stabbing Approach
@@ -40,6 +41,7 @@ def bestRotation(A: List[int]) -> int:
             rotation_steps = i
 
     return rotation_steps
+
 
 test_cases = [([2, 3, 1, 4, 0], 3)]
 for input, expected_value in test_cases:

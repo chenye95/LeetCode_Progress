@@ -6,7 +6,6 @@ If such arrangement is not possible, it must rearrange it as the lowest possible
 The replacement must be in-place and use only constant extra memory.
 """
 from typing import List
-from copy import deepcopy
 
 
 def nextPermutation(nums: List[int]) -> None:
@@ -29,6 +28,9 @@ def nextPermutation(nums: List[int]) -> None:
         nums[i+1:] = nums[i+1:][::-1]
 
 
+from copy import deepcopy
+
+
 test_cases = [[[1, 2, 3],
                [1, 3, 2],
                [2, 1, 3],
@@ -38,6 +40,7 @@ test_cases = [[[1, 2, 3],
               [[1, 1, 5],
                [1, 5, 1],
                [5, 1, 1]]]
+
 for case_i in test_cases:
     for j in range(len(case_i)):
         nums = deepcopy(case_i[j])
