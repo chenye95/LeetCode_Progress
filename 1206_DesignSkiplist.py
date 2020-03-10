@@ -8,7 +8,6 @@ behind Skiplists are just simple linked lists.
 - 0 <= num, target <= 20000
 - At most 50000 calls will be made to search, add, and erase.
 """
-from datetime import datetime
 from random import random
 
 
@@ -24,8 +23,8 @@ class Skiplist:
         self.lists = [[SkipListNode(), 0] for i in range(initial_levels)]
         for current_head, next_head in zip(self.lists[:-1], self.lists[1:]):
             next_head[0].down = current_head[0]
-        self.split_threshold = 20
-        self.proceed_threshold = .5
+        self.split_threshold = 50
+        self.proceed_threshold = .12
 
     def search(self, target: int) -> bool:
         current_node = self.lists[-1][0]
@@ -46,7 +45,7 @@ class Skiplist:
         current_level = len(self.lists) - 1
         stack = [None] * len(self.lists)
         while current_node:
-            if current_node.next is None or current_node.value < num < current_node.next.value:
+            if current_node.next is None or current_node.next.value > num:
                 stack[len(self.lists) - 1 - current_level] = current_node # FIFO
                 current_node = current_node.down
                 current_level -= 1
@@ -90,18 +89,18 @@ class Skiplist:
         self.lists.append([new_level_head, new_level_counter])
 
     def erase(self, num: int) -> bool:
-        erased, current_node, current_level = False, self.lists[-1][0], len(self.lists) - 1
-        node_removed = False
+        erased = remove_node = False
+        current_node, current_level = self.lists[-1][0], len(self.lists) - 1
         while current_node is not None:
-            if current_node.next is None or current_node.value < num < current_node.next.value:
+            if current_node.next is None or current_node.next.value > num:
                 current_node = current_node.down
                 current_level -= 1
             elif current_node.next.value == num:
-                if not erased and not node_removed:
+                if not erased:
                     current_node.next.count -= 1
-                    node_removed = current_node.next.count == 0
+                    remove_node = current_node.next.count == 0
                     erased = True
-                if node_removed:
+                if remove_node:
                     current_node.next = current_node.next.next
                     self.lists[current_level][1] -= 1
                 current_node = current_node.down
@@ -111,10 +110,13 @@ class Skiplist:
         return erased
 
 
-if __name__ == '__main__':
+from datetime import datetime
+from random import randint
+
+
+def test_case_1(N=10000):
     previous_time_stamp = datetime.now()
     test = Skiplist()
-    N = 10000
     assert not test.search(N)
     print("Test Add Operations")
     for i in range(N):
@@ -155,3 +157,26 @@ if __name__ == '__main__':
     current_time_stamp = datetime.now()
     print("\tDuration", current_time_stamp - previous_time_stamp)
     assert not test.search(N)
+
+
+def test_case_2(N=100000):
+    test_class = Skiplist()
+    action_list = [0, 0, 0]
+
+    start_time = datetime.now()
+    for _ in range(N):
+        take_step, param = randint(0, 2), randint(0, 1000)
+        if take_step == 0:
+            test_class.add(param)
+        elif take_step == 1:
+            test_class.erase(param)
+        else:
+            test_class.search(param)
+        action_list[take_step] += 1
+    print("Test 2: %d Actions Total Duration" % N, datetime.now() - start_time)
+    print(action_list)
+
+
+if __name__ == '__main__':
+    test_case_1()
+    test_case_2()
