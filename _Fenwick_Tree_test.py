@@ -42,9 +42,9 @@ new_tree = FenwickTree(num_array)
 cumulative_sum = [sum(num_array[:i]) for i in range(len(num_array))]
 assert new_tree.bit_array == [0, 1, 1, 2, 4, 1, 5, 0, 12, 2, 7, 2, 11, 3, 4, 0, 29]
 
-cum_sum_target = 21
-i = new_tree.find_cumulative_sum(cum_sum_target)
-assert cumulative_sum[i] == cum_sum_target
+for cum_sum_target in cumulative_sum:
+    i = new_tree.find_cumulative_sum(cum_sum_target)
+    assert cumulative_sum[i] == cum_sum_target
 assert new_tree.find_cumulative_sum(15) == -1
 assert new_tree.find_cumulative_sum(1) == 2
-print(cumulative_sum)
+# print(cumulative_sum)
