@@ -97,18 +97,33 @@ class BinaryTree:
 
     def inorder_traversal(self) -> List[Any]:
         """
+        Implements Morris Traversal: without recursion or stack.
+        Need to modify the tree and revert the changes during the
         :return: List[val]
         """
-        traverse_stack = []
         result_order = []
         current_node = self.root
-        while traverse_stack or current_node:
-            while current_node:
-                traverse_stack.append(current_node)
-                current_node = current_node.left
-            current_node = traverse_stack.pop()
-            result_order.append(current_node.val)
-            current_node = current_node.right
+        while current_node is not None:
+            if current_node.left is None:
+                result_order.append(current_node.val)
+                current_node = current_node.right
+            else:
+                # Find the inorder predecessor of current
+                predecessor = current_node.left
+                while (predecessor.right is not None and predecessor.right != current_node):
+                    predecessor = predecessor.right
+
+                # Make current_node the right child of its inorder predecessor
+                if predecessor.right is None:
+                    predecessor.right = current_node
+                    current_node = current_node.left
+                # Revert the changes made in if part to restore the original tree
+                # i.e., fix the right child of predecessor
+                else:
+                    predecessor.right = None
+                    result_order.append(current_node.val)
+                    current_node = current_node.right
+
         return result_order
 
     def postorder_traversal(self) -> List[Any]:
