@@ -18,6 +18,7 @@ class SkipListNode:
         self.next = next
         self.down = down
 
+
 class Skiplist:
     def __init__(self, initial_levels=4):
         self.lists = [[SkipListNode(), 0] for i in range(initial_levels)]
@@ -38,7 +39,6 @@ class Skiplist:
             else:
                 return True
         return False
-
 
     def add(self, num: int) -> None:
         current_node = self.lists[-1][0]
