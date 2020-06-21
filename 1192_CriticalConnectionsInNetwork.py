@@ -10,7 +10,6 @@ Return all critical connections in the network in any order.
 from typing import List
 
 
-
 def criticalConnections(n: int, connections: List[List[int]]) -> List[List[int]]:
     graph = [[] for _ in range(n)]  # vertex i ==> [neighbors]
     # lowest_rank[i] initialized to current DFS level.
@@ -22,9 +21,7 @@ def criticalConnections(n: int, connections: List[List[int]]) -> List[List[int]]
         graph[connection[0]].append(connection[1])
         graph[connection[1]].append(connection[0])
 
-
-    def _dfs(current_level: int, current_node: int, previous_node: int = -1):
-
+    def _dfs(current_level: int, current_node: int, previous_node: int):
         lowest_rank[current_node] = current_level
 
         for next_neighbor in graph[current_node]:
@@ -32,7 +29,7 @@ def criticalConnections(n: int, connections: List[List[int]]) -> List[List[int]]
                 continue  # exclude the incoming path to this vertex that was just traversed
 
             if lowest_rank[next_neighbor] == -1:
-                # lowest_rank never been changed, still equals to n
+                # lowest_rank never been changed, still equals to -1
                 _dfs(current_level+1, next_neighbor, current_node)
 
             lowest_rank[current_node] = min(lowest_rank[current_node], lowest_rank[next_neighbor])
@@ -40,7 +37,7 @@ def criticalConnections(n: int, connections: List[List[int]]) -> List[List[int]]
                 return_result.append([current_node, next_neighbor])
 
     return_result = []
-    _dfs(current_level=0, current_node=0)
+    _dfs(current_level=0, current_node=0, previous_node=-1)
     return return_result
 
 

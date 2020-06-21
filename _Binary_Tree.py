@@ -1,6 +1,7 @@
 from __future__ import annotations
+
 from collections import deque
-from typing import Any, List
+from typing import Any, List, Optional
 
 
 def get_height(current_node):
@@ -132,7 +133,7 @@ class BinaryTree:
         """
         if self.root is None:
             return []
-        traverse_stack = [self.root]
+        traverse_stack: List = [self.root]
         result_order = []
         prev_node = None
         while traverse_stack:
@@ -230,13 +231,8 @@ class ConstructTree:
     Assuming TreeNodes Contain Unique Values
     """
     @staticmethod
-    def build_tree_pre_in(preorder, inorder):
-        """
-        :type preorder: list[val]
-        :type inorder: list[val]
-        :rtype: TreeNode
-        """
-        def build_tree_helper(preorder_s, preorder_e, inorder_s, inorder_e):
+    def build_tree_pre_in(preorder: List[Any], inorder: List[Any]) -> Optional[BinaryTree]:
+        def build_tree_helper(preorder_s: int, preorder_e: int, inorder_s: int, inorder_e: int) -> TreeNode:
             current_x = preorder[preorder_s]
             current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)
@@ -260,13 +256,8 @@ class ConstructTree:
         return BinaryTree(root=root_node)
 
     @staticmethod
-    def build_tree_in_post(inorder, postorder):
-        """
-        :type inorder: list[val]
-        :type postorder: list[val]
-        :rtype: TreeNode
-        """
-        def build_tree_helper(inorder_s, inorder_e, postorder_s, postorder_e):
+    def build_tree_in_post(inorder, postorder) -> Optional[BinaryTree]:
+        def build_tree_helper(inorder_s: int, inorder_e: int, postorder_s: int, postorder_e: int) -> TreeNode:
             current_x = postorder[postorder_e]
             current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)
@@ -290,7 +281,7 @@ class ConstructTree:
         return BinaryTree(root=root_node)
 
     @staticmethod
-    def build_tree_leetcode(node_list):
+    def build_tree_leetcode(node_list: List[Any]) -> Optional[BinaryTree]:
         if not node_list:
             return None
         root = TreeNode(node_list[0])

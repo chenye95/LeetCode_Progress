@@ -28,13 +28,13 @@ def slidingPuzzle(board: List[List[int]]) -> int:
     while stack:
         current_board, zero_position, step_count = stack.popleft()
         possible_next_steps = []
-        if zero_position + n < m * n:
+        if zero_position + n < m * n:  # next line
             possible_next_steps.append(zero_position + n)
-        if zero_position - n >= 0:
+        if zero_position - n >= 0:  # previous line
             possible_next_steps.append(zero_position - n)
-        if zero_position % n > 0:
+        if zero_position % n > 0:  # left
             possible_next_steps.append(zero_position - 1)
-        if zero_position % n < n - 1:
+        if zero_position % n < n - 1:  # right
             possible_next_steps.append(zero_position + 1)
         for next_zero in possible_next_steps:
             d = current_board // 10 ** next_zero % 10

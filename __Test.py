@@ -1,14 +1,36 @@
-def uniquePaths(m: int, n: int) -> int:
-    assert m > 0 and n > 0
-    grid = [[1] * n]
-    grid.extend([[0] * n for _ in range(m-1)])
-    for i in range(1, m):
-        grid_i = grid[i]
-        grid_prev = grid[i-1]
-        grid_i[0] = 1
-        for j in range(1, n):
-            grid_i[j] = grid_i[j - 1] + grid_prev[j]
-    return grid[m - 1][n - 1]
+# Import our modules that we are using
+import matplotlib.pyplot as plt
+import numpy as np
 
-assert 3 == uniquePaths(3, 2)
-assert 28 == uniquePaths(7, 3)
+# Create the vectors X and Y
+t = np.array(range(10000))
+t = t / 1000.0
+
+k = 0.5
+c = 0.855
+
+p_t = k * np.exp(-t)
+q_t = np.exp(k * (np.exp(-t) - 1))
+limit_q_t = np.exp(-k)
+
+assert q_t[0] == 1.0
+
+c_date = -np.log(np.log(c) / k + 1)
+print("Limit of Q_t", limit_q_t)
+print('Reach {0:.1f}% in {1:.02f}% days'.format(c * 100, c_date))
+
+# Create the plot
+infection_fig, ax = plt.subplots()
+ax.plot(t, p_t)
+ax.set_title("Chance of Infection P(t)")
+ax.set_xlabel("Days t")
+ax.set_ylabel("Percentage P(t)")
+
+_, ax = plt.subplots()
+ax.plot(t, q_t)
+ax.set_title("Cumulative Chance of Not Infected Q(t)")
+ax.set_xlabel("Days t")
+ax.set_ylabel("Percentage Q(t)")
+
+# Show the plot
+plt.show()
