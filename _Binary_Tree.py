@@ -134,7 +134,7 @@ class BinaryTree:
         if self.root is None:
             return []
         traverse_stack: List = [self.root]
-        result_order = []
+        result_order: List = []
         prev_node = None
         while traverse_stack:
             current_node = traverse_stack[-1]

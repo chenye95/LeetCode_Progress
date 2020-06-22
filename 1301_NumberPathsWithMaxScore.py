@@ -48,7 +48,7 @@ def pathsWithMaxScore(board: List[str]) -> List[int]:
                 dp_curr_row.append((curr_val, curr_step))
         dp_prev_row = dp_curr_row
 
-    return list(dp_prev_row[-1]) if dp_prev_row[-1][0] != float('-inf') else [0, 0]
+    return list(dp_prev_row[-1]) if dp_prev_row[-1][1] > 0 else [0, 0]
 
 
 assert pathsWithMaxScore(board=["E23", "2X2", "12S"]) == [7, 1]
