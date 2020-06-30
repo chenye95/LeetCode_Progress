@@ -18,11 +18,11 @@ def findMaxValueOfEquation(points: List[List[int]], k: int) -> int:
     return_val = -float("inf")
     current_stack = deque()  # (x_i, y_i - x_i)
     for x_i, y_i in points:
-        while current_stack and x_i > current_stack[0][0] + k:
+        while current_stack and x_i > current_stack[0][0] + k:  # ensure x_i >= x_j - k
             current_stack.popleft()
         if current_stack:
             return_val = max(return_val, current_stack[0][1] + x_i + y_i)
-        while current_stack and current_stack[-1][1] <= y_i - x_i:
+        while current_stack and current_stack[-1][1] <= y_i - x_i:  # max value of (y_i - x_i)
             current_stack.pop()
         current_stack.append((x_i, y_i - x_i))
     return return_val
