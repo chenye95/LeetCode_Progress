@@ -14,17 +14,17 @@ from typing import List
 
 def isSolvable(words: List[str], result: str) -> bool:
     def try_position_i(position_i: int, word_j: int, carry: int):
-        # Exceeds the length of result, needs to check no leading 0s
+        # Exceeds the length of result and all words, check no leading 0s
         if position_i == len(result):
             return carry == 0 and all(assignment[word[len(word) - 1]] != 0 for word in words + [result])
 
-        # All position_i have been assigned, check position_i sum match up with result[position_i]
+        # All position_i have been assigned, check position_i sum match up result[position_i]
         if word_j == len(words):
             # position_i result has been assigned, so check validity and proceed to position_i+1
             if result[position_i] in assignment:
                 return carry % 10 == assignment[result[position_i]] and try_position_i(position_i + 1, 0, carry // 10)
-            # Can not reuse already assigned values or place leading 0
-            elif (carry % 10) in assignment.values() or (carry % 10 == 0 and position_i == len(result) - 1):
+            # Can not reuse already used values or place leading 0
+            elif (carry % 10 == 0 and position_i == len(result) - 1) or (carry % 10) in assignment.values():
                 return False
             assignment[result[position_i]] = carry % 10
             next_position_solvable = try_position_i(position_i + 1, 0, carry // 10)
@@ -48,6 +48,7 @@ def isSolvable(words: List[str], result: str) -> bool:
 
         return False
 
+    # result cannot be shorter than any word in words
     if len(result) < max(map(len, words)):
         return False
     result = result[::-1]
