@@ -1,12 +1,22 @@
-from _Graph_Unwgt_ListImplementation import DirectedUnweightedGraph, UndirectedUnweightedGraph
+from random import randint
+from string import ascii_uppercase
+
+from _Graph_Wgt_MapImplementation import DirectedWeightedGraph, UndirectedWeightedGraph
 
 vertices = [1, 2, 3, 4, 5]
 edges = [(1, 2), (1, 3), (1, 5), (2, 1), (3, 1), (4, 2), (5, 2)]
-dg = DirectedUnweightedGraph()
+dg = DirectedWeightedGraph()
 for i in vertices:
     dg.add_vertex(i)
 for u, v in edges:
-    dg.add_edge(u, v)
+    weight = randint(u, u * 100)
+    assert dg.get_edge_weight(u, v) == dg.EDGE_NOT_FOUND
+    dg.add_edge(u, v, weight)
+    assert dg.get_edge_weight(u, v) == weight
+    new_weight = randint(-100 * u, -u)
+    dg.set_edge_weight(u, v, new_weight)
+    assert dg.get_edge_weight(u, v) == new_weight
+assert dg.get_edge_weight(1, 3) != dg.get_edge_weight(3, 1)
 assert all([dg.check_vertex(i) for i in vertices]) and not dg.check_vertex(6)
 assert dg.check_edge(4, 2) and not dg.check_edge(2, 4)
 assert dg.vertex_no_self_loop(1) and dg.vertex_no_self_loop(2)
@@ -16,14 +26,14 @@ assert [1, 2, 1] in dg_cycles and [2, 1, 2] in dg_cycles
 assert [1, 3, 1] in dg_cycles and [3, 1, 3] in dg_cycles
 assert [1, 5, 2, 1] in dg_cycles and [2, 1, 5, 2] in dg_cycles and [5, 2, 1, 5] in dg_cycles
 
-ug = UndirectedUnweightedGraph()
+ug = UndirectedWeightedGraph()
 ug.add_vertex(1)
 ug.add_vertex(2)
 ug.add_vertex(3)
-ug.add_edge(1, 2)
-ug.add_edge(2, 2)
-ug.add_edge(1, 3)
-ug.add_edge(2, 3)
+ug.add_edge(1, 2, 0)
+ug.add_edge(2, 2, 0)
+ug.add_edge(1, 3, 0)
+ug.add_edge(2, 3, 0)
 assert ug.check_vertex(1) and ug.check_vertex(2) and ug.check_vertex(3) and not ug.check_vertex(4)
 assert ug.check_edge(1, 2) and ug.check_edge(2, 1)
 assert ug.vertex_no_self_loop(1) and not ug.vertex_no_self_loop(2)
@@ -54,17 +64,42 @@ assert [1, 2, 3, 1] in ug_cycles and [1, 3, 2, 1] in ug_cycles
 assert [2, 2] in ug_cycles and [2, 3, 1, 2] in ug_cycles and [2, 1, 3, 2] in ug_cycles
 assert [3, 1, 2, 3] in ug_cycles and [3, 2, 1, 3] in ug_cycles
 
-
-new_graph = DirectedUnweightedGraph.construct_unweighted_graph([0, 1], [(0, 1)])
-assert isinstance(new_graph, DirectedUnweightedGraph)
+new_graph = DirectedWeightedGraph.construct_unweighted_graph([0, 1], [(0, 1, 0)])
+assert isinstance(new_graph, DirectedWeightedGraph)
 assert (True, [0, 1]) == new_graph.topological_order(), new_graph.topological_order()
-new_graph.add_edge(1, 0)
+new_graph.add_edge(1, 0, 0)
 assert not new_graph.topological_order()[0]
 
-new_graph = DirectedUnweightedGraph.construct_unweighted_graph([0, 1, 2, 3], [(0, 1), (0, 2), (1, 3), (2, 3)])
-assert isinstance(new_graph, DirectedUnweightedGraph)
+new_graph = DirectedWeightedGraph.construct_unweighted_graph([0, 1, 2, 3], [(0, 1, 0), (0, 2, 0), (1, 3, 0), (2, 3, 0)])
+assert isinstance(new_graph, DirectedWeightedGraph)
 assert new_graph.topological_order()[1] in ([0, 1, 2, 3], [0, 2, 1, 3]), new_graph.topological_order()
 
-new_graph = UndirectedUnweightedGraph.construct_unweighted_graph([0, 1], [(0, 1)])
-assert isinstance(new_graph, UndirectedUnweightedGraph)
+new_graph = UndirectedWeightedGraph.construct_unweighted_graph([0, 1], [(0, 1, 0)])
+assert isinstance(new_graph, UndirectedWeightedGraph)
 assert 0 in new_graph.Edge[1]
+
+# Kruskal's MST Algorithm
+vertex = ascii_uppercase[:10]
+edges = [('I', 'J', 0),
+         ('A', 'E', 1),
+         ('C', 'I', 1),
+         ('E', 'F', 1),
+         ('G', 'H', 1),
+         ('B', 'D', 2),
+         ('C', 'J', 2),
+         ('D', 'E', 2),
+         ('D', 'H', 2),
+         ('A', 'D', 4),
+         ('B', 'C', 4),
+         ('C', 'H', 4),
+         ('G', 'I', 4),
+         ('A', 'B', 5),
+         ('D', 'F', 5),
+         ('H', 'I', 6),
+         ('F', 'G', 7),
+         ('D', 'G', 11)]
+mst_test_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=vertex, edges=edges)
+assert mst_test_tree.cycles()
+total_weight, mst_edges = mst_test_tree.mst_edge_kruskal()
+assert mst_test_tree.enforce_mst_kruskal() == total_weight
+assert set(mst_test_tree.edge_list()) == set(mst_edges)
