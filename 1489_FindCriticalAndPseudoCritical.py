@@ -1,3 +1,15 @@
+"""
+Given a weighted undirected connected graph with n vertices numbered from 0 to n-1, and an array edges where edges[i] =
+ [from_i, to_i, weight_i] represents a bidirectional and weighted edge between nodes from_i and to_i. A minimum spanning
+ tree (MST) is a subset of the edges of the graph that connects all vertices without cycles and with the minimum
+ possible total edge weight.
+
+Find all the critical and pseudo-critical edges in the minimum spanning tree (MST) of the given graph. An MST edge whose
+ deletion from the graph would cause the MST weight to increase is called a critical edge. A pseudo-critical edge, on
+  the other hand, is that which can appear in some MSTs but not all.
+
+Note that you can return the indices of the edges in any order.
+"""
 from collections import defaultdict
 from typing import List
 

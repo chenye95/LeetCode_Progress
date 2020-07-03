@@ -29,11 +29,12 @@ def criticalConnections(n: int, connections: List[List[int]]) -> List[List[int]]
                 continue  # exclude the incoming path to this vertex that was just traversed
 
             if lowest_rank[next_neighbor] == -1:
-                # lowest_rank never been changed, still equals to -1
+                # neighbor hasn't been visited yet
                 _dfs(current_level+1, next_neighbor, current_node)
 
             lowest_rank[current_node] = min(lowest_rank[current_node], lowest_rank[next_neighbor])
-            if lowest_rank[next_neighbor] >= current_level + 1:
+            if lowest_rank[next_neighbor] > current_level:
+                # no cycle pointing back to current_node
                 return_result.append([current_node, next_neighbor])
 
     return_result = []
