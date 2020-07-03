@@ -1,10 +1,16 @@
-from typing import List, Any
+from typing import List, Union
 
+NodeType = Union[int, str]
 
 class UnionFind:
     ELEMENT_NOT_FOUND = -1
 
-    def __init__(self, element_list: List[Any], use_recursion=False):
+    def __init__(self, element_list: List[NodeType], use_recursion=False):
+        """
+        :param element_list: list of elements tracked under UnionFind
+        :param use_recursion: default behavior whether use Recursive Calls to perform Path Compression,
+            set to True if find is frequent compared to unify
+        """
         if not element_list:
             raise ValueError('Empty element_list')
         self.look_up_dict = {element: i for i, element in enumerate(element_list)}
@@ -18,7 +24,7 @@ class UnionFind:
         """
         return len(self.look_up_dict)
 
-    def find(self, p: Any, use_recursion: bool = False) -> int:
+    def find(self, p: NodeType, use_recursion: bool = False) -> int:
         """
         :param use_recursion: whether uses Recursive Call to compress path, set to True if find() is frequent
         :param p: element to look up
@@ -28,7 +34,7 @@ class UnionFind:
             return self.ELEMENT_NOT_FOUND
         return self.union_find_array.find(self.look_up_dict[p], use_recursion)
 
-    def is_connected(self, p: Any, q: Any) -> bool:
+    def is_connected(self, p: NodeType, q: NodeType) -> bool:
         """
         :return: whether elements p and q are connected
         """
@@ -38,7 +44,7 @@ class UnionFind:
             raise ValueError('Element %s not fount' % str(q))
         return self.union_find_array.is_connected(self.look_up_dict[p], self.look_up_dict[q])
 
-    def component_size(self, p: Any) -> int:
+    def component_size(self, p: NodeType) -> int:
         """
         :return: the size of component for which p belongs to
         """
@@ -52,7 +58,7 @@ class UnionFind:
         """
         return self.union_find_array.components_count()
 
-    def unify(self, p: Any, q: Any) -> None:
+    def unify(self, p: NodeType, q: NodeType) -> None:
         """
         Unify components containing elements p and q
         """
@@ -67,6 +73,11 @@ class UnionFindArray:
     ELEMENT_NOT_FOUND = -1
 
     def __init__(self, elements_count: int, use_recursion: bool = False):
+        """
+        :param elements_count: number of elements tracked under UnionFindArray
+        :param use_recursion: default behavior whether use Recursive Calls to perform Path Compression,
+            set to True if find is frequent compared to unify
+        """
         if elements_count <= 0:
             raise ValueError("element_count must be positive")
         self.elements_count = elements_count
