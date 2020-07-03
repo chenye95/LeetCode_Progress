@@ -12,7 +12,8 @@ try:
 except ValueError as e:
     print("Expected Value Error Message:", e)
 
-test_union_find = UnionFind(elements)
+test_union_find = UnionFind(elements, True)
+assert test_union_find.union_find_array.use_recursion
 try:
     test_union_find.is_connected('Z', 'A')
 except ValueError as e:
@@ -50,6 +51,7 @@ except ValueError as e:
     print("Expected Value Error Message:", e)
 
 test_union_find_array = UnionFindArray(len(elements))
+assert not test_union_find_array.use_recursion
 try:
     test_union_find_array.is_connected(-1, mapping['A'])
 except ValueError as e:
