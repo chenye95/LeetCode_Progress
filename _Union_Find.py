@@ -1,6 +1,6 @@
 from typing import List, Union
 
-NodeType = Union[int, str]
+NodeType = Union[int, str, chr]
 
 class UnionFind:
     ELEMENT_NOT_FOUND = -1
