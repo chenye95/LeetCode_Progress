@@ -16,7 +16,7 @@ def addOperators(num: str, target: int) -> List[str]:
                 return_result.append(running_equation)
             return
 
-        # Pruning: with +/-/*/No_Op max value come out of num[curr_index:] is int(num[curr_index:]) with all No_Op
+        # Pruning: with +/-/*/No_Op, max value come out of num[curr_index:] is int(num[curr_index:]) with all No_Op
         # Prune if abs(prev_operand) * int(num[curr_index:]) < difference to target if prev_operand is not zero
         # or if int(num[curr_index:]) < difference to target if prev_operand is zero
         if max(1, abs(prev_operand)) * int(num[curr_index:]) < abs(target - running_value):
@@ -26,18 +26,20 @@ def addOperators(num: str, target: int) -> List[str]:
             # take care of No_Op without recursion
             str_operand = num[curr_index:i + 1]
             if len(str_operand) > 1 and str_operand[0] == '0':
+                # no leading 0s
                 break
 
-            current_operand = int(str_operand)
+            curr_operand = int(str_operand)
             if curr_index == 0:
                 # no leading operator
-                recurse(i + 1, current_operand, current_operand, str_operand)
+                recurse(i + 1, curr_operand, curr_operand, str_operand)
             else:
                 # try out +/-/*
-                recurse(i + 1, current_operand, running_value + current_operand, running_equation + '+' + str_operand)
-                recurse(i + 1, -current_operand, running_value - current_operand, running_equation + '-' + str_operand)
-                recurse(i + 1, prev_operand * current_operand,
-                        (running_value - prev_operand) + (prev_operand * current_operand),
+                recurse(i + 1, curr_operand, running_value + curr_operand, running_equation + '+' + str_operand)
+                recurse(i + 1, -curr_operand, running_value - curr_operand, running_equation + '-' + str_operand)
+                # * prioritize over +/-
+                recurse(i + 1, prev_operand * curr_operand,
+                        (running_value - prev_operand) + (prev_operand * curr_operand),
                         running_equation + '*' + str_operand)
 
     recurse(0, 0, 0, "")

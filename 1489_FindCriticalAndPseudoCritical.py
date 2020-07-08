@@ -31,7 +31,7 @@ def findCriticalAndPseudoCriticalEdges(n: int, edges: List[List[int]]) -> List[L
     # Find critical connection in a union_graph
     def find_critical_connection(current_node: int, level: int = 0, previous_node: int = DFS_NOT_VISITED) -> int:
         levels[current_node] = level
-        for child, i in union_graph[current_node]:
+        for child, edge_i in union_graph[current_node]:
             if child == previous_node:
                 # do not go back from the incoming path
                 continue
@@ -40,10 +40,11 @@ def findCriticalAndPseudoCriticalEdges(n: int, edges: List[List[int]]) -> List[L
                                            find_critical_connection(child, level + 1, current_node))
             else:
                 levels[current_node] = min(levels[current_node], levels[child])
-            if levels[child] >= level + 1 and i not in edge_pseudos:
-                # critical
-                # hence critical connection in the current snapshot will continue to be a
-                edge_critical.add(i)
+            if levels[child] >= level + 1 and edge_i not in edge_pseudos:
+                # critical edge in current snapshot
+                # no smaller weight edges has previously connection union_u and union_v
+                # critical connection in the current snapshot will continue to be a critical edge in MST
+                edge_critical.add(edge_i)
         return levels[current_node]
 
     # Initialize critical and pseudo-critical edge set
@@ -68,7 +69,7 @@ def findCriticalAndPseudoCriticalEdges(n: int, edges: List[List[int]]) -> List[L
 
             if union_u != union_v:
                 # Skip the edge that creates cycle and links two already connected graphs
-                # otherwise edge i connects union_u and union_v
+                # otherwise edge edge_i connects union_u and union_v
                 connections_between[min(union_u, union_v), max(union_u, union_v)].add(i)
 
         # w_edges contains all edges of weight_class that we may add to MST

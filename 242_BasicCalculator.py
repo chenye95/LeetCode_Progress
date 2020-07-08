@@ -27,7 +27,7 @@ def calculate(s: str) -> int:
         elif c == '-':
             # Evaluate expression to the left
             eval_result += sign * operand
-            # Set sign = -1 to keep track of +
+            # Set sign = -1 to keep track of -
             # Reset operand
             sign, operand = -1, 0
         elif c == '(':
