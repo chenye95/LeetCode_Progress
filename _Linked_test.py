@@ -1,6 +1,5 @@
-from _Linked_List import LinkedList, PrintableLinkedList, ListNode
 from _Linked_Complex import DoubleLinkedList, ComplexLinkedList
-
+from _Linked_List import LinkedList, PrintableLinkedList, ListNode
 
 test_node = ListNode(0)
 assert test_node.last_node().val == 0
@@ -18,17 +17,15 @@ assert str(printable_list) == expected_output
 list1 = list(range(1, 7))
 list2 = list(range(7, 11))
 list3 = list(range(11, 13))
-list_head_1 = ComplexLinkedList.create_linked_list(list1)
-list_head_2 = ComplexLinkedList.create_linked_list(list2)
-list_head_3 = ComplexLinkedList.create_linked_list(list3)
+list_head_1 = ComplexLinkedList.create_linked_list(list1).head
+list_head_2 = ComplexLinkedList.create_linked_list(list2).head
+list_head_3 = ComplexLinkedList.create_linked_list(list3).head
 list_head_1.next.next.child = list_head_2
 list_head_2.next.child = list_head_3
-
 
 end1 = list_head_1.last_node()
 end2 = list_head_2.last_node()
 end3 = list_head_3.last_node()
-
 
 assert end1.val == 6
 assert end2.val == 10
