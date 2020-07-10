@@ -12,7 +12,7 @@ Return True if the equation is solvable otherwise return False.
 from typing import List
 
 
-def isSolvable(words: List[str], result: str) -> bool:
+def is_solvable(words: List[str], result: str) -> bool:
     def try_position_i(position_i: int, word_j: int, carry: int):
         # Exceeds the length of result and all words, check no leading 0s
         if position_i == len(result):
@@ -57,7 +57,7 @@ def isSolvable(words: List[str], result: str) -> bool:
     return try_position_i(0, 0, 0)
 
 
-assert isSolvable(words=["SEND", "MORE"], result="MONEY") is True
-assert isSolvable(words=["SIX", "SEVEN", "SEVEN"], result="TWENTY") is True
-assert isSolvable(words=["THIS", "IS", "TOO"], result="FUNNY") is True
-assert isSolvable(words=["LEET", "CODE"], result="POINT") is False
+assert is_solvable(words=["SEND", "MORE"], result="MONEY") is True
+assert is_solvable(words=["SIX", "SEVEN", "SEVEN"], result="TWENTY") is True
+assert is_solvable(words=["THIS", "IS", "TOO"], result="FUNNY") is True
+assert is_solvable(words=["LEET", "CODE"], result="POINT") is False
