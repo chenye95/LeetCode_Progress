@@ -7,7 +7,7 @@ num_bit_array = [0, 3, 5, -1, 10, 5, 9, -3, 19, 7, 9, 3]
 epsilon = 0.001
 
 """Set Up"""
-test_tree = FenwickTree(num_array=num_array)
+test_tree = FenwickTree(init_frequencies=num_array)
 assert num_bit_array == test_tree.bit_array
 
 """At Index I"""

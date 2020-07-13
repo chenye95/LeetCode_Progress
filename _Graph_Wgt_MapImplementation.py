@@ -28,7 +28,6 @@ class WeightedGraph:
     def add_vertex(self, v: NODE) -> None:
         """
         :param v: Vertex, needs to be hashable
-        :return:
         """
         self.Vertex.add(v)
 
@@ -55,11 +54,9 @@ class WeightedGraph:
 
     def find_path_generator(self, start: NODE, end: NODE) -> GeneratorType:
         """
-        :param start: Vertex
-        :param end: Vertex
         :return: list[list] each list is a valid path from start to end
         Note: no re-visiting nodes allowed in the path.
-        Only exception is start == end, i.e finding cycles
+        Only exception is start == end, i.e. finding cycles
         """
         fringe = [(start, [start])]
         while fringe:
@@ -75,13 +72,16 @@ class WeightedGraph:
     def cycles(self) -> List[List[NODE]]:
         """
         Cannot reuse node or path
-        :return: list[list[node]]
+        :return: list[list[node]] each is a cycle in the graph
         """
         pass
 
 
 class UndirectedWeightedGraph(WeightedGraph):
     def add_edge(self, u: NODE, v: NODE, weight: float) -> None:
+        """
+        Undirected graph, both <u, v> and <v, u> are added and set to weight
+        """
         assert u in self.Vertex and v in self.Vertex
         self.Edge[u][v] = weight
         if u != v:
@@ -94,6 +94,9 @@ class UndirectedWeightedGraph(WeightedGraph):
             self.Edge[v][u] = weight
 
     def find_path(self, start: int, end: int) -> List[List[NODE]]:
+        """
+        Cannot reuse node or path
+        """
         if start != end:
             return [path for path in self.find_path_generator(start, end)]
         else:
@@ -103,7 +106,6 @@ class UndirectedWeightedGraph(WeightedGraph):
     def cycles(self) -> List[List[NODE]]:
         """
         Cannot reuse node or path
-        :return:
         """
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v) if len(cycle_v) != 3]
 
@@ -112,9 +114,9 @@ class UndirectedWeightedGraph(WeightedGraph):
 
     def mst_edge_kruskal(self) -> Tuple[float, List[Tuple[NODE, NODE, float]]]:
         """
-        Run Kruskal's algorithm to generate one MST from the Undirected Weighted Graph
+        Run Kruskal's algorithm to generate one Minimum Spanning Tree from the Undirected Weighted Graph
         please note that MST may not be unique
-        :return: list of edges in MST
+        :return: weight of MST and list of edges in MST
         """
         total_weight, mst_edges = 0, []
         union_find = UnionFind(list(self.Vertex))
@@ -130,6 +132,12 @@ class UndirectedWeightedGraph(WeightedGraph):
         return total_weight, mst_edges
 
     def enforce_mst_kruskal(self) -> float:
+        """
+        remove edges from the tree so that the remaining graph is a Minimum Spanning Tree
+        MST found through Kruskal methods
+        please note that the result is a MST, not necessarily the unique MST
+        :return: weight of MST
+        """
         total_weight = 0
         union_find = UnionFind(list(self.Vertex))
         edge_list = [(self.Edge[u][v], u, v) for u in self.Vertex for v in self.Edge[u] if u < v]
@@ -159,7 +167,6 @@ class DirectedWeightedGraph(WeightedGraph):
     def cycles(self) -> List[List[NODE]]:
         """
         Cannot reuse node or path
-        :return:
         """
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v)]
 

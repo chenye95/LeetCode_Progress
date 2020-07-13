@@ -1,17 +1,13 @@
 from collections import defaultdict
-from _Cache_Interface import Cache
+from typing import Optional, Any
 
-class LFUCache_Node(object):
-    def __init__(self, key, val):
-        self.key = key
-        self.val = val
-        self.freq = 1
-        self.prev = self.next = None
+from _Cache_Interface import Cache, CacheNode
 
-class LFUCache_LinkedList(object):
+
+class LFUCache_LinkedList:
     def __init__(self):
-        self.head = LFUCache_Node(None, None)
-        self.tail = LFUCache_Node(None, None)
+        self.head = CacheNode(-1, None, True)
+        self.tail = CacheNode(-1, None, True)
         self.head.next = self.tail
         self.tail.prev = self.head
         self.size = 0
@@ -19,8 +15,7 @@ class LFUCache_LinkedList(object):
     def __len__(self) -> int:
         return self.size
 
-
-    def insert(self, node: LFUCache_Node):
+    def insert(self, node: CacheNode):
         """
         Insert to the front of Double Linked List
         """
@@ -30,8 +25,7 @@ class LFUCache_LinkedList(object):
         self.head.next = node
         self.size += 1
 
-
-    def pop(self, node: LFUCache_Node = None) -> LFUCache_Node:
+    def pop(self, node: CacheNode = None) -> Optional[CacheNode]:
         """
         Server tie between Node and its predecessors and successors, and decrease the list size by 1
         If Node is None, pop the last node in the linked list
@@ -48,6 +42,7 @@ class LFUCache_LinkedList(object):
 
         return node
 
+
 class LFUCache(Cache):
     """
     Data structure for Least Frequently Used (LFU) cache.
@@ -55,13 +50,14 @@ class LFUCache(Cache):
     When at capacity, invalidate the least frequently used item before inserting a new item.
     When there is a tie (i.e., two or more keys that have the same frequency), the least recently used key would be evicted.
     """
+
     def __init__(self, capacity: int):
-        super().__init__(capacity = capacity)
+        super().__init__(capacity=capacity)
         self.lookup_table = {}
         self.freq_table = defaultdict(LFUCache_LinkedList)
         self.min_freq = 0
 
-    def _update_freq(self, node: LFUCache_Node) -> None:
+    def _update_freq(self, node: CacheNode) -> None:
         """
         * Increment frequency of node by 1
         * Move node from freq list to freq + 1 list and insert to the front
@@ -76,7 +72,7 @@ class LFUCache(Cache):
         node.freq += 1
         self.freq_table[freq + 1].insert(node)
 
-    def get(self, key: int) -> int:
+    def get(self, key: int) -> Any:
         if key in self.lookup_table:
             node = self.lookup_table[key]
             self._update_freq(node)
@@ -84,7 +80,7 @@ class LFUCache(Cache):
         else:
             return self.NOT_FOUND
 
-    def put(self, key: int, val: int) -> None:
+    def put(self, key: int, val: Any) -> None:
         if key in self.lookup_table:
             node = self.lookup_table[key]
             self._update_freq(node)
@@ -95,8 +91,7 @@ class LFUCache(Cache):
                 del self.lookup_table[node.key]
                 del node
 
-            node = LFUCache_Node(key, val)
+            node = CacheNode(key, val, True)
             self.lookup_table[key] = node
             self.freq_table[1].insert(node)
             self.min_freq = 1
-

@@ -1,13 +1,18 @@
+from typing import List, Union, Optional
+
 from _Binary_Tree import BinaryTree, TreeNode
 from _Linked_List import LinkedList
 
+BST_NODE_TYPE = Union[chr, int, chr, float]
 
-def construct_bst_from_list(values):
+
+def construct_bst_from_list(values: List[BST_NODE_TYPE]) -> Optional[TreeNode]:
     """
     :param values:  Sorted list of values
-    :return: TreeNode: root of BST
+    :return: root node of BST
     """
-    def construct_bst_helper(left_bound, right_bound):
+
+    def construct_bst_helper(left_bound: int, right_bound: int) -> Optional[TreeNode]:
         if left_bound > right_bound:
             return None
         mid_point = int((left_bound + right_bound) / 2)
@@ -15,18 +20,21 @@ def construct_bst_from_list(values):
         root_node.left = construct_bst_helper(left_bound, mid_point - 1)
         root_node.right = construct_bst_helper(mid_point + 1, right_bound)
         return root_node
+
     if len(values) == 0:
         return None
     else:
         return construct_bst_helper(0, len(values) - 1)
 
-def construct_bst_from_linked_list(linked_list):
+
+def construct_bst_from_linked_list(linked_list: LinkedList) -> Optional[TreeNode]:
     """
     Please note that this method will destruct the linked list, please make a deep copy if you want to preserve the list
     :param linked_list: Sorted linked list
-    :return: TreeNode: root of BST
+    :return: root node of BST
     """
-    def construct_bst_helper(list_start):
+
+    def construct_bst_helper(list_start) -> Optional[TreeNode]:
         if list_start is None:
             return None
         slow_ptr = list_start
@@ -45,43 +53,61 @@ def construct_bst_from_linked_list(linked_list):
         return root_node
     return construct_bst_helper(linked_list.head)
 
+
 class BST(BinaryTree):
-    def __init__(self, values):
+    def __init__(self, values: Union[List[BST_NODE_TYPE], LinkedList]):
+        """
+        Note: if pass in a linked list, the linked list will be destructed
+        :param values: supports either an array of values or a LinkedList of values
+        """
         assert (isinstance(values, list) or isinstance(values, LinkedList)), \
             "Only support initiate from list or linked list"
         assert values, "Empty list not supported"
 
         if isinstance(values, list):
             values.sort()
-            self.root = construct_bst_from_list(values)
+            super().__init__(construct_bst_from_list(values))
         else:
-            self.root = construct_bst_from_linked_list(values)
+            super().__init__(construct_bst_from_linked_list(values))
 
-    def traversal(self):
+    def traversal(self) -> List[BST_NODE_TYPE]:
+        """
+        :return: inorder traversal of BST
+        """
         assert self.root is not None, "Empty Tree"
         return self.inorder_traversal()
 
-    def traverse_range(self, left_bound, right_bound):
-        def traverse_range_boundary(root_node):
+    def traverse_range(self, val_low_bound: BST_NODE_TYPE, val_up_bound: BST_NODE_TYPE) -> List[BST_NODE_TYPE]:
+        """
+        :return: inorder traversal of BST for all val_low_bound <= node.val <= val_up_bound
+        """
+
+        def traverse_range_boundary(root_node: TreeNode) -> List[BST_NODE_TYPE]:
             return_list = []
-            if root_node.val > left_bound and root_node.left:
+            if root_node.val > val_low_bound and root_node.left:
                 return_list.extend(traverse_range_boundary(root_node.left))
-            if left_bound <= root_node.val <= right_bound:
+            if val_low_bound <= root_node.val <= val_up_bound:
                 return_list.append(root_node.val)
-            if root_node.val <= right_bound and root_node.right:
+            if root_node.val <= val_up_bound and root_node.right:
                 return_list.extend(traverse_range_boundary(root_node.right))
             return return_list
+
         assert self.root is not None, "Empty Tree"
         return traverse_range_boundary(self.root)
 
-    def balance_factor(self):
+    def balance_factor(self) -> int:
+        """
+        :return: left child tree height minus right child tree height
+        """
         assert self.root, "Empty Tree"
         left_height = 0 if self.root.left is None else self.root.left.height_of_subtree()
         right_height = 0 if self.root.right is None else self.root.right.height_of_subtree()
         return left_height - right_height
 
-
-    def insert(self, value):
+    def insert(self, value: BST_NODE_TYPE) -> None:
+        """
+        :return: insert a new node of value into the BST
+        """
         if self.root is None:
             self.root = TreeNode(value)
         else:
@@ -101,7 +127,10 @@ class BST(BinaryTree):
                     else:
                         current_node = current_node.right
 
-    def look_up(self, value):
+    def look_up(self, value: BST_NODE_TYPE) -> bool:
+        """
+        :return: whether a node of value exists in BST
+        """
         if self.root is None:
             return False
 
@@ -115,13 +144,19 @@ class BST(BinaryTree):
                 current_node = current_node.right
         return False
 
-
-    def hard_re_balance(self):
+    def hard_re_balance(self) -> None:
+        """
+        :return: reconstruct the BST from ground up. Used to re-balance the BST after multiple insertions and deletions
+        """
         assert self.root, "Empty Tree"
         values = self.inorder_traversal()
         self.root = construct_bst_from_list(values)
 
-    def delete_node(self, value):
+    def delete_node(self, value) -> bool:
+        """
+        :param value: deletes a node of value from BST
+        :return: if the deletion is successful
+        """
         assert self.root, "Empty Tree"
         to_be_deleted = self.root
         parent_node = None
@@ -182,10 +217,11 @@ class BST(BinaryTree):
 
     def is_valid(self) -> bool:
         """
+        ONLY for validation of BST implementation purposes
         For all nodes:
             node.left.val < node.val
             node.right.val >= node.val
-        :return: bool
+        :return: whether the BST is a valid BST
         """
         assert self.root, "Empty Tree"
         to_be_validated = [(self.root, None, None)]
@@ -203,11 +239,14 @@ class BST(BinaryTree):
                 to_be_validated.append((validating.right, validating.val, upper_limit))
         return True
 
-    def is_balanced(self):
+    def is_balanced(self) -> bool:
+        """
+        :return: whether the BST is balanced. Call hard_re_balance() if need to re-balance BST
+        """
         UNBALANCED = -1
 
-        def check_below_node(current_node):
-            # UNBALANCED means unbalanced, else return height
+        def check_below_node(current_node: TreeNode) -> int:
+            # UNBALANCED to mark unbalanced subtree, else return height
             if current_node is None:
                 return 0
             left_height = check_below_node(current_node.left)
@@ -220,7 +259,10 @@ class BST(BinaryTree):
         assert self.root, "Empty Tree"
         return check_below_node(self.root) != UNBALANCED
 
-    def kthSmallest(self, k: int):
+    def kthSmallest(self, k: int) -> Optional[BST_NODE_TYPE]:
+        """
+        :return: the kth smallest value in the BST
+        """
         traversal_stack = []
         counter = 0
         current_node = self.root
@@ -234,5 +276,3 @@ class BST(BinaryTree):
                 return current_node.val
             current_node = current_node.right
         return None
-
-

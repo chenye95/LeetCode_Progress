@@ -1,55 +1,47 @@
 from random import randint
+from typing import Any
 
 
 class RandomizedSet:
-
     def __init__(self):
         """
-        Initialize your data structure here.
+        Supports unweighted randomly chooses one elements from the collection
         """
-        self.obj = []
-        self.pos = {}
+        self.obj_in_collections = []
+        self.pos_to_obj_lookup = {}
 
-    def insert(self, val: int) -> bool:
+    def insert(self, val: Any) -> bool:
         """
-        Inserts a value to the set. Returns true if the set did not already contain the specified element.
+        Inserts a value to the set
+        :return if the set did not already contain the specified element.
         """
-        if val in self.pos:
+        if val in self.pos_to_obj_lookup:
             return False
 
-        self.obj.append(val)
-        self.pos[val] = len(self.obj) - 1
+        self.obj_in_collections.append(val)
+        self.pos_to_obj_lookup[val] = len(self.obj_in_collections) - 1
         return True
 
-    def remove(self, val: int) -> bool:
+    def remove(self, val: Any) -> bool:
         """
-        Removes a value from the set. Returns true if the set contained the specified element.
+        Removes a value from the set
+        :return if the set contained the specified element.
         """
-        if val not in self.pos:
+        if val not in self.pos_to_obj_lookup:
             return False
 
-        idx, lst = self.pos[val], self.obj[-1]
-        self.obj[idx], self.pos[lst] = lst, idx
-        self.obj.pop()
-        del self.pos[val]
+        idx, lst = self.pos_to_obj_lookup[val], self.obj_in_collections[-1]
+        self.obj_in_collections[idx], self.pos_to_obj_lookup[lst] = lst, idx
+        self.obj_in_collections.pop()
+        del self.pos_to_obj_lookup[val]
         return True
 
-    def getRandom(self) -> int:
+    def getRandom(self) -> Any:
         """
-        Get a random element from the set.
+        Get a unweighted random element from the set
+        :return an object if the collection is not empty or None otherwise
         """
-        if not self.obj:
+        if not self.obj_in_collections:
             return None
         else:
-            return self.obj[randint(0, len(self.obj) - 1)]
-
-
-# Your RandomizedSet object will be instantiated and called as such:
-obj = RandomizedSet()
-assert obj.insert(1)
-assert obj.insert(2)
-assert obj.getRandom() in set([1, 2])
-assert not obj.insert(2)
-assert obj.remove(1)
-assert not obj.remove(1)
-assert obj.getRandom() == 2
+            return self.obj_in_collections[randint(0, len(self.obj_in_collections) - 1)]

@@ -1,6 +1,9 @@
 from __future__ import annotations
+
 from collections import deque
-from typing import Any, List
+from typing import Union, List, Optional
+
+TREE_NODE_TYPE = Union[str, int, chr]
 
 
 def get_height(current_node):
@@ -9,8 +12,9 @@ def get_height(current_node):
     else:
         return 1 + max(get_height(current_node.left), get_height(current_node.right))
 
+
 class TreeNode:
-    def __init__(self, x: Any) -> None:
+    def __init__(self, x: TREE_NODE_TYPE):
         self.val = x
         self.left = None
         self.right = None
@@ -18,11 +22,15 @@ class TreeNode:
     def height_of_subtree(self):
         return get_height(self)
 
+
 class BinaryTree:
     def __init__(self, root: TreeNode):
         self.root = root
 
     def __eq__(self, other: BinaryTree) -> bool:
+        """
+        :return: whether a BinaryTree is identical to another. Structure and value wise
+        """
         if not other: return False
         if not isinstance(other, BinaryTree):
             return False
@@ -48,6 +56,9 @@ class BinaryTree:
         return True
 
     def __ne__(self, other: BinaryTree) -> bool:
+        """
+        :return: same as not .__eq__(other)
+        """
         return not self.__eq__(other)
 
     def height(self) -> int:
@@ -57,12 +68,13 @@ class BinaryTree:
         """
         return get_height(self.root)
 
-    def print_tree(self, filler=None) -> List[List[Any]]:
+    def print_tree(self, filler=None) -> List[List[TREE_NODE_TYPE]]:
         """
         Returns a 2D representation of the tree
         :param filler: Default filler for empty cells
         :return: List[List[Node.val]]
         """
+
         def fill(print_array, current_node, layer, left, right):
             if not current_node:
                 return
@@ -79,7 +91,7 @@ class BinaryTree:
         fill(print_array, self.root, 0, 0, tree_width)
         return print_array
 
-    def preorder_traversal(self) -> List[Any]:
+    def preorder_traversal(self) -> List[TREE_NODE_TYPE]:
         """
         :rtype: list[val]
         """
@@ -95,10 +107,10 @@ class BinaryTree:
             current_node = traverse_stack.pop()
         return result_order
 
-    def inorder_traversal(self) -> List[Any]:
+    def inorder_traversal(self) -> List[TREE_NODE_TYPE]:
         """
         Implements Morris Traversal: without recursion or stack.
-        Need to modify the tree and revert the changes during the
+        Modifies the tree and reverts the changes afterwards
         :return: List[val]
         """
         result_order = []
@@ -126,13 +138,13 @@ class BinaryTree:
 
         return result_order
 
-    def postorder_traversal(self) -> List[Any]:
+    def postorder_traversal(self) -> List[TREE_NODE_TYPE]:
         """
         :rtype: list[val]
         """
         if self.root is None:
             return []
-        traverse_stack = [self.root]
+        traverse_stack: List[TreeNode] = [self.root]
         result_order = []
         prev_node = None
         while traverse_stack:
@@ -150,7 +162,7 @@ class BinaryTree:
             prev_node = current_node
         return result_order
 
-    def layer_traversal(self) -> List[Any]:
+    def layer_traversal(self) -> List[TREE_NODE_TYPE]:
         """
         :rtype: list[val]
         """
@@ -168,7 +180,7 @@ class BinaryTree:
                 traverse_queue.append(current_node.right)
         return result_order
 
-    def layer_traversal_by_layer(self) -> List[List[Any]]:
+    def layer_traversal_by_layer(self) -> List[List[TREE_NODE_TYPE]]:
         """
         :rtype: list[list[val]]
         """
@@ -181,7 +193,7 @@ class BinaryTree:
             current_level = [leaf for lr_pair in next_level_tmp for leaf in lr_pair if leaf]
         return return_list
 
-    def leetcode_traversal(self) -> List[Any]:
+    def leetcode_traversal(self) -> List[TREE_NODE_TYPE]:
         """
         :rtype: list[val]
         """
@@ -200,7 +212,11 @@ class BinaryTree:
                 traverse_queue.append(current_node.right)
         return result_order
 
-    def right_side_view(self) -> List[Any]:
+    def right_side_view(self) -> List[TREE_NODE_TYPE]:
+        """
+        :return: list of the right most nodes per layer
+        """
+
         def add_new_depth(node, depth):
             if node:
                 if depth == len(left_view):
@@ -212,7 +228,11 @@ class BinaryTree:
         add_new_depth(self.root, 0)
         return left_view
 
-    def left_side_view(self) -> List[Any]:
+    def left_side_view(self) -> List[TREE_NODE_TYPE]:
+        """
+        :return: list of the left most nodes per layer
+        """
+
         def add_new_depth(node, depth):
             if node:
                 if depth == len(right_view):
@@ -229,14 +249,16 @@ class ConstructTree:
     """
     Assuming TreeNodes Contain Unique Values
     """
+
     @staticmethod
-    def build_tree_pre_in(preorder, inorder):
+    def build_tree_pre_in(preorder: List[TREE_NODE_TYPE], inorder: List[TREE_NODE_TYPE]) -> Optional[BinaryTree]:
         """
-        :type preorder: list[val]
-        :type inorder: list[val]
-        :rtype: TreeNode
+        :parameter preorder: preorder representation of the tree
+        :parameter inorder: inorder representation of the tree
+        :return: BinaryTree object of the tree; or None if the lists are empty
         """
-        def build_tree_helper(preorder_s, preorder_e, inorder_s, inorder_e):
+
+        def build_tree_helper(preorder_s: int, preorder_e: int, inorder_s: int, inorder_e: int):
             current_x = preorder[preorder_s]
             current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)
@@ -260,23 +282,24 @@ class ConstructTree:
         return BinaryTree(root=root_node)
 
     @staticmethod
-    def build_tree_in_post(inorder, postorder):
+    def build_tree_in_post(inorder: List[TREE_NODE_TYPE], postorder: List[TREE_NODE_TYPE]) -> Optional[BinaryTree]:
         """
-        :type inorder: list[val]
-        :type postorder: list[val]
-        :rtype: TreeNode
+        :parameter inorder: inorder representation of the tree
+        :parameter postorder: postorder representation of the tree
+        :return: BinaryTree object of the tree; or None if the lists are empty
         """
-        def build_tree_helper(inorder_s, inorder_e, postorder_s, postorder_e):
+
+        def build_tree_helper(inorder_s: int, inorder_e: int, postorder_s: int, postorder_e: int):
             current_x = postorder[postorder_e]
             current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)
             left_tree_len = inorder_x - inorder_s
             if inorder_x > inorder_s:
-                left_child = build_tree_helper(inorder_s, inorder_x-1, postorder_s, postorder_s+left_tree_len-1)
+                left_child = build_tree_helper(inorder_s, inorder_x - 1, postorder_s, postorder_s + left_tree_len - 1)
             else:
                 left_child = None
             if inorder_x < inorder_e:
-                right_child = build_tree_helper(inorder_x+1, inorder_e, postorder_s+left_tree_len, postorder_e-1)
+                right_child = build_tree_helper(inorder_x + 1, inorder_e, postorder_s + left_tree_len, postorder_e - 1)
             else:
                 right_child = None
             current_root_node.left = left_child
@@ -290,7 +313,11 @@ class ConstructTree:
         return BinaryTree(root=root_node)
 
     @staticmethod
-    def build_tree_leetcode(node_list):
+    def build_tree_leetcode(node_list: List[TREE_NODE_TYPE]) -> Optional[BinaryTree]:
+        """
+        Helper function to create Binary Tree according to Leet Code representation
+        :return: BinaryTree object of the tree; or None if the lists are empty
+        """
         if not node_list:
             return None
         root = TreeNode(node_list[0])
