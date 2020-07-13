@@ -6,6 +6,7 @@ from typing import List, Tuple, Union
 
 NODE = Union[str, int]
 
+
 class UnweightedGraph:
     @classmethod
     def construct_unweighted_graph(cls, vertices: List[NODE], edges: List[Tuple[NODE, NODE]]) -> UnweightedGraph:
@@ -23,7 +24,6 @@ class UnweightedGraph:
     def add_vertex(self, v: NODE) -> None:
         """
         :param v: Vertex, needs to be hashable
-        :return:
         """
         self.Vertex.add(v)
 
@@ -37,15 +37,16 @@ class UnweightedGraph:
         return u in self.Vertex and v in self.Vertex and v in self.Edge[u]
 
     def vertex_no_self_loop(self, v: NODE) -> bool:
+        """
+        :return: no direct link from v to itself. Doesn't count for cycles of >1 length
+        """
         return v in self.Vertex and v not in self.Edge[v]
 
     def find_path_generator(self, start: NODE, end: NODE) -> GeneratorType:
         """
-        :param start: Vertex
-        :param end: Vertex
         :return: list[list] each list is a valid path from start to end
         Note: no re-visiting nodes allowed in the path.
-        Only exception is start == end, i.e finding cycles
+        Only exception is start == end, idx.e finding cycles
         """
         fringe = [(start, [start])]
         while fringe:
@@ -61,20 +62,23 @@ class UnweightedGraph:
     def find_path(self, start: NODE, end: NODE) -> List[List[NODE]]:
         """
         Cannot reuse node or path
-        :return: list[list[node]]
+        :return: list[list[node]] each is a valid path from start to end
         """
         pass
 
-    def cycles(self) -> List[List]:
+    def cycles(self) -> List[List[NODE]]:
         """
         Cannot reuse node or path
-        :return: list[list[node]]
+        :return: list[list[node]] all cycles in the graph
         """
         pass
 
 
 class UndirectedUnweightedGraph(UnweightedGraph):
     def add_edge(self, u: NODE, v: NODE) -> None:
+        """
+        Undirected graph, add both <u, v> and <v, u>
+        """
         assert u in self.Vertex and v in self.Vertex
         self.Edge[u].add(v)
         if u != v:
@@ -90,13 +94,16 @@ class UndirectedUnweightedGraph(UnweightedGraph):
     def cycles(self) -> List[List[NODE]]:
         """
         Cannot reuse node or path
-        :return:
+        :return: list of cycles in the graph
         """
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v) if len(cycle_v) != 3]
 
 
 class DirectedUnweightedGraph(UnweightedGraph):
     def add_edge(self, u: NODE, v: NODE) -> None:
+        """
+        Directed graph, only <u, v> is added
+        """
         assert u in self.Vertex and v in self.Vertex
         self.Edge[u].add(v)
 
@@ -104,13 +111,9 @@ class DirectedUnweightedGraph(UnweightedGraph):
         return [path for path in self.find_path_generator(start, end)]
 
     def cycles(self) -> List[List[NODE]]:
-        """
-        Cannot reuse node or path
-        :return:
-        """
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v)]
 
-    def topological_order(self) -> (bool, List[int]):
+    def topological_order(self) -> (bool, List[NODE]):
         """
         :return: a tuple of (bool, list)
             True, list representing topological order of the directed graph, topological order exists

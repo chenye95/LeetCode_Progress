@@ -24,7 +24,7 @@ class UnionFind:
         """
         return len(self.look_up_dict)
 
-    def find(self, p: NodeType, use_recursion: bool = False) -> int:
+    def find(self, p: NodeType, use_recursion: bool = None) -> int:
         """
         :param use_recursion: whether uses Recursive Call to compress path, set to True if find() is frequent
         :param p: element to look up
@@ -92,7 +92,7 @@ class UnionFindArray:
         """
         return self.elements_count
 
-    def find(self, p: int, use_recursion: bool = False) -> int:
+    def find(self, p: int, use_recursion: bool = None) -> int:
         """
         Perform path compression to yield amortized constant time
         :param use_recursion: whether uses Recursive Call to compress path, set to True if find() is frequent
@@ -102,6 +102,9 @@ class UnionFindArray:
         # Find the root of the component/set
         if p >= self.elements_count or p < 0:
             return self.ELEMENT_NOT_FOUND
+
+        if use_recursion is None:
+            use_recursion = self.use_recursion
 
         if use_recursion:
             # Perform path compression through Recursive calls

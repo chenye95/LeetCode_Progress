@@ -1,6 +1,6 @@
 from _Cache_LRU import LRUCache
 
-cache = LRUCache(2);
+cache = LRUCache(2)
 cache.put(1, 1)
 cache.put(2, 2)
 assert cache.get(2) == 2       # returns 1

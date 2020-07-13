@@ -1,25 +1,42 @@
-from typing import List, Union
 from math import log2
+from typing import List, Union
+
 
 class FenwickTree:
     """
+    Used for storing frequencies and manipulating cumulative frequency table
     As known as Binary Indexed Tree, for more info please refer to
     https://www.topcoder.com/community/competitive-programming/tutorials/binary-indexed-trees/
     """
-    Numbers = Union[int, float]
-    def __init__(self, num_array = List[Numbers]):
-        self.bit_array_len = len(num_array) + 1
+    NUMBER_TYPE = Union[int, float]
+
+    def __init__(self, init_frequencies=List[NUMBER_TYPE]):
+        """
+        :param init_frequencies: initial frequencies to be stored in the BIT
+        """
+        self.bit_array_len = len(init_frequencies) + 1
+        # bit_array has a leading zero from index computation purposes
+        # need to shift user index +1 in code
         self.bit_array = [0] * (self.bit_array_len)
-        for i in range(len(num_array)):
-            self.__update(i + 1, num_array[i])
+        for i in range(len(init_frequencies)):
+            self.__update(i + 1, init_frequencies[i])
 
-
-    def range_sum(self, start_idx: int = 0,  end_idx: int = -1) -> Numbers:
+    def range_sum(self, start_idx: int = 0, end_idx: int = -1) -> NUMBER_TYPE:
+        """
+        :param start_idx: start of range sum query, inclusive
+        :param end_idx: end of range sum query, inclusive; set to -1 if want to sum to the end
+        :return: inclusive range sum between start_idx and end_idx
+        """
+        # tree_idx = user_idx + 1 given the leading zero in bit_array
         end_sum = self.__read(end_idx + 1) if end_idx >= 0 else self.__read(self.bit_array_len - 1)
         start_sum = self.__read(start_idx) if start_idx > 0 else 0
         return end_sum - start_sum
 
-    def __read(self, tree_idx: int) -> Numbers:
+    def __read(self, tree_idx: int) -> NUMBER_TYPE:
+        """
+        Helper function
+        :return: cumulative sum from the start till tree_idx
+        """
         assert tree_idx < self.bit_array_len, "Out of Bound, this Binary Indexed Tree only contains %d elements" % \
                                               (self.bit_array_len - 1)
         sum = 0
@@ -28,13 +45,20 @@ class FenwickTree:
             tree_idx -= (tree_idx & -tree_idx)
         return sum
 
-    def __update(self, tree_idx: int, val: Numbers) -> None:
+    def __update(self, tree_idx: int, val: NUMBER_TYPE) -> None:
+        """
+        Helper function
+        set frequency at tree_idx position to val
+        """
         while tree_idx < self.bit_array_len:
             self.bit_array[tree_idx] += val
             tree_idx += (tree_idx & -tree_idx)
 
-    def at_idx_i(self, i: int) -> Numbers:
-        tree_idx = i + 1
+    def at_idx_i(self, idx: int) -> NUMBER_TYPE:
+        """
+        :return: return frequencies of index idx
+        """
+        tree_idx = idx + 1
         assert tree_idx < self.bit_array_len, "Out of Bound, this Binary Indexed Tree only contains %d elements" % \
                                               (self.bit_array_len - 1)
         res = self.bit_array[tree_idx]
@@ -45,28 +69,36 @@ class FenwickTree:
             y -= (y & -y)
         return res
 
-    def scale(self, c: Numbers):
+    def scale(self, c: NUMBER_TYPE) -> None:
+        """
+        scale all frequencies by a factor of 1/c
+        """
         for i in range(self.bit_array_len):
             self.bit_array[i] /= float(c)
 
-    def increment_at_i(self, i: int, by_val: Numbers):
-        tree_idx = i + 1
+    def increment_at_i(self, idx: int, by_val: NUMBER_TYPE) -> None:
+        """
+        Increment frequencies at idx position +by_val
+        """
+        tree_idx = idx + 1
         while tree_idx < self.bit_array_len:
             self.bit_array[tree_idx] += by_val
             tree_idx += (tree_idx & -tree_idx)
 
-    def set_at_i(self, i: int, old_val: Numbers, new_val: Numbers):
+    def set_at_i(self, i: int, old_val: NUMBER_TYPE, new_val: NUMBER_TYPE) -> None:
+        """
+        Replace frequencies at idx position by new_val
+        """
         self.increment_at_i(i, new_val - old_val)
 
-
-    def find_cumulative_sum(self, cumulative_sum: Numbers):
+    def find_cumulative_sum(self, cumulative_sum: NUMBER_TYPE) -> int:
         """
-        Only use this function when all elements in the num_array is non-negative
+        Only use this function when all elements in the init_frequencies is non-negative
         :param cumulative_sum: target cumulative sum (from start) to find
-        :return: the largest index till which the cumulative sum from beginning equals to target
+        :return: the largest index till which the cumulative sum from beginning equals to target, -1 if not found
         """
         tree_idx = 0
-        bit_max = 1 << int(log2(self.bit_array_len-1) + 1)
+        bit_max = 1 << int(log2(self.bit_array_len - 1) + 1)
         while bit_max > 0:
             bit_max >>= 1
             temp_idx = tree_idx + bit_max

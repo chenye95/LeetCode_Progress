@@ -1,67 +1,54 @@
 from random import randint
-from collections import Counter
+from typing import Any
+
 
 class RandomizedCollection:
-
     def __init__(self):
         """
-        Initialize your data structure here.
+        Supports weighted randomly chooses one elements from the collection
         """
-        self.val_pos = {}
-        self.pos_val = {}
-        self.n = 0
+        self.values_in_collections = {}
+        self.position_to_value_lookup = dict()
+        self.total_counter = 0
 
-    def insert(self, val: int) -> bool:
+    def insert(self, val: Any) -> bool:
         """
-        Inserts a value to the collection. Returns true if the collection did not already contain the specified element.
-        :type val: int
-        :rtype: bool
+        Inserts a value to the collection or increment its weight by 1
+        :parameter val needs to be hashable
+        :return whether the collection did not already contain the specified element.
         """
-        flag_new_obj = val not in self.val_pos
+        flag_new_obj = val not in self.values_in_collections
         if flag_new_obj:
-            self.val_pos[val] = set()
-        self.val_pos[val].add(self.n)
-        self.pos_val[self.n] = val
-        self.n += 1
+            self.values_in_collections[val] = set()
+        self.values_in_collections[val].add(self.total_counter)
+        self.position_to_value_lookup[self.total_counter] = val
+        self.total_counter += 1
         return flag_new_obj
 
-
-    def remove(self, val: int) -> bool:
+    def remove(self, val: Any) -> bool:
         """
-        Removes a value from the collection. Returns true if the collection contained the specified element.
-        :type val: int
-        :rtype: bool
+        Decrease weight of val by 1 if it exists
+        :parameter val needs to be hashable
+        :return if the collection contained the specified element.
         """
-        if val not in self.val_pos:
+        if val not in self.values_in_collections:
             return False
-        val_idx = self.val_pos[val].pop()
-        if not self.val_pos[val]: # No more val in the collections
-            del self.val_pos[val]
+        val_idx = self.values_in_collections[val].pop()
+        if not self.values_in_collections[val]:  # No more val in the collections
+            del self.values_in_collections[val]
 
-        last_val = self.pos_val[self.n-1]
-        if val_idx != self.n-1:
-            self.val_pos[last_val].remove(self.n-1)
-            self.val_pos[last_val].add(val_idx)
-            self.pos_val[val_idx] = last_val
+        last_val = self.position_to_value_lookup[self.total_counter - 1]
+        if val_idx != self.total_counter - 1:
+            self.values_in_collections[last_val].remove(self.total_counter - 1)
+            self.values_in_collections[last_val].add(val_idx)
+            self.position_to_value_lookup[val_idx] = last_val
         else:
-            del self.pos_val[self.n-1]
-        self.n -= 1
+            del self.position_to_value_lookup[self.total_counter - 1]
+        self.total_counter -= 1
         return True
 
-    def getRandom(self) -> int:
+    def getRandom(self) -> Any:
         """
-        Get a random element from the collection.
-        :rtype: int
+        Get a random element from the collection according to its weigh
         """
-        return self.pos_val[randint(0, self.n-1)]
-
-# Your RandomizedCollection object will be instantiated and called as such:
-obj = RandomizedCollection()
-assert obj.insert(1)
-assert not obj.insert(1)
-assert obj.insert(2)
-rand_counter = Counter()
-for _ in range(1000):
-    rand_counter[obj.getRandom()] += 1
-print(rand_counter)
-# param_3 = obj.getRandom()
+        return self.position_to_value_lookup[randint(0, self.total_counter - 1)]

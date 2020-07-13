@@ -3,6 +3,9 @@ from typing import List
 
 class RollingCounter:
     def __init__(self, n: int):
+        """
+        :param n: n units/levels
+        """
         self.n = n
         self.counter = [0] * n
         self.has_next = True
@@ -14,6 +17,9 @@ class RollingCounter:
         pass
 
     def enumerate(self):
+        """
+        enumerate through all remaining states of counters
+        """
         while self.has_next:
             self.printCurrentState()
             self.__next__()
@@ -46,6 +52,7 @@ class CountingPennies(RollingCounter):
 
     def getValues(self):
         return sum([self.values[i] * self.counter[i] for i in range(self.n)])
+
 
 # tester = CountingPennies([25, 100], ["Quarters", "Dollars"], 200)
 tester= CountingPennies([5, 10, 25, 100], ["Nickles", "Dimes", "Quarters", "Dollars"], 200)

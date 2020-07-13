@@ -1,7 +1,8 @@
+from copy import deepcopy
+
 from _BST import BST
 from _Binary_Tree import TreeNode
 from _Linked_List import LinkedList
-from copy import deepcopy
 
 values = list(range(1, 19, 2))
 values.append(12)
@@ -81,5 +82,3 @@ new_bst.root.left.right = TreeNode(2)
 for i in range(1, 5):
     assert new_bst.kthSmallest(i) == i, "Expecting %d got %d" % (i, new_bst.kthSmallest(i))
 assert new_bst.kthSmallest(5) is None
-
-

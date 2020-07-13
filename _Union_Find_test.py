@@ -12,8 +12,8 @@ try:
 except ValueError as e:
     print("Expected Value Error Message:", e)
 
-test_union_find = UnionFind(elements, True)
-assert test_union_find.union_find_array.use_recursion
+test_union_find = UnionFind(elements, False)
+assert not test_union_find.union_find_array.use_recursion
 try:
     test_union_find.is_connected('Z', 'A')
 except ValueError as e:
@@ -27,6 +27,7 @@ join_list = [('C', 'K', False, 2), ('F', 'E', False, 2), ('A', 'J', False, 2),
              ('H', 'G', False, 2), ('H', 'F', False, 5), ('H', 'B', False, len(elements))]
 expected_component_count = len(elements)
 for e1, e2, previously_connected, expected_component_size in join_list:
+    assert (test_union_find.find(e1, True) == test_union_find.find(e2)) is previously_connected
     assert test_union_find.is_connected(e1, e2) is previously_connected
     test_union_find.unify(e1, e2)
     assert test_union_find.is_connected(e1, e2) is True
