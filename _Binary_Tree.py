@@ -47,12 +47,18 @@ class BinaryTree:
                     traverse_stack_other.append(current_node_other.left)
                 else:
                     return False
+            elif current_node_other.left:
+                # current_node_self.left is None, so current_node_other.left has to be None
+                return False
             if current_node_self.right:
                 if current_node_other.right:
                     traverse_stack_self.append(current_node_self.right)
                     traverse_stack_other.append(current_node_other.right)
                 else:
                     return False
+            elif current_node_other.right:
+                # current_node_self.right is None, so current_node_other.right has to be None
+                return False
         return True
 
     def __ne__(self, other: BinaryTree) -> bool:
