@@ -110,3 +110,11 @@ assert built_tree.leetcode_traversal() == [-1, 0, 1, None, None, None, None]
 
 built_tree = BinaryTree(TreeNode(0))
 print(built_tree.print_tree())
+
+test_tree_1 = ConstructTree.build_tree_leetcode([2, None, 4])
+test_tree_2 = ConstructTree.build_tree_leetcode([2, 3, 4])
+assert test_tree_1 != test_tree_2
+
+test_tree_1 = ConstructTree.build_tree_leetcode([2, 3, None])
+test_tree_2 = ConstructTree.build_tree_leetcode([2, 3, 4])
+assert test_tree_1 != test_tree_2
