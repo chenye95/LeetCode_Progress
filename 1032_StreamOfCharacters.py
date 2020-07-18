@@ -5,13 +5,12 @@ StreamChecker(words): Constructor, init the data structure with the given words.
 query(letter): returns true if and only if for some k >= 1, the last k characters queried (in order from oldest to
 newest, including this letter just queried) spell one of the words in the given list.
 """
-from typing import List
 from collections import defaultdict
 from functools import reduce
+from typing import List
 
 
 class StreamChecker:
-
     def __init__(self, words: List[str]):
         T = lambda: defaultdict(T)  # Template class used to construct trie
         self.trie = T()
@@ -37,4 +36,3 @@ assert not streamChecker.query('i');          # return false
 assert not streamChecker.query('j');          # return false
 assert not streamChecker.query('k');          # return false
 assert streamChecker.query('l');              # return true, because 'kl' is in the wordlist
-
