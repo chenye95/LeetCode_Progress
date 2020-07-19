@@ -7,10 +7,8 @@ from typing import List
 
 def productExceptSelf(nums: List[int]) -> List[int]:
     n = len(nums)
-    left_product, right_product = [0] * n, [0] * n
+    left_product, right_product = [1] * n, [1] * n
 
-    left_product[0] = 1
-    right_product[-1] = 1
     for i in range(1, n):
         left_product[i] = left_product[i - 1] * nums[i - 1]
         right_product[n - 1 - i] = right_product[n - i] * nums[n - i]
