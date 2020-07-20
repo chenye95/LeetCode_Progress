@@ -17,7 +17,7 @@ assert q_t[0] == 1.0
 
 c_date = -np.log(np.log(c) / k + 1)
 print("Limit of Q_t", limit_q_t)
-print('Reach {0:.1f}% in {1:.02f}% days'.format(c * 100, c_date))
+print('Reach {0:.1f}% in {1:.02f} days'.format(c * 100, c_date))
 
 # Create the plot
 infection_fig, ax = plt.subplots()
