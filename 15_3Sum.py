@@ -12,8 +12,8 @@ def threeSum(nums: List[int]) -> List[List[int]]:
         return []
 
     return_set = set()
-    less_than_target = Counter([num for num in nums if num < 0])
-    more_than_target = Counter([num for num in nums if num > 0])
+    less_than_target = Counter(filter(lambda x: x < 0, nums))
+    more_than_target = Counter(filter(lambda x: x > 0, nums))
     zero_count = reduce(lambda count, num: count + (num == 0), nums, 0)
 
     for num_i in set(nums):
