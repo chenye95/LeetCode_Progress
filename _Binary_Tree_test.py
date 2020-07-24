@@ -118,3 +118,7 @@ assert test_tree_1 != test_tree_2
 test_tree_1 = ConstructTree.build_tree_leetcode([2, 3, None])
 test_tree_2 = ConstructTree.build_tree_leetcode([2, 3, 4])
 assert test_tree_1 != test_tree_2
+
+assert BinaryTree(None) == BinaryTree(None)
+assert test_tree_1 != BinaryTree(None)
+assert BinaryTree(None) != test_tree_2
