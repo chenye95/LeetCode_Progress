@@ -28,8 +28,15 @@ def findCriticalAndPseudoCriticalEdges(n: int, edges: List[List[int]]) -> List[L
 
     DFS_NOT_VISITED = -1
 
-    # Find critical connection in a union_graph
     def find_critical_connection(current_node: int, level: int = 0, previous_node: int = DFS_NOT_VISITED) -> int:
+        """
+        Find critical connections in an union graph, among edges out of current_node by searching for cycles.
+        Those not part of a cycle will be marked as critical
+        :param current_node: finding critical edge out of current_node
+        :param level: levels through DFS, used to find cycle
+        :param previous_node: used to remember incoming path. Do NOT traverse the edge <previous_node, current_node>
+        :return: level of current_node
+        """
         levels[current_node] = level
         for child, edge_i in union_graph[current_node]:
             if child == previous_node:
@@ -41,9 +48,9 @@ def findCriticalAndPseudoCriticalEdges(n: int, edges: List[List[int]]) -> List[L
             else:
                 levels[current_node] = min(levels[current_node], levels[child])
             if levels[child] >= level + 1 and edge_i not in edge_pseudos:
-                # critical edge in current snapshot
+                # critical edge in current snapshot, as edge_i connecting current_node to child is not part of a cycle
                 # no smaller weight edges has previously connection union_u and union_v
-                # critical connection in the current snapshot will continue to be a critical edge in MST
+                # critical connection in the current snapshot will also be a critical edge in MST
                 edge_critical.add(edge_i)
         return levels[current_node]
 
@@ -55,7 +62,7 @@ def findCriticalAndPseudoCriticalEdges(n: int, edges: List[List[int]]) -> List[L
     for i, (u, v, w) in enumerate(edges):
         weight_distribution[w].append((u, v, i))
 
-    # define union find et
+    # define union find set
     union_set = UnionFindArray(n, use_recursion=True)
 
     # iterate through all weights in ascending order

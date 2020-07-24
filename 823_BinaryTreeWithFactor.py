@@ -26,8 +26,10 @@ def numFactoredBinaryTrees(A: List[int]) -> int:
             a_j = A[j]
             if a_i % a_j == 0 and a_i / a_j in lookup_map and a_j * a_j <= a_i:
                 if a_j * a_j < a_i:
+                    # Left Child and Right Child can swap
                     dp_memory[i] += (2 * dp_memory[lookup_map[a_j]] * dp_memory[lookup_map[a_i / a_j]]) % MOD_VALUE
                 else:
+                    # Left Child and Right Child have same value, cannot swap
                     dp_memory[i] += (dp_memory[lookup_map[a_j]] * dp_memory[lookup_map[a_i / a_j]]) % MOD_VALUE
     return sum(dp_memory) % MOD_VALUE
 
