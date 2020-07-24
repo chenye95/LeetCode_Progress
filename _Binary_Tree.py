@@ -6,7 +6,7 @@ from typing import Union, List, Optional
 TREE_NODE_TYPE = Union[str, int, chr]
 
 
-def get_height(current_node):
+def get_height(current_node: TreeNode):
     if current_node is None:
         return 0
     else:
@@ -24,7 +24,7 @@ class TreeNode:
 
 
 class BinaryTree:
-    def __init__(self, root: TreeNode):
+    def __init__(self, root: Optional[TreeNode]):
         self.root = root
 
     def __eq__(self, other: BinaryTree) -> bool:
@@ -33,6 +33,10 @@ class BinaryTree:
         """
         if not other: return False
         if not isinstance(other, BinaryTree):
+            return False
+        if self.root is None and other.root is None:
+            return True
+        elif self.root is None or other.root is None:
             return False
         traverse_stack_self = [self.root]
         traverse_stack_other = [other.root]
@@ -74,22 +78,23 @@ class BinaryTree:
         """
         return get_height(self.root)
 
-    def print_tree(self, filler=None) -> List[List[TREE_NODE_TYPE]]:
+    def print_tree(self, filler: TREE_NODE_TYPE = None) -> List[List[TREE_NODE_TYPE]]:
         """
         Returns a 2D representation of the tree
         :param filler: Default filler for empty cells
         :return: List[List[Node.val]]
         """
 
-        def fill(print_array, current_node, layer, left, right):
+        def fill(ref_print_array: List[List[TREE_NODE_TYPE]],
+                 current_node: TreeNode, layer: int, left: int, right: int):
             if not current_node:
                 return
             midpoint = int((left + right) / 2)
             right_tree_left_bound = int((left + right + 1) / 2)
             if current_node.val is not None:
-                print_array[layer][midpoint] = current_node.val
-            fill(print_array, current_node.left, layer + 1, left, midpoint)
-            fill(print_array, current_node.right, layer + 1, right_tree_left_bound, right)
+                ref_print_array[layer][midpoint] = current_node.val
+            fill(ref_print_array, current_node.left, layer + 1, left, midpoint)
+            fill(ref_print_array, current_node.right, layer + 1, right_tree_left_bound, right)
 
         tree_height = self.height()
         tree_width = 2 ** tree_height - 1
@@ -223,15 +228,15 @@ class BinaryTree:
         :return: list of the right most nodes per layer
         """
 
-        def add_new_depth(node, depth):
+        def right_view_add_new_depth(node: TreeNode, depth: int):
             if node:
                 if depth == len(left_view):
                     left_view.append(node.val)
-                add_new_depth(node.right, depth + 1)
-                add_new_depth(node.left, depth + 1)
+                right_view_add_new_depth(node.right, depth + 1)
+                right_view_add_new_depth(node.left, depth + 1)
 
         left_view = []
-        add_new_depth(self.root, 0)
+        right_view_add_new_depth(self.root, 0)
         return left_view
 
     def left_side_view(self) -> List[TREE_NODE_TYPE]:
@@ -239,15 +244,15 @@ class BinaryTree:
         :return: list of the left most nodes per layer
         """
 
-        def add_new_depth(node, depth):
+        def left_view_add_new_layer(node: TreeNode, depth: int):
             if node:
                 if depth == len(right_view):
                     right_view.append(node.val)
-                add_new_depth(node.left, depth + 1)
-                add_new_depth(node.right, depth + 1)
+                left_view_add_new_layer(node.left, depth + 1)
+                left_view_add_new_layer(node.right, depth + 1)
 
         right_view = []
-        add_new_depth(self.root, 0)
+        left_view_add_new_layer(self.root, 0)
         return right_view
 
 
