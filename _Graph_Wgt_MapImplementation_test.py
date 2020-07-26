@@ -1,3 +1,4 @@
+from operator import add, mul
 from random import randint
 from string import ascii_uppercase
 
@@ -88,3 +89,57 @@ assert mst_test_tree.cycles()
 total_weight, mst_edges = mst_test_tree.mst_edge_kruskal()
 assert mst_test_tree.enforce_mst_kruskal() == total_weight
 assert set(mst_test_tree.edge_list()) == set(mst_edges)
+
+# Bellman Ford Algorithm testing - Undirected Graph max prob
+vertex = list(range(3))
+max_prob_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=vertex, edges=[(0, 1, 0.5)])
+weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_initial_value=0,
+                                        path_update_function=mul,
+                                        path_selection_function=lambda new_value, old_value: new_value > old_value)
+assert weight_map.get(2, 0.0) == 0.0
+
+max_prob_tree.set_edge_weight(1, 2, 0.5)
+max_prob_tree.set_edge_weight(0, 2, 0.2)
+weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_initial_value=0,
+                                        path_update_function=mul,
+                                        path_selection_function=lambda new_value, old_value: new_value > old_value)
+assert weight_map.get(2, 0.0) == 0.25
+
+max_prob_tree.set_edge_weight(0, 2, 0.3)
+weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_initial_value=0,
+                                        path_update_function=mul,
+                                        path_selection_function=lambda new_value, old_value: new_value > old_value)
+assert weight_map.get(2, 0.0) == 0.3
+
+# Bellman Ford Algorithm testing - Undirected Graph min weight
+vertex = ['A', 'B', 'C', 'D', 'E']
+min_weight_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=vertex,
+                                                                     edges=[('A', 'B', 1),
+                                                                            ('A', 'C', 4),
+                                                                            ('B', 'C', 2),
+                                                                            ('B', 'D', 2),
+                                                                            ('B', 'E', 10),
+                                                                            ('E', 'D', 3)])
+weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_initial_value=float("inf"),
+                                          path_update_function=add,
+                                          path_selection_function=lambda new_value, old_value: new_value < old_value)
+path_expected_weight = [0, 1, 3, 3, 6]
+for current_node, current_path in zip(vertex, path_expected_weight):
+    assert weight_map[current_node] == current_path, current_node
+
+# Bellman Ford Algorithm testing - Directed Graph min weight
+vertex = ['A', 'B', 'C', 'D', 'E']
+min_weight_tree = DirectedWeightedGraph.construct_unweighted_graph(vertices=vertex,
+                                                                   edges=[('A', 'B', -1),
+                                                                          ('A', 'C', 4),
+                                                                          ('B', 'C', 3),
+                                                                          ('B', 'D', 2),
+                                                                          ('B', 'E', 2),
+                                                                          ('D', 'B', 1),
+                                                                          ('E', 'D', -3)])
+weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_initial_value=float("inf"),
+                                          path_update_function=add,
+                                          path_selection_function=lambda new_value, old_value: new_value < old_value)
+path_expected_weight = [0, -1, 2, -2, 1]
+for current_node, current_path in zip(vertex, path_expected_weight):
+    assert weight_map[current_node] == current_path, current_node
