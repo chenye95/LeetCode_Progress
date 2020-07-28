@@ -85,21 +85,21 @@ class BinaryTree:
         :return: List[List[Node.val]]
         """
 
-        def fill(ref_print_array: List[List[TREE_NODE_TYPE]],
-                 current_node: TreeNode, layer: int, left: int, right: int):
+        def fill(current_node: TreeNode, layer: int, left: int, right: int):
+            nonlocal print_array
             if not current_node:
                 return
             midpoint = int((left + right) / 2)
             right_tree_left_bound = int((left + right + 1) / 2)
             if current_node.val is not None:
-                ref_print_array[layer][midpoint] = current_node.val
-            fill(ref_print_array, current_node.left, layer + 1, left, midpoint)
-            fill(ref_print_array, current_node.right, layer + 1, right_tree_left_bound, right)
+                print_array[layer][midpoint] = current_node.val
+            fill(current_node.left, layer + 1, left, midpoint)
+            fill(current_node.right, layer + 1, right_tree_left_bound, right)
 
         tree_height = self.height()
         tree_width = 2 ** tree_height - 1
         print_array = [[filler for _ in range(tree_width)] for _ in range(tree_height)]
-        fill(print_array, self.root, 0, 0, tree_width)
+        fill(self.root, 0, 0, tree_width)
         return print_array
 
     def preorder_traversal(self) -> List[TREE_NODE_TYPE]:
@@ -229,6 +229,7 @@ class BinaryTree:
         """
 
         def right_view_add_new_depth(node: TreeNode, depth: int):
+            nonlocal left_view
             if node:
                 if depth == len(left_view):
                     left_view.append(node.val)
@@ -245,6 +246,7 @@ class BinaryTree:
         """
 
         def left_view_add_new_layer(node: TreeNode, depth: int):
+            nonlocal right_view
             if node:
                 if depth == len(right_view):
                     right_view.append(node.val)
@@ -270,6 +272,7 @@ class ConstructTree:
         """
 
         def build_tree_helper(preorder_s: int, preorder_e: int, inorder_s: int, inorder_e: int):
+            nonlocal preorder, inorder
             current_x = preorder[preorder_s]
             current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)
@@ -282,9 +285,9 @@ class ConstructTree:
                                                             preorder_e, inorder_x + 1, inorder_e)
             return current_root_node
 
-        assert len(preorder) == len(inorder)
-        if not preorder:
+        if not preorder or not inorder:
             return None
+        assert len(preorder) == len(inorder)
         root_node = build_tree_helper(0, len(preorder) - 1, 0, len(inorder) - 1)
         return BinaryTree(root=root_node)
 
@@ -297,6 +300,7 @@ class ConstructTree:
         """
 
         def build_tree_helper(inorder_s: int, inorder_e: int, postorder_s: int, postorder_e: int):
+            nonlocal inorder, postorder
             current_x = postorder[postorder_e]
             current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)
@@ -309,9 +313,9 @@ class ConstructTree:
                                                             postorder_s + left_tree_len, postorder_e - 1)
             return current_root_node
 
-        assert len(inorder) == len(postorder)
-        if len(inorder) == 0:
+        if not inorder or not postorder:
             return None
+        assert len(inorder) == len(postorder)
         root_node = build_tree_helper(0, len(inorder) - 1, 0, len(postorder) - 1)
         return BinaryTree(root=root_node)
 
