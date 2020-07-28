@@ -275,19 +275,15 @@ class ConstructTree:
             inorder_x = inorder.index(current_x)
             left_tree_len = inorder_x - inorder_s
             if inorder_x > inorder_s:
-                left_child = build_tree_helper(preorder_s + 1, preorder_s + left_tree_len, inorder_s, inorder_x - 1)
-            else:
-                left_child = None
+                current_root_node.left = build_tree_helper(preorder_s + 1, preorder_s + left_tree_len,
+                                                           inorder_s, inorder_x - 1)
             if inorder_x < inorder_e:
-                right_child = build_tree_helper(preorder_s + left_tree_len + 1, preorder_e, inorder_x + 1, inorder_e)
-            else:
-                right_child = None
-            current_root_node.left = left_child
-            current_root_node.right = right_child
+                current_root_node.right = build_tree_helper(preorder_s + left_tree_len + 1,
+                                                            preorder_e, inorder_x + 1, inorder_e)
             return current_root_node
 
         assert len(preorder) == len(inorder)
-        if len(preorder) == 0:
+        if not preorder:
             return None
         root_node = build_tree_helper(0, len(preorder) - 1, 0, len(inorder) - 1)
         return BinaryTree(root=root_node)
@@ -306,15 +302,11 @@ class ConstructTree:
             inorder_x = inorder.index(current_x)
             left_tree_len = inorder_x - inorder_s
             if inorder_x > inorder_s:
-                left_child = build_tree_helper(inorder_s, inorder_x - 1, postorder_s, postorder_s + left_tree_len - 1)
-            else:
-                left_child = None
+                current_root_node.left = build_tree_helper(inorder_s, inorder_x - 1,
+                                                           postorder_s, postorder_s + left_tree_len - 1)
             if inorder_x < inorder_e:
-                right_child = build_tree_helper(inorder_x + 1, inorder_e, postorder_s + left_tree_len, postorder_e - 1)
-            else:
-                right_child = None
-            current_root_node.left = left_child
-            current_root_node.right = right_child
+                current_root_node.right = build_tree_helper(inorder_x + 1, inorder_e,
+                                                            postorder_s + left_tree_len, postorder_e - 1)
             return current_root_node
 
         assert len(inorder) == len(postorder)
