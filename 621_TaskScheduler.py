@@ -25,7 +25,8 @@ def least_interval(tasks: List[str], n: int) -> int:
     # if top_contender <= n + 1, arrange the top contenders in group and ensure n units apart;
     # - if gap > len(remainder), fill in the gaps with remainder, len: (most_repetition - 1) * (n + 1) + top_contender
     # - if gap <= len(remainder), extend out to len(tasks)
-    # if top_contender > n + 1, arrange the top contenders in group, append the remainder to the end
+    # if top_contender > n + 1, arrange the top contenders in group
+    # - append the remainder to the end, or insert in between groups
     # - total length, len(tasks)
     return max(len(tasks), (most_repetition - 1) * (n + 1) + top_contender)
 
