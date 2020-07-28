@@ -7,6 +7,7 @@ Find the minimum element.
 
 You may assume no duplicate exists in the array.
 """
+from random import randint
 from typing import List
 
 
@@ -44,3 +45,10 @@ def find_min(nums: List[int]) -> int:
 
 assert 1 == find_min([3, 4, 5, 1, 2])
 assert 0 == find_min([4, 5, 6, 7, 0, 1, 2])
+
+N = randint(500, 1000)
+range_list = list(range(N))
+for _ in range(10):
+    i = randint(0, N - 1)
+    print(N, i)
+    assert 0 == find_min(range_list[i:] + range_list[:i])
