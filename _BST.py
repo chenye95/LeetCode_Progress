@@ -13,6 +13,7 @@ def construct_bst_from_list(values: List[BST_NODE_TYPE]) -> Optional[TreeNode]:
     """
 
     def construct_bst_helper(left_bound: int, right_bound: int) -> Optional[TreeNode]:
+        nonlocal values
         if left_bound > right_bound:
             return None
         mid_point = int((left_bound + right_bound) / 2)
@@ -35,6 +36,7 @@ def construct_bst_from_linked_list(linked_list: LinkedList) -> Optional[TreeNode
     """
 
     def construct_bst_helper(list_start) -> Optional[TreeNode]:
+        nonlocal linked_list
         if list_start is None:
             return None
         slow_ptr = list_start
@@ -83,6 +85,7 @@ class BST(BinaryTree):
         """
 
         def traverse_range_boundary(root_node: TreeNode) -> List[BST_NODE_TYPE]:
+            nonlocal val_low_bound, val_up_bound
             return_list = []
             if root_node.val > val_low_bound and root_node.left:
                 return_list.extend(traverse_range_boundary(root_node.left))
