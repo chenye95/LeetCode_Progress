@@ -1,3 +1,5 @@
+from random import randint
+
 from _Linked_Complex import DoubleLinkedList, ComplexLinkedList
 from _Linked_List import LinkedList, PrintableLinkedList, ListNode
 
@@ -52,10 +54,48 @@ while current_node:
 assert flattened_list == [1, 2, 3, 7, 8, 11, 12, 9, 10, 4, 5, 6]
 
 double_linked_list = DoubleLinkedList.create_linked_list(list(range(10)))
+assert len(double_linked_list) == 10
+for i in range(10):
+    assert double_linked_list.get_at_index(i) == i, i
+assert double_linked_list.get_at_index(-1) == double_linked_list.INDEX_OUT_OF_BOUND
+assert double_linked_list.get_at_index(11) == double_linked_list.INDEX_OUT_OF_BOUND
 assert double_linked_list.tail.val == 9
-double_linked_list.append_val_tail(10)
+double_linked_list.add_at_tail(10)
+assert len(double_linked_list) == 11
+for i in range(11):
+    assert double_linked_list.get_at_index(i) == i, i
+assert double_linked_list.get_at_index(-1) == double_linked_list.INDEX_OUT_OF_BOUND
+assert double_linked_list.get_at_index(12) == double_linked_list.INDEX_OUT_OF_BOUND
 assert double_linked_list.head.list_from_node() == list(range(11))
 assert double_linked_list.head.prev is None
-double_linked_list.append_val_head(-1)
+double_linked_list.add_at_head(-1)
+assert len(double_linked_list) == 12
+assert double_linked_list.get_at_index(0) == -1
 assert double_linked_list.head.list_from_node() == list(range(-1, 11))
 assert double_linked_list.head.prev is None
+
+expected_output = list(range(10))
+double_linked_list = DoubleLinkedList.create_linked_list(expected_output)
+for _ in range(1000):
+    index, val = randint(0, len(expected_output)), randint(0, 100)
+    expected_output.insert(index, val)
+    double_linked_list.add_at_index(index, val)
+    assert double_linked_list.head.list_from_node() == expected_output
+
+for _ in range(1000):
+    index = randint(0, len(expected_output) - 1)
+    del expected_output[index]
+    double_linked_list.delete_at_index(index)
+    assert double_linked_list.head.list_from_node() == expected_output, index
+
+test_list = DoubleLinkedList()
+test_list.add_at_head(1)
+assert len(test_list) == 1
+assert test_list.get_at_index(0) == 1
+assert test_list.get_at_index(1) == test_list.INDEX_OUT_OF_BOUND
+
+test_list = DoubleLinkedList()
+test_list.add_at_tail(1)
+assert len(test_list) == 1
+assert test_list.get_at_index(0) == 1
+assert test_list.get_at_index(1) == test_list.INDEX_OUT_OF_BOUND
