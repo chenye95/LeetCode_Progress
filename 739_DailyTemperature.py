@@ -12,14 +12,19 @@ from typing import List
 
 
 def dailyTemperatures(T: List[int]) -> List[int]:
-    warmer_than_today = []
+    """
+    :param T: list of temperatures on each day
+    :return: how many days you would have to wait until a warmer temperature
+    """
+    day_warmer_than_today = []
     return_result = [0] * len(T)
-    for i in range(len(T) - 1, -1, -1):
-        while warmer_than_today and T[warmer_than_today[-1]] <= T[i]:
-            warmer_than_today.pop()
-        if warmer_than_today:
-            return_result[i] = warmer_than_today[-1] - i
-        warmer_than_today.append(i)
+
+    for today in range(len(T)):
+        while day_warmer_than_today and T[today] > T[day_warmer_than_today[-1]]:
+            cold_day = day_warmer_than_today.pop()
+            return_result[cold_day] = today - cold_day
+        day_warmer_than_today.append(today)
+
     return return_result
 
 
