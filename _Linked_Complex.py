@@ -53,9 +53,15 @@ class DoubleListNode:
 
 
 class DoubleLinkedList:
-    def __init__(self, head: DoubleListNode = None, tail: DoubleListNode = None) -> None:
+    INDEX_OUT_OF_BOUND = -1
+
+    def __init__(self, head: DoubleListNode = None, tail: DoubleListNode = None, list_len: int = 0) -> None:
         self.head = head
         self.tail = tail
+        self.list_len = list_len
+
+    def __len__(self) -> int:
+        return self.list_len
 
     @staticmethod
     def create_linked_list(node_values: List[NodeValueType]) -> DoubleLinkedList:
@@ -71,23 +77,139 @@ class DoubleLinkedList:
             else:
                 current_node.next = DoubleListNode(node_x, prev=current_node)
                 current_node = current_node.next
-        return DoubleLinkedList(head, current_node)
+        return DoubleLinkedList(head, current_node, len(node_values))
 
-    def append_val_tail(self, val: NodeValueType) -> None:
+    def add_at_tail(self, val: NodeValueType) -> None:
         """
         Create a DoubleListNode and append to the end of the Double Linked List
         """
-        node = DoubleListNode(val, prev=self.tail, next=None)
-        self.tail.next = node
-        self.tail = node
+        if self.list_len:
+            node = DoubleListNode(val, prev=self.tail, next=None)
+            self.tail.next = node
+            self.tail = node
+            self.list_len += 1
+        else:
+            self.head = self.tail = DoubleListNode(val)
+            self.list_len = 1
 
-    def append_val_head(self, val: NodeValueType) -> None:
+    def add_at_head(self, val: NodeValueType) -> None:
         """
         Create a DoubleListNode and add to the head of the Double Linked List
         """
-        node = DoubleListNode(val, prev=None, next=self.head)
-        self.head.prev = node
-        self.head = node
+        if self.list_len:
+            node = DoubleListNode(val, prev=None, next=self.head)
+            self.head.prev = node
+            self.head = node
+            self.list_len += 1
+        else:
+            self.head = self.tail = DoubleListNode(val)
+            self.list_len = 1
+
+    def delete_at_tail(self) -> None:
+        """
+        Remove tail node
+        """
+        if self.list_len > 1:
+            self.tail.prev.next = None
+            self.tail = self.tail.prev
+            self.list_len -= 1
+        elif self.list_len == 1:
+            self.head = self.tail = None
+            self.list_len = 0
+
+    def delete_at_head(self) -> None:
+        """
+        Remove tail node
+        """
+        if self.list_len > 1:
+            self.head.next.prev = None
+            self.head = self.head.next
+            self.list_len -= 1
+        else:
+            self.head = self.tail = None
+            self.list_len = 0
+
+    def get_at_index(self, index: int) -> NodeValueType:
+        """
+        Get the value of the index-th node in the linked list. If the index is invalid, return -1.
+        """
+        if index < 0 or index >= self.list_len:
+            return self.INDEX_OUT_OF_BOUND
+        if index == 0:
+            return self.head.val
+        if index == self.list_len - 1:
+            return self.tail.val
+        if index <= self.list_len // 2:
+            current_node = self.head
+            for _ in range(index):
+                current_node = current_node.next
+            return current_node.val
+        else:
+            current_node = self.tail
+            for _ in range(self.list_len - 1 - index):
+                current_node = current_node.prev
+            return current_node.val
+
+    def add_at_index(self, index: int, val: NodeValueType) -> None:
+        """
+        Add a node of value val before the index-th node in the linked list.
+        If index equals to the length of linked list, the node will be appended to the end of linked list.
+        If index is greater than the length, the node will not be inserted.
+        """
+        if index < 0 or index > self.list_len:
+            # not valid index, ignore
+            return
+        if index == 0:
+            # add to head
+            self.add_at_head(val)
+            return
+        if index == self.list_len:
+            # add to tail
+            self.add_at_tail(val)
+            return
+
+        if index <= self.list_len // 2:
+            current_node = self.head
+            for _ in range(index):
+                current_node = current_node.next
+        else:
+            current_node = self.tail
+            for _ in range(self.list_len - 1 - index):
+                current_node = current_node.prev
+
+        new_node = DoubleListNode(val=val, next=current_node, prev=current_node.prev)
+        current_node.prev = new_node
+        new_node.prev.next = new_node
+        self.list_len += 1
+
+    def delete_at_index(self, index: int) -> None:
+        """
+        Delete the index-th node in the linked list, if the index is valid.
+        """
+        if index < 0 or index >= self.list_len:
+            # not valid index, ignore
+            return
+        if index == 0:
+            # add to head
+            self.delete_at_head()
+            return
+        if index == self.list_len - 1:
+            # add to tail
+            self.delete_at_tail()
+            return
+
+        if index <= self.list_len // 2:
+            current_node = self.head
+            for _ in range(index):
+                current_node = current_node.next
+        else:
+            current_node = self.tail
+            for _ in range(self.list_len - 1 - index):
+                current_node = current_node.prev
+
+        current_node.prev.next = current_node.next
+        current_node.next.prev = current_node.prev
+        self.list_len -= 1
 
 
 class ComplexListNode(DoubleListNode):
