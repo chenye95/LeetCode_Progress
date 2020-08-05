@@ -53,6 +53,7 @@ test_cases = [([4, 1], [5, 6, 1], [8, 4, 5]),
               ([1, 9, 1], [3], [2, 4]),
               ([2, 6, 4], [1, 5], []),
               ([4, 1], [5, 6, 1], [8, 4, 5]),
+              ([2, 6, 4], [2, 6, 4], []),
               ]
 for list_a, list_b, list_c in test_cases:
     head_a = LinkedList.create_linked_list(list_a).head
