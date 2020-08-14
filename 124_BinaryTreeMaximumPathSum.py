@@ -8,21 +8,23 @@ from _Binary_Tree import TreeNode
 
 
 class Solution:
-    def maxPathEndAtNode(self, node: TreeNode) -> int:
+    def __init__(self):
+        self.global_max = -2 ** 31 + 1
+
+    def max_path_end_at_node(self, node: TreeNode) -> int:
         """
         :param node:
         :return: max value of the path ends at node. return 0 if the max path is negative
         """
         if not node:
             return 0
-        left_max = self.maxPathEndAtNode(node.left)
-        right_max = self.maxPathEndAtNode(node.right)
+        left_max = self.max_path_end_at_node(node.left)
+        right_max = self.max_path_end_at_node(node.right)
         self.global_max = max(self.global_max, left_max + node.val + right_max)
         return max(node.val + max(left_max, right_max), 0)
 
-    def maxPathSum(self, root: TreeNode) -> int:
-        self.global_max = -2 ** 31 + 1
-        self.maxPathEndAtNode(root)
+    def max_path_sum(self, root: TreeNode) -> int:
+        self.max_path_end_at_node(root)
         return self.global_max
 
 
@@ -33,4 +35,4 @@ test_cases = [(ConstructTree.build_tree_leetcode([1, 2, 3]), 6),
 
 solution_class = Solution()
 for test_tree, expected_value in test_cases:
-    assert solution_class.maxPathSum(test_tree.root) == expected_value
+    assert solution_class.max_path_sum(test_tree.root) == expected_value

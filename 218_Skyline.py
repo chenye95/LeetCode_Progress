@@ -10,7 +10,12 @@ import heapq
 from typing import List
 
 
-def getSkyline(buildings: List[List[int]]) -> List[List[int]]:
+def get_skyline(buildings: List[List[int]]) -> List[List[int]]:
+    """
+    :param buildings: each building is represented by a triplet of integers [Li, Ri, Hi], where Li and Ri are x
+    coordinates of the left and right edge of the ith building, respectively, and Hi is its height
+    :return: the skyline formed by these buildings collectively
+    """
     skyline_out = []
     adding_i, total_n = 0, len(buildings)
     live_buildings = []  # list of (height, right)
@@ -39,4 +44,4 @@ test_cases = [([[1, 5, 8], [2, 4, 6]], [[1, 8], [5, 0]]),
               ([[2, 9, 10], [3, 7, 15], [5, 12, 12], [15, 20, 10], [19, 24, 8]],
                [[2, 10], [3, 15], [7, 12], [12, 0], [15, 10], [20, 8], [24, 0]])]
 for input, output in test_cases:
-    assert getSkyline(input) == output
+    assert get_skyline(input) == output

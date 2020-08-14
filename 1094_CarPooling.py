@@ -11,7 +11,7 @@ Return true if and only if it is possible to pick up and drop off all passengers
 from typing import List
 
 
-def carPooling(trips: List[List[int]], capacity: int) -> bool:
+def car_pooling(trips: List[List[int]], capacity: int) -> bool:
     """
     :param trips: trip[i] = [num_passengers, start_location, end_location] contains information about the i-th trip
     :param capacity: empty seats initially available for passengers
@@ -26,7 +26,7 @@ def carPooling(trips: List[List[int]], capacity: int) -> bool:
     return True
 
 
-assert carPooling(trips=[[2, 1, 5], [3, 3, 7]], capacity=4) is False
-assert carPooling(trips=[[2, 1, 5], [3, 3, 7]], capacity=5) is True
-assert carPooling(trips=[[2, 1, 5], [3, 5, 7]], capacity=3) is True
-assert carPooling(trips=[[3, 2, 7], [3, 7, 9], [8, 3, 9]], capacity=11) is True
+assert car_pooling(trips=[[2, 1, 5], [3, 3, 7]], capacity=4) is False
+assert car_pooling(trips=[[2, 1, 5], [3, 3, 7]], capacity=5) is True
+assert car_pooling(trips=[[2, 1, 5], [3, 5, 7]], capacity=3) is True
+assert car_pooling(trips=[[3, 2, 7], [3, 7, 9], [8, 3, 9]], capacity=11) is True

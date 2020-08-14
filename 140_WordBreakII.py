@@ -9,7 +9,7 @@ Note:
 from typing import List
 
 
-def wordBreak(s: str, word_dict: List[str]) -> List[str]:
+def word_break(s: str, word_dict: List[str]) -> List[str]:
     """
     :param s: string to break down into words
     :param word_dict: acceptable words in the dict
@@ -21,7 +21,7 @@ def wordBreak(s: str, word_dict: List[str]) -> List[str]:
     def split_into_sentences(start_at: int) -> List[str]:
         """
         Depth First Search with Memorization
-        :return split s[:start_at] into list of words
+        :return split s[start_at:] into list of words
         """
         nonlocal memory, beginning_letters
         if start_at not in memory:
@@ -37,4 +37,4 @@ def wordBreak(s: str, word_dict: List[str]) -> List[str]:
     return split_into_sentences(0)
 
 
-assert wordBreak(s="catsanddog", word_dict=["cat", "cats", "and", "sand", "dog"]) == ['cat sand dog', 'cats and dog']
+assert word_break(s="catsanddog", word_dict=["cat", "cats", "and", "sand", "dog"]) == ['cat sand dog', 'cats and dog']

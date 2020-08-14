@@ -5,7 +5,11 @@ all the elements of nums except nums[i].
 from typing import List
 
 
-def productExceptSelf(nums: List[int]) -> List[int]:
+def product_except_self(nums: List[int]) -> List[int]:
+    """
+    :param nums: array of n integers
+    :return: output[i] is equal to the product of all the elements of nums except nums[i]
+    """
     n = len(nums)
     left_product, right_product = [1] * n, [1] * n
 
@@ -19,4 +23,4 @@ def productExceptSelf(nums: List[int]) -> List[int]:
     return result
 
 
-assert productExceptSelf([1, 2, 3, 4]) == [24, 12, 8, 6]
+assert product_except_self([1, 2, 3, 4]) == [24, 12, 8, 6]

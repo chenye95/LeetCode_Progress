@@ -1,7 +1,13 @@
 """
 Ugly numbers are positive numbers whose prime factors only include 2, 3, 5.
 """
-def isUgly(num: int) -> bool:
+
+
+def is_ugly(num: int) -> bool:
+    """
+    :param num: positive numbers
+    :return: whether the positive numbers have prime factors only include 2, 3, 5
+    """
     factors = [2, 3, 5]
     if num <= 0:
         return False
@@ -11,6 +17,6 @@ def isUgly(num: int) -> bool:
     return num == 1
 
 
-assert isUgly(6)
-assert isUgly(8)
-assert not isUgly(14)
+assert is_ugly(6)
+assert is_ugly(8)
+assert not is_ugly(14)

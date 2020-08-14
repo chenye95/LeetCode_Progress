@@ -13,7 +13,7 @@ Please note that both secret number and friend's guess may contain duplicate dig
 from collections import Counter
 
 
-def getHint(secret: str, guess: str) -> str:
+def get_hint(secret: str, guess: str) -> str:
     """
      a hint that indicates how many digits in said guess match your secret number exactly in both digit and position
      (called "bulls") and how many digits match the secret number but locate in the wrong position (called "cows").
@@ -30,5 +30,5 @@ def getHint(secret: str, guess: str) -> str:
     return '%dA%dB' % (a, b)
 
 
-assert getHint(secret = "1123", guess = "0111") == "1A1B"
-assert getHint(secret = "1807", guess = "7810") == "1A3B"
+assert get_hint(secret="1123", guess="0111") == "1A1B"
+assert get_hint(secret="1807", guess="7810") == "1A3B"

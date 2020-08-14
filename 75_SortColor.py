@@ -16,11 +16,11 @@ def sort_color(nums: List[int]) -> None:
     :return: does not return anything. Inplace sorting
     """
     white_start = white_end_plus_one = 0
-    blue_start = len(nums) - 1
+    blue_start_minus_one = len(nums) - 1
 
-    while white_end_plus_one <= blue_start:
+    while white_end_plus_one <= blue_start_minus_one:
         if nums[white_end_plus_one] == 0:
-            # current number is red, swap with red plus
+            # current number is red, swap with white_end_plus_one
             # guaranteed white_start points to white, and follows the red color block
             nums[white_start], nums[white_end_plus_one] = nums[white_end_plus_one], nums[white_start]
             white_end_plus_one += 1
@@ -30,8 +30,9 @@ def sort_color(nums: List[int]) -> None:
             white_end_plus_one += 1
         else:
             # current number is blue
-            nums[white_end_plus_one], nums[blue_start] = nums[blue_start], nums[white_end_plus_one]
-            blue_start -= 1
+            # swap into blue blocks
+            nums[white_end_plus_one], nums[blue_start_minus_one] = nums[blue_start_minus_one], nums[white_end_plus_one]
+            blue_start_minus_one -= 1
 
 
 from random import randint

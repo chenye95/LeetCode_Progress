@@ -9,7 +9,10 @@ from typing import List
 NOT_FOUND = -100
 
 
-def majorityElement(nums: List[int]) -> int:
+def majority_element(nums: List[int]) -> int:
+    """
+    :return: find majority element in nums that appears more than ⌊ n/2 ⌋ times
+    """
     candidate, count = 0, 0
     for n in nums:
         if n == candidate:
@@ -21,8 +24,8 @@ def majorityElement(nums: List[int]) -> int:
     return candidate if nums.count(candidate) > len(nums) // 2 else NOT_FOUND
 
 
-assert majorityElement([3, 2, 3]) == 3
-assert majorityElement([2, 2, 1, 1, 1, 2, 2]) == 2
-assert majorityElement([6, 5, 5]) == 5
-assert majorityElement([1, 1, 2, 2]) == NOT_FOUND
-assert majorityElement([1, 1, 1, 2, 3, 4]) == NOT_FOUND
+assert majority_element([3, 2, 3]) == 3
+assert majority_element([2, 2, 1, 1, 1, 2, 2]) == 2
+assert majority_element([6, 5, 5]) == 5
+assert majority_element([1, 1, 2, 2]) == NOT_FOUND
+assert majority_element([1, 1, 1, 2, 3, 4]) == NOT_FOUND

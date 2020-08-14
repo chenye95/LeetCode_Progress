@@ -22,10 +22,10 @@ def dfs_solution(current_board_state: List[List[str]], i: int, j: int, remaining
         return False
     current_board_state[i][j] = ''
     rest_of_word = remaining_word[1:]
-    return_result = dfs_solution(current_board_state, i - 1, j, rest_of_word) or dfs_solution(current_board_state,
-                                                                                              i + 1, j, rest_of_word) or \
-                    dfs_solution(current_board_state, i, j - 1, rest_of_word) or dfs_solution(current_board_state, i,
-                                                                                              j + 1, rest_of_word)
+    return_result = dfs_solution(current_board_state, i - 1, j, rest_of_word) or \
+                    dfs_solution(current_board_state, i + 1, j, rest_of_word) or \
+                    dfs_solution(current_board_state, i, j - 1, rest_of_word) or \
+                    dfs_solution(current_board_state, i, j + 1, rest_of_word)
     current_board_state[i][j] = remaining_word[0]
     return return_result
 
@@ -43,7 +43,7 @@ def exist(board: List[List[str]], word: str) -> bool:
     return any(dfs_solution(board, i, j, word) for i in range(len(board)) for j in range(len(board[0])))
 
 
-board = [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']]
-assert exist(board, "ABCB") is False
-assert exist(board, "ABCCED") is True
-assert exist(board, "SEE") is True
+test_board = [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']]
+assert exist(test_board, "ABCB") is False
+assert exist(test_board, "ABCCED") is True
+assert exist(test_board, "SEE") is True

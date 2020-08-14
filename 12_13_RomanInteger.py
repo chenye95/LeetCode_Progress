@@ -1,23 +1,25 @@
 def IntToRoman(num: int) -> str:
     """
     :param num: integer within the range from 1 to 3999.
-    :return:
+    :return: Roman representation of integer num
     """
-    def IntToRomanHelper(num, lag_rank, mid_rank, sml_rank, lag_chr, mid_chr, sml_chr):
+
+    def IntToRomanHelper(current_num: int, lag_rank: int, mid_rank: int, sml_rank: int,
+                         lag_chr: chr, mid_chr: chr, sml_chr: chr):
         ret_str = ""
-        while num >= lag_rank:
+        while current_num >= lag_rank:
             ret_str += lag_chr
-            num -= lag_rank
-        if num >= (lag_rank - sml_rank):
+            current_num -= lag_rank
+        if current_num >= (lag_rank - sml_rank):
             ret_str += (sml_chr + lag_chr)
-            num -= (lag_rank - sml_rank)
-        elif num >= mid_rank:
+            current_num -= (lag_rank - sml_rank)
+        elif current_num >= mid_rank:
             ret_str += mid_chr
-            num -= mid_rank
-        elif num >= (mid_rank - sml_rank):
+            current_num -= mid_rank
+        elif current_num >= (mid_rank - sml_rank):
             ret_str += (sml_chr + mid_chr)
-            num -= (mid_rank - sml_rank)
-        return ret_str, num
+            current_num -= (mid_rank - sml_rank)
+        return ret_str, current_num
 
     remainder = num
     hundred_part, remainder = IntToRomanHelper(remainder, 1000, 500, 100, 'M', 'D', 'C')
@@ -32,6 +34,9 @@ def IntToRoman(num: int) -> str:
 
 
 def RomanToInt(s: str) -> int:
+    """
+    :return: convert Roman integer string to int
+    """
     trans_map = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
     int_val = 0
     prev_added = 0

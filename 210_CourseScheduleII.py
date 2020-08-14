@@ -12,10 +12,15 @@ from collections import deque
 from typing import List
 
 
-def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
+def find_order(num_courses: int, prerequisites: List[List[int]]) -> List[int]:
+    """
+    :param num_courses: total number of courses labeled from 0 to n-1
+    :param prerequisites: prerequisites to take each course
+    :return: the ordering of courses you should take to finish all courses, or [] if not possible
+    """
     # Topological Sort
-    enable_courses = [[] for _ in range(numCourses)]
-    unfinished_prerequisites = [0] * numCourses
+    enable_courses = [[] for _ in range(num_courses)]
+    unfinished_prerequisites = [0] * num_courses
 
     for p in prerequisites:
         unfinished_prerequisites[p[0]] += 1
@@ -23,7 +28,7 @@ def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
 
     running_deque = deque()
     class_order = []
-    for next_course in range(numCourses):
+    for next_course in range(num_courses):
         if unfinished_prerequisites[next_course] == 0:
             running_deque.append(next_course)
 
@@ -38,12 +43,12 @@ def findOrder(numCourses: int, prerequisites: List[List[int]]) -> List[int]:
             if unfinished_prerequisites[new_course] == 0:
                 running_deque.append(new_course)
 
-    return class_order if can_do == numCourses else []
+    return class_order if can_do == num_courses else []
 
 
 test_cases = [(2, [[1, 0]], [[0, 1], ]),
               (2, [[1, 0], [0, 1]], [[], ]),
               (4, [[1, 0], [2, 0], [3, 1], [3, 2]], [[0, 1, 2, 3], [0, 2, 1, 3], ]),
               ]
-for numCourse, prerequisites, expected_out in test_cases:
-    assert findOrder(numCourse, prerequisites) in expected_out
+for numCourse, test_prerequisites, expected_out in test_cases:
+    assert find_order(numCourse, test_prerequisites) in expected_out

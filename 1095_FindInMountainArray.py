@@ -26,50 +26,49 @@ class MountainArray:
         return len(self.array)
 
 
-class Solution:
-    def findPeak(self, mountain_arr: MountainArray) -> int:
-        left, right = 0, mountain_arr.length() - 1
-        while left < right:
-            probe = (left + right) // 2
-            if mountain_arr.get(probe) > mountain_arr.get(probe + 1):
-                right = probe
-            else:
-                left = probe + 1
-        return left
+def find_in_mountain_array(target: int, mountain_arr: MountainArray) -> int:
+    """
+    :param target: target to be found in Mountain Array
+    :param mountain_arr: Mountain Array object
+    :return: index of target in Mountain Array if it exists, -1 otherwise
+    """
+    # Find the index of peak in Mountain Array
+    left, right = 0, mountain_arr.length() - 1
+    while left < right:
+        probe = (left + right) // 2
+        if mountain_arr.get(probe) > mountain_arr.get(probe + 1):
+            right = probe
+        else:
+            left = probe + 1
+    peak_index = left
 
-    def findTarget(self, mountain_arr: MountainArray, peak_index: int, target: int) -> int:
-        # Find in Uphill leg
-        left, right = 0, peak_index
-        while left <= right:
-            probe = (left + right) // 2
-            probe_val = mountain_arr.get(probe)
-            if probe_val == target:
-                return probe
-            elif probe_val < target:
-                left = probe + 1
-            else:
-                right = probe - 1
+    # Find in Uphill leg
+    left, right = 0, peak_index
+    while left <= right:
+        probe = (left + right) // 2
+        probe_val = mountain_arr.get(probe)
+        if probe_val == target:
+            return probe
+        elif probe_val < target:
+            left = probe + 1
+        else:
+            right = probe - 1
 
-        # Find in Downhill Leg
-        left, right = peak_index, mountain_arr.length() - 1
-        while left <= right:
-            probe = (left + right) // 2
-            probe_val = mountain_arr.get(probe)
-            if probe_val == target:
-                return probe
-            elif probe_val > target:
-                left = probe + 1
-            else:
-                right = probe - 1
+    # Find in Downhill Leg
+    left, right = peak_index, mountain_arr.length() - 1
+    while left <= right:
+        probe = (left + right) // 2
+        probe_val = mountain_arr.get(probe)
+        if probe_val == target:
+            return probe
+        elif probe_val > target:
+            left = probe + 1
+        else:
+            right = probe - 1
 
-        return -1
-
-    def findInMountainArray(self, target: int, mountain_arr: MountainArray) -> int:
-        peak_index = self.findPeak(mountain_arr)
-        return self.findTarget(mountain_arr, peak_index, target)
+    return -1
 
 
-SolutionClass = Solution()
-assert SolutionClass.findInMountainArray(mountain_arr=MountainArray([1,2,3,4,5,3,1]), target=3) == 2
-assert SolutionClass.findInMountainArray(mountain_arr=MountainArray(array=[0,1,2,4,2,1]), target = 3) == -1
-assert SolutionClass.findInMountainArray(mountain_arr=MountainArray(array=[1,2,3,5,3]), target=0) == -1
+assert find_in_mountain_array(mountain_arr=MountainArray([1, 2, 3, 4, 5, 3, 1]), target=3) == 2
+assert find_in_mountain_array(mountain_arr=MountainArray(array=[0, 1, 2, 4, 2, 1]), target=3) == -1
+assert find_in_mountain_array(mountain_arr=MountainArray(array=[1, 2, 3, 5, 3]), target=0) == -1

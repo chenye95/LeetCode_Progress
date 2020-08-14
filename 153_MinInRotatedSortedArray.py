@@ -50,5 +50,4 @@ N = randint(500, 1000)
 range_list = list(range(N))
 for _ in range(10):
     i = randint(0, N - 1)
-    print(N, i)
     assert 0 == find_min(range_list[i:] + range_list[:i])

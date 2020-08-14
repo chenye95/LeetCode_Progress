@@ -28,10 +28,10 @@ def maxNumber(nums1: List[int], nums2: List[int], k: int) -> List[int]:
     def merge(a: List[int], b: List[int]) -> List[int]:
         return [max(a, b).pop(0) for _ in a + b]
 
-    return max(merge(prep_one_num(nums1, i), prep_one_num(nums2, k-i))
-               for i in range(k+1) if i <= len(nums1) and k-i <= len(nums2))
+    return max(merge(prep_one_num(nums1, i), prep_one_num(nums2, k - i))
+               for i in range(k + 1) if i <= len(nums1) and k - i <= len(nums2))
 
 
-assert maxNumber(nums1 = [3, 4, 6, 5], nums2 = [9, 1, 2, 5, 8, 3], k = 5) == [9, 8, 6, 5, 3]
-assert maxNumber(nums1 = [6, 7], nums2 = [6, 0, 4], k = 5) == [6, 7, 6, 0, 4]
-assert maxNumber(nums1 = [3, 9], nums2 = [8, 9], k = 3) == [9, 8, 9]
+assert maxNumber(nums1=[3, 4, 6, 5], nums2=[9, 1, 2, 5, 8, 3], k=5) == [9, 8, 6, 5, 3]
+assert maxNumber(nums1=[6, 7], nums2=[6, 0, 4], k=5) == [6, 7, 6, 0, 4]
+assert maxNumber(nums1=[3, 9], nums2=[8, 9], k=3) == [9, 8, 9]

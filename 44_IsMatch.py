@@ -3,7 +3,9 @@ Given an input string (s) and a pattern (p), implement wildcard pattern matching
 - '?' Matches any single character.
 = '*' Matches any sequence of characters (including the empty sequence).
 """
-def isMatch(s: str, p: str) -> bool:
+
+
+def is_match(s: str, p: str) -> bool:
     dp_memory = [[False] * (len(s) + 1) for _ in range(len(p) + 1)]
     dp_memory[0][0] = True
     # Leading * can match to no characters
@@ -24,6 +26,6 @@ def isMatch(s: str, p: str) -> bool:
     return dp_memory[-1][-1]
 
 
-assert isMatch(s="acdcb", p="a*c?")
-assert isMatch(s="adceb", p="*a*b")
-assert isMatch(s="adceb", p="**")
+assert is_match(s="acdcb", p="a*c?")
+assert is_match(s="adceb", p="*a*b")
+assert is_match(s="adceb", p="**")

@@ -6,7 +6,11 @@ and empty spaces.
 """
 
 
-def calculate(s: str) -> int:
+def calculate(expression_string: str) -> int:
+    """
+    :param expression_string: expressions with (), +, -, non-negative integers and empty spaces
+    :return: value of the simple expression string
+    """
     # stack used to handle parenthesis;
     # memory to store states before (, to be retrieved after encountering )
     parentheses_stack = []
@@ -14,7 +18,7 @@ def calculate(s: str) -> int:
     operand = 0
     eval_result = 0
 
-    for c in s:
+    for c in expression_string:
         if c.isdigit():
             # construct the number/operand
             operand = 10 * operand + int(c)

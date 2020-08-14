@@ -1,6 +1,8 @@
 """
 Implement pow(x, n), which calculates x raised to the power n (x^n).
 """
+
+
 def myPow(x: float, n: int) -> float:
     if n == 0:
         return 1.0

@@ -11,9 +11,9 @@ In case there is no path, return [0, 0].
 from typing import List
 
 
-def pathsWithMaxScore(board: List[str]) -> List[int]:
+def paths_with_max_score(board: List[str]) -> List[int]:
     n = len(board)
-    MOD = 10 ** 9 + 7
+    mod_value = 10 ** 9 + 7
     invalid = (float('-inf'), 0)
 
     # Reverse the traversal order, from E to S
@@ -44,15 +44,15 @@ def pathsWithMaxScore(board: List[str]) -> List[int]:
                         curr_val, curr_step = dp_prev_row[c - 1]
 
                 curr_val += int(board[r][c]) if board[r][c] not in 'SE' else 0
-                curr_step %= MOD
+                curr_step %= mod_value
                 dp_curr_row.append((curr_val, curr_step))
         dp_prev_row = dp_curr_row
 
     return list(dp_prev_row[-1]) if dp_prev_row[-1][1] > 0 else [0, 0]
 
 
-assert pathsWithMaxScore(board=["E23", "2X2", "12S"]) == [7, 1]
-assert [1773, 690285631] == pathsWithMaxScore(
+assert paths_with_max_score(board=["E23", "2X2", "12S"]) == [7, 1]
+assert [1773, 690285631] == paths_with_max_score(
     board=["E999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
            "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
            "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",

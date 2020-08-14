@@ -5,7 +5,10 @@ from bisect import bisect_left
 from typing import List
 
 
-def lengthOfLIS(nums: List[int]) -> int:
+def length_of_LIS(nums: List[int]) -> int:
+    """
+    :return: the length of longest increasing subsequence in an unsorted array of integers
+    """
     if not nums:
         return 0
 
@@ -22,4 +25,4 @@ def lengthOfLIS(nums: List[int]) -> int:
 test_cases = [([10, 9, 2, 5, 3, 7, 101, 18], 4),
               ([0], 1), ]
 for nums, expected_value in test_cases:
-    assert lengthOfLIS(nums) == expected_value
+    assert length_of_LIS(nums) == expected_value

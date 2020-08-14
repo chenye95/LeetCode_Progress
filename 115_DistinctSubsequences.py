@@ -5,7 +5,12 @@ A subsequence of a string is a new string which is formed from the original stri
  characters without disturbing the relative positions of the remaining characters. (ie, "ACE" is a subsequence of
  "ABCDE" while "AEC" is not).
 """
-def numDistinct(s: str, t: str) -> int:
+
+
+def num_distinct(s: str, t: str) -> int:
+    """
+    :return: number of distinct subsequences of s that equals t
+    """
     if not s or len(s) < len(t):
         return 0
 
@@ -19,5 +24,5 @@ def numDistinct(s: str, t: str) -> int:
     return sum(dp[-1])
 
 
-assert numDistinct(s="BABGBAG", t="BAG") == 5
-assert numDistinct(s="rabbbit", t="rabbit") == 3
+assert num_distinct(s="BABGBAG", t="BAG") == 5
+assert num_distinct(s="rabbbit", t="rabbit") == 3

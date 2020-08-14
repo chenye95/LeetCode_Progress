@@ -9,17 +9,17 @@ Now consider if some obstacles are added to the grids. How many unique paths wou
 from typing import List
 
 
-def uniquePathsWithObstacles(obstacleGrid: List[List[int]]) -> int:
-    if not obstacleGrid or len(obstacleGrid) == 0 or len(obstacleGrid[0]) == 0:
+def uniquePathsWithObstacles(obstacle_grid: List[List[int]]) -> int:
+    if not obstacle_grid or len(obstacle_grid) == 0 or len(obstacle_grid[0]) == 0:
         return 1
-    elif obstacleGrid[0][0]:
+    elif obstacle_grid[0][0]:
         return 0
-    m, n = len(obstacleGrid), len(obstacleGrid[0])
+    m, n = len(obstacle_grid), len(obstacle_grid[0])
     path_count = [[0] * n for _ in range(m)]
     path_count[0][0] = 1
     for i in range(m):
         for j in range(n):
-            if not obstacleGrid[i][j] and (i + j > 0):
+            if not obstacle_grid[i][j] and (i + j > 0):
                 up_path = 0 if i == 0 else path_count[i - 1][j]
                 left_path = 0 if j == 0 else path_count[i][j - 1]
                 path_count[i][j] = up_path + left_path

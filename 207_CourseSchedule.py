@@ -10,17 +10,22 @@ from collections import deque
 from typing import List
 
 
-def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
+def can_finish(num_courses: int, prerequisites: List[List[int]]) -> bool:
+    """
+    :param num_courses: total number of courses labeled from 0 to n-1
+    :param prerequisites: prerequisites to take each course
+    :return: if it is possible to finish all courses
+    """
     # Topological Sort
-    enable_courses = [[] for _ in range(numCourses)]
-    unfinished_prerequisites = [0] * numCourses
+    enable_courses = [[] for _ in range(num_courses)]
+    unfinished_prerequisites = [0] * num_courses
 
     for p in prerequisites:
         unfinished_prerequisites[p[0]] += 1
         enable_courses[p[1]].append(p[0])
 
     running_deque = deque()
-    for next_course in range(numCourses):
+    for next_course in range(num_courses):
         if unfinished_prerequisites[next_course] == 0:
             running_deque.append(next_course)
 
@@ -34,10 +39,10 @@ def canFinish(numCourses: int, prerequisites: List[List[int]]) -> bool:
             if unfinished_prerequisites[new_course] == 0:
                 running_deque.append(new_course)
 
-    return can_do == numCourses
+    return can_do == num_courses
 
 
 test_cases = [(2, [[1, 0]], True),
               (2, [[1, 0], [0, 1]], False)]
-for numCourse, prerequisites, expected_out in test_cases:
-    assert canFinish(numCourse, prerequisites) == expected_out
+for test_NumCourse, test_prerequisites, expected_out in test_cases:
+    assert can_finish(test_NumCourse, test_prerequisites) == expected_out

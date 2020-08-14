@@ -8,7 +8,11 @@ citations each, and the other N − h papers have no more than h citations each.
 from typing import List
 
 
-def hIndex(citations: List[int]) -> int:
+def h_index(citations: List[int]) -> int:
+    """
+    :param citations: array of citations
+    :return: h-index of the researcher
+    """
     h_index = 0
     n = len(citations)
     above_h_count = [0] * (n + 1)
@@ -22,4 +26,4 @@ def hIndex(citations: List[int]) -> int:
     return h_index
 
 
-assert(hIndex([3,0,6,1,5])) == 3
+assert h_index([3, 0, 6, 1, 5]) == 3

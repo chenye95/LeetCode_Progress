@@ -5,6 +5,8 @@ Validate if a given string can be interpreted as a decimal number.
 - Positive/negative sign - "+"/"-"
 - Decimal point - "."
 """
+
+
 def is_number(s: str) -> bool:
     def is_number_helper(s: str, can_have_decimal: bool = True, allow_empty_after_decimal: bool = True) -> bool:
         if len(s) == 0:

@@ -6,7 +6,7 @@ Note: The algorithm should run in linear time and in O(1) space.
 from typing import List
 
 
-def majorityElement(nums: List[int]) -> List[int]:
+def majority_element(nums: List[int]) -> List[int]:
     if not nums:
         return []
     candidate_1, count_1 = 0, 0
@@ -25,5 +25,5 @@ def majorityElement(nums: List[int]) -> List[int]:
     return [n for n in (candidate_1, candidate_2) if nums.count(n) > len(nums) // 3]
 
 
-assert {3} == set(majorityElement([3, 2, 3]))
-assert {1, 2} == set(majorityElement([1, 1, 1, 3, 3, 2, 2, 2]))
+assert {3} == set(majority_element([3, 2, 3]))
+assert {1, 2} == set(majority_element([1, 1, 1, 3, 3, 2, 2, 2]))

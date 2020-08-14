@@ -9,7 +9,7 @@ from bisect import bisect_left
 from typing import List
 
 
-def hIndex(citations: List[int]) -> int:
+def h_index(citations: List[int]) -> int:
     if not citations:
         return 0
     # elif len(citations) == 1:
@@ -27,11 +27,13 @@ def hIndex(citations: List[int]) -> int:
     return h_index
 
 
-def hIndexBisect(citations: List[int]) -> int:
+def h_index_bisect(citations: List[int]) -> int:
     n = len(citations)
+
     class Range():
         def __getitem__(self, key):
             return n - key <= citations[key]
+
     index = bisect_left(Range(), True, 0, n)
     return n - index if index < n else 0
 
@@ -39,16 +41,16 @@ def hIndexBisect(citations: List[int]) -> int:
 from timeit import Timer
 from functools import partial
 
-assert(hIndex([1,1,2,3,4,5,7])) == 3
-assert(hIndex([1, 2])) == 1
-assert(hIndex([0,1,3,5,6])) == 3
-assert(hIndex([0])) == 0
-assert(hIndex([100])) == 1
+assert (h_index([1, 1, 2, 3, 4, 5, 7])) == 3
+assert (h_index([1, 2])) == 1
+assert (h_index([0, 1, 3, 5, 6])) == 3
+assert (h_index([0])) == 0
+assert (h_index([100])) == 1
 
-test_citations = [1,1,2,3,4,5,7]
-n_cyclces = 10000
-t_disect = Timer(partial(hIndexBisect, test_citations))
-print("Bisect", t_disect.timeit(n_cyclces)/n_cyclces)
+test_citations = [1, 1, 2, 3, 4, 5, 7]
+n_cycles = 10000
+t_bisect = Timer(partial(h_index_bisect, test_citations))
+print("Bisect", t_bisect.timeit(n_cycles) / n_cycles)
 
-t_my = Timer(partial(hIndex, test_citations))
-print("My", t_my.timeit(n_cyclces)/n_cyclces)
+t_my = Timer(partial(h_index, test_citations))
+print("My", t_my.timeit(n_cycles) / n_cycles)
