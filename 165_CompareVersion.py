@@ -15,13 +15,11 @@ def compare_version(version_1: str, version_2: str) -> int:
     elif len(version1_int) > len(version2_int):
         version2_int.extend([0] * (len(version1_int) - len(version2_int)))
 
-    i = 0
-    while i < len(version1_int):
+    for i in range(len(version1_int)):
         if version1_int[i] < version2_int[i]:
             return -1
         elif version1_int[i] > version2_int[i]:
             return 1
-        i += 1
     return 0
 
 

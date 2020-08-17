@@ -41,11 +41,11 @@ def h_index_bisect(citations: List[int]) -> int:
 from timeit import Timer
 from functools import partial
 
-assert (h_index([1, 1, 2, 3, 4, 5, 7])) == 3
-assert (h_index([1, 2])) == 1
-assert (h_index([0, 1, 3, 5, 6])) == 3
-assert (h_index([0])) == 0
-assert (h_index([100])) == 1
+assert h_index([1, 1, 2, 3, 4, 5, 7]) == 3
+assert h_index([1, 2]) == 1
+assert h_index([0, 1, 3, 5, 6]) == 3
+assert h_index([0]) == 0
+assert h_index([100]) == 1
 
 test_citations = [1, 1, 2, 3, 4, 5, 7]
 n_cycles = 10000

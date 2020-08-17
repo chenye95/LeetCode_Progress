@@ -33,21 +33,23 @@ def is_number(s: str) -> bool:
         return is_number_helper(s)
 
 
-assert is_number("0")
-assert is_number(" 0.1 ")
-assert not is_number("abc")
-assert not is_number("1 a")
-assert is_number("2e10")
-assert is_number(" -90e3   ")
-assert not is_number(" 1e")
-assert not is_number("e3")
-assert is_number(" 6e-1")
-assert not is_number(" 99e2.5 ")
-assert is_number("53.5e93")
-assert not is_number(" --6 ")
-assert not is_number("-+3")
-assert not is_number("95a54e53")
-assert is_number(".1")
-assert is_number("3.")
-assert not is_number(".")
-assert not is_number("46.e3")
+test_cases = [("0", True),
+              (" 0.1 ", True),
+              ("abc", False),
+              ("1 a", False),
+              ("2e10", True),
+              (" -90e3   ", True),
+              (" 1e", False),
+              ("e3", False),
+              (" 6e-1", True),
+              (" 99e2.5 ", False),
+              ("53.5e93", True),
+              (" --6 ", False),
+              ("-+3", False),
+              ("95a54e53", False),
+              (".1", True),
+              ("3.", True),
+              (".", False),
+              ("46.e3", False)]
+for test_input, expected_output in test_cases:
+    assert is_number(test_input) is expected_output

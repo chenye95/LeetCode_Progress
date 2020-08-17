@@ -5,7 +5,12 @@ and is fully (left and right) justified.
 from typing import List
 
 
-def fullJustify(words: List[str], max_width: int) -> List[str]:
+def fully_justify(words: List[str], max_width: int) -> List[str]:
+    """
+    :param words: array of words to be fully justified
+    :param max_width: max_width for each line
+    :return: list of strings representing fully justified rendering of words
+    """
     scanner = 0
     output_lines = []
     current_line_start = 0
@@ -45,8 +50,8 @@ def fullJustify(words: List[str], max_width: int) -> List[str]:
     return output_lines
 
 
-print(fullJustify(words=["This", "is", "an", "example", "of", "text", "justification.", ], max_width=16))
-print(fullJustify(words=["What", "must", "be", "acknowledgment", "shall", "be"], max_width=16))
-print(fullJustify(
+print(fully_justify(words=["This", "is", "an", "example", "of", "text", "justification.", ], max_width=16))
+print(fully_justify(words=["What", "must", "be", "acknowledgment", "shall", "be"], max_width=16))
+print(fully_justify(
     words=["Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.",
            "Art", "is", "everything", "else", "we", "do"], max_width=20))

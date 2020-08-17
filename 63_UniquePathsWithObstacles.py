@@ -9,8 +9,12 @@ Now consider if some obstacles are added to the grids. How many unique paths wou
 from typing import List
 
 
-def uniquePathsWithObstacles(obstacle_grid: List[List[int]]) -> int:
-    if not obstacle_grid or len(obstacle_grid) == 0 or len(obstacle_grid[0]) == 0:
+def unique_paths_with_obstacles(obstacle_grid: List[List[int]]) -> int:
+    """
+    :param obstacle_grid: grids with some obstacles added
+    :return: unique path from top-left to bottom right, if robot can only move down or right at any point in time
+    """
+    if not obstacle_grid or not obstacle_grid[0]:
         return 1
     elif obstacle_grid[0][0]:
         return 0
@@ -26,6 +30,6 @@ def uniquePathsWithObstacles(obstacle_grid: List[List[int]]) -> int:
     return path_count[-1][-1]
 
 
-assert uniquePathsWithObstacles([[0]]) == 1
-assert uniquePathsWithObstacles([[0, 0, 0], [0, 1, 0], [0, 0, 0]]) == 2
-assert uniquePathsWithObstacles([[1]]) == 0
+assert unique_paths_with_obstacles([[0]]) == 1
+assert unique_paths_with_obstacles([[0, 0, 0], [0, 1, 0], [0, 0, 0]]) == 2
+assert unique_paths_with_obstacles([[1]]) == 0
