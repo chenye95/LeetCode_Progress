@@ -11,6 +11,12 @@ linked_list = LinkedList.create_linked_list(node_list)
 assert node_list == linked_list.head.list_from_node()
 assert linked_list.head.last_node().val == 5
 
+assert LinkedList.create_linked_list([]).midpoint_of_list() == (0, None)
+for list_len in range(1, 8):
+    midpoint_index, midpoint = LinkedList.create_linked_list(list(range(1, list_len + 1))).midpoint_of_list()
+    expected_index = list_len // 2
+    assert midpoint_index == expected_index and midpoint.val == midpoint_index + 1
+
 printable_list = PrintableLinkedList.create_linked_list(node_list)
 separator = ', '
 expected_output = separator.join([str(val) for val in node_list])
@@ -99,3 +105,10 @@ test_list.add_at_tail(1)
 assert len(test_list) == 1
 assert test_list.get_at_index(0) == 1
 assert test_list.get_at_index(1) == test_list.INDEX_OUT_OF_BOUND
+
+test_list = list(range(10))
+test_linked_list = LinkedList.create_linked_list(test_list)
+for k in range(10):
+    assert test_linked_list.k_to_last(k).val == test_list[-k - 1], test_list[-k - 1]
+for k in range(10, 20):
+    assert test_linked_list.k_to_last(k) is None
