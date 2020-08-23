@@ -28,7 +28,7 @@ def braceExpansionII(expression: str) -> List[str]:
             current_comma = [prev + cur for cur in current_brace + current_comma for prev in precede_brace or ["", ]]
             current_brace = stack.pop()
         elif c == ",":
-            current_brace += current_comma
+            current_brace.extend(current_comma)
             current_comma = []
     return sorted(set(current_brace + current_comma))
 
@@ -38,7 +38,8 @@ test_cases = [("{a,b}{c,{d,e}}", ["ac", "ad", "ae", "bc", "bd", "be"]),
               ("{ab,cd}{e,f}", ["abe", "abf", "cde", "cdf"]),
               ("{a,b}c{d,e}f", ["acdf", "acef", "bcdf", "bcef"]),
               ("abcd", ["abcd", ]),
-              ("{{a,{x,ia,o},w},er,a{x,ia,o}w}", ["a","aiaw","aow","axw","er","ia","o","w","x"])]
+              ("{{a,{x,ia,o},w},er,a{x,ia,o}w}", ["a", "aiaw", "aow", "axw", "er", "ia", "o", "w", "x"]),
+              ]
 
 for test_input, test_output in test_cases:
     assert braceExpansionII(test_input) == test_output, test_input

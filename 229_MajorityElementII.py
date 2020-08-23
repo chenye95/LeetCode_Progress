@@ -7,6 +7,11 @@ from typing import List
 
 
 def majority_element(nums: List[int]) -> List[int]:
+    """
+    Boyer-Moore Voting Algorithm
+    :param nums: an integer array of size n
+    :return: all elements that appear more than n/3 times
+    """
     if not nums:
         return []
     candidate_1, count_1 = 0, 0

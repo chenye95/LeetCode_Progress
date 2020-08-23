@@ -18,13 +18,16 @@ def max_uncrossed_lines(list_a: List[int], list_b: List[int]) -> int:
     :return: maximum number of connecting lines between list_a[i] == list_b[j]
     """
     m, n = len(list_a), len(list_b)
-    previous_row = [0] * (n + 1)
+    list_a_til_i_1 = [0] * (n + 1)
     for i in range(m):
-        current_row = [0] * (n + 1)
+        list_a_til_i = [0] * (n + 1)
         for j in range(n):
-            current_row[j + 1] = max(previous_row[j] + (list_a[i] == list_b[j]), current_row[j], previous_row[j + 1])
-        previous_row = current_row
-    return previous_row[-1]
+            # connecting a[i] to b[j], or skipping a[i], or skipping b[j]
+            list_a_til_i[j + 1] = max(list_a_til_i_1[j] + (list_a[i] == list_b[j]),
+                                      list_a_til_i[j],
+                                      list_a_til_i_1[j + 1])
+        list_a_til_i_1 = list_a_til_i
+    return list_a_til_i_1[-1]
 
 
 assert max_uncrossed_lines(list_a=[1, 4, 2], list_b=[1, 2, 4]) == 2
