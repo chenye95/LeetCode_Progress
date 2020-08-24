@@ -11,16 +11,20 @@ def fraction_to_decimal(numerator: int, denominator: int) -> str:
     """
     :return: convert fraction numerator / denominator to decimals
     """
+    assert denominator != 0, "Invalid Operation, Divided by 0"
     if numerator == 0:
         return "0"
-    decimal_str = ""
     if (numerator < 0) is not (denominator < 0):
-        decimal_str += '-'
+        decimal_str = "-"
+    else:
+        decimal_str = ""
+
     abs_numerator, abs_denominator = abs(numerator), abs(denominator)
     n, remainder = divmod(abs_numerator, abs_denominator)
     decimal_str += str(n)
     if remainder == 0:
         return decimal_str
+
     decimal_str += '.'
     # keep track of repetition in decimal division
     decimal_stack = {}

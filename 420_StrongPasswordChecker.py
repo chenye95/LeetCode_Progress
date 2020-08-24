@@ -5,11 +5,13 @@ A password is considered strong if below conditions are all met:
 - It must NOT contain three repeating characters in a row ("...aaa..." is weak, but "...aa...a..." is strong, assuming
     other conditions are met).
 
-Write a function strongPasswordChecker(s), that takes a string s as input, and return the MINIMUM change required to
+Write a function strong_password_checker(s), that takes a string s as input, and return the MINIMUM change required to
 make s a strong password. If s is already strong, return 0.
 Insertion, deletion or replace of any one character are all considered as one change.
 """
-def strongPasswordChecker(s: str) -> int:
+
+
+def strong_password_checker(s: str) -> int:
     missing_types = 3
     if any('A' <= c <= 'Z' for c in s): missing_types -= 1
     if any('a' <= c <= 'z' for c in s): missing_types -= 1
@@ -59,7 +61,7 @@ def strongPasswordChecker(s: str) -> int:
         return delete_op + max(missing_types, replace_op)
 
 
-assert(strongPasswordChecker("") == 6)
-assert(strongPasswordChecker("aaa111") == 2)
-assert(strongPasswordChecker("1111111111") == 3)
-assert(strongPasswordChecker("ABABABABABABABABABAB1") == 2)
+assert (strong_password_checker("") == 6)
+assert (strong_password_checker("aaa111") == 2)
+assert (strong_password_checker("1111111111") == 3)
+assert (strong_password_checker("ABABABABABABABABABAB1") == 2)

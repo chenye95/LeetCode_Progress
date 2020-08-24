@@ -6,9 +6,8 @@ Note: For the purpose of this problem, we define empty string as valid palindrom
 
 
 def is_palindrome(s: str) -> bool:
-    alpha_numeric_s = ''.join(x for x in s if x.isalpha() or x.isdigit()).lower()
-    rev_s = alpha_numeric_s[::-1]
-    return rev_s == alpha_numeric_s
+    alpha_numeric_s = ''.join(c for c in s if c.isalpha() or c.isdigit()).lower()
+    return alpha_numeric_s == alpha_numeric_s[::-1]
 
 
 assert is_palindrome("0P") is False

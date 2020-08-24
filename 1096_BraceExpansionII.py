@@ -33,12 +33,12 @@ def braceExpansionII(expression: str) -> List[str]:
     return sorted(set(current_brace + current_comma))
 
 
-test_cases = [("{a,b}{c,{d,e}}", ["ac", "ad", "ae", "bc", "bd", "be"]),
-              ("{{a,z},a{b,c},{ab,z}}", ["a", "ab", "ac", "z"]),
-              ("{ab,cd}{e,f}", ["abe", "abf", "cde", "cdf"]),
-              ("{a,b}c{d,e}f", ["acdf", "acef", "bcdf", "bcef"]),
+test_cases = [("{a,b}{c,{d,e}}", ["ac", "ad", "ae", "bc", "bd", "be", ]),
+              ("{{a,z},a{b,c},{ab,z}}", ["a", "ab", "ac", "z", ]),
+              ("{ab,cd}{e,f}", ["abe", "abf", "cde", "cdf", ]),
+              ("{a,b}c{d,e}f", ["acdf", "acef", "bcdf", "bcef", ]),
               ("abcd", ["abcd", ]),
-              ("{{a,{x,ia,o},w},er,a{x,ia,o}w}", ["a", "aiaw", "aow", "axw", "er", "ia", "o", "w", "x"]),
+              ("{{a,{x,ia,o},w},er,a{x,ia,o}w}", ["a", "aiaw", "aow", "axw", "er", "ia", "o", "w", "x", ]),
               ]
 
 for test_input, test_output in test_cases:
