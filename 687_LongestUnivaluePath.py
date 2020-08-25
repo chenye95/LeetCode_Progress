@@ -8,26 +8,47 @@ from _Binary_Tree import TreeNode
 
 
 class Solution:
-    def longestUnivaluePath(self, root: TreeNode) -> int:
+    def __init__(self):
         self.global_max = 0
-        self.longestUnivaluePathEndAtNode(root)
+
+    def longest_uni_value_path(self, root: TreeNode) -> int:
+        """
+        :param root: root node of a binary tree
+        :return: length of the longest path where each node has the same value, noted by number of edges on the path
+        """
+        if not root:
+            return 0
+        self.longest_uni_value_path_end_at_node(root)
         return self.global_max
 
-    def longestUnivaluePathEndAtNode(self, node: TreeNode) -> int:
-        if not node:
+    def longest_uni_value_path_end_at_node(self, node: TreeNode) -> int:
+        """
+        :return: longest uni_value path that ends at node
+        """
+        if not node or not (node.left or node.right):
             return 0
-        left_len = self.longestUnivaluePathEndAtNode(node.left) if node.left else 0
-        right_len = self.longestUnivaluePathEndAtNode(node.right) if node.right else 0
-        traverse_through_left = left_len + 1 if node.left and node.left.val == node.val else 0
-        traverse_through_right = right_len + 1 if node.right and node.right.val == node.val else 0
-        self.global_max = max(self.global_max, traverse_through_left + traverse_through_right)
-        return max(traverse_through_left, traverse_through_right)
+
+        # longest path that ends at node.left
+        len_left_child = self.longest_uni_value_path_end_at_node(node.left) if node.left else 0
+        # longest path that ends at node.right
+        len_right_child = self.longest_uni_value_path_end_at_node(node.right) if node.right else 0
+
+        # longest path through node -> node.left
+        len_through_left_child = len_left_child + 1 if node.left and node.left.val == node.val else 0
+        # longest path through node -> node.right
+        len_through_right_child = len_right_child + 1 if node.right and node.right.val == node.val else 0
+
+        # combining the left child leg and right child leg to build a full path
+        self.global_max = max(self.global_max, len_through_left_child + len_through_right_child)
+
+        return max(len_through_left_child, len_through_right_child)
 
 
 from _Binary_Tree import ConstructTree
 
 test_cases = [(ConstructTree.build_tree_leetcode([5, 4, 5, 1, 1, None, 5]), 2),
-              (ConstructTree.build_tree_leetcode([1, 4, 5, 4, 4, None, 5]), 2)]
+              (ConstructTree.build_tree_leetcode([1, 4, 5, 4, 4, None, 5]), 2),
+              (ConstructTree.build_tree_leetcode([1, 4, 5, 4, 4, 5, None]), 2), ]
 solution_class = Solution()
 for test_tree, expected_value in test_cases:
-    assert solution_class.longestUnivaluePath(test_tree.root) == expected_value
+    assert solution_class.longest_uni_value_path(test_tree.root) == expected_value
