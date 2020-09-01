@@ -82,7 +82,7 @@ class UnionFindArray:
             raise ValueError("element_count must be positive")
         self.elements_count = elements_count
         self.union_count = elements_count
-        self.union_size = [1] * (elements_count)
+        self.union_size = [1] * elements_count
         self.union_id = list(range(elements_count))
         self.use_recursion = use_recursion
 
