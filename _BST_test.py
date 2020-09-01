@@ -82,3 +82,12 @@ new_bst.root.left.right = TreeNode(2)
 for i in range(1, 5):
     assert new_bst.kthSmallest(i) == i, "Expecting %d got %d" % (i, new_bst.kthSmallest(i))
 assert new_bst.kthSmallest(5) is None
+
+new_bst = BST([5, 3, 6])
+new_bst.insert(2)
+new_bst.insert(4)
+new_bst.insert(7)
+assert new_bst.leetcode_traversal() == [5, 3, 6, 2, 4, None, 7, None, None, None, None, None, None]
+new_bst.delete_node(3)
+assert new_bst.leetcode_traversal() == [5, 4, 6, 2, None, None, 7, None, None, None, None] or \
+       new_bst.leetcode_traversal() == [5, 2, 6, None, 4, None, 7, None, None, None, None]
