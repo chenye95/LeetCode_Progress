@@ -61,7 +61,7 @@ def strong_password_checker(s: str) -> int:
         return delete_op + max(missing_types, replace_op)
 
 
-assert (strong_password_checker("") == 6)
-assert (strong_password_checker("aaa111") == 2)
-assert (strong_password_checker("1111111111") == 3)
-assert (strong_password_checker("ABABABABABABABABABAB1") == 2)
+assert strong_password_checker("") == 6
+assert strong_password_checker("aaa111") == 2
+assert strong_password_checker("1111111111") == 3
+assert strong_password_checker("ABABABABABABABABABAB1") == 2
