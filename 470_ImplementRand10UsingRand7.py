@@ -21,6 +21,7 @@ def rand10():
     while True:
         a = rand7()
         b = rand7()
+
         # idx from 1 to 49
         idx = b + (a - 1) * 7
         if idx <= 40:
@@ -48,5 +49,5 @@ def rand10():
 
 from collections import Counter
 
-N = 10000
+N = 1_000_000
 print(Counter([rand10() for _ in range(N)]))

@@ -1,20 +1,27 @@
 """
-Given a blacklist B containing unique integers from [0, N), write a function to return a uniform random integer from
-[0, N) which is NOT in B.
+Given a black_list B containing unique integers from [0, n), write a function to return a uniform random integer from
+[0, n) which is NOT in B.
 """
 from random import randint
 from typing import List
 
 
 class RandomPickBlackList:
-    def __init__(self, N: int, blacklist: List[int]):
-        black_set = set(blacklist)
-        self.white_N = N - len(black_set)
+    def __init__(self, n: int, black_list: List[int]):
+        """
+        :param n: integers from [0, n)
+        :param black_list: a subset of [0, n) to avoid by random generator
+        """
+        black_set = set(black_list)
+        self.white_N = n - len(black_set)
         key = [x for x in black_set if x < self.white_N]
-        val = [x for x in range(self.white_N, N) if x not in black_set]
+        val = [x for x in range(self.white_N, n) if x not in black_set]
         self.mapping = dict(zip(key, val))
 
     def pick(self) -> int:
+        """
+        :return: uniformly select an integer from [0, n) that is not on the black list
+        """
         i = randint(0, self.white_N - 1)
         return self.mapping.get(i, i)
 

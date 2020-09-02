@@ -7,7 +7,12 @@ Find the maximum area of an island in the given 2D array. (If there is no island
 from typing import List
 
 
-def maxAreaOfIsland(grid: List[List[int]]) -> int:
+def max_area_of_island(grid: List[List[int]]) -> int:
+    """
+    :param grid: 2D array of 0 (water) and 1 (land)
+    :return: maximum area of an island in the given 2D array
+    """
+
     def search(i: int, j: int, area_so_far: int) -> int:
         if j + 1 < len(grid[i]) and grid[i][j + 1]:
             grid[i][j + 1] = 0
@@ -32,12 +37,12 @@ def maxAreaOfIsland(grid: List[List[int]]) -> int:
     return max_area
 
 
-assert maxAreaOfIsland(grid=[[0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
-                             [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
-                             [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
-                             [0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
-                             [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0],
-                             [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
-                             [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
-                             [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]]) == 6
-assert maxAreaOfIsland(grid=[[0, 0, 0, 0, 0, 0, 0, 0]]) == 0
+assert max_area_of_island(grid=[[0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+                                [0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0],
+                                [0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 0, 0],
+                                [0, 1, 0, 0, 1, 1, 0, 0, 1, 1, 1, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0],
+                                [0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0]]) == 6
+assert max_area_of_island(grid=[[0, 0, 0, 0, 0, 0, 0, 0]]) == 0

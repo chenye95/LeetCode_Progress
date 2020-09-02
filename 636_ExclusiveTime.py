@@ -19,17 +19,17 @@ from typing import List
 
 def exclusive_time(n: int, logs: List[str]) -> List[int]:
     """
-    :param n: n unique process with id between 0 and n-1
-    :param logs: list of entries of format id:operation:timestamp, operation can either be start or end
+    :param n: n unique process with process_id between 0 and n-1
+    :param logs: list of entries of format process_id:operation:timestamp, operation can either be start or end
     :return:
     """
     tracker = [0] * (n + 1)
     stack = []
     current_process_id = -1
     for entry in logs:
-        id, operation, timestamp = entry.split(':')
-        next_process_id, int_timestamp = int(id), int(timestamp)
-        if operation == 'start':
+        process_id, operation, timestamp = entry.split(':')
+        next_process_id, int_timestamp = int(process_id), int(timestamp)
+        if operation == "start":
             # Hold current process
             # Append to stack for tracking
             tracker[current_process_id] += int_timestamp
@@ -37,7 +37,7 @@ def exclusive_time(n: int, logs: List[str]) -> List[int]:
             # Start next process
             tracker[next_process_id] -= int_timestamp
             current_process_id = next_process_id
-        elif operation == 'end':
+        elif operation == "end":
             # End current process
             # Process ends at end of timestamp period
             int_timestamp += 1

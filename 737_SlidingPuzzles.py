@@ -12,7 +12,11 @@ from collections import deque
 from typing import List
 
 
-def slidingPuzzle(board: List[List[int]]) -> int:
+def sliding_puzzle(board: List[List[int]]) -> int:
+    """
+    :param board: a 2-by-3 puzzle board
+    :return: least number of moves required so that the state of the board is solved
+    """
     m, n = 2, 3
     target = 123450
     start_position, zero_position = 0, 0
@@ -52,4 +56,4 @@ test_cases = [([[1, 2, 3], [4, 0, 5]], 1),
               ([[4, 1, 2], [5, 0, 3]], 5),
               ([[3, 2, 4], [1, 5, 0]], 14)]
 for input, output in test_cases:
-    assert slidingPuzzle(board=input) == output
+    assert sliding_puzzle(board=input) == output

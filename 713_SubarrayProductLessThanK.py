@@ -1,13 +1,13 @@
 """
 Your are given an array of positive integers nums.
 
-Count and print the number of (contiguous) subarrays where the product of all the elements in the subarray is less than
-k.
+Count and print the number of (contiguous) sub arrays where the product of all the elements in the sub array is less
+than k.
 """
 from typing import List
 
 
-def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
+def num_sub_array_product_less_than_k(nums: List[int], k: int) -> int:
     """
     :param nums: 0 < nums[i] < 1000
     :param k: 0 <= k < 10^6
@@ -18,8 +18,8 @@ def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
         return 0
     cumulative_prod = 1
     return_ans = left_pointer = 0
-    for right_pointer in range(len(nums)):
-        cumulative_prod *= nums[right_pointer]
+    for right_pointer, num_right_pointer in enumerate(nums):
+        cumulative_prod *= num_right_pointer
         while cumulative_prod >= k:
             cumulative_prod /= nums[left_pointer]
             left_pointer += 1
@@ -27,4 +27,4 @@ def numSubarrayProductLessThanK(nums: List[int], k: int) -> int:
     return return_ans
 
 
-assert numSubarrayProductLessThanK(nums=[10, 5, 2, 6], k=100) == 8
+assert num_sub_array_product_less_than_k(nums=[10, 5, 2, 6], k=100) == 8

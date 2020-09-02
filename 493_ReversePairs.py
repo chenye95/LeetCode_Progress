@@ -8,10 +8,10 @@ from copy import deepcopy
 from typing import List
 
 
-class BIT_Solution:
+class BITSolution:
     def query(self, bit: List[int], tree_idx: int) -> int:
         sum = 0
-        while tree_idx < len(bit) and tree_idx > 0:
+        while 0 < tree_idx < len(bit):
             sum += bit[tree_idx]
             tree_idx += (tree_idx & -tree_idx)      # next node that is not an ancestor of tree_idx
         return sum
@@ -32,7 +32,7 @@ class BIT_Solution:
         return count
 
 
-class MergeSort_Solution():
+class MergeSortSolution():
     def merge(self, nums: List[int], start_inclusive: int, mid_inclusive_in_left: int, end_inclusive: int) -> None:
         l_tmp = deepcopy(nums[start_inclusive:mid_inclusive_in_left + 1])
         r_tmp = deepcopy(nums[mid_inclusive_in_left + 1:end_inclusive + 1])
@@ -67,12 +67,11 @@ class MergeSort_Solution():
         else:
             return 0
 
-
     def reversePairs(self, nums: List[int]) -> int:
         return self.merge_sort_count(nums, 0, len(nums) - 1)
 
 
-solution_class = BIT_Solution()
+solution_class = BITSolution()
 test_cases = [([3, 2, 1], 1),
               ([8, 7, 6, 5, 4, 3, 2, 1], 3 * 2 + 2 * 2 + 1 * 2),
               ([1, 3, 2, 3, 1], 2),
@@ -81,7 +80,7 @@ for test_list, test_count in test_cases:
     return_res = solution_class.reversePairs(test_list)
     assert return_res == test_count, "BIT Method Expected %d Got %d" % (test_count, return_res)
 
-solution_class = MergeSort_Solution()
+solution_class = MergeSortSolution()
 for test_list, test_count in test_cases:
     return_res = solution_class.reversePairs(test_list)
     assert return_res == test_count, "Merge Sort Method Expected %d Got %d" % (test_count, return_res)

@@ -2,7 +2,7 @@
 You are given a tree with n nodes numbered from 0 to n-1 in the form of a parent array where parent[i] is the parent of
 node i. The root of the tree is node 0.
 
-Implement the function getKthAncestor(int node, int k) to return the k-th ancestor of the given node. If there is no
+Implement the function get_kth_ancestor(int node, int k) to return the k-th ancestor of the given node. If there is no
 such ancestor, return -1.
 
 The k-th ancestor of a tree node is the k-th node in the path from that node to the root.
@@ -43,7 +43,7 @@ class TreeAncestor:
         self.PRE_COMPUTE_MAX_JUMP = current_jump
         self.jump_map = jump_map
 
-    def getKthAncestor(self, node: int, k: int) -> int:
+    def get_kth_ancestor(self, node: int, k: int) -> int:
         """
         break down k into binaries of 1,0 and use jump_map for look up
             e.g. 5th (1001) ancestor = 1st ancestor of 4th ancestor of node
@@ -66,15 +66,15 @@ class TreeAncestor:
 
 # Your TreeAncestor object will be instantiated and called as such:
 # obj = TreeAncestor(n, parent)
-# param_1 = obj.getKthAncestor(node,k)
+# param_1 = obj.get_kth_ancestor(node,k)
 test_obj = TreeAncestor(7, [-1, 0, 0, 1, 1, 2, 2])
-assert test_obj.getKthAncestor(3, 1) == 1
-assert test_obj.getKthAncestor(5, 2) == 0
-assert test_obj.getKthAncestor(6, 3) == test_obj.NONE_EXISTENCE
+assert test_obj.get_kth_ancestor(3, 1) == 1
+assert test_obj.get_kth_ancestor(5, 2) == 0
+assert test_obj.get_kth_ancestor(6, 3) == test_obj.NONE_EXISTENCE
 
 test_obj = TreeAncestor(5, [-1, 0, 0, 0, 3])
-assert test_obj.getKthAncestor(1, 5) == test_obj.NONE_EXISTENCE
-assert test_obj.getKthAncestor(3, 2) == test_obj.NONE_EXISTENCE
-assert test_obj.getKthAncestor(0, 1) == test_obj.NONE_EXISTENCE
-assert test_obj.getKthAncestor(3, 1) == 0
-assert test_obj.getKthAncestor(3, 5) == test_obj.NONE_EXISTENCE
+assert test_obj.get_kth_ancestor(1, 5) == test_obj.NONE_EXISTENCE
+assert test_obj.get_kth_ancestor(3, 2) == test_obj.NONE_EXISTENCE
+assert test_obj.get_kth_ancestor(0, 1) == test_obj.NONE_EXISTENCE
+assert test_obj.get_kth_ancestor(3, 1) == 0
+assert test_obj.get_kth_ancestor(3, 5) == test_obj.NONE_EXISTENCE

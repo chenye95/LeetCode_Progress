@@ -1,15 +1,18 @@
 class CustomStack:
-    def __init__(self, maxSize: int):
+    EMPTY_STACK: int = -1
+
+    def __init__(self, max_size: int):
         """
         CustomStack(int maxSize) Initializes the object with maxSize which is the maximum number of elements in the
         stack or do nothing if the stack reached the maxSize.
-        :param maxSize: maximum number of elements in the stack
+        :param max_size: maximum number of elements in the stack
         """
         self.top_pointer = -1
-        self.initial_value = [0] * maxSize
-        # Lazy increment; 0,..,i all needs to add self.increment_value[i] at pop()
-        self.increment_value = [0] * maxSize
-        self.max_size = maxSize
+        self.initial_value = [0] * max_size
+        # Lazy increment
+        # upon pop(), stack[0], ..., stack[i] all needs to add self.increment_value[i] at pop()
+        self.increment_value = [0] * max_size
+        self.max_size = max_size
 
     def push(self, x: int) -> None:
         """
@@ -30,7 +33,7 @@ class CustomStack:
                 self.increment_value[self.top_pointer - 1] += i_inc
             self.top_pointer -= 1
             return self.initial_value[self.top_pointer + 1] + i_inc
-        return -1
+        return CustomStack.EMPTY_STACK
 
     def increment(self, k: int, val: int) -> None:
         """
@@ -53,4 +56,4 @@ customStack.increment(2, 100)  # stack becomes [201, 202, 103]
 assert customStack.pop() == 103  # return 103 --> Return top of the stack 103, stack becomes [201, 202]
 assert customStack.pop() == 202  # return 202 --> Return top of the stack 102, stack becomes [201]
 assert customStack.pop() == 201  # return 201 --> Return top of the stack 101, stack becomes []
-assert customStack.pop() == -1  # return -1 --> Stack is empty return -1
+assert customStack.pop() == customStack.EMPTY_STACK  # return -1 --> Stack is empty return -1

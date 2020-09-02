@@ -16,7 +16,7 @@ from typing import List
 from _Union_Find import UnionFindArray
 
 
-def findCriticalAndPseudoCriticalEdges(n: int, edges: List[List[int]]) -> List[List[int]]:
+def find_critical_and_pseudo_critical_edges(n: int, edges: List[List[int]]) -> List[List[int]]:
     """
     Progressively add edges, ranked in reverse order of edge weight
     Collapse original union_graph into union_graph of Unions after adding each batch of edges
@@ -119,5 +119,5 @@ test_cases = [
 for test_case in test_cases:
     n, edges, output = test_case
     expected_critical, expected_pseudo = output
-    got_critical, got_pseudo = findCriticalAndPseudoCriticalEdges(n, edges)
+    got_critical, got_pseudo = find_critical_and_pseudo_critical_edges(n, edges)
     assert got_critical == expected_critical and got_pseudo == expected_pseudo

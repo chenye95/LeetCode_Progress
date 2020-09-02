@@ -10,21 +10,28 @@ characters without disturbing the relative positions of the remaining characters
 from typing import List
 
 
-def maxDotProduct(nums1: List[int], nums2: List[int]) -> int:
+def max_dot_product(nums1: List[int], nums2: List[int]) -> int:
+    """
+    Dynamic Programming approach, loop through nums[:i] and find dot product against sub sequence of nums2
+    :return: maximum dot product between non-empty subsequences of nums1 and nums2 of the same length
+    """
     m, n = len(nums1), len(nums2)
     previous_iterations = [0] * n
     for i in range(m):
         current_iterations = [0] * n
         for j in range(n):
             current_iterations[j] = nums1[i] * nums2[j]  # Avoid empty subsequences
-            if i and j: current_iterations[j] += max(previous_iterations[j - 1], 0)
-            if i: current_iterations[j] = max(current_iterations[j], previous_iterations[j])
-            if j: current_iterations[j] = max(current_iterations[j], current_iterations[j - 1])
+            if i and j:
+                current_iterations[j] += max(previous_iterations[j - 1], 0)
+            if i:
+                current_iterations[j] = max(current_iterations[j], previous_iterations[j])
+            if j:
+                current_iterations[j] = max(current_iterations[j], current_iterations[j - 1])
         previous_iterations = current_iterations
     return previous_iterations[-1]
 
 
-assert maxDotProduct(nums1=[2, 1, -2, 5], nums2=[3, 0, -6]) == 18
-assert maxDotProduct(nums1=[3, -2], nums2=[2, -6, 7]) == 21
-assert maxDotProduct(nums1=[-1, -1], nums2=[1, 1]) == -1
-assert maxDotProduct(nums1=[2, 1, -2, 5], nums2=[3, 0, -6]) == 18
+assert max_dot_product(nums1=[2, 1, -2, 5], nums2=[3, 0, -6]) == 18
+assert max_dot_product(nums1=[3, -2], nums2=[2, -6, 7]) == 21
+assert max_dot_product(nums1=[-1, -1], nums2=[1, 1]) == -1
+assert max_dot_product(nums1=[2, 1, -2, 5], nums2=[3, 0, -6]) == 18

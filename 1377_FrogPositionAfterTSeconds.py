@@ -4,21 +4,28 @@ second, the frog jumps from its current vertex to another unvisited vertex if th
 not jump back to a visited vertex. In case the frog can jump to several vertices it jumps randomly to one of them with
 the same probability, otherwise, when the frog can not jump to any unvisited vertex it jumps forever on the same vertex.
 
-The edges of the undirected tree are given in the array edges, where edges[i] = [fromi, toi] means that exists an edge
-connecting directly the vertices fromi and toi.
+The edges of the undirected tree are given in the array edges, where edges[i] = [from_i, to_i] means that exists an edge
+connecting directly the vertices from_i and to_i.
 
 Return the probability that after t seconds the frog is on the vertex target.
 """
 from typing import List
 
 
-def frogPosition(n: int, edges: List[List[int]], t: int, target: int) -> float:
+def frog_position(n: int, edges: List[List[int]], t: int, target: int) -> float:
+    """
+    :param n: an undirected tree of n vertices numbered 1 to n
+    :param edges: undirected edges connecting two vertices from_i and to_i
+    :param t: t seconds elapsed
+    :param target: target vertex for the frog
+    :return: probability that after t seconds the frog is on vertex target
+    """
     start_from = 1
     if not edges:
         if target == start_from:
             return 1.0
         else:
-            return 0
+            return 0.0
     connected_to = {i: set() for i in range(1, n + 1)}
     for from_i, to_j in edges:
         connected_to[from_i].add(to_j)
@@ -39,14 +46,16 @@ def frogPosition(n: int, edges: List[List[int]], t: int, target: int) -> float:
                 visited.add(next_node)
                 next_step.append((next_node, next_node_prob))
         current_step = next_step
-    return 0
+    return 0.0
 
 
 epsilon = 1e-10
-assert abs(frogPosition(n=3, edges=[[2, 1], [3, 2]], t=1, target=2) - 1.0) < epsilon
-assert abs(frogPosition(n=7, edges=[[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], t=2, target=4) - 1.0 / 6) < epsilon
-assert abs(frogPosition(n=7, edges=[[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], t=1, target=7) - 1.0 / 3) < epsilon
+assert abs(frog_position(n=3, edges=[[2, 1], [3, 2]], t=1, target=2) - 1.0) < epsilon
 assert abs(
-    frogPosition(n=7, edges=[[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], t=20, target=6) - 1.0 / 6) < epsilon
-assert abs(frogPosition(n=4, edges=[[2, 1], [3, 2], [4, 1]], t=4, target=1) - 0) < epsilon
-assert abs(frogPosition(n=1, edges=[], t=1, target=1) - 1) < epsilon
+    frog_position(n=7, edges=[[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], t=2, target=4) - 1.0 / 6) < epsilon
+assert abs(
+    frog_position(n=7, edges=[[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], t=1, target=7) - 1.0 / 3) < epsilon
+assert abs(
+    frog_position(n=7, edges=[[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], t=20, target=6) - 1.0 / 6) < epsilon
+assert abs(frog_position(n=4, edges=[[2, 1], [3, 2], [4, 1]], t=4, target=1) - 0) < epsilon
+assert abs(frog_position(n=1, edges=[], t=1, target=1) - 1) < epsilon

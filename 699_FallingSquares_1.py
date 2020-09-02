@@ -17,7 +17,7 @@ after dropping squares represented by positions[0], positions[1], ..., positions
 from typing import List
 
 
-def fallingSquares(positions: List[List[int]]) -> List[int]:
+def falling_squares_one(positions: List[List[int]]) -> List[int]:
     # Block (Square Root) Decomposition
     # RunTime O(N*sqrt(N))
     # Divide coordinates into sqrt(N) groups, each with sqrt(N) coordinates
@@ -85,7 +85,7 @@ test_cases = [([[1, 2], [2, 3], [6, 1]], [2, 5, 5]),
               ([[100, 100], [200, 100]], [100, 100]),
               ([[7, 1], [3, 3], [7, 5]], [1, 3, 6])]
 for input, output in test_cases:
-    assert fallingSquares(input) == output
+    assert falling_squares_one(input) == output
 
 from random import randint
 from datetime import datetime, timedelta
@@ -100,6 +100,6 @@ for i in range(total_runs):
     for _ in range(N):
         input.append([randint(1, 10**8), randint(1, 10**6)])
     start_time = datetime.now()
-    fallingSquares(input)
+    falling_squares_one(input)
     cumulative_time += (datetime.now() - start_time)
 print('%d Tests total ' % total_runs, cumulative_time)

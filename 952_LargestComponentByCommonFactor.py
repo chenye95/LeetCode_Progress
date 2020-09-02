@@ -12,13 +12,13 @@ from typing import Set, List
 from _Union_Find import UnionFindArray
 
 
-def prime_set(n: int) -> Set[int]:
+def get_prime_set(n: int, start: int = 2) -> Set[int]:
     """
     :return: set of prime factors of integer n
     """
-    for i in range(2, int(sqrt(n)) + 1):
+    for i in range(start, int(sqrt(n)) + 1):
         if n % i == 0:
-            return prime_set(n // i) | {i}
+            return {i} | get_prime_set(n // i, i)
     return {n}
 
 
@@ -31,7 +31,7 @@ def largest_component_size(num_list: List[int]) -> int:
     primes_list = defaultdict(list)
 
     for i, num in enumerate(num_list):
-        n_prime_set = prime_set(num)
+        n_prime_set = get_prime_set(num)
         for p_n in n_prime_set:
             primes_list[p_n].append(i)
 
@@ -42,6 +42,7 @@ def largest_component_size(num_list: List[int]) -> int:
     return max(union_find.component_size(i) for i in range(union_find.size()))
 
 
+assert largest_component_size([83, 99, 39, 11, 19, 30, 31]) == 4
 assert largest_component_size([4, 6, 15, 35]) == 4
 assert largest_component_size([20, 50, 9, 63]) == 2
 assert largest_component_size([2, 3, 6, 7, 4, 12, 21, 39]) == 8

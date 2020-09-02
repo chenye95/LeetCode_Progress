@@ -13,24 +13,28 @@ from _Linked_List import ListNode, LinkedList
 def is_sub_path(head: ListNode, root: TreeNode) -> bool:
     """
     :param head: head of a linked list
-    :param root: root of a Binary Tree
+    :param root: probe_root of a Binary Tree
     :return: whether elements from head corresponding to some downward path in binary tree
     """
 
-    def downward_probe(head: ListNode, root: TreeNode) -> bool:
-        if not head:
+    def downward_probe(probe_head: ListNode, probe_root: TreeNode) -> bool:
+        """
+        :return: whether elements in sub list probe_head corresponding to some downward path in sub tree probe_head
+        """
+        if not probe_head:
             # end of linked list
             return True
-        if not root:
+        if not probe_root:
             # end of binary tree
             return False
         # Current level match up and next node match up with either child node
-        return head.val == root.val and (downward_probe(head.next, root.left) or downward_probe(head.next, root.right))
+        return probe_head.val == probe_root.val and \
+               (downward_probe(probe_head.next, probe_root.left) or downward_probe(probe_head.next, probe_root.right))
 
     if not root:
         # Empty tree
         return False
-    # Start downward path from root
+    # Start downward path from probe_root
     # or wait until child node to start downward path
     return downward_probe(head, root) or is_sub_path(head, root.left) or is_sub_path(head, root.right)
 

@@ -1,11 +1,11 @@
 """
-Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals
+Given an array of integers and an integer k, you need to find the total number of continuous sub arrays whose sum equals
 to k.
 """
 from typing import List
 
 
-def subarraySum(nums: List[int], k: int) -> int:
+def sub_array_sum(nums: List[int], k: int) -> int:
     """
     :return: number of pairs (i, j) such that sum(nums[i:j]) == k
     """
@@ -23,4 +23,4 @@ def subarraySum(nums: List[int], k: int) -> int:
     return return_count
 
 
-assert subarraySum(nums=[1, 1, 1], k=2) == 2
+assert sub_array_sum(nums=[1, 1, 1], k=2) == 2

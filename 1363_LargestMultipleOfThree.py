@@ -9,7 +9,11 @@ If there is no answer return an empty string.
 from typing import List
 
 
-def largestMultipleOfThree(digits: List[int]) -> str:
+def largest_multiple_of_three(digits: List[int]) -> str:
+    """
+    :param digits: array of digits 0-9
+    :return: largest multiple of three that can be formed by concatenating some of given digits in any order
+    """
     digits.sort(reverse=True)
     if digits[0] == 0:
         return '0'
@@ -44,4 +48,4 @@ test_cases = [([0,0,0,0,0,0], '0'),
               ([5,8], ''),
               ([1,1,1,2], '111')]
 for input, output in test_cases:
-    assert largestMultipleOfThree(input) == output
+    assert largest_multiple_of_three(input) == output

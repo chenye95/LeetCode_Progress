@@ -1,5 +1,5 @@
 """
-Given the array nums consisting of n positive integers. You computed the sum of all non-empty continous subarrays from
+Given the array nums consisting of n positive integers. You computed the sum of all non-empty continuous sub-arrays from
 the array and then sort them in non-decreasing order, creating a new array of n * (n + 1) / 2 numbers.
 
 Return the sum of the numbers from index left to index right (indexed from 1), inclusive, in the new array. Since the

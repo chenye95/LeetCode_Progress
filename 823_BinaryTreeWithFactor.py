@@ -10,7 +10,7 @@ How many binary trees can we make?  Return the answer modulo 10 ** 9 + 7.
 from typing import List
 
 
-def numFactoredBinaryTrees(A: List[int]) -> int:
+def num_factored_binary_trees(A: List[int]) -> int:
     """
     Dynamic Programming Approach
     :param A: an array of unique integers, each integer is strictly greater than 1
@@ -34,9 +34,9 @@ def numFactoredBinaryTrees(A: List[int]) -> int:
     return sum(dp_memory) % MOD_VALUE
 
 
-assert 3 == numFactoredBinaryTrees(A=[2, 4])
-assert 7 == numFactoredBinaryTrees(A=[2, 4, 5, 10])
-assert 888820343 == numFactoredBinaryTrees(
+assert 3 == num_factored_binary_trees(A=[2, 4])
+assert 7 == num_factored_binary_trees(A=[2, 4, 5, 10])
+assert 888820343 == num_factored_binary_trees(
     [767520, 91499520, 1336764, 41598354, 48070400, 14676480, 51781632, 45603480, 43200, 5640, 665, 67392000, 258876,
      177553950, 281424, 838515600, 88179840, 695705472, 53143734, 670320, 806, 647534592, 289476000, 259616700,
      538989360, 18461520, 493722432, 372960, 49, 9013200, 1462, 160496640, 8262, 551110560, 394740, 3455060, 9752400,

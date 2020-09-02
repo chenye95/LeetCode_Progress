@@ -1,7 +1,7 @@
 """
-Given an array A, we may rotate it by a non-negative integer K so that the array becomes A[K], A[K+1], A{K+2],
-... A[A.length - 1], A[0], A[1], ..., A[K-1].  Afterward, any entries that are less than or equal to their index are
-worth 1 point.
+Given an array nums, we may rotate it by a non-negative integer K so that the array becomes nums[K], nums[K+1],
+nums{K+2], ... nums[nums.length - 1], nums[0], nums[1], ..., nums[K-1].  Afterward, any entries that are less than or
+equal to their index are worth 1 point.
 
 For example, if we have [2, 4, 1, 3, 0], and we rotate by K = 2, it becomes [1, 3, 0, 2, 4].  This is worth 3 points
 because 1 > 0 [no points], 3 > 1 [no points], 0 <= 2 [one point], 2 <= 3 [one point], 4 <= 4 [one point].
@@ -12,27 +12,27 @@ there are multiple answers, return the smallest such index K.
 from typing import List
 
 
-def bestRotation(A: List[int]) -> int:
+def bestRotation(nums: List[int]) -> int:
     """
     Interval Stabbing Approach
-    :param A:
-    :return:
+    :param nums: array of integers
+    :return: index k that yields that highest score post rotation
     """
-    N = len(A)
-    interval_overlap = [0] * N
-    for i, a in enumerate(A):
-        # Calculate the interval of rotation steps for which A[i] = a will not score point
+    n = len(nums)
+    interval_overlap = [0] * n
+    for i, a in enumerate(nums):
+        # Calculate the interval of rotation steps for which nums[i] = a will not score point
         # left inclusive, right exclusive
-        interval_left, interval_right = (i - a + 1) % N, (i + 1) % N
+        interval_left, interval_right = (i - a + 1) % n, (i + 1) % n
         interval_overlap[interval_left] -= 1
         interval_overlap[interval_right] += 1
 
         if interval_left > interval_right:
             # loop around then break into two intervals
             interval_overlap[0] -= 1
-            # doesn't have to keep track of interval_overlap[N]
+            # doesn't have to keep track of interval_overlap[n]
 
-    smallest_overlap = -N
+    smallest_overlap = -n
     rotation_steps = current_overlap = 0
     for i, score in enumerate(interval_overlap):
         current_overlap += score
