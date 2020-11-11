@@ -33,15 +33,15 @@ class RandomPointCircle:
                 self.y_center + distance * sin(degree)]
 
 
-x_center, y_center = random() * 10 + 10, random() * 5 + 10
-radius = 5
+test_x_center, test_y_center = random() * 10 + 10, random() * 5 + 10
+test_radius = 5
 N = 500
 x_list, y_list = [0] * N, [0] * N
 
-circle = RandomPointCircle(radius=radius, x_center=x_center, y_center=y_center)
+circle = RandomPointCircle(radius=test_radius, x_center=test_x_center, y_center=test_y_center)
 for i in range(N):
     x, y = circle.random_point()
-    assert (x - x_center) * (x - x_center) + (y - y_center) * (y - y_center) <= radius ** 2
+    assert (x - test_x_center) * (x - test_x_center) + (y - test_y_center) * (y - test_y_center) <= test_radius ** 2
     x_list[i], y_list[i] = x, y
 
 """
