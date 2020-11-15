@@ -13,14 +13,14 @@ def longest_common_subsequence(text1: str, text2: str) -> int:
     """
     short_text, long_text = (text1, text2) if len(text1) <= len(text2) else (text2, text1)
     prev_iteration = [0] * (len(short_text) + 1)
+    curr_iteration = [0] * (len(short_text) + 1)
     for bi in long_text:
-        curr_iteration = [0] * (len(short_text) + 1)
         for i, ai in enumerate(short_text):
             if ai == bi:
                 curr_iteration[i + 1] = prev_iteration[i] + 1
             else:
                 curr_iteration[i + 1] = max(curr_iteration[i], prev_iteration[i + 1])
-        prev_iteration = curr_iteration
+        prev_iteration, curr_iteration = curr_iteration, prev_iteration
     return prev_iteration[-1]
 
 
