@@ -229,16 +229,16 @@ class BinaryTree:
         """
 
         def right_view_add_new_depth(node: TreeNode, depth: int):
-            nonlocal left_view
+            nonlocal right_view
             if node:
-                if depth == len(left_view):
-                    left_view.append(node.val)
+                if depth == len(right_view):
+                    right_view.append(node.val)
                 right_view_add_new_depth(node.right, depth + 1)
                 right_view_add_new_depth(node.left, depth + 1)
 
-        left_view = []
+        right_view = []
         right_view_add_new_depth(self.root, 0)
-        return left_view
+        return right_view
 
     def left_side_view(self) -> List[TREE_NODE_TYPE]:
         """
@@ -246,16 +246,16 @@ class BinaryTree:
         """
 
         def left_view_add_new_layer(node: TreeNode, depth: int):
-            nonlocal right_view
+            nonlocal left_view
             if node:
-                if depth == len(right_view):
-                    right_view.append(node.val)
+                if depth == len(left_view):
+                    left_view.append(node.val)
                 left_view_add_new_layer(node.left, depth + 1)
                 left_view_add_new_layer(node.right, depth + 1)
 
-        right_view = []
+        left_view = []
         left_view_add_new_layer(self.root, 0)
-        return right_view
+        return left_view
 
 
 class ConstructTree:
