@@ -10,6 +10,7 @@ from _Binary_Tree import TreeNode
 
 def path_sum(root: TreeNode, target_sum: int) -> List[List[int]]:
     """
+    DFS Solution
     :param root: root of Binary Tree
     :param target_sum: target sum for root-to-leaf paths add up to
     :return: list of all root-to-leaf paths that add up to target_sum; each path is represented as list of node values
