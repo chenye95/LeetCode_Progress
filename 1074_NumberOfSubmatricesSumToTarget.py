@@ -26,6 +26,7 @@ def num_submatrix_sum_target(matrix: List[List[int]], target: int) -> int:
         for r_2 in range(r_1 + 1, n_row + 1):
             seen_in_current_section = {0: 1}
             for c_plus_one in range(1, n_col + 1):
+                # x is the sum of submatrix (r_1, 0, r_2, c_plus_one - 1)
                 x = cumulative_sum[r_2][c_plus_one] - cumulative_sum[r_1][c_plus_one]
                 if x - target in seen_in_current_section:
                     return_result += seen_in_current_section[x - target]

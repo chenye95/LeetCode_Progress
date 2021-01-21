@@ -24,11 +24,13 @@ def get_skyline(buildings: List[List[int]]) -> List[List[int]]:
             # Start of a new block or continuation of an existing block
             x = buildings[adding_i][0]
             while adding_i < total_n and buildings[adding_i][0] == x:
+                # need to add all buildings that start at x to the block together
                 heapq.heappush(live_buildings, (-buildings[adding_i][2], -buildings[adding_i][1]))
                 adding_i += 1
         else:
             # Scanning through an existing block
             x = -live_buildings[0][1]
+            # in this block, tallest building ends at x
             while live_buildings and -live_buildings[0][1] <= x:
                 # Pop every interesting point hiding behind the tallest building
                 heapq.heappop(live_buildings)

@@ -9,12 +9,16 @@ from typing import List
 
 
 def max_sub_array(nums: List[int]) -> int:
+    """
+    Greedy algorithm
+    """
     max_tracker = nums[0]
     accumulation_tracker = 0
     for n_i in nums:
         accumulation_tracker += n_i
         if accumulation_tracker > max_tracker:
             max_tracker = accumulation_tracker
+        # keep adding int until the accumulator is negative
         if accumulation_tracker < 0:
             accumulation_tracker = 0
     return max_tracker

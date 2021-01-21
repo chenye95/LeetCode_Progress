@@ -13,6 +13,7 @@ def restore_ip_address(s: str) -> List[str]:
     def dfs_helper(remainder: str, part_idx: int, path_so_far: str, ref_result: List[str]) -> None:
         if part_idx == 4:
             if not remainder:
+                # Remove trailing .
                 ref_result.append(path_so_far[:-1])
             return
         # Each part can not be longer than 3 digits
@@ -24,7 +25,7 @@ def restore_ip_address(s: str) -> List[str]:
         # Two or Three Digits, need to avoid leading 0
         if remainder[0] != '0' and len(remainder) >= 2:
             dfs_helper(remainder[2:], part_idx + 1, path_so_far + remainder[:2] + '.', ref_result)
-            if len(remainder) >= 3 and int(remainder[:3]) < 256:
+            if len(remainder) >= 3 and remainder[:3] < '256':
                 dfs_helper(remainder[3:], part_idx + 1, path_so_far + remainder[:3] + '.', ref_result)
 
     return_list = []

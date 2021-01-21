@@ -8,23 +8,23 @@ from typing import List, Dict
 
 
 def find_words(board: List[List[chr]], words: List[str]) -> List[str]:
-    END_OF_WORD = '$'
+    _end_of_word = '$'
     word_trie = {}
     for word in words:
         current_node = word_trie
         for letter in word:
             current_node = current_node.setdefault(letter, {})
-        current_node[END_OF_WORD] = word
+        current_node[_end_of_word] = word
 
     total_rows, total_cols = len(board), len(board[0])
     return_list = []
 
     def explore_board(row: int, col: int, parent_node: Dict[chr, Dict]) -> None:
-        nonlocal board, END_OF_WORD, return_list, total_rows, total_cols
+        nonlocal board, _end_of_word, return_list, total_rows, total_cols
         curr_letter = board[row][col]
         curr_node = parent_node[curr_letter]
         # Do not find repetitive words
-        trie_word = curr_node.pop(END_OF_WORD, None)
+        trie_word = curr_node.pop(_end_of_word, None)
         if trie_word:
             return_list.append(trie_word)
 
