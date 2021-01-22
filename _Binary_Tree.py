@@ -14,10 +14,10 @@ def get_height(current_node: TreeNode):
 
 
 class TreeNode:
-    def __init__(self, x: TREE_NODE_TYPE):
+    def __init__(self, x: TREE_NODE_TYPE, left: TreeNode = None, right: TreeNode = None):
         self.val = x
-        self.left = None
-        self.right = None
+        self.left = left
+        self.right = right
 
     def height_of_subtree(self):
         return get_height(self)
@@ -133,7 +133,7 @@ class BinaryTree:
             else:
                 # Find the inorder predecessor of current
                 predecessor = current_node.left
-                while (predecessor.right is not None and predecessor.right != current_node):
+                while predecessor.right is not None and predecessor.right != current_node:
                     predecessor = predecessor.right
 
                 # Make current_node the right child of its inorder predecessor
