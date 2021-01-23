@@ -10,6 +10,7 @@ from typing import List
 
 def all_paths_source_target(graph: List[List[int]]) -> List[List[int]]:
     """
+    BFS Solution
     :param graph: an acyclic graph, where graph[i] list all directed edge out of node i
     :return: list of all paths from node 0 to node N-1
     """
@@ -20,10 +21,10 @@ def all_paths_source_target(graph: List[List[int]]) -> List[List[int]]:
     while running_path:
         current_path = running_path.pop()
         current_node = current_path[-1]
-        for next_node in graph[current_node]:
-            if next_node == target_node:
-                return_list.append(current_path + [next_node])
-            else:
+        if current_node == target_node:
+            return_list.append(current_path)
+        else:
+            for next_node in graph[current_node]:
                 running_path.append(current_path + [next_node])
 
     return return_list

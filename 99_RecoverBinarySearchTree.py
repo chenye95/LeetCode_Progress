@@ -76,15 +76,15 @@ def is_valid_BST(root: TreeNode) -> bool:
     def BST_checker(current_node: TreeNode) -> Tuple[int, int]:
         if current_node.left:
             left_lower, left_upper = BST_checker(current_node.left)
-            # Left tree contains nodes with keys strictly less than node's key
-            if left_lower > left_upper or left_upper >= current_node.val:
+            # Left tree contains nodes with keys less than or equal to node's key
+            if left_lower > left_upper or left_upper > current_node.val:
                 return _invalid_bst_lower, _invalid_bst_upper
         else:
             left_lower = current_node.val
         if current_node.right:
             right_lower, right_upper = BST_checker(current_node.right)
-            # Right tree contains nodes with keys strictly greater than node's key
-            if right_lower > right_upper or right_lower <= current_node.val:
+            # Right tree contains nodes with keys greater than or equal to node's key
+            if right_lower > right_upper or right_lower < current_node.val:
                 return _invalid_bst_lower, _invalid_bst_upper
         else:
             right_upper = current_node.val
