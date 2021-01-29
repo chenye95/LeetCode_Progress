@@ -21,14 +21,15 @@ def least_interval(tasks: List[str], n: int) -> int:
     # find the most repetitive tasks and arrange them first
     count_by_task = list(Counter(tasks).values())
     most_repetition = max(count_by_task)
-    top_contender = count_by_task.count(most_repetition)
-    # if top_contender <= n + 1, arrange the top contenders in group and ensure n units apart;
-    # - if gap > len(remainder), fill in the gaps with remainder, len: (most_repetition - 1) * (n + 1) + top_contender
+    task_with_most_repetition = count_by_task.count(most_repetition)
+    # if task_with_most_repetition <= n + 1, arrange the top contenders in group and ensure n units apart;
+    # - if gap > len(remainder), fill in the gaps with remainder,
+    #   len: (most_repetition - 1) * (n + 1) + task_with_most_repetition
     # - if gap <= len(remainder), extend out to len(tasks)
-    # if top_contender > n + 1, arrange the top contenders in group
+    # if task_with_most_repetition > n + 1, arrange the top contenders in group
     # - append the remainder to the end, or insert in between groups
     # - total length, len(tasks)
-    return max(len(tasks), (most_repetition - 1) * (n + 1) + top_contender)
+    return max(len(tasks), (most_repetition - 1) * (n + 1) + task_with_most_repetition)
 
 
 assert least_interval(tasks=["A", "A", "A", "B", "B", "B"], n=2) == 8
