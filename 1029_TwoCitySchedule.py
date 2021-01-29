@@ -18,4 +18,7 @@ def two_city_scheduling(costs: List[List[int]]) -> int:
            sum(costs[i][1] for i in range(len(costs) // 2, len(costs)))
 
 
-assert two_city_scheduling([[10, 20], [30, 200], [400, 50], [30, 20]]) == 110
+assert two_city_scheduling(costs=[[10, 20], [30, 200], [400, 50], [30, 20]]) == 110
+assert two_city_scheduling(costs=[[259, 770], [448, 54], [926, 667], [184, 139], [840, 118], [577, 469]]) == 1859
+assert two_city_scheduling(
+    costs=[[515, 563], [451, 713], [537, 709], [343, 819], [855, 779], [457, 60], [650, 359], [631, 42]]) == 3086

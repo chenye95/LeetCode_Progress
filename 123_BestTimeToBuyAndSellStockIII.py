@@ -20,21 +20,22 @@ def max_profit(prices: List[int]) -> int:
 
     n = len(prices)
 
-    # best trade if we sell before day i, including day i
+    # best trade if we sell before day t, including day t
     max_profit_before_day_i = [0] * n
     min_price_before_day_i = prices[0]
 
-    # best trade if we buy after day i, including day i
+    # best trade if we buy after day t, including day t
     max_profit_after_day_i = [0] * n
     max_price_after_day_i = prices[-1]
 
-    for i in range(1, n):
-        min_price_before_day_i = min(min_price_before_day_i, prices[i])
-        max_profit_before_day_i[i] = max(max_profit_before_day_i[i - 1], prices[i] - min_price_before_day_i)
-        max_price_after_day_i = max(max_price_after_day_i, prices[-1 - i])
-        max_profit_after_day_i[-1 - i] = max(max_profit_after_day_i[-i], max_price_after_day_i - prices[-1 - i])
+    for t in range(1, n):
+        min_price_before_day_i = min(min_price_before_day_i, prices[t])
+        max_profit_before_day_i[t] = max(max_profit_before_day_i[t - 1], prices[t] - min_price_before_day_i)
+    for t in range(n - 2, -1, -1):
+        max_price_after_day_i = max(max_price_after_day_i, prices[t])
+        max_profit_after_day_i[t] = max(max_profit_after_day_i[t + 1], max_price_after_day_i - prices[t])
 
-    return max(max_profit_before_day_i[i] + max_profit_after_day_i[i] for i in range(n))
+    return max(max_profit_before_day_i[t] + max_profit_after_day_i[t] for t in range(n))
 
 
 assert max_profit(prices=[2, 4, 1]) == 2
