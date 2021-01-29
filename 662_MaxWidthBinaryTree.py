@@ -18,7 +18,7 @@ def width_of_binary_tree(root: TreeNode) -> int:
     if not root:
         return 0
 
-    current_level = deque([(root, 0)])
+    current_level = deque([(root, 0)])  # (node, node_id)
     max_width = 0
 
     while current_level:
