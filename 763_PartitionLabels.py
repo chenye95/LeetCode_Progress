@@ -18,6 +18,7 @@ def partition_labels(s: str) -> List[int]:
     current_end = current_start = 0
     partition_len = []
     for i, c in enumerate(s):
+        # Scan for new characters that will extend out current_end
         current_end = max(current_end, last_appears[c])
         if i == current_end:
             partition_len.append(i - current_start + 1)
