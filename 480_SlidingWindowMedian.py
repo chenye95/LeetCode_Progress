@@ -22,6 +22,7 @@ def median_sliding_window(nums: List[int], k: int) -> List[float]:
         return large_half[0][0] if k & 1 else (large_half[0][0] - small_half[0][0]) / 2.
 
     # Keep smaller half of the list in a max_heap, and bigger half in a min_heap
+    # Enforce in the active sliding window, len(small_half) <= len(large_half) <= len(small_half) + 1
     small_half: List[Tuple[int, int]] = []
     large_half: List[Tuple[int, int]] = []
 
