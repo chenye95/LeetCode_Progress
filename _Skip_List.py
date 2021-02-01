@@ -3,7 +3,7 @@ Design a SkipList without using any built-in libraries.
 
 A SkipList is a data structure that takes O(log(n)) time to add, erase and search. Comparing with treap and red-black
 tree which has the same function and performance, the code length of SkipList can be comparatively short and the idea
-behind Skiplists are just simple linked lists.
+behind Skip Lists are just simple linked lists.
 
 - 0 <= value, target <= 20000
 - At most 50000 calls will be made to search, add, and erase.
@@ -11,7 +11,7 @@ behind Skiplists are just simple linked lists.
 from __future__ import annotations
 
 from random import random
-from typing import Union
+from typing import Union, List, Optional
 
 SkipList_Value_Type = Union[int, chr, str]
 
@@ -73,7 +73,7 @@ class SkipList:
         """
         current_node = self.lists[-1][0]
         current_level = len(self.lists) - 1
-        stack = [None] * len(self.lists)
+        stack: List[Optional[SkipListNode]] = [None] * len(self.lists)
         while current_node:
             if current_node.next is None or current_node.next.value > value:
                 stack[len(self.lists) - 1 - current_level] = current_node  # FIFO
@@ -91,7 +91,7 @@ class SkipList:
         prev_level_added = None
         current_level = 0
         while proceed:
-            current_level_prev = stack.pop()
+            current_level_prev: SkipListNode = stack.pop()
             current_level_prev.next = SkipListNode(value=value,
                                                    next=current_level_prev.next,
                                                    down=prev_level_added, )
