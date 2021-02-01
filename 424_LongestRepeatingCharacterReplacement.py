@@ -15,11 +15,11 @@ def character_replacement(s: str, k: int) -> int:
     if k > 0:
         window_count = Counter(s[:k])
         most_chr_in_window = max(window_count.values())
-        window_start = 0
     else:
         window_count = Counter()
-        most_chr_in_window = window_start = 0
+        most_chr_in_window = 0
 
+    window_start = 0
     for window_end in range(k, len(s)):
         window_count[s[window_end]] += 1
         if window_count[s[window_end]] > most_chr_in_window:

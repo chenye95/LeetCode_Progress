@@ -1,14 +1,15 @@
 """
-Design a Skiplist without using any built-in libraries.
+Design a SkipList without using any built-in libraries.
 
-A Skiplist is a data structure that takes O(log(n)) time to add, erase and search. Comparing with treap and red-black
-tree which has the same function and performance, the code length of Skiplist can be comparatively short and the idea
+A SkipList is a data structure that takes O(log(n)) time to add, erase and search. Comparing with treap and red-black
+tree which has the same function and performance, the code length of SkipList can be comparatively short and the idea
 behind Skiplists are just simple linked lists.
 
 - 0 <= num, target <= 20000
 - At most 50000 calls will be made to search, add, and erase.
 """
 from random import random
+from typing import List, Optional
 
 
 class SkipListNode:
@@ -19,7 +20,7 @@ class SkipListNode:
         self.down = down
 
 
-class Skiplist:
+class SkipList:
     def __init__(self, initial_levels=4):
         self.lists = [[SkipListNode(), 0] for i in range(initial_levels)]
         for current_head, next_head in zip(self.lists[:-1], self.lists[1:]):
@@ -43,10 +44,10 @@ class Skiplist:
     def add(self, num: int) -> None:
         current_node = self.lists[-1][0]
         current_level = len(self.lists) - 1
-        stack = [None] * len(self.lists)
+        stack: List[Optional[SkipListNode]] = [None] * len(self.lists)
         while current_node:
             if current_node.next is None or current_node.next.value > num:
-                stack[len(self.lists) - 1 - current_level] = current_node # FIFO
+                stack[len(self.lists) - 1 - current_level] = current_node  # FIFO
                 current_node = current_node.down
                 current_level -= 1
             elif current_node.next.value == num:
@@ -61,10 +62,10 @@ class Skiplist:
         prev_level_added = None
         current_level = 0
         while proceed:
-            current_level_prev = stack.pop()
+            current_level_prev: SkipListNode = stack.pop()
             current_level_prev.next = SkipListNode(value=num,
                                                    next=current_level_prev.next,
-                                                   down=prev_level_added,)
+                                                   down=prev_level_added, )
             prev_level_added = current_level_prev.next
             self.lists[current_level][1] += 1
             proceed = random() < self.proceed_threshold and stack
@@ -116,7 +117,7 @@ from random import randint
 
 def test_case_1(N=10000):
     previous_time_stamp = datetime.now()
-    test = Skiplist()
+    test = SkipList()
     assert not test.search(N)
     print("Test Add Operations")
     for i in range(N):
@@ -160,7 +161,7 @@ def test_case_1(N=10000):
 
 
 def test_case_2(N=100000):
-    test_class = Skiplist()
+    test_class = SkipList()
     action_list = [0, 0, 0]
 
     start_time = datetime.now()
