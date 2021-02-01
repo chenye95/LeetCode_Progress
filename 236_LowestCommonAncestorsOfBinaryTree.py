@@ -4,11 +4,43 @@ Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in
 According to the definition of LCA on Wikipedia: “The lowest common ancestor is defined between two nodes p and q as the
  lowest node in T that has both p and q as descendants (where we allow a node to be a descendant of itself).”
 """
-from _Binary_Tree import TreeNode, ConstructTree
 from typing import Optional
 
+from _Binary_Tree import TreeNode, ConstructTree
 
-def lowest_common_ancestor(root: TreeNode, p: TreeNode, q: TreeNode) -> Optional[TreeNode]:
+
+def lowest_common_ancestor_1(root: TreeNode, p: TreeNode, q: TreeNode) -> Optional[TreeNode]:
+    """
+    Depth search first to check for p and q
+    Recurse and find the lowest common ancestor
+    """
+
+    def recurse_tree(current_node: TreeNode) -> bool:
+        """
+        :return: True if either p or q resides in the subtree from current_node
+        """
+        nonlocal lca_node
+
+        if not current_node:
+            return False
+
+        left_contains = recurse_tree(current_node.left)
+        right_contains = recurse_tree(current_node.right)
+
+        current_node_matches = (current_node == p) or (current_node == q)
+
+        if left_contains + right_contains + current_node_matches >= 2:
+            # Two of the three flags are true -> found lowest common ancestor
+            lca_node = current_node
+
+        return current_node_matches or left_contains or right_contains
+
+    lca_node = None
+    recurse_tree(root)
+    return lca_node
+
+
+def lowest_common_ancestor_2(root: TreeNode, p: TreeNode, q: TreeNode) -> Optional[TreeNode]:
     # state to mark node exploration
     # defined as number of child node left to be explored
     _node_state_both_pending = 2
@@ -80,17 +112,21 @@ def lowest_common_ancestor(root: TreeNode, p: TreeNode, q: TreeNode) -> Optional
 test_tree = ConstructTree.build_tree_leetcode(list(range(1, 16)))
 node_p = test_tree.root.left.left.right
 node_q = test_tree.root.left.right.right
-assert lowest_common_ancestor(test_tree.root, node_p, node_q).val == 2
+assert lowest_common_ancestor_1(test_tree.root, node_p, node_q).val == 2
+assert lowest_common_ancestor_2(test_tree.root, node_p, node_q).val == 2
 
 test_tree = ConstructTree.build_tree_leetcode([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
 node_p = test_tree.root.left
 node_q = test_tree.root.right
-assert lowest_common_ancestor(test_tree.root, node_p, node_q).val == 3
+assert lowest_common_ancestor_1(test_tree.root, node_p, node_q).val == 3
+assert lowest_common_ancestor_2(test_tree.root, node_p, node_q).val == 3
 
 node_q = test_tree.root.left.right.right
-assert lowest_common_ancestor(test_tree.root, node_p, node_q).val == 5
+assert lowest_common_ancestor_1(test_tree.root, node_p, node_q).val == 5
+assert lowest_common_ancestor_2(test_tree.root, node_p, node_q).val == 5
 
 test_tree = ConstructTree.build_tree_leetcode([1, 2])
 node_p = test_tree.root
 node_q = test_tree.root.left
-assert lowest_common_ancestor(test_tree.root, node_p, node_q).val == 1
+assert lowest_common_ancestor_1(test_tree.root, node_p, node_q).val == 1
+assert lowest_common_ancestor_2(test_tree.root, node_p, node_q).val == 1

@@ -16,8 +16,8 @@ from _Binary_Tree import TreeNode, ConstructTree, BinaryTree, TREE_NODE_TYPE
 
 
 class Codec:
-    def __init__(self, mode: TREE_NODE_TYPE = int):
-        self.mode = mode
+    def __init__(self, node_val_type: TREE_NODE_TYPE = int):
+        self.node_val_type = node_val_type
         self.split_chr = ','
 
     def serialize(self, root: TreeNode) -> str:
@@ -41,7 +41,7 @@ class Codec:
     def deserialize(self, data: str) -> Optional[TreeNode]:
         if not data:
             return None
-        data_prep = [self.mode(x) for x in data.split(self.split_chr)]
+        data_prep = [self.node_val_type(x) for x in data.split(self.split_chr)]
         return self.deserialize_recurse(data_prep)
 
     def deserialize_recurse(self, data: List[TREE_NODE_TYPE]) -> Optional[TreeNode]:

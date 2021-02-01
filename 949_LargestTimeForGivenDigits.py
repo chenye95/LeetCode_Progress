@@ -43,18 +43,16 @@ def my_largest_time_from_digits(four_digits: List[int]) -> str:
             return
 
         for swap_index in range(start_index, len(ref_digits)):
-            if swap_index > start_index:
-                ref_digits[start_index], ref_digits[swap_index] = ref_digits[swap_index], ref_digits[start_index]
+            ref_digits[start_index], ref_digits[swap_index] = ref_digits[swap_index], ref_digits[start_index]
             permute(ref_digits, start_index + 1)
-            if swap_index > start_index:
-                ref_digits[start_index], ref_digits[swap_index] = ref_digits[swap_index], ref_digits[start_index]
+            ref_digits[start_index], ref_digits[swap_index] = ref_digits[swap_index], ref_digits[start_index]
 
     max_time = -1
     permute(four_digits, 0)
     if max_time == -1:
         return ""
     else:
-        return "{:2d}:{:2d}".format(max_time // 60, max_time % 60)
+        return "{:02d}:{:02d}".format(max_time // 60, max_time % 60)
 
 
 test_cases = [([1, 2, 3, 4], "23:41"),
@@ -62,7 +60,8 @@ test_cases = [([1, 2, 3, 4], "23:41"),
               ([2, 3, 5, 9], "23:59"),
               ([1, 2, 5, 8], "21:58"),
               ([2, 4, 6, 0], "20:46"),
-              ([2, 4, 6, 5], "")]
+              ([2, 4, 6, 5], ""),
+              ([0, 0, 0, 0], "00:00")]
 for test_function in [largest_time_from_digits, my_largest_time_from_digits]:
     for test_input, expected_output in test_cases:
         assert test_function(test_input) == expected_output
