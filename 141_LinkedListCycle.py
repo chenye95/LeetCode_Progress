@@ -25,8 +25,7 @@ def test_create_test_cases(node_values: List[NodeValueType], pos: int = -1) -> L
     """
     create test cases for the problem
     :param node_values: list representing node values
-    :param pos: tail connects to pos_th node; -1 if no cycle, else 0 <= pos < len(node_values)
-    :return:
+    :param pos: tail connects to pos_th node; -1 if no cycle, else 0 <= test_pos < len(test_node_values)
     """
     assert node_values
     assert -1 <= pos < len(node_values)
@@ -48,18 +47,18 @@ test_cases = [([3, 2, 0, -4], 1),
               ([1, 2], 0),
               ([1], -1), ]
 
-for node_values, pos in test_cases:
-    test_head = test_create_test_cases(node_values, pos)
+for test_node_values, test_pos in test_cases:
+    test_head = test_create_test_cases(test_node_values, test_pos)
 
     # test implementation of test_create_test_cases()
-    test_head_list = [None] * len(node_values)
+    test_head_list = [None] * len(test_node_values)
     current_node = test_head
-    for i in range(len(node_values)):
+    for i in range(len(test_node_values)):
         test_head_list[i] = current_node.val
         current_node = current_node.next
-    assert test_head_list == node_values
-    if pos != -1:
-        assert current_node.val == node_values[pos], current_node.next.val
+    assert test_head_list == test_node_values
+    assert (test_pos != -1 and current_node.val == test_node_values[test_pos]) or \
+           (test_pos == -1 and current_node is None)
 
     # test implementation of has_cycle()
-    assert has_cycle(test_head) is (pos != -1)
+    assert has_cycle(test_head) is (test_pos != -1)

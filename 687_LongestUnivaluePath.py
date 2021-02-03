@@ -51,4 +51,5 @@ test_cases = [(ConstructTree.build_tree_leetcode([5, 4, 5, 1, 1, None, 5]), 2),
               (ConstructTree.build_tree_leetcode([1, 4, 5, 4, 4, 5, None]), 2), ]
 solution_class = Solution()
 for test_tree, expected_value in test_cases:
+    solution_class.global_max = 0
     assert solution_class.longest_uni_value_path(test_tree.root) == expected_value

@@ -18,8 +18,8 @@ def strong_password_checker(s: str) -> int:
     if any('0' <= c <= '9' for c in s): missing_types -= 1
 
     replace_op = type_1_change = type_2_change = 0
-    # Type 1: replication length is 3l + can replace one change_op with one deletion
-    # Type 2: replication length is 3l+2, can replace one change_op with two deletions
+    # Type 1: replication length is 3l, can replace one change_op with one deletion
+    # Type 2: replication length is 3l+1, can replace one change_op with two deletions
     # All change_op can be replaced by 3 deletion
     i = 2
     while i < len(s):
@@ -31,8 +31,10 @@ def strong_password_checker(s: str) -> int:
 
             replace_op += length // 3
             if length % 3 == 0:
+                # Type 1: replication length is 3l, can replace one change_op with one deletion
                 type_1_change += 1
             elif length % 3 == 1:
+                # Type 2: replication length is 3l+1, can replace one change_op with two deletions
                 type_2_change += 1
 
         else:
@@ -52,10 +54,10 @@ def strong_password_checker(s: str) -> int:
 
         # Type 1: replication length is 3l, can replace one change with 1 deletion
         replace_op -= min(delete_op, type_1_change)
-        # Type 2: replication length is 3l+2, can replace one change with 2 deletions
+        # Type 2: replication length is 3l+1, can replace one change with 2 deletions
         replace_op -= min(max(delete_op - type_1_change, 0), type_2_change * 2) // 2
         # All change_op can be replaced by 3 deletions
-        replace_op -= max(delete_op - type_1_change - 2 * type_2_change, 0) // 3
+        replace_op -= max(delete_op - type_1_change - type_2_change * 2, 0) // 3
 
         # missing_types >= 0
         return delete_op + max(missing_types, replace_op)
