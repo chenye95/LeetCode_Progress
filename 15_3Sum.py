@@ -12,29 +12,29 @@ def threeSum(nums: List[int]) -> List[List[int]]:
         return []
 
     return_set = set()
-    less_than_target = Counter(filter(lambda x: x < 0, nums))
-    more_than_target = Counter(filter(lambda x: x > 0, nums))
+    less_than_zero = Counter(filter(lambda x: x < 0, nums))
+    more_than_zero = Counter(filter(lambda x: x > 0, nums))
     zero_count = reduce(lambda count, num: count + (num == 0), nums, 0)
 
     for num_i in set(nums):
         if num_i < 0:
-            for num_j in more_than_target:
+            for num_j in more_than_zero:
                 num_k = -num_i - num_j
                 if num_k == 0 and zero_count > 0:
                     return_set.add(tuple(sorted((num_i, num_j, 0))))
-                elif num_k in more_than_target and (num_k != num_j or more_than_target[num_j] >= 2):
+                elif num_k in more_than_zero and (num_k != num_j or more_than_zero[num_j] >= 2):
                     return_set.add(tuple(sorted((num_i, num_j, num_k))))
-                #elif num_k in less_than_target and (num_k != num_i or less_than_target[num_i] >= 2):
+                # elif num_k in less_than_zero and (num_k != num_i or less_than_zero[num_i] >= 2):
                 #    return_set.add(tuple(sorted((num_i, num_j, num_k))))
                 #    Covered when num_i > 0
         elif num_i > 0:
-            for num_j in less_than_target:
+            for num_j in less_than_zero:
                 num_k = -num_i - num_j
                 if num_k == 0 and zero_count > 0:
                     return_set.add(tuple(sorted((num_i, num_j, 0))))
-                elif num_k in less_than_target and (num_k != num_j or less_than_target[num_j] >= 2):
+                elif num_k in less_than_zero and (num_k != num_j or less_than_zero[num_j] >= 2):
                     return_set.add(tuple(sorted((num_i, num_j, num_k))))
-                # elif num_k in more_than_target and (num_k != num_i or more_than_target[num_i] >= 2):
+                # elif num_k in more_than_zero and (num_k != num_i or more_than_zero[num_i] >= 2):
                 #     return_set.add(tuple(sorted((num_i, num_j, num_k))))
                 #     Covered when num_i < 0
         elif zero_count >= 3:

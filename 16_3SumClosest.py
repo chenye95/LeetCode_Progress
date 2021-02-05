@@ -10,7 +10,7 @@ def threeSumClosest(nums: List[int], target: int) -> int:
         return 0
 
     nums.sort()
-    less_than_target_max, more_than_target_min = -float("inf"), float("inf")
+    less_than_target_max, more_than_target_min = sum(nums[:3]), sum(nums[-3:])
 
     for i in range(len(nums)):
         if i > 0 and nums[i] == nums[i - 1]:
@@ -26,9 +26,12 @@ def threeSumClosest(nums: List[int], target: int) -> int:
                 r -= 1
             else:
                 return target
-    return more_than_target_min if more_than_target_min + less_than_target_max < 2 * target else less_than_target_max
+    return more_than_target_min if more_than_target_min - target < target - less_than_target_max \
+        else less_than_target_max
 
 
-test_cases = [([-1, 2, 1, -4], 1, 2)]
-for input_list, target, output in test_cases:
-    assert threeSumClosest(input_list, target) == output
+test_cases = [([-1, 2, 1, -4], 1, 2),
+              ([0, 2, 1, -3], 1, 0),
+              ([-1, 2, 1, -4], 1, 2), ]
+for input_list, test_target, expected_output in test_cases:
+    assert threeSumClosest(input_list, test_target) == expected_output

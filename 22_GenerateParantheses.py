@@ -22,7 +22,7 @@ def generate_parenthesis(n: int) -> List[str]:
     return return_list
 
 
-test_cases = [(3, ["((()))", "(()())", "(())()", "()(())", "()()()"]),
-              (1, ["()"])]
+test_cases = [(3, {"((()))", "(()())", "(())()", "()(())", "()()()"}),
+              (1, {"()"})]
 for n, expected_output in test_cases:
-    assert set(expected_output) == set(generate_parenthesis(n))
+    assert expected_output == set(generate_parenthesis(n))
