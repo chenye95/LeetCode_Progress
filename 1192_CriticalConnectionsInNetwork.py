@@ -10,7 +10,7 @@ Return all critical connections in the network in any order.
 from typing import List
 
 
-def criticalConnections(n: int, connections: List[List[int]]) -> List[List[int]]:
+def critical_connections(n: int, connections: List[List[int]]) -> List[List[int]]:
     """
     Tarjan’s algorithm
     find critical connections in a undirected graph with n nodes
@@ -50,4 +50,4 @@ def criticalConnections(n: int, connections: List[List[int]]) -> List[List[int]]
     return return_result
 
 
-assert criticalConnections(n=4, connections=[[0, 1], [1, 2], [2, 0], [1, 3]]) == [[1, 3], ]
+assert critical_connections(n=4, connections=[[0, 1], [1, 2], [2, 0], [1, 3]]) == [[1, 3], ]
