@@ -2,11 +2,11 @@
 Given an Iterator class interface with methods: next() and hasNext(), design and implement a PeekingIterator that
 support the peek() operation -- it essentially peek() at the element that will be returned by the next call to next().
 """
-from typing import List, Optional
+from typing import List, Optional, Any
 
 
 class Iterator:
-    def __init__(self, nums: List[int]):
+    def __init__(self, nums: List[Any]):
         """
 #       Initializes an iterator object to the beginning of a list
         """
@@ -15,11 +15,11 @@ class Iterator:
 
     def has_next(self) -> bool:
         """
-        Returns true if the iteration has more elements
+        Returns True if the iteration has more elements
         """
         return self.pointer < len(self.nums)
 
-    def next(self) -> Optional[int]:
+    def next(self) -> Optional[Any]:
         """
         Returns the next element in the iteration
         """
@@ -29,26 +29,30 @@ class Iterator:
         else:
             return None
 
+    def reset(self) -> None:
+        """
+        Reset pointer to the start of the list
+        """
+        self.pointer = 0
+
 
 class PeekingIterator:
     def __init__(self, iterator: Iterator):
         """
-        Initialize your data structure here
+        Initialize data structure
         """
         self.iterator = iterator
         self.cache = None
 
-    def peek(self) -> Optional[int]:
+    def peek(self) -> Optional[Any]:
         """
         Returns the next element in the iteration without advancing the iterator.
         """
-        if not self.iterator.has_next():
-            return None
-        if not self.cache:
+        if not self.cache and self.iterator.has_next():
             self.cache = self.iterator.next()
         return self.cache
 
-    def next(self) -> Optional[int]:
+    def next(self) -> Optional[Any]:
         if self.cache:
             return_value, self.cache = self.cache, None
             return return_value
@@ -56,13 +60,32 @@ class PeekingIterator:
             return self.iterator.next()
 
     def has_next(self) -> bool:
-        if self.cache or self.iterator.has_next():
-            return True
-        else:
-            return False
+        return self.cache is not None or self.iterator.has_next()
+
+    def reset(self) -> None:
+        self.iterator.reset()
+        self.cache = None
 
 
 test_peek_iterator = PeekingIterator(Iterator([1, 2, 3]))
+assert test_peek_iterator.next() == 1
+assert test_peek_iterator.has_next() is True
+assert test_peek_iterator.peek() == 2
+assert test_peek_iterator.peek() == 2
+assert test_peek_iterator.has_next() is True
+assert test_peek_iterator.next() == 2
+assert test_peek_iterator.peek() == 3
+assert test_peek_iterator.has_next() is True
+assert test_peek_iterator.next() == 3
+assert test_peek_iterator.peek() is None
+assert test_peek_iterator.has_next() is False
+assert test_peek_iterator.peek() is None
+assert test_peek_iterator.next() is None
+
+test_peek_iterator.reset()
+assert test_peek_iterator.has_next() is True
+assert test_peek_iterator.peek() == 1
+assert test_peek_iterator.peek() == 1
 assert test_peek_iterator.next() == 1
 assert test_peek_iterator.has_next() is True
 assert test_peek_iterator.peek() == 2
@@ -70,6 +93,7 @@ assert test_peek_iterator.has_next() is True
 assert test_peek_iterator.next() == 2
 assert test_peek_iterator.has_next() is True
 assert test_peek_iterator.next() == 3
+assert test_peek_iterator.peek() is None
 assert test_peek_iterator.has_next() is False
 assert test_peek_iterator.peek() is None
 assert test_peek_iterator.next() is None
