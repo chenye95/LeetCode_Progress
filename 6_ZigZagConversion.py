@@ -23,8 +23,8 @@ def convert_calculate(s: str, num_rows: int) -> str:
                           for i in range(group_count - 1)]
             if (group_count - 1) * repetition_group + row_i < len(s):
                 row_i_list.append(s[repetition_group * (group_count - 1) + row_i])
-            if group_count * repetition_group - row_i < len(s):
-                row_i_list.append(s[group_count * repetition_group - row_i])
+                if group_count * repetition_group - row_i < len(s):
+                    row_i_list.append(s[group_count * repetition_group - row_i])
             return_result.append(''.join(row_i_list))
 
     return ''.join(return_result)
