@@ -28,7 +28,7 @@ def shortest_path_binary_matrix_bfs(grid: List[List[int]]) -> int:
     frontier = deque([(1, 0, 0)])
     while frontier:
         steps, current_x, current_y = frontier.popleft()
-        if current_x == m - 1 and current_y == n - 1:
+        if (current_x, current_y) == (m - 1, n - 1):
             return steps
         for d_x, d_y in [(-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1)]:
             if 0 <= current_x + d_x < m and 0 <= current_y + d_y < n and grid[current_x + d_x][current_y + d_y] == 0:
