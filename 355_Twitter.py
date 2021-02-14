@@ -47,11 +47,11 @@ class Twitter:
         """
         self.followee[follower_id].add(followee_id)
 
-    def unfollow(self, followerId: int, followeeId: int) -> None:
+    def unfollow(self, follower_id: int, followee_id: int) -> None:
         """
         Follower unfollows a followee. If the operation is invalid, it should be a no-op.
         """
-        self.followee[followerId].discard(followeeId)
+        self.followee[follower_id].discard(followee_id)
 
 
 test = Twitter()

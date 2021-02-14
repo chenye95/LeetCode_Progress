@@ -11,14 +11,14 @@ def dfs_solution(current_board_state: List[List[str]], i: int, j: int, remaining
     """
     :param current_board_state: reference to the board
     :param i: row i
-    :param j:  column j
+    :param j: column j
     :param remaining_word: remaining_word to be found on the board
     :return: whether remaining_word can be found in current_board_state
     """
     if not remaining_word:
         return True
-    if i < 0 or i >= len(current_board_state) or j < 0 or j >= len(current_board_state[0]) or remaining_word[0] != \
-            current_board_state[i][j]:
+    if i < 0 or i >= len(current_board_state) or j < 0 or j >= len(current_board_state[0]) or \
+            remaining_word[0] != current_board_state[i][j]:
         return False
     current_board_state[i][j] = ''
     rest_of_word = remaining_word[1:]

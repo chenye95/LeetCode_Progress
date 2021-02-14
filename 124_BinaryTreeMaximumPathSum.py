@@ -4,7 +4,7 @@ Given a non-empty binary tree, find the maximum path sum.
 For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the
 parent-child connections. The path must contain at least one node and does not need to go through the root.
 """
-from _Binary_Tree import TreeNode
+from _Binary_Tree import TreeNode, ConstructTree
 
 
 class Solution:
@@ -13,7 +13,6 @@ class Solution:
 
     def max_path_end_at_node(self, node: TreeNode) -> int:
         """
-        :param node:
         :return: max value of the path ends at node. return 0 if the max path is negative
         """
         if not node:
@@ -27,8 +26,6 @@ class Solution:
         self.max_path_end_at_node(root)
         return self.global_max
 
-
-from _Binary_Tree import ConstructTree
 
 test_cases = [(ConstructTree.build_tree_leetcode([1, 2, 3]), 6),
               (ConstructTree.build_tree_leetcode([-10, 9, 20, None, None, 15, 7]), 42)]

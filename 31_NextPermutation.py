@@ -8,7 +8,7 @@ The replacement must be in-place and use only constant extra memory.
 from typing import List
 
 
-def nextPermutation(nums: List[int]) -> None:
+def next_permutation(nums: List[int]) -> None:
     """
     Do not return anything, modify nums in-place instead.
     """
@@ -22,10 +22,8 @@ def nextPermutation(nums: List[int]) -> None:
         j = len(nums) - 1
         while j >= 0 and nums[j] <= nums[i]:
             j -= 1
-        tmp = nums[i]
-        nums[i] = nums[j]
-        nums[j] = tmp
-        nums[i+1:] = nums[i+1:][::-1]
+        nums[i], nums[j] = nums[j], nums[i]
+        nums[i + 1:] = nums[i + 1:][::-1]
 
 
 from copy import deepcopy
@@ -43,11 +41,11 @@ test_cases = [[[1, 2, 3],
 
 for case_i in test_cases:
     for j in range(len(case_i)):
-        nums = deepcopy(case_i[j])
-        print(nums)
-        nextPermutation(nums)
+        test_nums = deepcopy(case_i[j])
+        # print(test_nums)
+        next_permutation(test_nums)
         if j < len(case_i) - 1:
-            assert nums == case_i[j + 1]
+            assert test_nums == case_i[j + 1]
         else:
-            assert nums == case_i[0]
-    print()
+            assert test_nums == case_i[0]
+    # print()

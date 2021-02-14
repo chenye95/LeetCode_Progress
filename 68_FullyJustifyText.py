@@ -23,7 +23,7 @@ def fully_justify(words: List[str], max_width: int) -> List[str]:
             current_blk_count += 1
             current_line_count += 1
             scanner += 1
-        else: # construct current line
+        else:  # construct current line
             if current_line_count > 1:
                 current_line = ""
                 diff = max_width - current_line_len
@@ -50,8 +50,26 @@ def fully_justify(words: List[str], max_width: int) -> List[str]:
     return output_lines
 
 
-print(fully_justify(words=["This", "is", "an", "example", "of", "text", "justification.", ], max_width=16))
-print(fully_justify(words=["What", "must", "be", "acknowledgment", "shall", "be"], max_width=16))
-print(fully_justify(
+assert fully_justify(words=["This", "is", "an", "example", "of", "text", "justification.", ],
+                     max_width=16) == [
+           "This    is    an",
+           "example  of text",
+           "justification.  "
+       ]
+assert fully_justify(words=["What", "must", "be", "acknowledgment", "shall", "be"],
+                     max_width=16) == [
+           "What   must   be",
+           "acknowledgment  ",
+           "shall be        "
+       ]
+assert fully_justify(
     words=["Science", "is", "what", "we", "understand", "well", "enough", "to", "explain", "to", "a", "computer.",
-           "Art", "is", "everything", "else", "we", "do"], max_width=20))
+           "Art", "is", "everything", "else", "we", "do"],
+    max_width=20) == [
+           "Science  is  what we",
+           "understand      well",
+           "enough to explain to",
+           "a  computer.  Art is",
+           "everything  else  we",
+           "do                  "
+       ]
