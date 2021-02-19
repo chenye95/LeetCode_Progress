@@ -11,5 +11,5 @@ def is_power_of_two(n: int) -> bool:
 
 
 two_powers = {2 ** i for i in range(15)}
-for i in range(17000):
-    assert is_power_of_two(i) == (i in two_powers), i
+for i in range(32_000):
+    assert is_power_of_two(i) is (i in two_powers), i
