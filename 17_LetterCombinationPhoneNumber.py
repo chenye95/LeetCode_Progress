@@ -20,7 +20,6 @@ num_to_chr = {'2': ['a', 'b', 'c'],
 
 def letter_combinations_1(digits: str) -> List[str]:
     def letter_combination_helper(prefix: str, ref_digits: str, idx: int) -> None:
-        nonlocal return_result
         if idx < len(ref_digits) - 1:
             for c in num_to_chr[ref_digits[idx]]:
                 letter_combination_helper(prefix + c, ref_digits, idx + 1)

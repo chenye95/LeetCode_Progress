@@ -25,23 +25,19 @@ def int_to_roman(num: int) -> str:
     hundred_part, remainder = int_to_roman_helper(remainder, 1000, 500, 100, 'M', 'D', 'C')
     tens_part, remainder = int_to_roman_helper(remainder, 100, 50, 10, 'C', 'L', 'X')
     ind_part, remainder = int_to_roman_helper(remainder, 10, 5, 1, 'X', 'V', 'I')
-    roman_int = hundred_part + tens_part + ind_part
 
-    while remainder > 0:
-        roman_int += 'I'
-        remainder -= 1
-    return roman_int
+    return hundred_part + tens_part + ind_part + 'I' * remainder
 
 
-def roman_to_in(s: str) -> int:
+def roman_to_int(s: str) -> int:
     """
     :return: convert Roman integer string to int
     """
-    trans_map = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+    translation_map = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
     int_val = 0
     prev_added = 0
-    for i in range(len(s)):
-        will_add = trans_map[s[i]]
+    for s_i in s:
+        will_add = translation_map[s_i]
         if will_add > prev_added:
             int_val -= (2 * prev_added)
         int_val += will_add
@@ -49,13 +45,10 @@ def roman_to_in(s: str) -> int:
     return int_val
 
 
-assert int_to_roman(3) == "III"
-assert int_to_roman(4) == "IV", int_to_roman(4)
-assert int_to_roman(9) == "IX"
-assert int_to_roman(58) == "LVIII"
+test_cases = [(3, "III"), (4, "IV"), (9, "IX"), (58, "LVIII"), (1994, "MCMXCIV")]
+for test_int_val, test_roman_val in test_cases:
+    assert int_to_roman(test_int_val) == test_roman_val, test_int_val
+    assert roman_to_int(test_roman_val) == test_int_val, test_roman_val
 
-assert roman_to_in("III") == 3
-assert roman_to_in("IV") == 4
-assert roman_to_in("IX") == 9
-assert roman_to_in("LVIII") == 58
-assert roman_to_in("MCMXCIV") == 1994
+for i in range(1, 4000):
+    assert i == roman_to_int(int_to_roman(i)), i

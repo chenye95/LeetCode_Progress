@@ -34,6 +34,10 @@ def garden_no_adjacent(n: int, paths: List[List[int]]) -> List[int]:
     return color_pattern
 
 
-print(garden_no_adjacent(n=3, paths=[[1, 2], [2, 3], [3, 1]]))
-print(garden_no_adjacent(n=4, paths=[[1, 2], [3, 4]]))
-print(garden_no_adjacent(n=4, paths=[[1, 2], [2, 3], [3, 4], [4, 1], [1, 3], [2, 4]]))
+test_cases = [(3, [[1, 2], [2, 3], [3, 1]]),
+              (4, [[1, 2], [3, 4]]),
+              (4, [[1, 2], [2, 3], [3, 4], [4, 1], [1, 3], [2, 4]]), ]
+for n_garden, connections in test_cases:
+    color_pattern = garden_no_adjacent(n=n_garden, paths=connections)
+    for garden_i, garden_j in connections:
+        assert color_pattern[garden_i - 1] != color_pattern[garden_j - 1], connections

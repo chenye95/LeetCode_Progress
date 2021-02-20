@@ -8,14 +8,14 @@ from typing import List
 
 def max_area(height: List[int]) -> int:
     max_area_tracker = 0
-    l, r = 0, len(height) - 1
-    while l < r:
-        if height[l] < height[r]:
-            max_area_tracker = max(max_area_tracker, (r - l) * height[l])
-            l += 1
+    left_pointer, right_pointer = 0, len(height) - 1
+    while left_pointer < right_pointer:
+        if height[left_pointer] < height[right_pointer]:
+            max_area_tracker = max(max_area_tracker, (right_pointer - left_pointer) * height[left_pointer])
+            left_pointer += 1
         else:
-            max_area_tracker = max(max_area_tracker, (r - l) * height[r])
-            r -= 1
+            max_area_tracker = max(max_area_tracker, (right_pointer - left_pointer) * height[right_pointer])
+            right_pointer -= 1
 
     return max_area_tracker
 

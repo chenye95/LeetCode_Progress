@@ -25,7 +25,7 @@ def combination_sum_2(candidates: List[int], target: int) -> List[List[int]]:
                 # avoid back_tracking from duplicated values
                 continue
 
-            if remainder - candidates[next_pick] < 0:
+            if candidates[next_pick] > remainder:
                 # since candidates are sorted, we can prune the back_tracking here
                 break
 

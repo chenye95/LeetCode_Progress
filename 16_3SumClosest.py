@@ -5,7 +5,7 @@ target. Return the sum of the three integers. You may assume that each input wou
 from typing import List
 
 
-def threeSumClosest(nums: List[int], target: int) -> int:
+def three_sum_closest(nums: List[int], target: int) -> int:
     if not nums or len(nums) < 3:
         return 0
 
@@ -15,15 +15,15 @@ def threeSumClosest(nums: List[int], target: int) -> int:
     for i in range(len(nums)):
         if i > 0 and nums[i] == nums[i - 1]:
             continue
-        l, r = i + 1, len(nums) - 1
-        while l < r:
-            current_sum = nums[i] + nums[l] + nums[r]
+        left_pointer, right_pointer = i + 1, len(nums) - 1
+        while left_pointer < right_pointer:
+            current_sum = nums[i] + nums[left_pointer] + nums[right_pointer]
             if current_sum < target:
                 less_than_target_max = max(less_than_target_max, current_sum)
-                l += 1
+                left_pointer += 1
             elif current_sum > target:
                 more_than_target_min = min(more_than_target_min, current_sum)
-                r -= 1
+                right_pointer -= 1
             else:
                 return target
     return more_than_target_min if more_than_target_min - target < target - less_than_target_max \
@@ -34,4 +34,4 @@ test_cases = [([-1, 2, 1, -4], 1, 2),
               ([0, 2, 1, -3], 1, 0),
               ([-1, 2, 1, -4], 1, 2), ]
 for input_list, test_target, expected_output in test_cases:
-    assert threeSumClosest(input_list, test_target) == expected_output
+    assert three_sum_closest(input_list, test_target) == expected_output

@@ -6,8 +6,6 @@ from typing import List
 
 def generate_parenthesis(n: int) -> List[str]:
     def generate_helper(current_string: str, left_count: int, right_count: int) -> None:
-        nonlocal return_list
-
         if left_count == n and right_count == n:
             return_list.append(current_string)
             return

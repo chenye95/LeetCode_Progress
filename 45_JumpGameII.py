@@ -27,6 +27,5 @@ def jump(nums: List[int]) -> int:
 
 test_cases = [([2, 3, 1, 1, 4], 2),
               ([2, 3, 0, 1, 4], 2)]
-for nums, expected in test_cases:
-    result = jump(nums)
-    assert result == expected, result
+for test_nums, expected in test_cases:
+    assert jump(test_nums) == expected, expected
