@@ -11,8 +11,7 @@ def invert_tree(root: TreeNode) -> Optional[TreeNode]:
         return None
     right = invert_tree(root.right) if root.right else None
     left = invert_tree(root.left) if root.left else None
-    root.left = right
-    root.right = left
+    root.left, root.right = right, left
     return root
 
 

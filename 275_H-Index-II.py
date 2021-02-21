@@ -48,7 +48,8 @@ assert h_index([0]) == 0
 assert h_index([100]) == 1
 
 test_citations = [1, 1, 2, 3, 4, 5, 7]
-n_cycles = 10000
+n_cycles = 10_000
+
 t_bisect = Timer(partial(h_index_bisect, test_citations))
 print("Bisect", t_bisect.timeit(n_cycles) / n_cycles)
 

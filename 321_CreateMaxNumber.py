@@ -7,7 +7,7 @@ The relative order of the digits from the same array must be preserved. Return a
 from typing import List
 
 
-def maxNumber(nums1: List[int], nums2: List[int], k: int) -> List[int]:
+def max_number(nums1: List[int], nums2: List[int], k: int) -> List[int]:
     def prep_one_num(nums: List[int], k_digit: int) -> List[int]:
         """
         :return: the largest k_digit number selected out of nums, s.t. the relative order of the digits is preserved
@@ -32,6 +32,6 @@ def maxNumber(nums1: List[int], nums2: List[int], k: int) -> List[int]:
                for i in range(k + 1) if i <= len(nums1) and k - i <= len(nums2))
 
 
-assert maxNumber(nums1=[3, 4, 6, 5], nums2=[9, 1, 2, 5, 8, 3], k=5) == [9, 8, 6, 5, 3]
-assert maxNumber(nums1=[6, 7], nums2=[6, 0, 4], k=5) == [6, 7, 6, 0, 4]
-assert maxNumber(nums1=[3, 9], nums2=[8, 9], k=3) == [9, 8, 9]
+assert max_number(nums1=[3, 4, 6, 5], nums2=[9, 1, 2, 5, 8, 3], k=5) == [9, 8, 6, 5, 3]
+assert max_number(nums1=[6, 7], nums2=[6, 0, 4], k=5) == [6, 7, 6, 0, 4]
+assert max_number(nums1=[3, 9], nums2=[8, 9], k=3) == [9, 8, 9]
