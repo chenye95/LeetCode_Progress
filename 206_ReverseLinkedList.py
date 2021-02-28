@@ -1,7 +1,7 @@
 """
 Given the head of a singly linked list, reverse the list, and return the reversed list
 """
-from _Linked_List import ListNode, PrintableLinkedList
+from _Linked_List import ListNode, LinkedList
 
 
 def reverse_list(head: ListNode) -> ListNode:
@@ -16,9 +16,9 @@ def reverse_list(head: ListNode) -> ListNode:
 
 test_cases = [[1, 2, 3, 4, 5],
               [1, 2],
-              []]
+              [], ]
 for test_input in test_cases:
-    test_list = PrintableLinkedList.create_linked_list(test_input)
+    test_list = LinkedList.create_linked_list(test_input)
     test_list.head = reverse_list(test_list.head)
     if not test_input:
         assert test_list.head is None
