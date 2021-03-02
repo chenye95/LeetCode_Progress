@@ -2,7 +2,7 @@
 On an infinite number line (x-axis), we drop given squares in the order they are given.
 
 The i-th square dropped (positions[i] = (left, side_length)) is a square with the left-most point being positions[i][0]
-and sidelength positions[i][1].
+and side length positions[i][1].
 
 The square is dropped with the bottom edge parallel to the number line, and from a higher height than all currently
 landed squares. We wait for each square to stick before dropping the next.
@@ -84,8 +84,8 @@ def falling_squares_one(positions: List[List[int]]) -> List[int]:
 test_cases = [([[1, 2], [2, 3], [6, 1]], [2, 5, 5]),
               ([[100, 100], [200, 100]], [100, 100]),
               ([[7, 1], [3, 3], [7, 5]], [1, 3, 6])]
-for input, output in test_cases:
-    assert falling_squares_one(input) == output
+for test_input, expected_output in test_cases:
+    assert falling_squares_one(test_input) == expected_output
 
 from random import randint
 from datetime import datetime, timedelta
@@ -96,10 +96,10 @@ for i in range(total_runs):
     if i % 100 == 0:
         print("Test %d" % i)
     N = randint(1, 1000)
-    input = []
+    test_input = []
     for _ in range(N):
-        input.append([randint(1, 10**8), randint(1, 10**6)])
+        test_input.append([randint(1, 10 ** 8), randint(1, 10 ** 6)])
     start_time = datetime.now()
-    falling_squares_one(input)
+    falling_squares_one(test_input)
     cumulative_time += (datetime.now() - start_time)
 print('%d Tests total ' % total_runs, cumulative_time)
