@@ -27,8 +27,7 @@ def get_intersection_node(head_a: ListNode, head_b: ListNode) -> Optional[ListNo
             current_a = current_a.next
         elif continue_a:
             # switch to list b to finish the remaining len_b steps
-            current_a = head_b
-            continue_a = False
+            current_a, continue_a = head_b, False
         else:
             # cap out at len_a + len_b + len_c steps
             # no need to traverse more
@@ -39,8 +38,7 @@ def get_intersection_node(head_a: ListNode, head_b: ListNode) -> Optional[ListNo
             current_b = current_b.next
         elif continue_b:
             # switch to list a to finish the remaining len_a steps
-            current_b = head_a
-            continue_b = False
+            current_b, continue_b = head_a, False
         else:
             # cap out at len_a + len_b + len_c steps
             # no need to traverse more
@@ -59,14 +57,8 @@ for list_a, list_b, list_c in test_cases:
     test_head_a = LinkedList.create_linked_list(list_a).head
     test_head_b = LinkedList.create_linked_list(list_b).head
     test_head_c = LinkedList.create_linked_list(list_c).head
-    current_node = test_head_a
-    for _ in range(len(list_a) - 1):
-        current_node = current_node.next
-    current_node.next = test_head_c
-    current_node = test_head_b
-    for _ in range(len(list_b) - 1):
-        current_node = current_node.next
-    current_node.next = test_head_c
+    test_head_a.last_node().next = test_head_c
+    test_head_b.last_node().next = test_head_c
     intersection = get_intersection_node(test_head_a, test_head_b)
     if test_head_c:
         assert intersection.val == list_c[0]
