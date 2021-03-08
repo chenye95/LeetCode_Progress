@@ -22,7 +22,7 @@ class MyHashMap:
         """
         Hash with chaining implementation
         """
-        self.bucket_count: int = 1000
+        self.bucket_count = 1000
         self.buckets: List[Optional[MyHashNode]] = [None] * self.bucket_count
 
     def put(self, key: int, value: int) -> None:
@@ -37,7 +37,7 @@ class MyHashMap:
                 # update node if node already exists in the HashMap
                 current_node.val = value
                 return
-            if not current_node.next:
+            if current_node.next is None:
                 break
             current_node = current_node.next
 
@@ -54,8 +54,7 @@ class MyHashMap:
         while current_node:
             if current_node.key == key:
                 return current_node.val
-            else:
-                current_node = current_node.next
+            current_node = current_node.next
 
         return -1
 

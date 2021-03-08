@@ -29,8 +29,8 @@ def shortest_path(grid: List[List[int]], k: int) -> int:
             next_x, next_y = x + dx, y + dy
             if (0 <= next_x < m and 0 <= next_y < n) and \
                     ((grid[next_x][next_y] == 0 and (next_x, next_y, left_obstacles) not in visited_states) or
-                     (grid[next_x][next_y] == 1 and (next_x, next_y, left_obstacles - 1) not in visited_states
-                      and left_obstacles > 0)):
+                     (grid[next_x][next_y] == 1 and left_obstacles > 0
+                      and (next_x, next_y, left_obstacles - 1) not in visited_states)):
                 if next_x == m - 1 and next_y == n - 1:
                     return step + 1
                 else:
