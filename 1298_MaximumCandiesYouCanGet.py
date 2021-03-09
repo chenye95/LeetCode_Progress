@@ -23,18 +23,18 @@ def max_candies(status: List[int], candies: List[int], keys: List[List[int]], co
     :param initial_boxes: start with some boxes given in initial_boxes array
     :return: maximum number of candies you can get
     """
-    holding_box, running_total, next_batch = set(initial_boxes), 0, True
-    while holding_box and next_batch:
+    holding_box, running_total, has_next_batch = set(initial_boxes), 0, True
+    while holding_box and has_next_batch:
         opened_box, added_box = set(), set()
         for i in holding_box:
             if status[i]:
                 running_total += candies[i]
-                added_box.update(contained_boxes[i])
+                added_box.update(set(contained_boxes[i]))
                 for j in keys[i]:
                     status[j] = 1
                 opened_box.add(i)
         holding_box = holding_box.difference(opened_box).union(added_box)
-        next_batch = added_box or opened_box
+        has_next_batch = added_box or opened_box
     return running_total
 
 
