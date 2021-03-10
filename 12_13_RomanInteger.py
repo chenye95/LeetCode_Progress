@@ -3,30 +3,25 @@ def int_to_roman(num: int) -> str:
     :param num: integer within the range from 1 to 3999.
     :return: Roman representation of integer num
     """
+    current_num, str_list = num, []
+    for large_rank, medium_rank, small_rank, large_chr, medium_chr, small_chr in [(1000, 500, 100, 'M', 'D', 'C'),
+                                                                                  (100, 50, 10, 'C', 'L', 'X'),
+                                                                                  (10, 5, 1, 'X', 'V', 'I'), ]:
+        large_count = current_num // large_rank
+        str_list.append(large_chr * large_count)
+        current_num -= large_count * large_rank
 
-    def int_to_roman_helper(current_num: int, lag_rank: int, mid_rank: int, sml_rank: int,
-                            lag_chr: chr, mid_chr: chr, sml_chr: chr):
-        ret_str = ""
-        while current_num >= lag_rank:
-            ret_str += lag_chr
-            current_num -= lag_rank
-        if current_num >= (lag_rank - sml_rank):
-            ret_str += (sml_chr + lag_chr)
-            current_num -= (lag_rank - sml_rank)
-        elif current_num >= mid_rank:
-            ret_str += mid_chr
-            current_num -= mid_rank
-        elif current_num >= (mid_rank - sml_rank):
-            ret_str += (sml_chr + mid_chr)
-            current_num -= (mid_rank - sml_rank)
-        return ret_str, current_num
+        if current_num >= large_rank - small_rank:
+            str_list.append(small_chr + large_chr)
+            current_num -= (large_rank - small_rank)
+        elif current_num >= medium_rank:
+            str_list.append(medium_chr)
+            current_num -= medium_rank
+        elif current_num >= medium_rank - small_rank:
+            str_list.append(small_chr + medium_chr)
+            current_num -= (medium_rank - small_rank)
 
-    remainder = num
-    hundred_part, remainder = int_to_roman_helper(remainder, 1000, 500, 100, 'M', 'D', 'C')
-    tens_part, remainder = int_to_roman_helper(remainder, 100, 50, 10, 'C', 'L', 'X')
-    ind_part, remainder = int_to_roman_helper(remainder, 10, 5, 1, 'X', 'V', 'I')
-
-    return hundred_part + tens_part + ind_part + 'I' * remainder
+    return ''.join(str_list) + 'I' * current_num
 
 
 def roman_to_int(s: str) -> int:
@@ -45,7 +40,8 @@ def roman_to_int(s: str) -> int:
     return int_val
 
 
-test_cases = [(3, "III"), (4, "IV"), (9, "IX"), (58, "LVIII"), (1994, "MCMXCIV")]
+test_cases = [(1, "I"), (5, "V"), (10, "X"), (50, "L"), (100, "C"), (500, "D"), (1000, "M"),
+              (3, "III"), (4, "IV"), (9, "IX"), (58, "LVIII"), (1994, "MCMXCIV")]
 for test_int_val, test_roman_val in test_cases:
     assert int_to_roman(test_int_val) == test_roman_val, test_int_val
     assert roman_to_int(test_roman_val) == test_int_val, test_roman_val
