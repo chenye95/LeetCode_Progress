@@ -8,7 +8,7 @@ You may assume that you have an infinite number of each kind of coin.
 from typing import List
 
 
-def coin_change_1(coins: List[int], amount: int) -> int:
+def coin_change_dfs(coins: List[int], amount: int) -> int:
     """
     DFS implementation
     """
@@ -31,7 +31,7 @@ def coin_change_1(coins: List[int], amount: int) -> int:
     return global_min if global_min <= amount else -1
 
 
-def coin_change_2(coins: List[int], amount: int) -> int:
+def coin_change_dp(coins: List[int], amount: int) -> int:
     """
     DP implementation
     """
@@ -44,7 +44,7 @@ def coin_change_2(coins: List[int], amount: int) -> int:
     return memory[-1] if memory[-1] <= amount else -1
 
 
-for coin_change in [coin_change_1, coin_change_2]:
+for coin_change in [coin_change_dfs, coin_change_dp]:
     assert 3 == coin_change(coins=[1, 2, 5], amount=11)
     assert -1 == coin_change(coins=[2], amount=3)
     assert 0 == coin_change(coins=[1], amount=0)
