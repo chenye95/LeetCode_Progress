@@ -14,6 +14,9 @@ def has_all_codes_set(s: str, k: int) -> bool:
 
 
 def has_all_codes_bits(s: str, k: int) -> bool:
+    if len(s) - k + 1 < 1 << k:
+        return False
+
     need_to_find = 1 << k
     find_in_string = [False] * need_to_find
     binary_all_one = need_to_find - 1
