@@ -29,6 +29,6 @@ def capture_surrounded_regions(board: List[List[str]]) -> None:
     board[:] = [['XO'[c == 'S'] for c in row] for row in board]
 
 
-board = [['X', 'X', 'X', 'X'], ['X', 'O', 'O', 'X'], ['X', 'X', 'O', 'X'], ['X', 'O', 'X', 'X']]
-capture_surrounded_regions(board)
-assert board == [['X', 'X', 'X', 'X'], ['X', 'X', 'X', 'X'], ['X', 'X', 'X', 'X'], ['X', 'O', 'X', 'X']]
+test_board = [['X', 'X', 'X', 'X'], ['X', 'O', 'O', 'X'], ['X', 'X', 'O', 'X'], ['X', 'O', 'X', 'X']]
+capture_surrounded_regions(test_board)
+assert test_board == [['X', 'X', 'X', 'X'], ['X', 'X', 'X', 'X'], ['X', 'X', 'X', 'X'], ['X', 'O', 'X', 'X']]
