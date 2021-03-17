@@ -10,7 +10,7 @@ Note:
 """
 from math import sqrt, sin, cos, pi
 from random import random
-from typing import List
+from typing import Tuple
 
 
 class RandomPointCircle:
@@ -22,20 +22,20 @@ class RandomPointCircle:
         self.x_center = x_center
         self.y_center = y_center
 
-    def random_point(self) -> List[float]:
+    def random_point(self) -> Tuple[float, float]:
         """
         Polar coordinates
         :return: [x, y] randomly selected within the circle
         """
         distance = sqrt(random()) * self.radius
         degree = random() * 2 * pi
-        return [self.x_center + distance * cos(degree),
-                self.y_center + distance * sin(degree)]
+        return (self.x_center + distance * cos(degree),
+                self.y_center + distance * sin(degree))
 
 
 test_x_center, test_y_center = random() * 10 + 10, random() * 5 + 10
 test_radius = 5
-N = 500
+N = 1000
 x_list, y_list = [0] * N, [0] * N
 
 circle = RandomPointCircle(radius=test_radius, x_center=test_x_center, y_center=test_y_center)
