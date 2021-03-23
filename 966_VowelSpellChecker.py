@@ -26,11 +26,11 @@ def vowel_spellchecker(word_list: List[str], queries: List[str]) -> List[str]:
     :return: closest match for each query_word in queries
     """
 
-    def de_vowel(word: str) -> str:
+    def de_vowel(word_pre_lower: str) -> str:
         """
-        :return: replace vowels eiou with letter a
+        :return: replace vowels e i o u with letter a
         """
-        return word.lower().replace('e', 'a').replace('i', 'a').replace('o', 'a').replace('u', 'a')
+        return word_pre_lower.replace('e', 'a').replace('i', 'a').replace('o', 'a').replace('u', 'a')
 
     def solve_query(query_word: str) -> str:
         """
@@ -43,11 +43,7 @@ def vowel_spellchecker(word_list: List[str], queries: List[str]) -> List[str]:
         if query_word_lower in word_capitalization:
             return word_capitalization[query_word_lower]
 
-        query_word_vowel = de_vowel(query_word_lower)
-        if query_word_vowel in word_vowel:
-            return word_vowel[query_word_vowel]
-
-        return ""
+        return word_vowel.get(de_vowel(query_word_lower), "")
 
     word_perfect_match = set(word_list)
     word_capitalization = dict()
@@ -61,6 +57,12 @@ def vowel_spellchecker(word_list: List[str], queries: List[str]) -> List[str]:
     return list(map(solve_query, queries))
 
 
+assert vowel_spellchecker(word_list=["yellow"], queries=["YellOw"]) == ["yellow"]
+assert vowel_spellchecker(word_list=["Yellow"], queries=["yellow"]) == ["Yellow"]
+assert vowel_spellchecker(word_list=["yellow"], queries=["yellow"]) == ["yellow"]
+assert vowel_spellchecker(word_list=["Yellow"], queries=["yollow"]) == ["Yellow"]
+assert vowel_spellchecker(word_list=["Yellow"], queries=["yeellow"]) == [""]
+assert vowel_spellchecker(word_list=["Yellow"], queries=["yllw"]) == [""]
 assert vowel_spellchecker(word_list=["KiTe", "kite", "hare", "Hare"],
                           queries=["kite", "Kite", "KiTe", "Hare", "HARE", "Hear", "hear", "keti", "keet", "keto"]) \
        == ["kite", "KiTe", "KiTe", "Hare", "hare", "", "", "KiTe", "", "KiTe"]
