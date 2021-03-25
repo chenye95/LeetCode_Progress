@@ -7,7 +7,7 @@ value.
 - get(key): Returns the value to which the specified key is mapped, or -1 if this map contains no mapping for the key.
 - remove(key) : Remove the mapping for the value key if this map contains the mapping for the key.
 """
-from typing import List, Optional
+from typing import List, Optional, Callable
 
 
 class MyHashNode:
@@ -18,15 +18,18 @@ class MyHashNode:
 
 
 class MyHashMap:
+    not_in_map = -1
+
     def __init__(self):
         """
         Hash with chaining implementation
         """
         self.bucket_count = 1000
+        self.get_bucket_id: Callable[[int], int] = lambda key: key % self.bucket_count
         self.buckets: List[Optional[MyHashNode]] = [None] * self.bucket_count
 
     def put(self, key: int, value: int) -> None:
-        bucket_id: int = key % self.bucket_count
+        bucket_id = self.get_bucket_id(key)
         if self.buckets[bucket_id] is None:
             self.buckets[bucket_id] = MyHashNode(key, value)
             return
@@ -48,7 +51,7 @@ class MyHashMap:
         """
         :return: the value to which the specified key is mapped, or -1 if this map contains no mapping for the key
         """
-        bucket_id: int = key % self.bucket_count
+        bucket_id = self.get_bucket_id(key)
 
         current_node = self.buckets[bucket_id]
         while current_node:
@@ -56,13 +59,13 @@ class MyHashMap:
                 return current_node.val
             current_node = current_node.next
 
-        return -1
+        return self.not_in_map
 
     def remove(self, key: int) -> None:
         """
         Removes the mapping of the specified value key if this map contains a mapping for the key
         """
-        bucket_id: int = key % self.bucket_count
+        bucket_id = self.get_bucket_id(key)
         if self.buckets[bucket_id] is None:
             return
 
@@ -83,8 +86,8 @@ test_map = MyHashMap()
 test_map.put(1, 1)
 test_map.put(2, 2)
 assert test_map.get(1) == 1
-assert test_map.get(3) == -1
+assert test_map.get(3) == test_map.not_in_map
 test_map.put(2, 1)
 assert test_map.get(2) == 1
 test_map.remove(2)
-assert test_map.get(2) == -1
+assert test_map.get(2) == test_map.not_in_map

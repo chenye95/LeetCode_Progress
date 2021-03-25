@@ -21,4 +21,4 @@ with concurrent.futures.ThreadPoolExecutor(max_workers=max_worker) as executor:
                           if file_name.endswith('.py') and
                           (not file_name.startswith("_") or file_name.endswith("_test.py"))}
     for future in concurrent.futures.as_completed(future_to_filename):
-        print("Ran ", future_to_filename[future])
+        print("Ran", future_to_filename[future])

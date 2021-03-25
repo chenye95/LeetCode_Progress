@@ -22,3 +22,4 @@ def is_happy_number(n: int) -> bool:
 
 
 assert is_happy_number(19)
+assert not is_happy_number(2)

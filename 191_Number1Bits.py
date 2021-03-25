@@ -12,6 +12,8 @@ def hamming_weight(n: int) -> int:
     return counter
 
 
-assert hamming_weight(n=int('00000000000000000000000000001011', 2)) == 3
-assert hamming_weight(n=int('00000000000000000000000010000000', 2)) == 1
-assert hamming_weight(n=int('11111111111111111111111111111101', 2)) == 31
+test_cases = ['00000000000000000000000000001011',
+              '00000000000000000000000010000000',
+              '11111111111111111111111111111101', ]
+for test_input in test_cases:
+    assert hamming_weight(n=int(test_input, 2)) == test_input.count('1')

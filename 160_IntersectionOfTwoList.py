@@ -60,7 +60,4 @@ for list_a, list_b, list_c in test_cases:
     test_head_a.last_node().next = test_head_c
     test_head_b.last_node().next = test_head_c
     intersection = get_intersection_node(test_head_a, test_head_b)
-    if test_head_c:
-        assert intersection.val == list_c[0]
-    else:
-        assert intersection is None
+    assert intersection is test_head_c
