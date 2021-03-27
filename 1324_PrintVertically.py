@@ -7,11 +7,16 @@ from itertools import zip_longest
 from typing import List
 
 
-def printVertically(s: str) -> List[str]:
+def print_vertically(s: str) -> List[str]:
+    """
+    :return: list represent words printed vertically in the same order in which they appear in s. No Trialing spaces
+    """
     words = s.split()
     return [''.join(w).rstrip() for w in zip_longest(*words, fillvalue=' ')]
 
 
-assert ["HAY", "ORO", "WEU"] == printVertically(s="HOW ARE YOU")
-assert ["TBONTB", "OEROOE", "   T"] == printVertically(s="TO BE OR NOT TO BE")
-assert ["CIC", "OSO", "N M", "T I", "E N", "S G", "T"] == printVertically(s="CONTEST IS COMING")
+test_cases = [("HOW ARE YOU", ["HAY", "ORO", "WEU"]),
+              ("TO BE OR NOT TO BE", ["TBONTB", "OEROOE", "   T"]),
+              ("CONTEST IS COMING", ["CIC", "OSO", "N M", "T I", "E N", "S G", "T"]), ]
+for test_s, expected_output in test_cases:
+    assert print_vertically(s=test_s) == expected_output

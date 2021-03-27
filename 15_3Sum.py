@@ -4,10 +4,14 @@ in the array which gives the sum of zero.
 """
 from collections import Counter
 from functools import reduce
-from typing import List
+from typing import List, Tuple
 
 
-def threeSum(nums: List[int]) -> List[List[int]]:
+def three_sum(nums: List[int]) -> List[Tuple[int, int, int]]:
+    """
+    :param nums: array of integers, may contain duplicates
+    :return:  all unique triplets in nums that add up to 0, triplet in sorted order
+    """
     if not nums:
         return []
 
@@ -40,18 +44,18 @@ def threeSum(nums: List[int]) -> List[List[int]]:
         elif zero_count >= 3:
             return_set.add((0, 0, 0))
 
-    return [list(s) for s in return_set]
+    return list(return_set)
 
 
 test_cases = [
     ([-4, -2, 1, -5, -4, -4, 4, -2, 0, 4, 0, -2, 3, 1, -5, 0],
-     [[-5, 1, 4], [-4, 0, 4], [-4, 1, 3], [-2, -2, 4], [-2, 1, 1], [0, 0, 0]]),
+     [(-5, 1, 4), (-4, 0, 4), (-4, 1, 3), (-2, -2, 4), (-2, 1, 1), (0, 0, 0)]),
     ([-4, -2, -2, -2, 0, 1, 2, 2, 2, 3, 3, 4, 4, 6, 6],
-     [[-4, -2, 6], [-4, 0, 4], [-4, 1, 3], [-4, 2, 2], [-2, -2, 4], [-2, 0, 2]]),
-    ([0, 0, 0], [[0, 0, 0]]),
+     [(-4, -2, 6), (-4, 0, 4), (-4, 1, 3), (-4, 2, 2), (-2, -2, 4), (-2, 0, 2)]),
+    ([0, 0, 0], [(0, 0, 0)]),
     ([0, 0], []),
-    ([-1, 0, 1], [[-1, 0, 1]])
+    ([-1, 0, 1], [(-1, 0, 1)]),
 ]
 
 for input, output in test_cases:
-    assert sorted(threeSum(input)) == sorted(output)
+    assert sorted(three_sum(input)) == sorted(output)

@@ -5,6 +5,9 @@ weight).
 
 
 def hamming_weight(n: int) -> int:
+    """
+    :return: count of '1' in binary representation of n
+    """
     counter = 0
     while n > 0:
         counter += (n % 2)

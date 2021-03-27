@@ -4,6 +4,9 @@ Given a string s, find the length of the longest substring without repeating cha
 
 
 def length_of_longest_substring(s: str) -> int:
+    """
+    :return: the length of the longest substring of s without repeating characters
+    """
     substring_start = max_len = 0
     last_seen = {}
 
@@ -20,7 +23,9 @@ def length_of_longest_substring(s: str) -> int:
     return max_len
 
 
-assert length_of_longest_substring(s="abcabcbb") == 3
-assert length_of_longest_substring(s="bbbbb") == 1
-assert length_of_longest_substring(s="pwwkew") == 3
-assert length_of_longest_substring(s="") == 0
+test_cases = [("abcabcbb", 3),
+              ("bbbbb", 1),
+              ("pwwkew", 3),
+              ("", 0), ]
+for test_s, expected_output in test_cases:
+    assert length_of_longest_substring(s=test_s) == expected_output

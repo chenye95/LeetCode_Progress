@@ -6,11 +6,18 @@ A valid BST is defined as follows:
 - The right subtree of a node contains only nodes with keys greater than the node's key.
 - Both the left and right subtrees must also be binary search trees.
 """
-from _Binary_Tree import TreeNode, ConstructTree
 from typing import Tuple
+
+from _Binary_Tree import TreeNode, ConstructTree
 
 
 def is_valid_BST(root: TreeNode) -> bool:
+    """
+    No equality supported here; left sub tree < current node < right sub tree
+
+    :param root: root of a binary tree
+    :return: whether the tree is a valid Binary Search Tree
+    """
     _invalid_bst_lower, _invalid_bst_upper = 1, 0
 
     def BST_checker(current_node: TreeNode) -> Tuple[int, int]:
@@ -38,5 +45,6 @@ def is_valid_BST(root: TreeNode) -> bool:
     return tree_lower <= tree_upper
 
 
-test_tree = ConstructTree.build_tree_leetcode([1, 1])
-assert not is_valid_BST(test_tree.root)
+test_cases = [([1, 1], False), ([1, 0], True), ([1, None, 2], True), ([1, None, 1], False), ]
+for test_tree, expected_output in test_cases:
+    assert is_valid_BST(root=ConstructTree.build_tree_leetcode(test_tree).root) is expected_output

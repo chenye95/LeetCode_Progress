@@ -6,6 +6,9 @@ the sum of the squares of its digits, and repeat the process until the number eq
 
 
 def is_happy_number(n: int) -> bool:
+    """
+    :return: whether the number n is a happy number
+    """
     appeared = set()
     current_number = n
     while current_number not in appeared:
@@ -21,5 +24,6 @@ def is_happy_number(n: int) -> bool:
     return False
 
 
-assert is_happy_number(19)
-assert not is_happy_number(2)
+test_cases = [(19, True), (2, False), ]
+for test_n, expected_output in test_cases:
+    assert is_happy_number(test_n) is expected_output

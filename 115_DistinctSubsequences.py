@@ -24,5 +24,7 @@ def num_distinct(s: str, t: str) -> int:
     return sum(dp[-1])
 
 
-assert num_distinct(s="BABGBAG", t="BAG") == 5
-assert num_distinct(s="rabbbit", t="rabbit") == 3
+test_cases = [("BABGBAG", "BAG", 5),
+              ("rabbbit", "rabbit", 3), ]
+for test_s, test_t, expected_output in test_cases:
+    assert num_distinct(s=test_s, t=test_t) == expected_output

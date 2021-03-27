@@ -7,7 +7,7 @@ from typing import List
 
 def contains_nearby_almost_duplicate(nums: List[int], k: int, t: int) -> bool:
     """
-    :return: exists (i, j) pair such that i < j <= i + k and |nums[i] - nums[j]| <= t
+    :return: whether there exists (i, j) pair such that i < j <= i + k and |nums[i] - nums[j]| <= t
     """
     if t < 0 or k < 0:
         return False
@@ -29,6 +29,8 @@ def contains_nearby_almost_duplicate(nums: List[int], k: int, t: int) -> bool:
     return False
 
 
-assert contains_nearby_almost_duplicate(nums=[1, 2, 3, 1], k=3, t=0) is True
-assert contains_nearby_almost_duplicate(nums=[1, 0, 1, 1], k=1, t=2) is True
-assert contains_nearby_almost_duplicate(nums=[1, 5, 9, 1, 5, 9], k=2, t=3) is False
+test_cases = [([1, 2, 3, 1], 3, 0, True),
+              ([1, 0, 1, 1], 1, 2, True),
+              ([1, 5, 9, 1, 5, 9], 2, 3, False), ]
+for test_nums, test_k, test_t, expected_output in test_cases:
+    assert contains_nearby_almost_duplicate(nums=test_nums, k=test_k, t=test_t) is expected_output

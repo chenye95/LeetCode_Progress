@@ -23,7 +23,9 @@ def compare_version(version_1: str, version_2: str) -> int:
     return 0
 
 
-assert compare_version(version_1='0.1', version_2='1.1') == -1
-assert compare_version(version_1='1.0.1', version_2='1') == 1
-assert compare_version(version_1="7.5.2.4", version_2="7.5.3") == -1
-assert compare_version(version_1="1.01", version_2="1.001") == 0
+test_cases = [('0.1', '1.1', -1),
+              ('1.0.1', '1', 1),
+              ("7.5.2.4", "7.5.3", -1),
+              ("1.01", "1.001", 0), ]
+for test_version_1, test_version_2, expected_outcome in test_cases:
+    assert compare_version(version_1=test_version_1, version_2=test_version_2) == expected_outcome

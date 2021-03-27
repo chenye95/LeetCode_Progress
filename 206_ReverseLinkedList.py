@@ -5,6 +5,10 @@ from _Linked_List import ListNode, LinkedList
 
 
 def reverse_list(head: ListNode) -> ListNode:
+    """
+    :param head: head of a singly linked list
+    :return: the head of the reversed list
+    """
     previous_node, current_node = None, head
     while current_node:
         next_node = current_node.next
@@ -19,7 +23,7 @@ test_cases = [[1, 2, 3, 4, 5],
               [], ]
 for test_input in test_cases:
     test_list = LinkedList.create_linked_list(test_input)
-    test_list.head = reverse_list(test_list.head)
+    test_list.head = reverse_list(head=test_list.head)
     if not test_input:
         assert test_list.head is None
     else:

@@ -10,6 +10,10 @@ The answer is guaranteed to fit in a 32-bit integer.
 
 
 def num_decoding(s: str) -> int:
+    """
+    :param s: non-empty string of digits only
+    :return: total number of ways to decode and translate to letters
+    """
     if s[0] == '0':
         return 0
     one_chr_before = two_chr_before = 1
@@ -29,6 +33,6 @@ def num_decoding(s: str) -> int:
     return one_chr_before
 
 
-test_cases = [('226', 3), ('12', 2), ('0', 0), ('1', 1)]
+test_cases = [('226', 3), ('12', 2), ('0', 0), ('1', 1), ]
 for test_input, expected_output in test_cases:
     assert num_decoding(s=test_input) == expected_output, test_input

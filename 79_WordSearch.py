@@ -7,8 +7,10 @@ or vertically neighboring. The same letter cell may not be used more than once.
 from typing import List
 
 
-def dfs_solution(current_board_state: List[List[str]], i: int, j: int, remaining_word: str):
+def _dfs_helper(current_board_state: List[List[str]], i: int, j: int, remaining_word: str):
     """
+    Depth first search helper function
+
     :param current_board_state: reference to the board
     :param i: row i
     :param j: column j
@@ -22,10 +24,10 @@ def dfs_solution(current_board_state: List[List[str]], i: int, j: int, remaining
         return False
     current_board_state[i][j] = ''
     rest_of_word = remaining_word[1:]
-    return_result = dfs_solution(current_board_state, i - 1, j, rest_of_word) or \
-                    dfs_solution(current_board_state, i + 1, j, rest_of_word) or \
-                    dfs_solution(current_board_state, i, j - 1, rest_of_word) or \
-                    dfs_solution(current_board_state, i, j + 1, rest_of_word)
+    return_result = _dfs_helper(current_board_state, i - 1, j, rest_of_word) or \
+                    _dfs_helper(current_board_state, i + 1, j, rest_of_word) or \
+                    _dfs_helper(current_board_state, i, j - 1, rest_of_word) or \
+                    _dfs_helper(current_board_state, i, j + 1, rest_of_word)
     current_board_state[i][j] = remaining_word[0]
     return return_result
 
@@ -40,10 +42,11 @@ def exist(board: List[List[str]], word: str) -> bool:
         return False
     if not word:
         return True
-    return any(dfs_solution(board, i, j, word) for i in range(len(board)) for j in range(len(board[0])))
+    return any(_dfs_helper(board, i, j, word) for i in range(len(board)) for j in range(len(board[0])))
 
 
-test_board = [['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']]
-assert exist(test_board, "ABCB") is False
-assert exist(test_board, "ABCCED") is True
-assert exist(test_board, "SEE") is True
+test_cases = [([['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']], "ABCB", False),
+              ([['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']], "ABCCED", True),
+              ([['A', 'B', 'C', 'E'], ['S', 'F', 'C', 'S'], ['A', 'D', 'E', 'E']], "SEE", True), ]
+for test_board, test_word, expected_output in test_cases:
+    assert exist(board=test_board, word=test_word) is expected_output

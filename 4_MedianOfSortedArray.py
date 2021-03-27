@@ -13,6 +13,10 @@ def find_median_sorted_arrays(nums1: List[int], nums2: List[int]) -> float:
     j = (m + n + 1) // 2 - i and short_list[i - 1] <= long_list[j] and long_list[j - 1] <= short_list[i]
 
     Binary search on i
+
+    :param nums1: sorted list of length m
+    :param nums2: sorted list of length n
+    :return: median of the combined list of num1 and num2
     """
     m, n = len(nums1), len(nums2)
     if m <= n:
@@ -58,8 +62,10 @@ def find_median_sorted_arrays(nums1: List[int], nums2: List[int]) -> float:
             return (max_of_left + min_of_right) / 2.0
 
 
-assert find_median_sorted_arrays(nums1=[1, 3], nums2=[2]) == 2.0
-assert find_median_sorted_arrays(nums1=[1, 2], nums2=[3, 4]) == 2.5
-assert find_median_sorted_arrays(nums1=[0, 0], nums2=[0, 0]) == 0
-assert find_median_sorted_arrays(nums1=[], nums2=[1]) == 1
-assert find_median_sorted_arrays(nums1=[2], nums2=[]) == 2
+test_cases = [([1, 3], [2], 2.0),
+              ([1, 2], [3, 4], 2.5),
+              ([0, 0], [0, 0], 0),
+              ([], [1], 1),
+              ([2], [], 2), ]
+for test_num_1, test_num_2, expected_output in test_cases:
+    assert find_median_sorted_arrays(nums1=test_num_1, nums2=test_num_2) == expected_output

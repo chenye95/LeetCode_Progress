@@ -10,8 +10,9 @@ You have the following 3 operations permitted on a word:
 
 def min_edit_distance(word_1: str, word_2: str) -> int:
     """
-    Dynamic Programming Approach, uses current_iteration and last_iteration to replace 2D table
+    Dynamic Programming Approach, uses current_iteration and last_iteration to replace 2D table.
     Compute Edit Distance between word_1[:i] and word[:j]
+
     :return: edit distance between word_1 and word_2
     """
     m, n = len(word_1), len(word_2)
@@ -34,5 +35,7 @@ def min_edit_distance(word_1: str, word_2: str) -> int:
     return last_iteration[-1]
 
 
-assert min_edit_distance(word_1="horse", word_2="ros") == 3
-assert min_edit_distance(word_1="intention", word_2="execution") == 5
+test_cases = [("horse", "ros", 3),
+              ("intention", "execution", 5), ]
+for test_word_1, test_word_2, expected_output in test_cases:
+    assert min_edit_distance(word_1=test_word_1, word_2=test_word_2) == expected_output

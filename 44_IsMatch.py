@@ -6,6 +6,11 @@ Given an input string (s) and a pattern (p), implement wildcard pattern matching
 
 
 def is_match(s: str, p: str) -> bool:
+    """
+    Regex matching with ? and *
+
+    :return: whether string s regex matches pattern p
+    """
     dp_memory = [[False] * (len(s) + 1) for _ in range(len(p) + 1)]
     dp_memory[0][0] = True
     # Leading * can match to no characters
@@ -26,6 +31,10 @@ def is_match(s: str, p: str) -> bool:
     return dp_memory[-1][-1]
 
 
-assert is_match(s="acdcb", p="a*c?")
-assert is_match(s="adceb", p="*a*b")
-assert is_match(s="adceb", p="**")
+test_cases = [("acdcb", "a*c?", True),
+              ("adceb", "*a*b", True),
+              ("adceb", "a*b", True),
+              ("adced", "*a*b", False),
+              ("adceb", "**", True), ]
+for test_s, test_p, expected_output in test_cases:
+    assert is_match(s=test_s, p=test_p) is expected_output

@@ -9,7 +9,7 @@ If multiple answers are possible, just return any of them.
 
 def fraction_to_decimal(numerator: int, denominator: int) -> str:
     """
-    :return: convert fraction numerator / denominator to decimals
+    :return: convert fraction numerator / denominator to decimals. Use parentheses to enclose repeating parts
     """
     assert denominator != 0, "Invalid Operation, Divided by 0"
     if numerator == 0:

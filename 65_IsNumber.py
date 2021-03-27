@@ -8,6 +8,10 @@ Validate if a given string can be interpreted as a decimal number.
 
 
 def is_number(s: str) -> bool:
+    """
+    :return: whether s is a valid decimal number
+    """
+
     def is_number_helper(s: str, can_have_decimal: bool = True, allow_empty_after_decimal: bool = True) -> bool:
         if len(s) == 0:
             return False
@@ -50,6 +54,6 @@ test_cases = [("0", True),
               (".1", True),
               ("3.", True),
               (".", False),
-              ("46.e3", False)]
+              ("46.e3", False), ]
 for test_input, expected_output in test_cases:
     assert is_number(test_input) is expected_output

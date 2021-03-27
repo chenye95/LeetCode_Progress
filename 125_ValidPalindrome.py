@@ -6,10 +6,15 @@ Note: For the purpose of this problem, we define empty string as valid palindrom
 
 
 def is_palindrome(s: str) -> bool:
+    """
+    :return: whether the alphanumeric characters of s make a valid palindrome
+    """
     alpha_numeric_s = ''.join(c for c in s if c.isalpha() or c.isdigit()).lower()
     return alpha_numeric_s == alpha_numeric_s[::-1]
 
 
-assert is_palindrome("0P") is False
-assert is_palindrome("A man, a plan, a canal: Panama") is True
-assert is_palindrome("race a car") is False
+test_cases = [("0P", False),
+              ("A man, a plan, a canal: Panama", True),
+              ("race a car", False), ]
+for test_s, expected_output in test_cases:
+    assert is_palindrome(s=test_s) is expected_output

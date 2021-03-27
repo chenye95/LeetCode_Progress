@@ -9,7 +9,11 @@ from bisect import bisect_left
 from typing import List
 
 
-def h_index(citations: List[int]) -> int:
+def h_index_my_bisect(citations: List[int]) -> int:
+    """
+    :param citations: array of non-negative integers in ascending order
+    :return: h-index of the researcher
+    """
     if not citations:
         return 0
     # elif len(citations) == 1:
@@ -28,6 +32,10 @@ def h_index(citations: List[int]) -> int:
 
 
 def h_index_bisect(citations: List[int]) -> int:
+    """
+    :param citations: array of non-negative integers in ascending order
+    :return: h-index of the researcher
+    """
     n = len(citations)
 
     class Range():
@@ -38,20 +46,25 @@ def h_index_bisect(citations: List[int]) -> int:
     return n - index if index < n else 0
 
 
-from timeit import Timer
-from functools import partial
+test_cases = [([1, 1, 2, 3, 4, 5, 7], 3),
+              ([1, 2], 1),
+              ([0, 1, 3, 5, 6], 3),
+              ([0], 0),
+              ([100], 1), ]
+for h_index in [h_index_my_bisect, h_index_bisect]:
+    for citation_list, expected_h_index in test_cases:
+        assert h_index(citations=citation_list) == expected_h_index, h_index.__name__
 
-assert h_index([1, 1, 2, 3, 4, 5, 7]) == 3
-assert h_index([1, 2]) == 1
-assert h_index([0, 1, 3, 5, 6]) == 3
-assert h_index([0]) == 0
-assert h_index([100]) == 1
-
+"""
 test_citations = [1, 1, 2, 3, 4, 5, 7]
 n_cycles = 10_000
 
 t_bisect = Timer(partial(h_index_bisect, test_citations))
 print("Bisect", t_bisect.timeit(n_cycles) / n_cycles)
 
-t_my = Timer(partial(h_index, test_citations))
+t_my = Timer(partial(h_index_my_bisect, test_citations))
 print("My", t_my.timeit(n_cycles) / n_cycles)
+
+t_bisect = Timer(partial(h_index_bisect, test_citations))
+print("Bisect", t_bisect.timeit(n_cycles) / n_cycles)
+"""

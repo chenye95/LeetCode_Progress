@@ -5,12 +5,13 @@ Note: A leaf is a node with no children.
 """
 from typing import List
 
-from _Binary_Tree import TreeNode
+from _Binary_Tree import TreeNode, ConstructTree
 
 
 def path_sum(root: TreeNode, target_sum: int) -> List[List[int]]:
     """
     DFS Solution
+
     :param root: root of Binary Tree
     :param target_sum: target sum for root-to-leaf paths add up to
     :return: list of all root-to-leaf paths that add up to target_sum; each path is represented as list of node values
@@ -44,7 +45,6 @@ def path_sum(root: TreeNode, target_sum: int) -> List[List[int]]:
     return dfs_traverse(root, target_sum)
 
 
-from _Binary_Tree import ConstructTree
-
-test_cases = ConstructTree.build_tree_leetcode([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1])
-assert path_sum(test_cases.root, 22) == [[5, 4, 11, 2], [5, 8, 4, 5]]
+test_cases = [([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, 5, 1], 22, [[5, 4, 11, 2], [5, 8, 4, 5]]), ]
+for test_tree, test_target, expected_output in test_cases:
+    assert sorted(path_sum(ConstructTree.build_tree_leetcode(test_tree).root, test_target)) == sorted(expected_output)

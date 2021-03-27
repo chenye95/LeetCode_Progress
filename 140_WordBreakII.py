@@ -13,7 +13,7 @@ def word_break(s: str, word_dict: List[str]) -> List[str]:
     """
     :param s: string to break down into words
     :param word_dict: acceptable words in the dict
-    :return:
+    :return: all possible sentences such word concatenate to s, and all words appear in word_dict
     """
     beginning_letters = {w[0] for w in word_dict}
     memory = {len(s): [""]}
@@ -37,4 +37,6 @@ def word_break(s: str, word_dict: List[str]) -> List[str]:
     return split_into_sentences(0)
 
 
-assert word_break(s="catsanddog", word_dict=["cat", "cats", "and", "sand", "dog"]) == ['cat sand dog', 'cats and dog']
+test_cases = [("catsanddog", ["cat", "cats", "and", "sand", "dog"], {'cat sand dog', 'cats and dog'}), ]
+for test_s, test_dict, expected_output in test_cases:
+    assert set(word_break(s=test_s, word_dict=test_dict)) == expected_output

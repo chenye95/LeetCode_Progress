@@ -11,6 +11,8 @@ from typing import List
 def max_sub_array(nums: List[int]) -> int:
     """
     Greedy algorithm
+
+    :return: maximum sum of any non-empty sub array of nums
     """
     max_tracker = nums[0]
     accumulation_tracker = 0
@@ -24,8 +26,10 @@ def max_sub_array(nums: List[int]) -> int:
     return max_tracker
 
 
-assert 6 == max_sub_array(nums=[-2, 1, -3, 4, -1, 2, 1, -5, 4])
-assert 1 == max_sub_array(nums=[1])
-assert 0 == max_sub_array(nums=[0])
-assert -1 == max_sub_array(nums=[-1])
-assert -2147483647 == max_sub_array(nums=[-2147483647])
+test_cases = [([-2, 1, -3, 4, -1, 2, 1, -5, 4], 6),
+              ([1], 1),
+              ([0], 0),
+              ([-1], -1),
+              ([-2147483647], -2147483647), ]
+for test_nums, expected_output in test_cases:
+    assert max_sub_array(nums=test_nums) == expected_output

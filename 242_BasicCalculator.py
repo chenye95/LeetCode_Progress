@@ -53,7 +53,6 @@ def calculate(expression_string: str) -> int:
 test_cases = [('1 + 1 ', 2),
               ('2-1+ 2 ', 3),
               ('(1+(4+5+2)-3)+(6+8)', 23),
-              ('    0    ', 0),
-              ]
-for s, expected in test_cases:
-    assert calculate(s) == expected
+              ('    0    ', 0), ]
+for test_expression, expected_output in test_cases:
+    assert calculate(expression_string=test_expression) == expected_output

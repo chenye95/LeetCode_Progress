@@ -16,6 +16,7 @@ from typing import List
 def min_tap_water_garden(n: int, ranges: List[int]) -> int:
     """
     Similar to 1024 Video Stitching
+
     :param n: garden covers [0, n]
     :param ranges: ith tap covers [i-range[i], i+range[i]] for i in [0,...N]
     :return: min number of taps to be open to water the whole garden
@@ -48,8 +49,10 @@ def min_tap_water_garden(n: int, ranges: List[int]) -> int:
     return min_count if farthest_all_taps >= n else -1
 
 
-assert 1 == min_tap_water_garden(n=5, ranges=[3, 4, 1, 1, 0, 0])
-assert -1 == min_tap_water_garden(n=3, ranges=[0, 0, 0, 0])
-assert 3 == min_tap_water_garden(n=7, ranges=[1, 2, 1, 0, 2, 1, 0, 1])
-assert 2 == min_tap_water_garden(n=8, ranges=[4, 0, 0, 0, 0, 0, 0, 0, 4])
-assert 1 == min_tap_water_garden(n=8, ranges=[4, 0, 0, 0, 4, 0, 0, 0, 4])
+test_cases = ([(5, [3, 4, 1, 1, 0, 0], 1),
+               (3, [0, 0, 0, 0], -1),
+               (7, [1, 2, 1, 0, 2, 1, 0, 1], 3),
+               (8, [4, 0, 0, 0, 0, 0, 0, 0, 4], 2),
+               (8, [4, 0, 0, 0, 4, 0, 0, 0, 4], 1), ])
+for test_n, test_ranges, expected_output in test_cases:
+    assert min_tap_water_garden(n=test_n, ranges=test_ranges) == expected_output

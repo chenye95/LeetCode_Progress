@@ -15,13 +15,13 @@ class Iterator:
 
     def has_next(self) -> bool:
         """
-        Returns True if the iteration has more elements
+        :return: if iterator has more elements
         """
         return self.pointer < len(self.nums)
 
     def next(self) -> Optional[Any]:
         """
-        Returns the next element in the iteration
+        :return: next element in the iteration
         """
         if self.pointer < len(self.nums):
             self.pointer += 1
@@ -46,13 +46,16 @@ class PeekingIterator:
 
     def peek(self) -> Optional[Any]:
         """
-        Returns the next element in the iteration without advancing the iterator.
+        :return: the next element in the iteration without advancing the iterator.
         """
         if not self.cache and self.iterator.has_next():
             self.cache = self.iterator.next()
         return self.cache
 
     def next(self) -> Optional[Any]:
+        """
+        :return: next element in the iteration
+        """
         if self.cache:
             return_value, self.cache = self.cache, None
             return return_value
@@ -60,9 +63,15 @@ class PeekingIterator:
             return self.iterator.next()
 
     def has_next(self) -> bool:
+        """
+        :return: if iterator has more elements
+        """
         return self.cache is not None or self.iterator.has_next()
 
     def reset(self) -> None:
+        """
+        Reset pointer to the start of the list
+        """
         self.iterator.reset()
         self.cache = None
 

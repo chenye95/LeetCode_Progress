@@ -11,7 +11,7 @@ from typing import List
 
 def unique_paths_with_obstacles(obstacle_grid: List[List[int]]) -> int:
     """
-    :param obstacle_grid: grids with some obstacles added
+    :param obstacle_grid: matrix of 0 and 1, representing grids with some obstacles added
     :return: unique path from top-left to bottom right, if robot can only move down or right at any point in time
     """
     if not obstacle_grid or not obstacle_grid[0]:
@@ -30,6 +30,8 @@ def unique_paths_with_obstacles(obstacle_grid: List[List[int]]) -> int:
     return path_count[-1][-1]
 
 
-assert unique_paths_with_obstacles([[0]]) == 1
-assert unique_paths_with_obstacles([[0, 0, 0], [0, 1, 0], [0, 0, 0]]) == 2
-assert unique_paths_with_obstacles([[1]]) == 0
+test_cases = [([[0]], 1),
+              ([[0, 0, 0], [0, 1, 0], [0, 0, 0]], 2),
+              ([[1]], 0), ]
+for test_matrix, expected_output in test_cases:
+    assert unique_paths_with_obstacles(obstacle_grid=test_matrix) == expected_output

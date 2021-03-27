@@ -12,6 +12,10 @@ from typing import List
 def combination_sum_2(candidates: List[int], target: int) -> List[List[int]]:
     """
     Backtrack to generate all possible combinations
+
+    :param candidates: list of integers may contain duplicates
+    :param target: integer target number
+    :return: all unique combinations in candidates that sum to target, and each item in candidates is used at most once
     """
 
     def back_track(combination: List[int], remainder: int, start_from: int, ref_results: List[List[int]]) -> None:
@@ -40,5 +44,7 @@ def combination_sum_2(candidates: List[int], target: int) -> List[List[int]]:
     return result_list
 
 
-assert combination_sum_2(candidates=[10, 1, 2, 7, 6, 1, 5], target=8) == [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]
-assert combination_sum_2(candidates=[2, 5, 2, 1, 2], target=5) == [[1, 2, 2], [5]]
+test_cases = [([10, 1, 2, 7, 6, 1, 5], 8, [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]),
+              ([2, 5, 2, 1, 2], 5, [[1, 2, 2], [5]]), ]
+for test_candidates, test_target, expected_output in test_cases:
+    assert sorted(combination_sum_2(candidates=test_candidates, target=test_target)) == sorted(expected_output)

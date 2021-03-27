@@ -18,5 +18,7 @@ def largest_number(nums: List[int]) -> str:
     return '0' if return_largest_number[0] == '0' else return_largest_number
 
 
-assert largest_number([10, 2]) == '210'
-assert largest_number([3, 30, 34, 5, 9]) == "9534330"
+test_cases = [([10, 2], "210"),
+              ([3, 30, 34, 5, 9], "9534330"), ]
+for test_nums, expected_output in test_cases:
+    assert largest_number(nums=test_nums) == expected_output

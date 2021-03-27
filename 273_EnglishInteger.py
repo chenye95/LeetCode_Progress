@@ -1,12 +1,12 @@
 """
-Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
+Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 2^31 - 1.
 """
 
 
 def int_to_english(num: int) -> str:
     """
-    :param num: Positive Integer, less than a trillion
-    :return: String
+    :param num: positive integer, less than a trillion (32 bit integer)
+    :return: English representation of the integer
     """
 
     def int_to_english_helper(helper_three_dig: int) -> str:
@@ -44,6 +44,10 @@ def int_to_english(num: int) -> str:
 
 
 def english_to_int(num: str) -> int:
+    """
+    :param num: English representation of a positive integer, less than a trillion (32 bit integer)
+    :return: integer form the number
+    """
     splitters = {'Thousand': 10 ** 3, 'Million': 10 ** 6, 'Billion': 10 ** 9, 'Trillion': 10 ** 12}
     trans_map = {'Zero': 0, 'One': 1, 'Two': 2, 'Three': 3, 'Four': 4, 'Five': 5, 'Six': 6, 'Seven': 7, 'Eight': 8,
                  'Nine': 9, 'Ten': 10, 'Eleven': 11, 'Twelve': 12, 'Thirteen': 13, 'Fourteen': 14, 'Fifteen': 15,
@@ -63,6 +67,6 @@ def english_to_int(num: str) -> int:
     return ret_val + remainder
 
 
-test_cases = (0, 1_234_567, 1_230_567, 1_000_567, 1_000_700, 1_000_067, 123, 1_000, 1_020_345_000_900)
+test_cases = {0, 1_234_567, 1_230_567, 1_000_567, 1_000_700, 1_000_067, 123, 1_000, 1_020_345_000_900}
 for test_num in test_cases:
     assert test_num == english_to_int(int_to_english(test_num))

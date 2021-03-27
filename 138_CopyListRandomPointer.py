@@ -17,6 +17,10 @@ class Node:
 
 
 def copy_random_list(head: Node) -> Node:
+    """
+    :param head: node contains an additional random pointer, which could point to any node in the list, or None.
+    :return: head node of the copy list
+    """
     if not head:
         return head
 
@@ -51,8 +55,7 @@ test_cases = [[[-1, 0]],
               [[7, None], [13, 0], [11, 4], [10, 2], [1, 0]],
               [[1, 1], [2, 1]],
               [[3, None], [3, 0], [3, None]],
-              []
-              ]
+              [], ]
 for test_input in test_cases:
     if not test_input:
         test_head = None
@@ -65,7 +68,7 @@ for test_input in test_cases:
             if random_point is not None:
                 node_list[i].random = node_list[random_point]
         test_head = node_list[0]
-    output_head = copy_random_list(test_head)
+    output_head = copy_random_list(head=test_head)
     output_node_map = {}
     output_current = output_head
     i = 0

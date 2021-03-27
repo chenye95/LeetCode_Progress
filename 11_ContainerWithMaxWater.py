@@ -20,7 +20,9 @@ def max_area(height: List[int]) -> int:
     return max_area_tracker
 
 
-assert max_area(height=[1, 8, 6, 2, 5, 4, 8, 3, 7]) == 49
-assert max_area(height=[1, 1]) == 1
-assert max_area(height=[4, 3, 2, 1, 4]) == 16
-assert max_area(height=[1, 2, 1]) == 2
+test_cases = [([1, 8, 6, 2, 5, 4, 8, 3, 7], 49),
+              ([1, 1], 1),
+              ([4, 3, 2, 1, 4], 16),
+              ([1, 2, 1], 2), ]
+for test_height, expected_output in test_cases:
+    assert max_area(height=test_height) == expected_output

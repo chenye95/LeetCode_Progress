@@ -8,6 +8,13 @@ from typing import List
 
 
 def num_of_islands(grid: List[List[str]]) -> int:
+    """
+    Depth First Search
+
+    :param grid: 2D grid of 1 (land) and 0 (water)
+    :return: number of islands in the grid
+    """
+
     def dfs_explore_island(ref_grid: List[List[str]], i: int, j: int) -> None:
         if 0 <= i < len(ref_grid) and 0 <= j < len(ref_grid[0]) and ref_grid[i][j] == '1':
             ref_grid[i][j] = '#'
@@ -28,13 +35,13 @@ def num_of_islands(grid: List[List[str]]) -> int:
     return island_count
 
 
-assert 1 == num_of_islands(grid=[["1", "1", "1", "1", "0"],
-                                 ["1", "1", "0", "1", "0"],
-                                 ["1", "1", "0", "0", "0"],
-                                 ['0', "0", "0", "0", "0"]]
-                           )
-assert 3 == num_of_islands(grid=[["1", "1", "0", "0", "0"],
-                                 ["1", "1", "0", "0", "0"],
-                                 ["0", "0", "1", "0", "0"],
-                                 ["0", "0", "0", "1", "1"]]
-                           )
+test_cases = [([["1", "1", "1", "1", "0"],
+                ["1", "1", "0", "1", "0"],
+                ["1", "1", "0", "0", "0"],
+                ['0', "0", "0", "0", "0"]], 1),
+              ([["1", "1", "0", "0", "0"],
+                ["1", "1", "0", "0", "0"],
+                ["0", "0", "1", "0", "0"],
+                ["0", "0", "0", "1", "1"]], 3), ]
+for test_grid, expected_output in test_cases:
+    assert num_of_islands(test_grid) == expected_output

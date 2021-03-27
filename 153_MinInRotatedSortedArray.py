@@ -14,6 +14,7 @@ from typing import List
 def find_min(nums: List[int]) -> int:
     """
     Modified version of binary search to find inflection, pivot point
+
     :param nums: an array sorted in ascending order is rotated at some pivot; no duplicates allowed
     :return: min element in nums
     """
@@ -43,8 +44,10 @@ def find_min(nums: List[int]) -> int:
             right = mid - 1
 
 
-assert 1 == find_min([3, 4, 5, 1, 2])
-assert 0 == find_min([4, 5, 6, 7, 0, 1, 2])
+test_cases = [([3, 4, 5, 1, 2], 1),
+              ([4, 5, 6, 7, 0, 1, 2], 0), ]
+for test_input, expected_output in test_cases:
+    assert find_min(nums=test_input) == expected_output
 
 N = randint(500, 1000)
 range_list = list(range(N))

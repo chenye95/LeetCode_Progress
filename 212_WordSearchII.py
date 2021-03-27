@@ -8,6 +8,11 @@ from typing import List, Dict
 
 
 def find_words(board: List[List[chr]], words: List[str]) -> List[str]:
+    """
+    :param board: a 2D board of characters
+    :param words: list of strings
+    :return: all word in words that can be found on the board
+    """
     _end_of_word = '$'
     word_trie = {}
     for word in words:
@@ -47,9 +52,11 @@ def find_words(board: List[List[chr]], words: List[str]) -> List[str]:
     return return_list
 
 
-assert set(find_words(board=[["o", "a", "a", "n"],
-                             ["e", "t", "a", "e"],
-                             ["i", "h", "k", "r"],
-                             ["i", "f", "l", "v"]],
-                      words=["oath", "pea", "eat", "rain"])) == {"eat", "oath"}
-assert set(find_words(board=[['a', 'b'], ['c', 'd']], words=["abcd"])) == set()
+test_cases = [([["o", "a", "a", "n"],
+                ["e", "t", "a", "e"],
+                ["i", "h", "k", "r"],
+                ["i", "f", "l", "v"]],
+               ["oath", "pea", "eat", "rain"], {"eat", "oath"}),
+              ([['a', 'b'], ['c', 'd']], ["abcd"], set()), ]
+for test_board, test_words, expected_output in test_cases:
+    assert set(find_words(board=test_board, words=test_words)) == expected_output

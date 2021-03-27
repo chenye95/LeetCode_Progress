@@ -7,6 +7,10 @@ from _Binary_Tree import TreeNode, BinaryTree
 
 
 def invert_tree(root: TreeNode) -> Optional[TreeNode]:
+    """
+    :param root: root of a binary tree
+    :return: root of the inverted binary tree, after flipping left and right child of each node
+    """
     if root is None:
         return None
     right = invert_tree(root.right) if root.right else None

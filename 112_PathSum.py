@@ -4,7 +4,7 @@ the path equals the given sum.
 
 Note: A leaf is a node with no children.
 """
-from _Binary_Tree import TreeNode
+from _Binary_Tree import TreeNode, ConstructTree
 
 
 def has_path_sum(root: TreeNode, target_sum: int) -> bool:
@@ -28,8 +28,7 @@ def has_path_sum(root: TreeNode, target_sum: int) -> bool:
     return False
 
 
-from _Binary_Tree import ConstructTree
-
-test_cases = ConstructTree.build_tree_leetcode([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, 1])
-assert has_path_sum(test_cases.root, 0) is False
-assert has_path_sum(test_cases.root, 22) is True
+test_cases = [([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, 1], 0, False),
+              ([5, 4, 8, 11, None, 13, 4, 7, 2, None, None, None, 1], 22, True), ]
+for test_tree, test_target, expected_output in test_cases:
+    assert has_path_sum(ConstructTree.build_tree_leetcode(test_tree).root, test_target) is expected_output

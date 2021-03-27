@@ -23,13 +23,16 @@ class Solution:
         return max(node.val + max(left_max, right_max), 0)
 
     def max_path_sum(self, root: TreeNode) -> int:
+        """
+        :param root: root of an non-empty binary tree
+        :return: maximum path sum in the tree
+        """
         self.max_path_end_at_node(root)
         return self.global_max
 
 
 test_cases = [(ConstructTree.build_tree_leetcode([1, 2, 3]), 6),
               (ConstructTree.build_tree_leetcode([-10, 9, 20, None, None, 15, 7]), 42)]
-
-solution_class = Solution()
 for test_tree, expected_value in test_cases:
-    assert solution_class.max_path_sum(test_tree.root) == expected_value
+    solution_class = Solution()
+    assert solution_class.max_path_sum(root=test_tree.root) == expected_value

@@ -12,6 +12,7 @@ def get_intersection_node(head_a: ListNode, head_b: ListNode) -> Optional[ListNo
     let len_b be length of section in list b before intersection
     let len_c be length of section after intersection
     if two list intersects, we can find the intersection in len_a + len_b + len_c steps or len_a steps if len_a == len_b
+
     :param head_a: head node of list a
     :param head_b: head node of list b
     :return: ListNode that is intersection of two linked list, if exists; None otherwise
@@ -51,13 +52,11 @@ test_cases = [([4, 1], [5, 6, 1], [8, 4, 5]),
               ([1, 9, 1], [3], [2, 4]),
               ([2, 6, 4], [1, 5], []),
               ([4, 1], [5, 6, 1], [8, 4, 5]),
-              ([2, 6, 4], [2, 6, 4], []),
-              ]
+              ([2, 6, 4], [2, 6, 4], []), ]
 for list_a, list_b, list_c in test_cases:
     test_head_a = LinkedList.create_linked_list(list_a).head
     test_head_b = LinkedList.create_linked_list(list_b).head
     test_head_c = LinkedList.create_linked_list(list_c).head
     test_head_a.last_node().next = test_head_c
     test_head_b.last_node().next = test_head_c
-    intersection = get_intersection_node(test_head_a, test_head_b)
-    assert intersection is test_head_c
+    assert get_intersection_node(head_a=test_head_a, head_b=test_head_b) is test_head_c

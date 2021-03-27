@@ -9,6 +9,12 @@ from typing import List
 
 
 def remove_duplicates(nums: List[int]) -> int:
+    """
+    Remove duplicates in place for a sorted integer list
+
+    :param nums: sorted integer list
+    :return: new length after de-duplication
+    """
     if not nums:
         return 0
 

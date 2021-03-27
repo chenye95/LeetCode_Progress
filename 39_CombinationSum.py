@@ -12,6 +12,12 @@ from typing import List
 
 
 def combination_sum(candidates: List[int], target: int) -> List[List[int]]:
+    """
+    :param candidates: array of distinct integers
+    :param target: integer value
+    :return: list of all unique combinations of candidates that add to target
+    """
+
     def back_track(combination: List[int], remainder: int, start_from: int, ref_return_list) -> None:
         if remainder == 0:
             ref_return_list.append(list(combination))
@@ -31,16 +37,15 @@ def combination_sum(candidates: List[int], target: int) -> List[List[int]]:
     return return_list
 
 
-assert combination_sum(candidates=[2, 3, 6, 7], target=7) == [[2, 2, 3], [7]]
-assert combination_sum(candidates=[2, 3, 5], target=8) == [[2, 2, 2, 2], [2, 3, 3], [3, 5]]
-assert combination_sum(candidates=[2], target=1) == []
-assert combination_sum(candidates=[1], target=1) == [[1]]
-assert combination_sum(candidates=[1], target=2) == [[1, 1]]
-assert combination_sum(candidates=[2, 7, 6, 3, 5, 1], target=9) == [[1, 1, 1, 1, 1, 1, 1, 1, 1],
-                                                                    [1, 1, 1, 1, 1, 1, 1, 2], [1, 1, 1, 1, 1, 1, 3],
-                                                                    [1, 1, 1, 1, 1, 2, 2], [1, 1, 1, 1, 2, 3],
-                                                                    [1, 1, 1, 1, 5], [1, 1, 1, 2, 2, 2],
-                                                                    [1, 1, 1, 3, 3], [1, 1, 1, 6], [1, 1, 2, 2, 3],
-                                                                    [1, 1, 2, 5], [1, 1, 7], [1, 2, 2, 2, 2],
-                                                                    [1, 2, 3, 3], [1, 2, 6], [1, 3, 5], [2, 2, 2, 3],
-                                                                    [2, 2, 5], [2, 7], [3, 3, 3], [3, 6]]
+test_cases = [([2, 3, 6, 7], 7, [[2, 2, 3], [7]]),
+              ([2, 3, 5], 8, [[2, 2, 2, 2], [2, 3, 3], [3, 5]]),
+              ([2], 1, []),
+              ([1], 1, [[1]]),
+              ([1], 2, [[1, 1]]),
+              ([2, 7, 6, 3, 5, 1], 9, [[1, 1, 1, 1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 2], [1, 1, 1, 1, 1, 1, 3],
+                                       [1, 1, 1, 1, 1, 2, 2], [1, 1, 1, 1, 2, 3], [1, 1, 1, 1, 5], [1, 1, 1, 2, 2, 2],
+                                       [1, 1, 1, 3, 3], [1, 1, 1, 6], [1, 1, 2, 2, 3], [1, 1, 2, 5], [1, 1, 7],
+                                       [1, 2, 2, 2, 2], [1, 2, 3, 3], [1, 2, 6], [1, 3, 5], [2, 2, 2, 3], [2, 2, 5],
+                                       [2, 7], [3, 3, 3], [3, 6]]), ]
+for test_candidates, test_target, expected_output in test_cases:
+    assert sorted(combination_sum(candidates=test_candidates, target=test_target)) == sorted(expected_output)

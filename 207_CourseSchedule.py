@@ -12,6 +12,8 @@ from typing import List
 
 def can_finish(num_courses: int, prerequisites: List[List[int]]) -> bool:
     """
+    Topological sort approach
+
     :param num_courses: total number of courses labeled from 0 to n-1
     :param prerequisites: prerequisites to take each course
     :return: if it is possible to finish all courses
@@ -43,6 +45,6 @@ def can_finish(num_courses: int, prerequisites: List[List[int]]) -> bool:
 
 
 test_cases = [(2, [[1, 0]], True),
-              (2, [[1, 0], [0, 1]], False)]
+              (2, [[1, 0], [0, 1]], False), ]
 for test_NumCourse, test_prerequisites, expected_out in test_cases:
-    assert can_finish(test_NumCourse, test_prerequisites) == expected_out
+    assert can_finish(test_NumCourse, test_prerequisites) is expected_out

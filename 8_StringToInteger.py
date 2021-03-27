@@ -12,13 +12,19 @@ The algorithm for myAtoi(string s) is as follows:
 - Convert these digits into an integer (i.e. "123" -> 123, "0032" -> 32). If no digits were read, then the integer is 0.
     Change the sign as necessary (from step 2).
 - If the integer is out of the 32-bit signed integer range [-2^31, 2^31 - 1], then clamp the integer so that it remains
-    in the range. Specifically, integers less than -231 should be clamped to -231, and integers greater than 2^31 - 1
+    in the range. Specifically, integers less than -2^31 should be clamped to -2^31, and integers greater than 2^31 - 1
     should be clamped to 2^31 - 1.
 - Return the integer as the final result.
 """
 
 
 def my_atoi(s: str) -> int:
+    """
+    Implementation of atoi function
+
+    :param s: string that we want to convert to integer
+    :return: clamped to 32 bit signed int if s is an integer, or zero otherwise
+    """
     i, sign = 0, 1
     return_result = 0
 
@@ -46,9 +52,11 @@ def my_atoi(s: str) -> int:
     return return_result * sign
 
 
-assert my_atoi(s="42") == 42
-assert my_atoi(s="   -42") == -42
-assert my_atoi(s="4193 with words") == 4193
-assert my_atoi(s="words and 987") == 0
-assert my_atoi(s="-91283472332") == -2147483648
-assert my_atoi(s="21474836460") == (1 << 31) - 1
+test_cases = [("42", 42),
+              ("   -42", -42),
+              ("4193 with words", 4193),
+              ("words and 987", 0),
+              ("-91283472332", -2147483648),
+              ("21474836460", (1 << 31) - 1), ]
+for test_s, expected_output in test_cases:
+    assert my_atoi(s=test_s) == expected_output

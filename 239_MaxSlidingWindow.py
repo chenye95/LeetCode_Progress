@@ -26,18 +26,21 @@ def max_sliding_window(nums: List[int], k: int) -> List[int]:
     return return_list
 
 
-assert max_sliding_window(nums=[1, 3, -1, -3, 5, 3, 6, 7], k=3) == [3, 3, 5, 5, 6, 7]
+test_cases = [([1, 3, -1, -3, 5, 3, 6, 7], 3, [3, 3, 5, 5, 6, 7]),
+              ([0, -42, -59, 38, -13, -79, 78, -11, 20, 67], 5, [38, 38, 78, 78, 78, 78]), ]
+for test_nums, test_k, expected_output in test_cases:
+    assert max_sliding_window(nums=test_nums, k=test_k) == expected_output
 
 from random import randint
 from datetime import datetime
 
 for i in range(10):
     N = 10000
-    k = randint(2, 20)
-    nums = [randint(-100, 100) for _ in range(N)]
-    out = [max(nums[i:i + k]) for i in range(N - k + 1)]
+    test_k = randint(2, 20)
+    test_nums = [randint(-100, 100) for _ in range(N)]
+    expected_output = [max(test_nums[i:i + test_k]) for i in range(N - test_k + 1)]
     start_time = datetime.now()
-    calculated_output = max_sliding_window(nums, k)
+    calculated_output = max_sliding_window(nums=test_nums, k=test_k)
     end_time = datetime.now()
-    assert calculated_output == out
-    print("Cycle %d" % i, end_time - start_time)
+    assert calculated_output == expected_output
+    # print("Cycle %d" % i, end_time - start_time)

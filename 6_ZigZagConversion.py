@@ -1,11 +1,15 @@
 """
-The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this:
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows of like this:
 (you may want to display this pattern in a fixed font for better legibility)
 And then read line by line: "PAHNAPLSIIGYIR"
 """
 
 
 def convert_calculate(s: str, num_rows: int) -> str:
+    """
+    :param num_rows: number of rows used in zig zag pattern
+    :return: s written in zig-zag pattern and read horizontally
+    """
     if not s or len(s) <= 1 or num_rows == 1:
         return s
     repetition_group = 2 * (num_rows - 1)
@@ -60,4 +64,4 @@ test_cases = [("PAYPALISHIRING", 3, "PAHNAPLSIIGYIR"),
               ("A", 2, "A"), ]
 for convert in [convert_simulate, convert_calculate]:
     for test_s, test_rows, expected_output in test_cases:
-        assert convert(s=test_s, num_rows=test_rows) == expected_output
+        assert convert(s=test_s, num_rows=test_rows) == expected_output, convert.__name__

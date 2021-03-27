@@ -11,6 +11,7 @@ from typing import List
 def search_matrix_binary_search(matrix: List[List[int]], target: int) -> bool:
     """
     Search from top right, leftward and downward. Utilize property 2 to eliminate whole columns
+
     :return: whether target exists in matrix
     """
     if not matrix or not matrix[0]:
@@ -27,6 +28,11 @@ def search_matrix_binary_search(matrix: List[List[int]], target: int) -> bool:
 
 
 def search_matrix_sequential(matrix: List[List[int]], target: int) -> bool:
+    """
+    Search from top right, leftward and downward. Utilize property 2 to eliminate whole columns
+
+    :return: whether target exists in matrix
+    """
     if not matrix or not matrix[0]:
         return False
     j = len(matrix[0]) - 1
@@ -46,4 +52,4 @@ test_cases = [
 ]
 for search_matrix in [search_matrix_binary_search, search_matrix_sequential]:
     for test_matrix, test_target, expected_output in test_cases:
-        assert search_matrix(matrix=test_matrix, target=test_target) is expected_output
+        assert search_matrix(matrix=test_matrix, target=test_target) is expected_output, search_matrix.__name__

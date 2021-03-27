@@ -6,12 +6,14 @@ Here, we will use the integers 0, 1, and 2 to represent the color red, white, an
 
 Note: You are not suppose to use the library's sort function for this problem.
 """
+from random import randint
 from typing import List
 
 
 def sort_color(nums: List[int]) -> None:
     """
     Dutch partitioning problem: sort list of 3 colors
+
     :param nums: list of integer representing colors, 0: red, 1: white, 2: blue
     :return: does not return anything. Inplace sorting
     """
@@ -35,12 +37,10 @@ def sort_color(nums: List[int]) -> None:
             blue_start_minus_one -= 1
 
 
-from random import randint
-
 for i in range(100):
     if i % 10 == 0:
         print('Testing case %d' % i)
     test_case_input = [randint(0, 2) for _ in range(10000)]
     test_case_output = sorted(test_case_input)
-    sort_color(test_case_input)
+    sort_color(nums=test_case_input)
     assert test_case_input == test_case_output, test_case_input

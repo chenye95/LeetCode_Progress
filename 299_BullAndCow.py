@@ -19,9 +19,10 @@ def get_hint(secret: str, guess: str) -> str:
      (called "bulls") and how many digits match the secret number but locate in the wrong position (called "cows").
 
      use A to indicate the bulls and B to indicate the cows.
-    :param secret:
+
+    :param secret: reference string to calculate guess's bulls and cows against
     :param guess: of equal length as secret
-    :return: %dA%dB
+    :return: %dA%dB, where A is bull and B is cow
     """
     assert len(secret) == len(guess)
     a = sum(i == j for i, j in zip(secret, guess))
@@ -30,5 +31,7 @@ def get_hint(secret: str, guess: str) -> str:
     return '%dA%dB' % (a, b)
 
 
-assert get_hint(secret="1123", guess="0111") == "1A1B"
-assert get_hint(secret="1807", guess="7810") == "1A3B"
+test_cases = [("1123", "0111", "1A1B"),
+              ("1807", "7810", "1A3B"), ]
+for test_secret, test_guess, expected_output in test_cases:
+    assert get_hint(secret=test_secret, guess=test_guess) == expected_output

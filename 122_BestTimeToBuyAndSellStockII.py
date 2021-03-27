@@ -10,10 +10,16 @@ from typing import List
 
 
 def max_profit(prices: List[int]) -> int:
+    """
+    :param prices: price of a stock by day
+    :return: maximum profit from unlimited trade
+    """
     # purchase or hold on day t if prices rises on day t + 1
     return sum([max(0, p_t_1 - p_t) for p_t_1, p_t in zip(prices[1:], prices[:-1])])
 
 
-assert max_profit(prices=[7, 1, 5, 3, 6, 4]) == 7
-assert max_profit(prices=[1, 2, 3, 4, 5]) == 4
-assert max_profit(prices=[7, 6, 4, 3, 1]) == 0
+test_cases = [([7, 1, 5, 3, 6, 4], 7),
+              ([1, 2, 3, 4, 5], 4),
+              ([7, 6, 4, 3, 1], 0), ]
+for test_prices, expected_profit in test_cases:
+    assert max_profit(prices=test_prices) == expected_profit

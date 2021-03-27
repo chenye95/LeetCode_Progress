@@ -9,7 +9,7 @@ from _Linked_List import ListNode, LinkedList
 
 def reorder_list(head: ListNode) -> None:
     """
-    In-place modification
+    :param head: head of a linked list
     """
     if not head or not head.next:
         return
@@ -47,9 +47,8 @@ test_cases = [(list(range(10)), [0, 9, 1, 8, 2, 7, 3, 6, 4, 5, ]),
               (list(range(9)), [0, 8, 1, 7, 2, 6, 3, 5, 4, ]),
               ([1, ], [1, ]),
               ([1, 2, ], [1, 2, ]), ]
-
 for test_input, test_output in test_cases:
     test_head = LinkedList.create_linked_list(test_input).head
     assert test_head.list_from_node() == test_input
-    reorder_list(test_head)
+    reorder_list(head=test_head)
     assert test_head.list_from_node() == test_output

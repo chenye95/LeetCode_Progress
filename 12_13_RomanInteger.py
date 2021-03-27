@@ -26,7 +26,8 @@ def int_to_roman(num: int) -> str:
 
 def roman_to_int(s: str) -> int:
     """
-    :return: convert Roman integer string to int
+    :param s: a valid Roman integer
+    :return: integer value of a Roman integer string
     """
     translation_map = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
     int_val = 0
@@ -41,7 +42,7 @@ def roman_to_int(s: str) -> int:
 
 
 test_cases = [(1, "I"), (5, "V"), (10, "X"), (50, "L"), (100, "C"), (500, "D"), (1000, "M"),
-              (3, "III"), (4, "IV"), (9, "IX"), (58, "LVIII"), (1994, "MCMXCIV")]
+              (3, "III"), (4, "IV"), (9, "IX"), (58, "LVIII"), (1994, "MCMXCIV"), ]
 for test_int_val, test_roman_val in test_cases:
     assert int_to_roman(test_int_val) == test_roman_val, test_int_val
     assert roman_to_int(test_roman_val) == test_int_val, test_roman_val

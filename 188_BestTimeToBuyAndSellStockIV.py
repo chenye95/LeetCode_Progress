@@ -12,9 +12,10 @@ from typing import List
 def max_profit(k: int, prices: List[int]) -> int:
     """
     Dynamic Programming approach
+
     :param k: at most transactions to be made
     :param prices: daily prices of the stock
-    :return: max profit from trading the stock
+    :return: max profit from trading the stock with at most k transactions
     """
     if not prices or k == 0:
         return 0
@@ -51,6 +52,8 @@ def max_profit(k: int, prices: List[int]) -> int:
     return max(prev_day[j][0] for j in range(k + 1))
 
 
-assert max_profit(prices=[2, 4, 1], k=2) == 2
-assert max_profit(prices=[3, 2, 6, 5, 0, 3], k=2) == 7
-assert max_profit(prices=[3, 3, 5, 0, 0, 3, 1, 4], k=2) == 6
+test_cases = [([2, 4, 1], 2, 2),
+              ([3, 2, 6, 5, 0, 3], 2, 7),
+              ([3, 3, 5, 0, 0, 3, 1, 4], 2, 6), ]
+for test_prices, test_k, expected_output in test_cases:
+    assert max_profit(prices=test_prices, k=test_k) == expected_output

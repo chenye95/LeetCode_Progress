@@ -7,7 +7,11 @@ from typing import List
 
 def trap_dynamic_programming(height: List[int]) -> int:
     """
-    Water trapped on location i = min(tallest_left_to_i, tallest_right_to_i) - height[i]
+    Water trapped at location i = min(tallest_left_to_i, tallest_right_to_i) - height[i];
+    Dynamic Programming Approach
+
+    :param height: list of non-negative integers, representing elevation map
+    :return: how much water the hills can trap
     """
     if not height:
         return 0
@@ -25,10 +29,13 @@ def trap_dynamic_programming(height: List[int]) -> int:
     return sum([min(left_max[i], right_max[i]) - height[i] for i in range(n)])
 
 
-def trap_2_pointer(height: List[int]) -> int:
+def trap_two_pointer(height: List[int]) -> int:
     """
-    Optimization on Dynamic Programming approach
-    estimate bound on left_max and right_max
+    Optimization on Dynamic Programming approach: estimate bound on left_max and right_max;
+    Water trapped at location i = min(tallest_left_to_i, tallest_right_to_i) - height[i];
+
+    :param height: list of non-negative integers, representing elevation map
+    :return: how much water the hills can trap
     """
     left, right = 0, len(height) - 1
     left_max = right_max = 0
@@ -57,7 +64,11 @@ def trap_2_pointer(height: List[int]) -> int:
 
 def trap_stack(height: List[int]) -> int:
     """
-    Use stack to keep track of taller heights to the left
+    Use stack to keep track of taller heights to the left;
+    Water trapped at location i = min(tallest_left_to_i, tallest_right_to_i) - height[i];
+
+    :param height: list of non-negative integers, representing elevation map
+    :return: how much water the hills can trap
     """
     total_volume = 0
     height_stack = []
@@ -78,7 +89,7 @@ def trap_stack(height: List[int]) -> int:
 
 test_cases = [([], 0),
               ([0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1], 6),
-              ([4, 2, 0, 3, 2, 5], 9)]
-for trap_fn in [trap_2_pointer, trap_stack, trap_dynamic_programming, ]:
+              ([4, 2, 0, 3, 2, 5], 9), ]
+for trap_fn in [trap_two_pointer, trap_stack, trap_dynamic_programming, ]:
     for test_input, expected_out in test_cases:
-        assert trap_fn(test_input) == expected_out
+        assert trap_fn(height=test_input) == expected_out, trap_fn.__name__

@@ -26,4 +26,8 @@ def h_index(citations: List[int]) -> int:
     return h_index
 
 
-assert h_index([3, 0, 6, 1, 5]) == 3
+test_cases = [([3, 0, 6, 1, 5], 3),
+              ([1, 3, 1], 1),
+              ([1, 1, 3, 6, 7, 10, 7, 1, 8, 5, 9, 1, 4, 4, 3], 6), ]
+for citation_list, expected_h_index in test_cases:
+    assert h_index(citations=citation_list) == expected_h_index

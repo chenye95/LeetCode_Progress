@@ -12,8 +12,9 @@ def max_profit(prices: List[int]) -> int:
     """
     Find the two trade separately, not using DP;
     For DP solution please refer to 188
+
     :param prices: daily prices of the stock
-    :return: max profit from trading the stock
+    :return: max profit from trading the stock with at most 2 transactions
     """
     if not prices:
         return 0
@@ -39,8 +40,10 @@ def max_profit(prices: List[int]) -> int:
     return max(max_profit_before_day_t[t] + max_profit_after_day_t[t] for t in range(n))
 
 
-assert max_profit(prices=[2, 4, 1]) == 2
-assert max_profit(prices=[3, 2, 6, 5, 0, 3]) == 7
-assert max_profit(prices=[3, 3, 5, 0, 0, 3, 1, 4]) == 6
-assert max_profit(prices=[0, 1, 1, 2, 2, 3, 3, 4]) == 4
-assert max_profit(prices=[0, 1, 1, 2, 2, 3, 3, 4, 2, 1]) == 4
+test_cases = [([2, 4, 1], 2),
+              ([3, 2, 6, 5, 0, 3], 7),
+              ([3, 3, 5, 0, 0, 3, 1, 4], 6),
+              ([0, 1, 1, 2, 2, 3, 3, 4], 4),
+              ([0, 1, 1, 2, 2, 3, 3, 4, 2, 1], 4), ]
+for test_prices, expected_profit in test_cases:
+    assert max_profit(prices=test_prices) == expected_profit

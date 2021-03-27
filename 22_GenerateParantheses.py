@@ -5,6 +5,11 @@ from typing import List
 
 
 def generate_parenthesis(n: int) -> List[str]:
+    """
+    :param n: a positive integer
+    :return: generate all combinations of n well-formed parentheses
+    """
+
     def generate_helper(current_string: str, left_count: int, right_count: int) -> None:
         if left_count == n and right_count == n:
             return_list.append(current_string)

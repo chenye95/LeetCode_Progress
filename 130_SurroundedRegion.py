@@ -9,7 +9,8 @@ from typing import List
 def capture_surrounded_regions(board: List[List[str]]) -> None:
     """
     start from border and connect inwards
-    Modify inplace
+
+    :param board: 2D grid of X and O
     """
     if not board:
         return
@@ -29,6 +30,8 @@ def capture_surrounded_regions(board: List[List[str]]) -> None:
     board[:] = [['XO'[c == 'S'] for c in row] for row in board]
 
 
-test_board = [['X', 'X', 'X', 'X'], ['X', 'O', 'O', 'X'], ['X', 'X', 'O', 'X'], ['X', 'O', 'X', 'X']]
-capture_surrounded_regions(test_board)
-assert test_board == [['X', 'X', 'X', 'X'], ['X', 'X', 'X', 'X'], ['X', 'X', 'X', 'X'], ['X', 'O', 'X', 'X']]
+test_cases = [([['X', 'X', 'X', 'X'], ['X', 'O', 'O', 'X'], ['X', 'X', 'O', 'X'], ['X', 'O', 'X', 'X']],
+               [['X', 'X', 'X', 'X'], ['X', 'X', 'X', 'X'], ['X', 'X', 'X', 'X'], ['X', 'O', 'X', 'X']]), ]
+for test_board, expected_output in test_cases:
+    capture_surrounded_regions(test_board)
+    assert test_board == expected_output

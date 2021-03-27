@@ -18,6 +18,10 @@ Return the simplified canonical path.
 
 
 def simplify_path(path: str) -> str:
+    """
+    :param path: absolute path starting with / to a file or a directory in a Unix like file system
+    :return: simplified canonical path
+    """
     path_stack = []
     components = [c_i for c_i in path.split('/') if c_i]
     for c_i in components:
@@ -36,4 +40,4 @@ test_cases = [("/../", "/"),
               ("/a/./b/../../c/", "/c"),
               ("/home/", "/home")]
 for test_path, expected_output in test_cases:
-    assert simplify_path(test_path) == expected_output
+    assert simplify_path(path=test_path) == expected_output

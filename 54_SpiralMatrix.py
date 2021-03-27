@@ -4,12 +4,17 @@ Given a matrix of m x n elements (m rows, n columns), return all elements of the
 from typing import List
 
 
-def spiralOrder(matrix: List[List[int]]) -> List[int]:
+def spiral_order(matrix: List[List[int]]) -> List[int]:
+    """
+    :param matrix: matrix of m x n
+    :return: all elements in the matrix in spiral order
+    """
     return_list = []
     if not matrix:
         return []
     upper_bound, lower_bound = 0, len(matrix) - 1
     left_bound, right_bound = 0, len(matrix[0]) - 1
+
     while upper_bound < lower_bound and left_bound <= right_bound:
         return_list.extend(matrix[upper_bound][upper_bound:right_bound + 1])
         return_list.extend([row[right_bound] for row in matrix[upper_bound + 1:lower_bound]])
@@ -22,15 +27,16 @@ def spiralOrder(matrix: List[List[int]]) -> List[int]:
         left_bound += 1
         lower_bound -= 1
         right_bound -= 1
+
     if upper_bound == lower_bound:
         return_list.extend(matrix[upper_bound][upper_bound:right_bound + 1])
+
     return return_list
 
 
 test_cases = [([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 2, 3, 6, 9, 8, 7, 4, 5]),
               ([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]], [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]),
               ([[7], [9], [6]], [7, 9, 6]),
-              ([[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10])]
-
-for input, output in test_cases:
-    assert spiralOrder(input) == output
+              ([[1], [2], [3], [4], [5], [6], [7], [8], [9], [10]], [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]), ]
+for test_matrix, expected_output in test_cases:
+    assert spiral_order(matrix=test_matrix) == expected_output

@@ -18,6 +18,7 @@ class WordDictionary:
     def add_word(self, word: str) -> None:
         """
         Adds a word into WordDictionary
+
         :param word: all words are consist of lowercase letters a-z
         """
         current_node = self.root

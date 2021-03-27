@@ -6,6 +6,11 @@ from typing import List
 
 
 def three_sum_closest(nums: List[int], target: int) -> int:
+    """
+    Assume each input has exactly one solution
+
+    :return: sum of 3 integers in nums such that sum is closest to target (in terms of absolute value)
+    """
     if not nums or len(nums) < 3:
         return 0
 

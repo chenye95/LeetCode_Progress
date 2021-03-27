@@ -8,6 +8,11 @@ from _Linked_List import ListNode, LinkedList
 
 
 def add_two_number(l1: ListNode, l2: ListNode) -> ListNode:
+    """
+    :param l1: head of a non-empty linked lists representing a non-negative integers, one node per digit
+    :param l2: head of a non-empty linked lists representing a non-negative integers, one node per digit
+    :return: head of a non-empty linked lists representing sum of two integers, one node per digit
+    """
     if not l1:
         return l2
     if not l2:
@@ -38,7 +43,7 @@ def add_two_number(l1: ListNode, l2: ListNode) -> ListNode:
 
 test_cases = [([2, 4, 3], [5, 6, 4], [7, 0, 8]),
               ([0], [0], [0]),
-              ([9, 9, 9, 9, 9, 9, 9], [9, 9, 9, 9], [8, 9, 9, 9, 0, 0, 0, 1])]
+              ([9, 9, 9, 9, 9, 9, 9], [9, 9, 9, 9], [8, 9, 9, 9, 0, 0, 0, 1]), ]
 for input_1, input_2, expected_output in test_cases:
-    assert add_two_number(LinkedList.create_linked_list(input_1).head,
-                          LinkedList.create_linked_list(input_2).head).list_from_node() == expected_output
+    assert add_two_number(l1=LinkedList.create_linked_list(input_1).head,
+                          l2=LinkedList.create_linked_list(input_2).head).list_from_node() == expected_output

@@ -16,6 +16,7 @@ from typing import List
 def find_the_city_floyd(n: int, edges: List[List[int]], distance_threshold: int) -> int:
     """
     Floyd's algorithm to find pair wise distance between all i and j
+
     :param n: number of cities
     :param edges: list of ui, vi, wi such that path between ui and vi weighs wi
     :param distance_threshold: maximum distance to be considered a neighbor
@@ -41,6 +42,11 @@ def find_the_city_floyd(n: int, edges: List[List[int]], distance_threshold: int)
 def find_the_city_dijkstra(n: int, edges: List[List[int]], distance_threshold: int) -> int:
     """
     Dijkstra's algorithm with aggressive pruning
+
+    :param n: number of cities
+    :param edges: list of ui, vi, wi such that path between ui and vi weighs wi
+    :param distance_threshold: maximum distance to be considered a neighbor
+    :return: city with the fewest neighbor
     """
     connection_graph = defaultdict(list)
     for ui, vi, wi in edges:
@@ -83,7 +89,8 @@ def find_the_city_dijkstra(n: int, edges: List[List[int]], distance_threshold: i
     return city_id
 
 
+test_cases = [(4, [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], 4, 3),
+              (5, [[0, 1, 2], [0, 4, 8], [1, 2, 3], [1, 4, 2], [2, 3, 1], [3, 4, 1]], 2, 0), ]
 for find_the_city in [find_the_city_dijkstra, find_the_city_floyd]:
-    assert find_the_city(n=4, edges=[[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]], distance_threshold=4) == 3
-    assert find_the_city(n=5, edges=[[0, 1, 2], [0, 4, 8], [1, 2, 3], [1, 4, 2], [2, 3, 1], [3, 4, 1]],
-                         distance_threshold=2) == 0
+    for test_n, test_edges, test_threshold, expected_output in test_cases:
+        assert find_the_city(n=test_n, edges=test_edges, distance_threshold=test_threshold) == expected_output

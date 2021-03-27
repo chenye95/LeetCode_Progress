@@ -7,7 +7,9 @@ The input strings are both non-empty and contains only characters 1 or 0.
 
 def add_binary(a: str, b: str) -> str:
     """
-    :return: return sum(binary string) of two binary strings
+    :param a: non-empty binary string of 0 or 1, no leading 0s
+    :param b: non-empty binary string of 0 or 1, no leading 0s
+    :return: return sum of two binary strings, a and b, in binary format, no leading 0s
     """
     if a == '0':
         return b
@@ -47,5 +49,7 @@ def add_binary(a: str, b: str) -> str:
         return ''.join(result)
 
 
-assert add_binary(a="1010", b="1011") == "10101"
-assert add_binary(a="11", b='1') == '100'
+test_cases = [("1010", "1011", "10101"),
+              ("11", "1", "100"), ]
+for test_a, test_b, expected_c in test_cases:
+    assert add_binary(a=test_a, b=test_b) == expected_c

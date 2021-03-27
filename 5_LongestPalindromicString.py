@@ -4,6 +4,11 @@ Given a string s, return the longest palindromic substring in s.
 
 
 def longest_palindrome_dp(s: str) -> str:
+    """
+    Dynamic programming approach
+
+    :return: longest palindromic substring in s
+    """
     if not s or len(s) <= 1:
         return s
     memory = [[False] * len(s) for _ in range(len(s))]
@@ -32,6 +37,11 @@ def longest_palindrome_dp(s: str) -> str:
 
 
 def longest_palindromic_construction(s: str) -> str:
+    """
+    Construction from center approach
+
+    :return: longest palindromic substring in s
+    """
     def expand_around_center(l: int, r: int) -> int:
         while 0 <= l and r < len(s) and s[l] == s[r]:
             l -= 1
@@ -54,10 +64,10 @@ def longest_palindromic_construction(s: str) -> str:
     return s[return_str_start: return_str_end + 1]
 
 
-test_cases = [("babad", ["bab", "aba"]),
-              ("cbbd", ["bb"]),
-              ("a", ["a"]),
-              ("ac", ["a", "c"])]
+test_cases = [("babad", {"bab", "aba"}),
+              ("cbbd", {"bb"}),
+              ("a", {"a"}),
+              ("ac", {"a", "c"}), ]
 for longest_palindromic in [longest_palindromic_construction, longest_palindrome_dp]:
     for test_input, expected_output in test_cases:
-        assert longest_palindromic(test_input) in expected_output
+        assert longest_palindromic(s=test_input) in expected_output

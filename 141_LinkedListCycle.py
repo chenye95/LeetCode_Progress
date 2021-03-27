@@ -24,6 +24,7 @@ def has_cycle(head: ListNode) -> bool:
 def test_create_test_cases(node_values: List[NodeValueType], pos: int = -1) -> ListNode:
     """
     create test cases for the problem
+
     :param node_values: list representing node values
     :param pos: tail connects to pos_th node; -1 if no cycle, else 0 <= test_pos < len(test_node_values)
     """
@@ -46,9 +47,8 @@ def test_create_test_cases(node_values: List[NodeValueType], pos: int = -1) -> L
 test_cases = [([3, 2, 0, -4], 1),
               ([1, 2], 0),
               ([1], -1), ]
-
 for test_node_values, test_pos in test_cases:
-    test_head = test_create_test_cases(test_node_values, test_pos)
+    test_head = test_create_test_cases(node_values=test_node_values, pos=test_pos)
 
     # test implementation of test_create_test_cases()
     test_head_list = [None] * len(test_node_values)
@@ -61,4 +61,4 @@ for test_node_values, test_pos in test_cases:
            (test_pos == -1 and current_node is None)
 
     # test implementation of has_cycle()
-    assert has_cycle(test_head) is (test_pos != -1)
+    assert has_cycle(head=test_head) is (test_pos != -1)

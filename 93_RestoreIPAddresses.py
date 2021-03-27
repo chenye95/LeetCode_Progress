@@ -10,6 +10,11 @@ from typing import List
 
 
 def restore_ip_address(s: str) -> List[str]:
+    """
+    :param s: string of digits only
+    :return: all possible IPv4 that can be obtained from s
+    """
+
     def dfs_helper(remainder: str, part_idx: int, path_so_far: str, ref_result: List[str]) -> None:
         if part_idx == 4:
             if not remainder:
@@ -33,8 +38,8 @@ def restore_ip_address(s: str) -> List[str]:
     return return_list
 
 
-test_cases = [("25525511135", ["255.255.11.135", "255.255.111.35"]),
-              ("0000", ["0.0.0.0"]),
-              ("1111", ["1.1.1.1"])]
-for s, expected_output in test_cases:
-    assert set(restore_ip_address(s)) == set(expected_output)
+test_cases = [("25525511135", {"255.255.11.135", "255.255.111.35"}),
+              ("0000", {"0.0.0.0"}),
+              ("1111", {"1.1.1.1"}), ]
+for test_s, expected_output in test_cases:
+    assert set(restore_ip_address(s=test_s)) == expected_output

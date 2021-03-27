@@ -20,4 +20,7 @@ def product_except_self(nums: List[int]) -> List[int]:
     return [left_product[i] * right_product[i] for i in range(n)]
 
 
-assert product_except_self([1, 2, 3, 4]) == [24, 12, 8, 6]
+test_cases = [([1, 2, 3, 4], [24, 12, 8, 6]),
+              ([3, 8, 4, 5, 9], [1440, 540, 1080, 864, 480]), ]
+for test_nums, expected_output in test_cases:
+    assert product_except_self(nums=test_nums) == expected_output

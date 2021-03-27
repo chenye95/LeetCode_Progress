@@ -9,10 +9,11 @@ from typing import Optional
 from _Binary_Tree import TreeNode, ConstructTree
 
 
-def lowest_common_ancestor_1(root: TreeNode, p: TreeNode, q: TreeNode) -> Optional[TreeNode]:
+def lowest_common_ancestor_recurse(root: TreeNode, p: TreeNode, q: TreeNode) -> Optional[TreeNode]:
     """
-    Depth search first to check for p and q
-    Recurse and find the lowest common ancestor
+    Depth search first to check for p and q: recurse and find the lowest common ancestor
+
+    :return: lowest common ancestor of tree node p and q
     """
 
     def recurse_tree(current_node: TreeNode) -> bool:
@@ -40,7 +41,12 @@ def lowest_common_ancestor_1(root: TreeNode, p: TreeNode, q: TreeNode) -> Option
     return lca_node
 
 
-def lowest_common_ancestor_2(root: TreeNode, p: TreeNode, q: TreeNode) -> Optional[TreeNode]:
+def lowest_common_ancestor_post_order(root: TreeNode, p: TreeNode, q: TreeNode) -> Optional[TreeNode]:
+    """
+    Post order traversal with stack
+
+    :return: lowest common ancestor of tree node p and q
+    """
     # state to mark node exploration
     # defined as number of child node left to be explored
     _node_state_both_pending = 2
@@ -112,21 +118,21 @@ def lowest_common_ancestor_2(root: TreeNode, p: TreeNode, q: TreeNode) -> Option
 test_tree = ConstructTree.build_tree_leetcode(list(range(1, 16)))
 node_p = test_tree.root.left.left.right
 node_q = test_tree.root.left.right.right
-assert lowest_common_ancestor_1(test_tree.root, node_p, node_q).val == 2
-assert lowest_common_ancestor_2(test_tree.root, node_p, node_q).val == 2
+assert lowest_common_ancestor_recurse(test_tree.root, node_p, node_q).val == 2
+assert lowest_common_ancestor_post_order(test_tree.root, node_p, node_q).val == 2
 
 test_tree = ConstructTree.build_tree_leetcode([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
 node_p = test_tree.root.left
 node_q = test_tree.root.right
-assert lowest_common_ancestor_1(test_tree.root, node_p, node_q).val == 3
-assert lowest_common_ancestor_2(test_tree.root, node_p, node_q).val == 3
+assert lowest_common_ancestor_recurse(test_tree.root, node_p, node_q).val == 3
+assert lowest_common_ancestor_post_order(test_tree.root, node_p, node_q).val == 3
 
 node_q = test_tree.root.left.right.right
-assert lowest_common_ancestor_1(test_tree.root, node_p, node_q).val == 5
-assert lowest_common_ancestor_2(test_tree.root, node_p, node_q).val == 5
+assert lowest_common_ancestor_recurse(test_tree.root, node_p, node_q).val == 5
+assert lowest_common_ancestor_post_order(test_tree.root, node_p, node_q).val == 5
 
 test_tree = ConstructTree.build_tree_leetcode([1, 2])
 node_p = test_tree.root
 node_q = test_tree.root.left
-assert lowest_common_ancestor_1(test_tree.root, node_p, node_q).val == 1
-assert lowest_common_ancestor_2(test_tree.root, node_p, node_q).val == 1
+assert lowest_common_ancestor_recurse(test_tree.root, node_p, node_q).val == 1
+assert lowest_common_ancestor_post_order(test_tree.root, node_p, node_q).val == 1

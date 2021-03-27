@@ -17,6 +17,6 @@ def is_ugly(num: int) -> bool:
     return num == 1
 
 
-assert is_ugly(6)
-assert is_ugly(8)
-assert not is_ugly(14)
+test_cases = [(6, True), (8, True), (14, False), ]
+for test_n, expected_output in test_cases:
+    assert is_ugly(test_n) is expected_output

@@ -15,6 +15,7 @@ from typing import List
 def find_order(num_courses: int, prerequisites: List[List[int]]) -> List[int]:
     """
     BFS - Topological Sort algorithm
+
     :param num_courses: total number of courses labeled from 0 to n-1
     :param prerequisites: prerequisites to take each course
     :return: the ordering of courses you should take to finish all courses, or [] if not possible
@@ -49,7 +50,6 @@ def find_order(num_courses: int, prerequisites: List[List[int]]) -> List[int]:
 
 test_cases = [(2, [[1, 0]], [[0, 1], ]),
               (2, [[1, 0], [0, 1]], [[], ]),
-              (4, [[1, 0], [2, 0], [3, 1], [3, 2]], [[0, 1, 2, 3], [0, 2, 1, 3], ]),
-              ]
-for numCourse, test_prerequisites, expected_out in test_cases:
-    assert find_order(numCourse, test_prerequisites) in expected_out
+              (4, [[1, 0], [2, 0], [3, 1], [3, 2]], [[0, 1, 2, 3], [0, 2, 1, 3], ]), ]
+for test_course_count, test_prerequisites, expected_out in test_cases:
+    assert find_order(num_courses=test_course_count, prerequisites=test_prerequisites) in expected_out

@@ -19,6 +19,7 @@ def recover_bst(root: TreeNode) -> None:
     - if we encounter such pair twice, (prev_1, curr_1) and (prev_2, curr_2), then prev_1 and curr_2 are swapped
 
     Use Morris inorder traversal to achieve O(1) space
+
     :param root: root of the BST with minor defect
     :return: in place modifications
     """
@@ -69,7 +70,10 @@ def recover_bst(root: TreeNode) -> None:
 
 def is_valid_BST(root: TreeNode) -> bool:
     """
-    From 98 checker from correct answer
+    From 98 checker from correct answer, but supports equality
+
+    :param root: root of a binary tree
+    :return: whether the tree is a valid Binary Search Tree
     """
     _invalid_bst_lower, _invalid_bst_upper = 1, 0
 
@@ -98,9 +102,9 @@ def is_valid_BST(root: TreeNode) -> bool:
     return tree_lower <= tree_upper
 
 
-test_cases = [[3, 1, 4, None, None, 2], [1, 3, None, None, 2]]
+test_cases = [[3, 1, 4, None, None, 2], [1, 3, None, None, 2], ]
 for tree_list in test_cases:
     test_tree = ConstructTree.build_tree_leetcode(tree_list)
-    assert not is_valid_BST(test_tree.root)
-    recover_bst(test_tree.root)
-    assert is_valid_BST(test_tree.root)
+    assert not is_valid_BST(root=test_tree.root)
+    recover_bst(root=test_tree.root)
+    assert is_valid_BST(root=test_tree.root)

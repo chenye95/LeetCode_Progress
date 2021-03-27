@@ -1,10 +1,14 @@
 """
 Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the
-signed 32-bit integer range [-231, 231 - 1], then return 0.
+signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
 """
 
 
 def reverse(x: int) -> int:
+    """
+    :param x: a signed 32 bit integer
+    :return: x with its digits reversed. If return result go outside bound of a signed 32 bit int, return 0
+    """
     if x == 0:
         return 0
     return_result = 0
@@ -19,8 +23,10 @@ def reverse(x: int) -> int:
         return return_result
 
 
-assert reverse(x=123) == 321
-assert reverse(x=-123) == -321
-assert reverse(x=120) == 21
-assert reverse(x=0) == 0
-assert reverse(x=1534236469) == 0
+test_cases = [(123, 321),
+              (-123, -321),
+              (120, 21),
+              (0, 0),
+              (1534236469, 0), ]
+for test_x, expected_output in test_cases:
+    assert reverse(x=test_x) == expected_output

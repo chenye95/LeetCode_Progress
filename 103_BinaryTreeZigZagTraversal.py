@@ -42,5 +42,6 @@ def zigzag_level_order(root: TreeNode) -> List[List[int]]:
     return levels
 
 
-test_tree_node = ConstructTree.build_tree_leetcode([3, 9, 20, None, None, 15, 7]).root
-assert [[3], [20, 9], [15, 7]] == zigzag_level_order(test_tree_node)
+test_cases = [([3, 9, 20, None, None, 15, 7], [[3], [20, 9], [15, 7]]), ]
+for test_tree, expected_output in test_cases:
+    assert zigzag_level_order(root=ConstructTree.build_tree_leetcode(test_tree).root) == expected_output

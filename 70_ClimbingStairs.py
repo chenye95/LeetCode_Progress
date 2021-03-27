@@ -20,5 +20,6 @@ def climb_stairs(n: int) -> int:
     return current_step
 
 
-assert climb_stairs(2) == 2
-assert climb_stairs(3) == 3
+test_case = [(2, 2), (3, 3), ]
+for test_n, expected_count in test_case:
+    assert climb_stairs(n=test_n) == expected_count

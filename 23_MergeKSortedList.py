@@ -7,11 +7,12 @@ from typing import List, Optional
 from _Linked_List import ListNode, LinkedList
 
 
-def mergeKLists(lists: List[ListNode]) -> Optional[ListNode]:
+def merge_k_lists(lists: List[ListNode]) -> Optional[ListNode]:
     """
     Note this will destroy the original linked lists
-    :param lists: k sorted linked lists
-    :return: merge into one sorted linked list
+
+    :param lists: k head node of sorted linked lists
+    :return: merge into one sorted linked list and return head node
     """
     # Add i to break even, < may not be implemented in ListNode class
     current_heap = [(lists[i].val, i, lists[i]) for i in range(len(lists)) if lists[i] is not None]
@@ -34,10 +35,9 @@ def mergeKLists(lists: List[ListNode]) -> Optional[ListNode]:
 test_cases = [([[1, 4, 5], [1, 3, 4], [2, 6]], [1, 1, 2, 3, 4, 4, 5, 6]),
               ([[1, 4], [2, 4]], [1, 2, 4, 4]),
               ([[]], None)]
-for case_i, expected in test_cases:
-    linked_case = [LinkedList.create_linked_list(list_j).head for list_j in case_i]
-    result_head = mergeKLists(linked_case)
-    if result_head:
-        assert result_head.list_from_node() == expected, result_head.list_from_node()
+for case_i, expected_output in test_cases:
+    result_head = merge_k_lists(lists=[LinkedList.create_linked_list(list_j).head for list_j in case_i])
+    if expected_output:
+        assert result_head.list_from_node() == expected_output, result_head.list_from_node()
     else:
-        assert expected is None
+        assert expected_output is None

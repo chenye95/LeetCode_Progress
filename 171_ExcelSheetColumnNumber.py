@@ -25,6 +25,6 @@ def column_to_number(column_name: str) -> int:
     return return_row
 
 
-assert column_to_number('A') == 1
-assert column_to_number("AB") == 28
-assert column_to_number("ZY") == 701
+test_cases = [("A", 1), ("AB", 28), ("ZY", 701), ]
+for test_col, expected_output in test_cases:
+    assert column_to_number(column_name=test_col) == expected_output
