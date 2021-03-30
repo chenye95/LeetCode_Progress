@@ -11,6 +11,9 @@ from typing import List
 
 
 def find_anagrams(s: str, p: str) -> List[int]:
+    """
+    :return: return all indices i such that s[i:i+len(p)] is an anagram of p
+    """
     if len(s) < len(p):
         return []
 
@@ -53,5 +56,7 @@ def find_anagrams(s: str, p: str) -> List[int]:
     return anagram_start
 
 
-assert find_anagrams(s="cbaebabacd", p="abc") == [0, 6]
-assert find_anagrams(s="abab", p="ab") == [0, 1, 2]
+test_cases = [("cbaebabacd", "abc", [0, 6]),
+              ("abab", "ab", [0, 1, 2]), ]
+for test_s, test_p, expected_output in test_cases:
+    assert find_anagrams(s=test_s, p=test_p) == expected_output

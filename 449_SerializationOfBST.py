@@ -23,6 +23,7 @@ class Codec:
     def serialize(self, root: TreeNode) -> str:
         """
         Encode a Binary Search Tree into string
+
         :param root: root node of a valid BST
         :return: pre-order traversal of BST
         """
@@ -39,6 +40,12 @@ class Codec:
         return self.split_chr.join([str(i) for i in pre_order_traversal])
 
     def deserialize(self, data: str) -> Optional[TreeNode]:
+        """
+        Decode a string into a Binary Search Tree
+
+        :param data: pre-order traversal of the BST
+        :return: root node of a valid BST
+        """
         if not data:
             return None
         data_prep = [self.node_val_type(x) for x in data.split(self.split_chr)]
@@ -46,7 +53,8 @@ class Codec:
 
     def deserialize_recurse(self, data: List[TREE_NODE_TYPE]) -> Optional[TreeNode]:
         """
-        Decode a string into a Binary Search Tree
+        Recursively decode a string into a Binary Search Tree
+
         :param data: pre-order traversal of the BST
         :return: root node of a valid BST
         """

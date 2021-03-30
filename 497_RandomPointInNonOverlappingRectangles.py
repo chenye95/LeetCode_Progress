@@ -20,20 +20,20 @@ class RandomPointNonOverlappingRectangles:
 
     def pick(self) -> Tuple[int, int]:
         """
-        :return: integer coordinates [px, py] that is covered by the rectangles
+        :return: integer coordinates [px, py] that reside in the cover areas of self.rectangles
         """
         select_point = randint(0, self.cumulative_area[-1] - 1)
         rect_i = bisect_right(self.cumulative_area, select_point)
         x1, y1, x2, y2 = self.rectangles[rect_i]
         dy, dx = divmod(select_point - self.cumulative_area[rect_i - 1], x2 - x1 + 1) if rect_i > 0 \
             else divmod(select_point, x2 - x1 + 1)
-        return (x1 + dx, y1 + dy)
+        return x1 + dx, y1 + dy
 
 
 test_cases = [[[-2, -2, -1, -1], [1, 0, 3, 0]], [[1, 1, 5, 5]], ]
 for test_rectangles in test_cases:
     rand_gen = RandomPointNonOverlappingRectangles(test_rectangles)
-    n_cycles = 100000
+    n_cycles = 100_000
     for _ in range(n_cycles):
         x, y = rand_gen.pick()
         assert any([x1 <= x <= x2 and y1 <= y <= y2 for x1, y1, x2, y2 in test_rectangles]), \

@@ -11,12 +11,23 @@ from typing import List, Tuple
 
 
 def median_sliding_window(nums: List[int], k: int) -> List[float]:
+    """
+    :param nums: stream of integers that we need to process
+    :param k: window size of the sliding window
+    :return: median values of each sliding window
+    """
+
     def move_heap(from_heap: List[Tuple[int, int]], to_heap: List[Tuple[int, int]]) -> None:
-        # One of from_heap is a max_heap, the other is a min_heap
+        """
+        Move top of from_heap to to_heap; one of from_heap is a max_heap, the other is a min_heap
+        """
         x, i = heappop(from_heap)
         heappush(to_heap, (-x, i))
 
     def get_window_median() -> float:
+        """
+        :return: median of current sliding window
+        """
         # if k is odd, the median is stored as the smallest value in large_half, a min_heap
         # if k is even, the median is average of smallest value in large_half and the largest value in small_half
         return large_half[0][0] if k & 1 else (large_half[0][0] - small_half[0][0]) / 2.
@@ -62,4 +73,6 @@ def median_sliding_window(nums: List[int], k: int) -> List[float]:
     return window_medians
 
 
-assert median_sliding_window(nums=[1, 3, -1, -3, 5, 3, 6, 7], k=3) == [1.0, -1.0, -1.0, 3.0, 5.0, 6.0]
+test_cases = [([1, 3, -1, -3, 5, 3, 6, 7], 3, [1.0, -1.0, -1.0, 3.0, 5.0, 6.0]), ]
+for test_nums, test_k, expected_output in test_cases:
+    assert median_sliding_window(nums=test_nums, k=test_k) == expected_output, test_nums

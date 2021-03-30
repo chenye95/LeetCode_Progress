@@ -9,7 +9,7 @@ The tree has no more than 1,000 nodes and the values are in the range -1,000,000
 """
 from typing import Dict
 
-from _Binary_Tree import TreeNode
+from _Binary_Tree import TreeNode, ConstructTree
 
 
 def path_sum(root: TreeNode, target_sum: int) -> int:
@@ -48,7 +48,7 @@ def path_sum(root: TreeNode, target_sum: int) -> int:
     return dfs_traverse(root, 0, path_sum_cache)
 
 
-from _Binary_Tree import ConstructTree
-
-test_tree = ConstructTree.build_tree_leetcode([10, 5, -3, 3, 2, None, 11, 3, -2, None, 1])
-assert path_sum(test_tree.root, 8) == 3
+test_cases = [([10, 5, -3, 3, 2, None, 11, 3, -2, None, 1], 8, 3), ]
+for test_tree, test_target, expected_count in test_cases:
+    assert path_sum(root=ConstructTree.build_tree_leetcode(test_tree).root, target_sum=test_target) == expected_count, \
+        test_tree

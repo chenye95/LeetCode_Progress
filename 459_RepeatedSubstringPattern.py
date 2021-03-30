@@ -10,13 +10,14 @@ def repeated_substring_pattern(s: str) -> bool:
     Note that
         - First char of input string is first char of repeated substring
         - Last char of input string is last char of repeated substring
+
+    :param s: a non empty string
     :return: if s exhibits repeated pattern
     """
-    if not s:
-        return False
+    assert s
     return s in (s + s)[1: -1]
 
 
-assert repeated_substring_pattern("abc") is False
-assert repeated_substring_pattern("abab") is True
-assert repeated_substring_pattern("abcabcabcabc") is True
+test_cases = [("abc", False), ("abab", True), ("abcabcabcabc", True), ]
+for test_s, expected_output in test_cases:
+    assert repeated_substring_pattern(s=test_s) is expected_output

@@ -1,7 +1,7 @@
 """
 Find the sum of all left leaves in a given binary tree.
 """
-from _Binary_Tree import TreeNode
+from _Binary_Tree import TreeNode, ConstructTree
 
 
 def sum_of_left_leaves(root: TreeNode) -> int:
@@ -26,7 +26,6 @@ def sum_of_left_leaves(root: TreeNode) -> int:
     return sum_left_leaves
 
 
-from _Binary_Tree import ConstructTree
-
-test_tree = ConstructTree.build_tree_leetcode([3, 9, 20, None, None, 15, 7])
-assert sum_of_left_leaves(test_tree.root) == 24
+test_cases = [([3, 9, 20, None, None, 15, 7], 24), ([1], 0), ([1, 2], 2), ]
+for test_input, expected_output in test_cases:
+    assert sum_of_left_leaves(ConstructTree.build_tree_leetcode(test_input).root) == expected_output

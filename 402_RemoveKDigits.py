@@ -1,5 +1,5 @@
 """
-Given word_a non-negative integer num represented as word_a string, remove k digits from the number so that the new number is the
+Given a non-negative integer num represented as a string, remove k digits from the number so that the new number is the
 smallest possible.
 
 Note:
@@ -11,6 +11,10 @@ Note:
 def remove_k_digits(num: str, k: int) -> str:
     """
     Greedy algorithm, want to smaller digits in high positions
+
+    :param num: a string of length <= 10_002, representing a non-negative integer
+    :param k: an integer less than length of num
+    :return: smallest number by removing k digits from num
     """
     if k == len(num):
         return '0'
@@ -33,8 +37,13 @@ def remove_k_digits(num: str, k: int) -> str:
     return ''.join(output_list).lstrip('0') or '0'
 
 
-assert remove_k_digits(num="112", k=1) == "11"
-assert remove_k_digits(num="1432219", k=3) == "1219"
-assert remove_k_digits(num="10200", k=1) == "200"
-assert remove_k_digits(num="10", k=2) == "0"
-assert remove_k_digits(num="10", k=1) == "0"
+test_cases = [("112", 1, "11"),
+              ("1432219", 3, "1219"),
+              ("10200", 1, "200"),
+              ("10", 2, "0"),
+              ("10", 1, "0"),
+              ("1234567890", 10, "0"),
+              ("1234567890", 9, "0"),
+              ("43214321", 4, "1321"), ]
+for test_num, test_k, expected_output in test_cases:
+    assert remove_k_digits(num=test_num, k=test_k) == expected_output

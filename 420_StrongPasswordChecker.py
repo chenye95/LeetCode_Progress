@@ -12,6 +12,10 @@ Insertion, deletion or replace of any one character are all considered as one ch
 
 
 def strong_password_checker(s: str) -> int:
+    """
+    :param s: proposed password that needs to be checked
+    :return: minimum change needed to change s into a strong password
+    """
     missing_types = 3
     if any('A' <= c <= 'Z' for c in s): missing_types -= 1
     if any('a' <= c <= 'z' for c in s): missing_types -= 1
@@ -63,7 +67,6 @@ def strong_password_checker(s: str) -> int:
         return delete_op + max(missing_types, replace_op)
 
 
-assert strong_password_checker("") == 6
-assert strong_password_checker("aaa111") == 2
-assert strong_password_checker("1111111111") == 3
-assert strong_password_checker("ABABABABABABABABABAB1") == 2
+test_cases = [("", 6), ("aaa111", 2), ("1111111111", 3), ("ABABABABABABABABABAB1", 2), ]
+for test_s, expected_count in test_cases:
+    assert strong_password_checker(s=test_s) == expected_count

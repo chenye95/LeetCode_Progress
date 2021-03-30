@@ -24,13 +24,14 @@ class RandomPointCircle:
 
     def random_point(self) -> Tuple[float, float]:
         """
-        Polar coordinates
+        Sample polar coordinates and convert to (x, y)
+
         :return: [x, y] randomly selected within the circle
         """
         distance = sqrt(random()) * self.radius
         degree = random() * 2 * pi
-        return (self.x_center + distance * cos(degree),
-                self.y_center + distance * sin(degree))
+        return self.x_center + distance * cos(degree), \
+               self.y_center + distance * sin(degree)
 
 
 test_x_center, test_y_center = random() * 10 + 10, random() * 5 + 10

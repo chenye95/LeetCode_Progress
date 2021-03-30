@@ -9,6 +9,12 @@ from collections import Counter
 
 
 def character_replacement(s: str, k: int) -> int:
+    """
+    :param s: string of uppercase English letters, with length not exceeding 104
+    :param k: at most k operations, in which we replace any character with any other uppercase English letter. k will
+    not exceed 104
+    :return: length of longest substring containing all repeating letters after performing at most k operations
+    """
     if not s:
         return 0
 
@@ -33,8 +39,10 @@ def character_replacement(s: str, k: int) -> int:
     return len(s) - window_start
 
 
-assert character_replacement(s="ABAB", k=2) == 4
-assert character_replacement(s="AABABBA", k=1) == 4
-assert character_replacement(s="AABABBACC", k=1) == 4
-assert character_replacement(s="AAAA", k=0) == 4
-assert character_replacement(s="", k=10) == 0
+test_cases = [("ABAB", 2, 4),
+              ("AABABBA", 1, 4),
+              ("AABABBACC", 1, 4),
+              ("AAAA", 0, 4),
+              ("", 10, 0), ]
+for test_s, test_k, expected_count in test_cases:
+    assert character_replacement(s=test_s, k=test_k) == expected_count
