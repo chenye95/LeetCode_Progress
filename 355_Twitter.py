@@ -27,7 +27,10 @@ class Twitter:
 
     def post_tweet(self, user_id: int, tweet_id: int) -> None:
         """
-        Compose a new tweet.
+        user_id compose a new tweet, tweet_id
+
+        :param user_id: user_id for the tweet
+        :param tweet_id: tweet_id for the tweet
         """
         self.tweets[user_id].appendleft((next(self.timer), tweet_id))
         if len(self.tweets[user_id]) > self.maxN:
@@ -37,6 +40,9 @@ class Twitter:
         """
         Retrieve the 10 most recent tweet ids in the user's news feed. Each item in the news feed must be posted by
         users who the user followed or by the user herself. Tweets must be ordered from most recent to least recent.
+
+        :param user_id: news feed for user_id
+        :return: 10 most recent tweets for user_id, tweets posted either by user or user_id that they follow
         """
         tweets_list = merge(*(self.tweets[u] for u in self.followee[user_id] | {user_id}))
         return [tweet_id for _, tweet_id in islice(tweets_list, self.maxN)]
@@ -44,12 +50,18 @@ class Twitter:
     def follow(self, follower_id: int, followee_id: int) -> None:
         """
         Follower follows a followee. If the operation is invalid, it should be a no-op.
+
+        :param follower_id: follower_id follows followee_id
+        :param followee_id: follower_id follows followee_id
         """
         self.followee[follower_id].add(followee_id)
 
     def unfollow(self, follower_id: int, followee_id: int) -> None:
         """
         Follower unfollows a followee. If the operation is invalid, it should be a no-op.
+
+        :param follower_id: follower_id unfollows followee_id
+        :param followee_id: follower_id unfollows followee_id
         """
         self.followee[follower_id].discard(followee_id)
 

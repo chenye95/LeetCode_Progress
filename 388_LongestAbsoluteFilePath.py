@@ -22,16 +22,16 @@ file2.ext.
 """
 
 
-def longest_absolute_path(input: str) -> int:
+def longest_absolute_path(folder_structure: str) -> int:
     """
-    :param input: string representation of folder structures, level 1
-    :return: longest absolute path
+    :param folder_structure: string representation of folder structures
+    :return: longest absolute path of a file
     """
     max_len = 0
-    # 'dir' is level 0
+    # root folder is level 0
     # path_len_by_level[level_i + 1] total length til level_i sub folder
     path_len_by_level = {0: 0}
-    for line in input.splitlines():
+    for line in folder_structure.splitlines():
         folder_file_name = line.lstrip('\t')
         level_i = len(line) - len(folder_file_name)
         if '.' in folder_file_name:
@@ -44,8 +44,10 @@ def longest_absolute_path(input: str) -> int:
     return max_len
 
 
-test_cases = [("dir/subdir2/subsubdir2/", 0),
-              ("dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext", 32),
-              ("dir\n\ta\n\t\taa\n\t\t\taaa\n\t\t\t\tfile1.txt\n\taaaaaaaaaaaaaaaaaaaaa\n\t\tsth.png", 33), ]
+test_cases = [("dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext", 32),
+              ("dir\n\ta\n\t\taa\n\t\t\taaa\n\t\t\t\tfile1.txt\n\taaaaaaaaaaaaaaaaaaaaa\n\t\tsth.png", 33),
+              ("dir/subdir2/subsubdir2/", 0),
+              ("a", 0),
+              ("file1.txt\nfile2.txt\nlongfile.txt", 12), ]
 for test_input, expected_output in test_cases:
     assert longest_absolute_path(test_input) == expected_output, test_input

@@ -48,16 +48,16 @@ def origin_digits_counter_embed(s: str) -> str:
     """
     count_s = Counter(s)
     digit_counts = [
-        count_s["z"],  # 0
-        count_s["o"] - count_s["z"] - count_s["w"] - count_s["u"],  # 1
-        count_s["w"],  # 2
-        count_s["t"] - count_s["w"] - count_s["g"],  # 3
-        count_s["u"],  # 4
-        count_s["f"] - count_s["u"],  # 5
-        count_s["x"],  # 6
-        count_s["s"] - count_s["x"],  # 7
-        count_s["g"],  # 8
-        count_s["i"] - count_s["x"] - count_s["g"] - (count_s["f"] - count_s["u"]),  # 9
+        count_s["z"],  # 0: z
+        count_s["o"] - count_s["z"] - count_s["w"] - count_s["u"],  # 1: o - 0 - 2 - 4
+        count_s["w"],  # 2: w
+        count_s["t"] - count_s["w"] - count_s["g"],  # 3: t - 2 - 8
+        count_s["u"],  # 4: u
+        count_s["f"] - count_s["u"],  # 5: f - 4
+        count_s["x"],  # 6: x
+        count_s["s"] - count_s["x"],  # 7: s - 6
+        count_s["g"],  # 8: g
+        count_s["i"] - count_s["x"] - count_s["g"] - (count_s["f"] - count_s["u"]),  # 9: i - 6 - 8 - 5
     ]
     return "".join(str(digit) * count_digit for digit, count_digit in enumerate(digit_counts))
 

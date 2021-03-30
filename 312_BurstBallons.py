@@ -13,6 +13,13 @@ from typing import List
 
 
 def burst_balloons(nums: List[int]) -> int:
+    """
+    When you burst balloon i, you get nums[left] * nums[i] * nums[right] coins, where left and right are balloons
+    adjacent to i at i's bursting
+
+    :param nums: coins in balloon i
+    :return: maximum number of coins you can collect by bursting the balloons sequentially
+    """
     # Drop all 0s in nums as this will not change final results
     # Extend both ends by 1
     nums = [1] + list(filter(lambda x: x > 0, nums)) + [1]
@@ -36,5 +43,6 @@ def burst_balloons(nums: List[int]) -> int:
     return dp_memory[0][-1]
 
 
-assert burst_balloons(nums=[3, 1, 5, 8]) == 167
-assert burst_balloons(nums=[1, 5]) == 10
+test_cases = [([3, 1, 5, 8], 167), ([1, 5], 10), ([7, 9, 8, 0, 7, 1, 3, 5, 5, 2, 3], 1654), ]
+for test_nums, expected_coins in test_cases:
+    assert burst_balloons(nums=test_nums) == expected_coins

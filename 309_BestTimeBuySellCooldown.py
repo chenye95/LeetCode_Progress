@@ -30,4 +30,6 @@ def max_profit(prices: List[int]) -> int:
     return max(state_sold, state_rest)
 
 
-assert max_profit([1, 2, 3, 0, 2]) == 3
+test_cases = [([1, 2, 3, 0, 2], 3), ([1], 0), ([1, 2, 4, 2, 5, 7, 2, 4, 9, 0, 9], 15), ]
+for test_prices, expected_profit in test_cases:
+    assert max_profit(prices=test_prices) == expected_profit

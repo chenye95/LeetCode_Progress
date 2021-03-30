@@ -8,21 +8,29 @@ Write a one-pass algorithm with O(1) extra space to determine, if your path cros
 from typing import List
 
 
-def isSelfCrossing(x: List[int]) -> bool:
-    b = c = d = e = f = 0  # a, b, c, d, e, f consecutive moves
+def is_self_crossing(x: List[int]) -> bool:
+    """
+    :param x: array of positive integers, representing moves. Starting at (0, 0) and facing north, droid moves x[i]
+    steps and turn 90 degrees counter clock wise
+    :return: whether the path is self crossing
+    """
+    # let a, b, c, d, e, f be 6 consecutive moves
+    b = c = d = e = f = 0
     for a in x:
-        if d >= b > 0 and (a >= c or a >= c-e >= 0 and f >= d-b):
-            # The directions of the line doesn't matter so long as there is a 90 degree counter-clockwise turn between
+        if d >= b > 0 and (a >= c or a >= c - e >= 0 and f >= d - b):
+            # The directions of the line doesn't matter, so long as there is a 90 degree counter-clockwise turn between
             # 2 lines
-            # Cross a from the left: d >= b and a >= c
-            # Cross a from the right: d >= b and b + f >= d and c >= e and a + e >= c
+            # - Cross a from the left: d >= b and a >= c
+            # - Cross a from the right: d >= b and b + f >= d and c >= e and a + e >= c
             return True
         b, c, d, e, f = a, b, c, d, e
     return False
 
 
-assert isSelfCrossing([2,1,1,2])
-assert not isSelfCrossing([3,3,3,2,1,1])
-assert not isSelfCrossing([1,2,2,3,4])
-assert isSelfCrossing([1,1,2,1,1])
-assert not isSelfCrossing([1,2,2,3,4])
+test_cases = [([2, 1, 1, 2], True),
+              ([3, 3, 3, 2, 1, 1], False),
+              ([1, 2, 2, 3, 4], False),
+              ([1, 1, 2, 1, 1], True),
+              ([1, 2, 2, 3, 4], False), ]
+for test_x, expected_outcome in test_cases:
+    assert is_self_crossing(test_x) is expected_outcome

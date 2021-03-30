@@ -18,7 +18,8 @@ from typing import List
 def wiggle_max_length_dp(nums: List[int]) -> int:
     """
     Dynamic Programming approach
-    :return: max length of wiggle subsequences out of nums
+
+    :return: max length of wiggle subsequences in nums
     """
     if len(nums) < 2:
         return len(nums)
@@ -45,7 +46,8 @@ def wiggle_max_length_greedy(nums: List[int]) -> int:
     - if we choose any other intermediate number to be a part of the current wiggle subsequence, the maximum length of
     that wiggle subsequence will always be less than or equal to the one obtained by choosing only the consecutive max
     and min elements.
-    :return: number of local max and local min in the array
+
+    :return: number of local max and local min in the array + 1
     """
     if len(nums) < 2:
         return len(nums)
