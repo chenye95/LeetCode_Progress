@@ -115,24 +115,21 @@ def lowest_common_ancestor_post_order(root: TreeNode, p: TreeNode, q: TreeNode) 
     return None
 
 
-test_tree = ConstructTree.build_tree_leetcode(list(range(1, 16)))
-node_p = test_tree.root.left.left.right
-node_q = test_tree.root.left.right.right
-assert lowest_common_ancestor_recurse(test_tree.root, node_p, node_q).val == 2
-assert lowest_common_ancestor_post_order(test_tree.root, node_p, node_q).val == 2
-
-test_tree = ConstructTree.build_tree_leetcode([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4])
-node_p = test_tree.root.left
-node_q = test_tree.root.right
-assert lowest_common_ancestor_recurse(test_tree.root, node_p, node_q).val == 3
-assert lowest_common_ancestor_post_order(test_tree.root, node_p, node_q).val == 3
-
-node_q = test_tree.root.left.right.right
-assert lowest_common_ancestor_recurse(test_tree.root, node_p, node_q).val == 5
-assert lowest_common_ancestor_post_order(test_tree.root, node_p, node_q).val == 5
-
-test_tree = ConstructTree.build_tree_leetcode([1, 2])
-node_p = test_tree.root
-node_q = test_tree.root.left
-assert lowest_common_ancestor_recurse(test_tree.root, node_p, node_q).val == 1
-assert lowest_common_ancestor_post_order(test_tree.root, node_p, node_q).val == 1
+test_cases = [(list(range(1, 16)), 'llr', 'lrr', 'l'),
+              ([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4], 'l', 'r', ''),
+              ([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4], 'l', 'lrr', 'l'),
+              ([1, 2], '', 'l', ''), ]
+for lowest_common_ancestor in [lowest_common_ancestor_recurse, lowest_common_ancestor_post_order]:
+    for test_tree_list, test_p_steps, test_q_steps, test_both_steps in test_cases:
+        test_tree = ConstructTree.build_tree_leetcode(test_tree_list)
+        test_pointers = [None, None, None]
+        for i, instruction in enumerate([test_p_steps, test_q_steps, test_both_steps]):
+            pointer = test_tree.root
+            for next_step in instruction:
+                if next_step == 'l':
+                    pointer = pointer.left
+                elif next_step == 'r':
+                    pointer = pointer.right
+            test_pointers[i] = pointer
+        test_p, test_q, test_both = test_pointers
+        assert lowest_common_ancestor(test_tree.root, test_p, test_q) is test_both, lowest_common_ancestor.__name__

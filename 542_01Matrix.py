@@ -10,6 +10,9 @@ from typing import List
 def update_matrix_bfs(matrix: List[List[int]]) -> List[List[int]]:
     """
     BFS Solution
+
+    :param matrix: matrix of 0 and 1. Matrix will be preserved after the computation
+    :return: 2D matrix of same size, with each cell equals to distance to the nearest 0
     """
     if not matrix:
         return matrix
@@ -37,6 +40,9 @@ def update_matrix_bfs(matrix: List[List[int]]) -> List[List[int]]:
 def update_matrix_dp(matrix: List[List[int]]) -> List[List[int]]:
     """
     DP Solution: shortest path doesn't go in loops: only direct paths with right-bottom moves or left-up moves
+
+    :param matrix: matrix of 0 and 1. Matrix will be preserved after the computation
+    :return: 2D matrix of same size, with each cell equals to distance to the nearest 0
     """
     if not matrix:
         return matrix
@@ -65,6 +71,8 @@ def update_matrix_dp(matrix: List[List[int]]) -> List[List[int]]:
     return dist_matrix
 
 
+test_cases = [([[0, 0, 0], [0, 1, 0], [0, 0, 0]], [[0, 0, 0], [0, 1, 0], [0, 0, 0]]),
+              ([[0, 0, 0], [0, 1, 0], [1, 1, 1]], [[0, 0, 0], [0, 1, 0], [1, 2, 1]]), ]
 for update_matrix in [update_matrix_bfs, update_matrix_dp]:
-    assert update_matrix([[0, 0, 0], [0, 1, 0], [0, 0, 0]]) == [[0, 0, 0], [0, 1, 0], [0, 0, 0]]
-    assert update_matrix([[0, 0, 0], [0, 1, 0], [1, 1, 1]]) == [[0, 0, 0], [0, 1, 0], [1, 2, 1]]
+    for test_matrix, expected_output in test_cases:
+        assert update_matrix(test_matrix) == expected_output

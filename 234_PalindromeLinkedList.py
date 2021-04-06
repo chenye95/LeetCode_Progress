@@ -6,6 +6,8 @@ from _Linked_List import ListNode, LinkedList
 
 def is_palindrome(head: ListNode) -> bool:
     """
+    Destructive operation: it will break the linked list
+
     :param head: head of a singly linked list
     :return: return whether the linked list is a palindrome
     """

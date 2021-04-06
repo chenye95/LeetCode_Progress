@@ -10,6 +10,7 @@ from _Linked_List import ListNode, LinkedList
 def swap_nodes_reference(head: ListNode, k: int) -> ListNode:
     """
     This implementation swap ListNodes within the LinkedList
+
     :param head: head of the linked list, the linked list is 1 indexed
     :param k: assume k is less or equal to length of linked list,
             swap the kth node from the beginning and the kth node from the end
@@ -56,6 +57,7 @@ def swap_nodes_reference(head: ListNode, k: int) -> ListNode:
 def swap_nodes_value(head: ListNode, k: int) -> ListNode:
     """
     This implementation swap values stored in first and second node
+
     :param head: head of the linked list, the linked list is 1 indexed
     :param k: assume k is less or equal to length of linked list,
             swap the kth node from the beginning and the kth node from the end
@@ -82,7 +84,7 @@ test_cases = [([1, 2, 3, 4, 5], 2, [1, 4, 3, 2, 5]),
               ([1, 2], 2, [2, 1]),
               ([1, 2], 1, [2, 1]),
               ([1, 2, 3], 2, [1, 2, 3]),
-              ([7, 9, 6, 6, 7, 8, 3, 0, 9, 5], 5, [7, 9, 6, 6, 8, 7, 3, 0, 9, 5])]
+              ([7, 9, 6, 6, 7, 8, 3, 0, 9, 5], 5, [7, 9, 6, 6, 8, 7, 3, 0, 9, 5]), ]
 for swap_nodes in [swap_nodes_value, swap_nodes_reference]:
     for test_input, test_k, expected_output in test_cases:
         test_linked_list = LinkedList.create_linked_list(test_input)
