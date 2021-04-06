@@ -28,5 +28,7 @@ def find_all_concatenated_words(words: List[str]) -> List[str]:
 
 
 test_cases = [(["cat", "cats", "catsdogcats", "dog", "dogcatsdog", "hippopotamuses", "rat", "ratcatdogcat"],
-               ["catsdogcats", "dogcatsdog", "ratcatdogcat"]),
-              (["cat", "dog", "catdog"], ["catdog"]), ]
+               {"catsdogcats", "dogcatsdog", "ratcatdogcat"}),
+              (["cat", "dog", "catdog"], {"catdog", }), ]
+for test_words, expected_output in test_cases:
+    assert set(find_all_concatenated_words(test_words)) == expected_output

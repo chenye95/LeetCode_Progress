@@ -21,7 +21,7 @@ def exclusive_time(n: int, logs: List[str]) -> List[int]:
     """
     :param n: n unique process with process_id between 0 and n-1
     :param logs: list of entries of format process_id:operation:timestamp, operation can either be start or end
-    :return:
+    :return: exclusive time of each function, sorted by their function id
     """
     tracker = [0] * (n + 1)
     stack = []
@@ -46,7 +46,13 @@ def exclusive_time(n: int, logs: List[str]) -> List[int]:
             # Restart the process
             current_process_id = stack.pop()
             tracker[current_process_id] -= int_timestamp
-    return tracker[:n]
+    return tracker[:-1]
 
 
-assert exclusive_time(n=2, logs=["0:start:0", "1:start:2", "1:end:5", "0:end:6"]) == [3, 4]
+test_cases = [(2, ["0:start:0", "1:start:2", "1:end:5", "0:end:6"], [3, 4]),
+              (1, ["0:start:0", "0:start:2", "0:end:5", "0:start:6", "0:end:6", "0:end:7"], [8]),
+              (2, ["0:start:0", "0:start:2", "0:end:5", "1:start:6", "1:end:6", "0:end:7"], [7, 1]),
+              (2, ["0:start:0", "0:start:2", "0:end:5", "1:start:7", "1:end:7", "0:end:8"], [8, 1]),
+              (1, ["0:start:0", "0:end:0"], [1]), ]
+for test_n, test_log, expected_output in test_cases:
+    assert exclusive_time(n=test_n, logs=test_log) == expected_output

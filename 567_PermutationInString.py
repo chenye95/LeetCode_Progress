@@ -6,6 +6,11 @@ from collections import Counter
 
 
 def check_inclusion(s1: str, s2: str) -> bool:
+    """
+    :param s1: short string
+    :param s2: long string
+    :return: some permutation of s1 is a substring of s2
+    """
     # Sliding Window
     s1_counter = Counter(s1)
     s2_sliding_window = Counter(s2[:len(s1)])
@@ -43,6 +48,6 @@ def check_inclusion(s1: str, s2: str) -> bool:
     return False
 
 
-assert check_inclusion(s1="adc", s2="dcda")
-assert check_inclusion(s1="ab", s2="eidbaooo")
-assert not check_inclusion(s1="ab", s2="eidboaoo")
+test_cases = [("adc", "dcda", True), ("ab", "eidbaooo", True), ("ab", "eidboaoo", False), ]
+for test_s1, test_s2, expected_output in test_cases:
+    assert check_inclusion(s1=test_s1, s2=test_s2) is expected_output

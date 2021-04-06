@@ -7,6 +7,11 @@ from typing import List
 
 
 def find_longest_word(s: str, d: List[str]) -> str:
+    """
+    :param s: string to start deleting from
+    :param d: list of acceptable strings
+    :return: longest word with the smallest lexicographical order; if no possible result, return empty string
+    """
     d.sort(key=lambda x: (-len(x), x))
     for dict_str in d:
         last_chr_position = 0
@@ -23,6 +28,6 @@ def find_longest_word(s: str, d: List[str]) -> str:
 
 
 test_cases = [("abpcplea", ["ale", "apple", "monkey", "plea"], "apple"),
-              ("abpcplea", ["a", "b", "c"], "a")]
+              ("abpcplea", ["a", "b", "c"], "a"), ]
 for test_s, test_dict, expected_output in test_cases:
     assert find_longest_word(test_s, test_dict) == expected_output

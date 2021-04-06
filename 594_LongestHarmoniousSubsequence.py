@@ -12,6 +12,12 @@ from typing import List
 
 
 def find_LHS(nums: List[int]) -> int:
+    """
+    Harmonious array is an array where the difference between its maximum value and its minimum value is exactly 1
+
+    :param nums: array of integers
+    :return: length of its longest harmonious subsequences
+    """
     num_counter = Counter(nums)
     len_lhs = 0
     for n in num_counter:
@@ -20,7 +26,9 @@ def find_LHS(nums: List[int]) -> int:
     return len_lhs
 
 
-assert find_LHS(nums=[1, 3, 2, 2, 5, 2, 3, 7]) == 5
-assert find_LHS(nums=[1, 2, 3, 4]) == 2
-assert find_LHS(nums=[1, 1, 1, 1]) == 0
-assert find_LHS(nums=[1, 2, 2, 1]) == 4
+test_cases = [([1, 3, 2, 2, 5, 2, 3, 7], 5),
+              ([1, 2, 3, 4], 2),
+              ([1, 1, 1, 1], 0),
+              ([1, 2, 2, 1], 4), ]
+for test_nums, expected_output in test_cases:
+    assert find_LHS(nums=test_nums) == expected_output

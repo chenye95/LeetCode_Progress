@@ -11,6 +11,7 @@ from typing import List
 def find_error_nums(nums: List[int]) -> List[int]:
     """
     only 1 missing_num from sequence 1, ..., n, 1 duplicate_num
+
     :param nums: total length of n
     :return: [duplicate_num, missing_num] in that order
     """
@@ -34,6 +35,6 @@ def find_error_nums(nums: List[int]) -> List[int]:
 test_cases = [([2, 2], [2, 1]),
               ([1, 2, 2, 4], [2, 3]),
               ([1, 1], [1, 2]),
-              ([3, 2, 3, 4, 6, 5], [3, 1])]
+              ([3, 2, 3, 4, 6, 5], [3, 1]), ]
 for test_input, expected_output in test_cases:
     assert find_error_nums(test_input) == expected_output

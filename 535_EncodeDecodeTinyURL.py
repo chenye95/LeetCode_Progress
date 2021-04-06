@@ -20,6 +20,9 @@ class Codec:
     def encode(self, long_url: str) -> str:
         """
         Encode a URL, long_url, to a shortened one
+
+        :param long_url: original url to encode
+        :return: shortened url of length self.short_url_len
         """
         while long_url not in self.url_to_code:
             code = "".join(choice(self.letter_number_set) for _ in range(self.short_url_len))
@@ -32,6 +35,9 @@ class Codec:
     def decode(self, short_url: str) -> str:
         """
         Decodes a shortened URL, short_url, to its original URL.
+
+        :param short_url: shortened url of length self.short_url_len
+        :return: original url
         """
         return self.code_to_url[short_url[-self.short_url_len:]]
 
@@ -47,4 +53,3 @@ for test_long_url in url_lists:
 for test_long_url, shortened_url in url_map.items():
     assert test_codec.encode(test_long_url) == shortened_url
     assert test_codec.decode(shortened_url) == test_long_url
-# print(url_map)

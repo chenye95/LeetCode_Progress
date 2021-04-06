@@ -8,6 +8,7 @@ from _Binary_Tree import TreeNode, ConstructTree
 def convert_bst_recurse(root: TreeNode) -> TreeNode:
     """
     Recursion with helper function
+
     In order traversal, from right to left -> from biggest to smallest
     :param root: root node of a binary search tree
     :return: root again, no modification
@@ -29,6 +30,7 @@ def convert_bst_recurse(root: TreeNode) -> TreeNode:
 def convert_bst_stack(root: TreeNode) -> TreeNode:
     """
     Iteration with a stack
+
     In order traversal, from right to left -> from biggest to smallest
     :param root: root node of a binary search tree
     :return: root again, no modification
@@ -58,6 +60,7 @@ def convert_bst_morris(root: TreeNode) -> TreeNode:
     """
     Reversed Morris In-order Traversal
     In order traversal, from right to left -> from biggest to smallest
+
     :param root: root node of a binary search tree
     :return: root again, no modification
     """
@@ -97,8 +100,7 @@ test_cases = [([4, 1, 6, 0, 2, 5, 7, None, None, None, 3, None, None, None, 8],
                [30, 36, 21, 36, 35, 26, 15, None, None, None, 33, None, None, None, 8]),
               ([0, None, 1], [1, None, 1]),
               ([1, 0, 2], [3, 3, 2]),
-              ([3, 2, 4, 1], [7, 9, 4, 10])]
-
+              ([3, 2, 4, 1], [7, 9, 4, 10]), ]
 for test_input, expected_output in test_cases:
     for convert_bst in [convert_bst_stack, convert_bst_morris, convert_bst_recurse]:
         test_tree = ConstructTree.build_tree_leetcode(test_input)

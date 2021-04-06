@@ -39,6 +39,6 @@ def num_decoding(message: str) -> int:
     return ways[-1]
 
 
-assert num_decoding("*") == 9
-assert num_decoding("2*9") == 16
-assert num_decoding("1*") == 18
+test_cases = [("*", 9), ("2*9", 16), ("1*", 18), ("2*", 15), ]
+for test_str, expected_output in test_cases:
+    assert num_decoding(message=test_str) == expected_output

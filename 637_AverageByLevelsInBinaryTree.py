@@ -9,6 +9,7 @@ from _Binary_Tree import ConstructTree, TreeNode
 def average_of_levels(root: TreeNode) -> List[float]:
     """
     BFS solution
+
     :param root: root of binary tree
     :return: list of float, each represent average of node values in a level
     """
@@ -34,5 +35,7 @@ def average_of_levels(root: TreeNode) -> List[float]:
     return list_avg
 
 
-test_tree = ConstructTree.build_tree_leetcode([3, 9, 20, None, None, 15, 7])
-assert average_of_levels(test_tree.root) == [3, 14.5, 11]
+test_cases = [([3, 9, 20, None, None, 15, 7], [3, 14.5, 11]),
+              ([3, 9, 20, 15, 7], [3, 14.5, 11]), ]
+for test_tree_list, expected_output in test_cases:
+    assert average_of_levels(ConstructTree.build_tree_leetcode(test_tree_list).root) == expected_output

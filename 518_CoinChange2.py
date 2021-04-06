@@ -8,6 +8,7 @@ from typing import List
 def change_coin(amount: int, coins: List[int]) -> int:
     """
     Unbound Knapsack problem
+
     :param amount: value to add up to
     :param coins: coins of different domination; assumed to have infinite number of each kind
     :return: number of combinations from coins to make up amount
@@ -19,6 +20,6 @@ def change_coin(amount: int, coins: List[int]) -> int:
     return combo_count[-1]
 
 
-assert 4 == change_coin(amount=5, coins=[1, 2, 5])
-assert 0 == change_coin(amount=3, coins=[2])
-assert 1 == change_coin(amount=10, coins=[10])
+test_cases = [(5, [1, 2, 5], 4), (3, [2], 0), (10, [10], 1), ]
+for test_amount, test_coins, expected_output in test_cases:
+    assert change_coin(amount=test_amount, coins=test_coins) == expected_output

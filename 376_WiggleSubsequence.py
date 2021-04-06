@@ -66,8 +66,7 @@ def wiggle_max_length_greedy(nums: List[int]) -> int:
 
 test_cases = [([1, 7, 4, 9, 2, 5], 6),
               ([1, 17, 5, 10, 13, 15, 10, 5, 16, 8], 7),
-              ([1, 2, 3, 4, 5, 6, 7, 8, 9], 2),
-              ]
+              ([1, 2, 3, 4, 5, 6, 7, 8, 9], 2), ]
 for wiggle_max_length in [wiggle_max_length_dp, wiggle_max_length_greedy]:
     for test_input, expected_output in test_cases:
         assert wiggle_max_length(test_input) == expected_output

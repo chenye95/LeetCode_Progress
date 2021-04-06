@@ -32,6 +32,8 @@ def least_interval(tasks: List[str], n: int) -> int:
     return max(len(tasks), (most_repetition - 1) * (n + 1) + task_with_most_repetition)
 
 
-assert least_interval(tasks=["A", "A", "A", "B", "B", "B"], n=2) == 8
-assert least_interval(tasks=["A", "A", "A", "B", "B", "B"], n=0) == 6
-assert least_interval(tasks=["A", "A", "A", "A", "A", "A", "B", "C", "D", "E", "F", "G"], n=2) == 16
+test_cases = [(["A", "A", "A", "B", "B", "B"], 2, 8),
+              (["A", "A", "A", "B", "B", "B"], 0, 6),
+              (["A", "A", "A", "A", "A", "A", "B", "C", "D", "E", "F", "G"], 2, 16), ]
+for test_tasks, test_n, expected_output in test_cases:
+    assert least_interval(tasks=test_tasks, n=test_n) == expected_output

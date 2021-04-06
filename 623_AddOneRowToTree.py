@@ -12,7 +12,12 @@ from _Binary_Tree import TreeNode, ConstructTree
 
 
 def add_one_row(root: TreeNode, value: int, depth: int) -> TreeNode:
-    # assume proper input
+    """
+    :param root: root of a proper binary tree
+    :param value: add a new row at level depth with all nodes set to value
+    :param depth: add a new row at level depth with all nodes set to value
+    :return: root of the new binary tree
+    """
     if depth == 1:
         return TreeNode(value, left=root)
 
@@ -35,8 +40,7 @@ def add_one_row(root: TreeNode, value: int, depth: int) -> TreeNode:
 test_cases = [([4, 2, 6, 3, 1, 5], 1, 1, [1, 4, None, 2, 6, 3, 1, 5]),
               ([4, 2, 6, 3, 1, 5], 1, 2, [4, 1, 1, 2, None, None, 6, 3, 1, 5]),
               ([4, 2, None, 3, 1], 1, 3, [4, 2, None, 1, 1, 3, None, None, 1]),
-              ([1], 3, 1, [3, 1]),
-              ]
+              ([1], 3, 1, [3, 1]), ]
 for test_tree_list, test_value, test_depth, expected_output in test_cases:
     test_tree = ConstructTree.build_tree_leetcode(test_tree_list)
     test_tree.root = add_one_row(test_tree.root, test_value, test_depth)

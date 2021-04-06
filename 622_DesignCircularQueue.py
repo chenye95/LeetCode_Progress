@@ -17,7 +17,7 @@ class CircularQueueList:
         """
         :param k: initializes the object with the size of the queue to be k
         """
-        self.queue_list: List[int] = []
+        self.queue_list: List[Any] = []
         self.queue_capacity: int = k
 
     def enqueue(self, value: Any) -> bool:
