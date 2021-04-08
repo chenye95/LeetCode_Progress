@@ -34,6 +34,6 @@ def min_operations_all(n: int) -> int:
 
 test_cases = [(1, 0), (2, 1), (3, 2), (4, 4), (5, 6), (6, 9), (7, 12), (8, 16), (9, 20),
               (50, 625), ]
-for min_operations in [min_operations_split_cases, ]:
+for min_operations in [min_operations_split_cases, min_operations_all]:
     for test_n, expected_output in test_cases:
         assert min_operations(test_n) == expected_output, min_operations.__name__

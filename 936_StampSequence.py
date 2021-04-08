@@ -117,7 +117,7 @@ def move_to_stamp_dfs(stamp: str, target: str) -> List[int]:
                 candidate_sequence = depth_first_search(position_s + 1, position_t + 1, partial_sequence)
                 if candidate_sequence:
                     memory[(position_s, position_t)] = candidate_sequence
-                elif stamp[0] == target[position_t + 1]:
+                elif position_t + 1 < len_target and stamp[0] == target[position_t + 1]:
                     # or stamp one more time at position_t + 1
                     # if stamp[0] != target[t+1], there is no way to stamp without overwriting previous stamped sequence
                     memory[(position_s, position_t)] = depth_first_search(0, position_t + 1,
@@ -131,7 +131,7 @@ def move_to_stamp_dfs(stamp: str, target: str) -> List[int]:
 
         return memory[(position_s, position_t)]
 
-    if stamp[0] != target[0]:
+    if stamp[0] != target[0] or stamp[-1] != target[-1]:
         # stamp[0] has to match target[0]
         return []
 
@@ -155,11 +155,9 @@ def test_simulator(stamp: str, stamp_sequence: List[int], total_len: int) -> str
     return ''.join(return_str)
 
 
-test_cases = [("abc", "ababc"), ("abca", "aabcaca"), ]
-for move_to_stamp in [move_to_stamp_dfs, move_to_stamp_backward]:
+test_cases = [("abc", "ababc"), ("abca", "aabcaca"), ("ffebb", "fffeffebbb"), ("t", "t" * 100), ]
+for move_to_stamp in [move_to_stamp_dfs, move_to_stamp_backward, ]:
     for test_stamp, test_target in test_cases:
-        simulated_stamping = test_simulator(stamp=test_stamp,
-                                            stamp_sequence=move_to_stamp(stamp=test_stamp, target=test_target),
-                                            total_len=len(test_target))
-        # print(simulated_stamping, test_target)
-        assert simulated_stamping == test_target, move_to_stamp.__name__
+        assert test_simulator(stamp=test_stamp,
+                              stamp_sequence=move_to_stamp(stamp=test_stamp, target=test_target),
+                              total_len=len(test_target)) == test_target, move_to_stamp.__name__

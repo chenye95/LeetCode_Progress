@@ -21,7 +21,7 @@ class FrequencyStack(object):
 
     def push(self, x: Any) -> None:
         """
-        pushes an element x onto the stack
+        :param x: pushes an element x onto the stack
         """
         f = self.frequency_map[x] + 1
         self.frequency_map[x] = f
@@ -33,6 +33,7 @@ class FrequencyStack(object):
         """
         Removes and returns the most frequent element in the stack.
         If there is a tie for most frequent element, the element closest to the top of the stack is removed and returned
+
         :return: most frequent element in the stack
         """
         x = self.i_th_occurrence[self.max_frequency].pop()
