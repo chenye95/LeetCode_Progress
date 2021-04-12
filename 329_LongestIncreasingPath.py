@@ -21,10 +21,9 @@ def longest_increasing_path(matrix: List[List[int]]) -> int:
             current_val = matrix[i][j]
             dp_memory[i][j] = 1 + max(
                 dfs_recurse(i - 1, j) if i and matrix[i - 1][j] > current_val else 0,
-                dfs_recurse(i + 1, j) if i < m - 1
-                                         and matrix[i + 1][j] > current_val else 0,
+                dfs_recurse(i + 1, j) if i + 1 < m and matrix[i + 1][j] > current_val else 0,
                 dfs_recurse(i, j - 1) if j and matrix[i][j - 1] > current_val else 0,
-                dfs_recurse(i, j + 1) if j < n - 1 and matrix[i][j + 1] > current_val else 0,
+                dfs_recurse(i, j + 1) if j + 1 < n and matrix[i][j + 1] > current_val else 0,
             )
         return dp_memory[i][j]
 
@@ -51,7 +50,7 @@ test_cases = [([[9, 9, 4], [6, 6, 8], [2, 1, 1]], 4),
                 [119, 118, 117, 116, 115, 114, 113, 112, 111, 110],
                 [120, 121, 122, 123, 124, 125, 126, 127, 128, 129],
                 [139, 138, 137, 136, 135, 134, 133, 132, 131, 130],
-                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], 140), ]
-
+                [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]], 140),
+              ([[1]], 1), ]
 for test_matrix, expected_len in test_cases:
     assert longest_increasing_path(test_matrix) == expected_len
