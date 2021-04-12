@@ -1,7 +1,7 @@
 """
 Given a binary tree, return the sum of values of its deepest leaves.
 """
-from _Binary_Tree import TreeNode
+from _Binary_Tree import TreeNode, ConstructTree
 
 
 def deepest_leaves_sum(root: TreeNode) -> int:
@@ -31,7 +31,7 @@ def deepest_leaves_sum(root: TreeNode) -> int:
     return current_level_sum
 
 
-from _Binary_Tree import ConstructTree
-
-test_tree = ConstructTree.build_tree_leetcode([1, 2, 3, 4, 5, None, 6, 7, None, None, None, None, 8])
-assert deepest_leaves_sum(test_tree.root) == 15
+test_cases = [([1, 2, 3, 4, 5, None, 6, 7, None, None, None, None, 8], 15),
+              ([6, 7, 8, 2, 7, 1, 3, 9, None, 1, 4, None, None, None, 5], 19), ]
+for test_tree_list, expected_output in test_cases:
+    assert deepest_leaves_sum(ConstructTree.build_tree_leetcode(test_tree_list).root) == expected_output
