@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import deque
 from typing import Union, List, Optional
 
-TREE_NODE_TYPE = Union[str, int, chr]
+TREE_NODE_TYPE = Union[str, int, chr, float]
 
 
 def get_height(current_node: TreeNode):
@@ -24,7 +24,7 @@ class TreeNode:
 
 
 class BinaryTree:
-    def __init__(self, root: Optional[TreeNode]):
+    def __init__(self, root: Optional[TreeNode] = None):
         self.root = root
 
     def __eq__(self, other: BinaryTree) -> bool:
@@ -80,9 +80,8 @@ class BinaryTree:
 
     def print_tree(self, filler: TREE_NODE_TYPE = None) -> List[List[TREE_NODE_TYPE]]:
         """
-        Returns a 2D representation of the node
         :param filler: Default filler for empty cells
-        :return: List[List[Node.val]]
+        :return: 2D representation of the binary tree
         """
 
         def fill(current_node: TreeNode, layer: int, left: int, right: int):
@@ -104,7 +103,7 @@ class BinaryTree:
 
     def preorder_traversal(self) -> List[TREE_NODE_TYPE]:
         """
-        :rtype: list[val]
+        :return: pre-order traversal of the Binary Tree
         """
         current_node = self.root
         traverse_stack = [None]
@@ -120,9 +119,9 @@ class BinaryTree:
 
     def inorder_traversal(self) -> List[TREE_NODE_TYPE]:
         """
-        Implements Morris Traversal: without recursion or stack.
-        Modifies the tree and reverts the changes afterwards
-        :return: List[val]
+        Implements Morris Traversal: without recursion or stack. Modifies the tree and reverts the changes afterwards
+
+        :return: in order traversal of the Binary Tree
         """
         result_order = []
         current_node = self.root
@@ -151,7 +150,7 @@ class BinaryTree:
 
     def postorder_traversal(self) -> List[TREE_NODE_TYPE]:
         """
-        :rtype: list[val]
+        :return: post order traversal of the Binary Tree
         """
         if self.root is None:
             return []
@@ -175,7 +174,7 @@ class BinaryTree:
 
     def layer_traversal(self) -> List[TREE_NODE_TYPE]:
         """
-        :rtype: list[val]
+        :return: all nodes layer by layer in a single list, remove all None/empty child nodes
         """
         if self.root is None:
             return []
@@ -193,7 +192,7 @@ class BinaryTree:
 
     def layer_traversal_by_layer(self) -> List[List[TREE_NODE_TYPE]]:
         """
-        :rtype: list[list[val]]
+        :return: all nodes layer by layer in list of lists, remove all None/empty child nodes
         """
         if self.root is None:
             return []
@@ -206,7 +205,9 @@ class BinaryTree:
 
     def leetcode_traversal(self) -> List[TREE_NODE_TYPE]:
         """
-        :rtype: list[val]
+        Helper function for Leetcode problems
+
+        :return: Leetcode traversal
         """
         if self.root is None:
             return []
@@ -227,7 +228,6 @@ class BinaryTree:
         """
         :return: list of the right most nodes per layer
         """
-
         def right_view_add_new_depth(node: TreeNode, depth: int):
             nonlocal right_view
             if node:
@@ -244,7 +244,6 @@ class BinaryTree:
         """
         :return: list of the left most nodes per layer
         """
-
         def left_view_add_new_layer(node: TreeNode, depth: int):
             nonlocal left_view
             if node:
@@ -256,6 +255,32 @@ class BinaryTree:
         left_view = []
         left_view_add_new_layer(self.root, 0)
         return left_view
+
+    def trim_boundary(self, low_val: TREE_NODE_TYPE, high_val: TREE_NODE_TYPE) -> None:
+        """
+        Recursively remove all nodes whose values that are out of [low_val, high_val]
+
+        :param low_val: remove all nodes that are strictly less than low_val
+        :param high_val: remove all nodes that are strictly greater than low_val
+        :return: in place update; may replace the root of binary_tree
+        """
+
+        def _trim_boundary_helper(current_node: TreeNode) -> TreeNode:
+            if not current_node:
+                return current_node
+
+            if current_node.val < low_val:
+                # root and its left tree will be dropped
+                return _trim_boundary_helper(current_node.right)
+            elif current_node.val > high_val:
+                # root and its right tree will be dropped
+                return _trim_boundary_helper(current_node.left)
+
+            current_node.left = _trim_boundary_helper(current_node.left)
+            current_node.right = _trim_boundary_helper(current_node.right)
+            return current_node
+
+        self.root = _trim_boundary_helper(self.root)
 
 
 class ConstructTree:
@@ -322,7 +347,9 @@ class ConstructTree:
     @staticmethod
     def build_tree_leetcode(node_list: List[TREE_NODE_TYPE]) -> Optional[BinaryTree]:
         """
-        Helper function to create Binary Tree according to Leet Code representation
+        Helper function to create Binary Tree according to Leetcode representation
+
+        :param node_list: leetcode traversal order
         :return: BinaryTree object of the tree; or None if the lists are empty
         """
         if not node_list:
