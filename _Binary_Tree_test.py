@@ -123,7 +123,7 @@ assert BinaryTree(None) == BinaryTree(None)
 assert test_tree_1 != BinaryTree(None)
 assert BinaryTree(None) != test_tree_2
 
-# Test Binary Trim Boundary
+# Test Binary Tree Trim Boundary
 test_cases = [([1, 0, 2], 1, 2, [1, None, 2]),
               ([3, 0, 4, None, 2, None, None, 1], 1, 3, [3, 2, None, 1]),
               ([1], 1, 2, [1]),
@@ -135,3 +135,12 @@ for tree_input, low_input, high_input, expected_output in test_cases:
     len_leetcode = len(test_tree.leetcode_traversal())
     assert test_tree.leetcode_traversal()[:len(expected_output)] == expected_output
     assert test_tree.leetcode_traversal()[len(expected_output):] == [None] * (len_leetcode - len(expected_output))
+
+# Test Binary Tree Max Width
+test_cases = [([1, 3, 2, 5, 3, None, 9], 4),
+              ([1, 3, None, 5, 3], 2),
+              ([1, 3, 2, 5], 2),
+              ([1, 3, 2, 5, None, None, 9, 6, None, None, 7], 8)]
+for tree_list, expected_out in test_cases:
+    test_tree = ConstructTree.build_tree_leetcode(tree_list)
+    assert test_tree.max_width() == expected_out
