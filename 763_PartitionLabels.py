@@ -8,6 +8,7 @@ from typing import List
 def partition_labels(s: str) -> List[int]:
     """
     Greedy Algorithm
+
     :param s: partition s into as many parts as possible so that each letter appears in at most one part
     :return: a list of integers representing the size of these parts
     """
@@ -26,4 +27,13 @@ def partition_labels(s: str) -> List[int]:
     return partition_len
 
 
+test_cases = [("ntswuqqbidunnixxpoxxuuupotaatwdainsotwvpxpsdvdbwvbtdiptwtxnnbtqbdvnbowqitudutpsxsbbsvtipibqpvpnivott" +
+               "sxvoqqaqdxiviidivndvdtbvadnxboiqivpusuxaaqnqaobutdbpiosuitdnopoboivopaapadvqwwnnwvxndpxbapixaspwxxxvp" +
+               "poptqxitsvaaawxwaxtbxuixsoxoqdtopqqivaitnpvutzchkygjjgjkcfzjzrkmyerhgkglcyffezmehjcllmlrjghhfkfylkgyh" +
+               "yjfmljkzglkklykrjgrmzjyeyzrrkymccefggczrjflykclfhrjjckjlmglrmgfzlkkhffkjrkyfhegyykrzgjzcgjhkzzmzyejyc" +
+               "frkkekmhzjgggrmchkeclljlyhjkchmhjlehhejjyccyegzrcrerfzczfelzrlfylzleefgefgmzzlggmejjjygehmrczmkrc",
+               [246, 254]),
+              ("ababcbacadefegdehijhklij", [9, 7, 8]), ]
+for test_s, expected_output in test_cases:
+    assert partition_labels(test_s) == expected_output
 assert partition_labels("ababcbacadefegdehijhklij") == [9, 7, 8]

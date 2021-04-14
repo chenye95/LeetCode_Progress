@@ -9,7 +9,7 @@ def check_inclusion(s1: str, s2: str) -> bool:
     """
     :param s1: short string
     :param s2: long string
-    :return: some permutation of s1 is a substring of s2
+    :return: whether some permutation of s1 is a substring of s2
     """
     # Sliding Window
     s1_counter = Counter(s1)

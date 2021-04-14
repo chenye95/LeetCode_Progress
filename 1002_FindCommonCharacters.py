@@ -22,4 +22,14 @@ def common_chars(list_of_strings: List[str]) -> List[str]:
     return list(tmp.elements())
 
 
+test_cases = [(["bella", "label", "roller"], ['e', 'l', 'l']),
+              (["cool", "lock", "cook"], ['c', 'o']),
+              (["adahafhbgccagdeebcac", "fafgacdacbfafegbaafe", "hdefhchehgaeehegbcdd", "ahgeeafbeeedefbbdeaf",
+                "bdbccgbgeffccacehfca", "cfccgbcfedgffdggbbha", "hdbgedhhaahfadaeadeg", "ahefaeacaedfahfagcaa",
+                "aadhbfadfhhdehccgbgh", "hcbbddchgbgbdeabdcag", "faabcaccacehchhhdebg", "gcdfceefgbafgghegdcc",
+                "cadeffheabbcdcbfeffd", "fdaeeffhfhbfhhgbaecg", "hbghdfcbfhadacdebfag", "gcdeaahegfhgdaggeefc",
+                "abgffcehabegfgbbafbg", "egceahedahfhafehfdae", "ccdehaehchaehefadcac", "dfbgdbgcfbceffddehea"],
+               ['a', 'e']), ]
+for test_input, expected_output in test_cases:
+    assert common_chars(test_input) == expected_output
 assert common_chars(["bella", "label", "roller"]) == ['e', 'l', 'l']

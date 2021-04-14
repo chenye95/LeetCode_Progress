@@ -9,10 +9,10 @@ impossible for all the n nodes to receive the signal, return -1.
 from collections import defaultdict
 from heapq import heappop, heappush
 from sys import maxsize
-from typing import List
+from typing import List, Tuple
 
 
-def network_delay(times: List[List[int]], n: int, k: int) -> int:
+def network_delay(times: List[Tuple[int, int, int]], n: int, k: int) -> int:
     """
     Dijkstra's algorithm
 
@@ -42,7 +42,15 @@ def network_delay(times: List[List[int]], n: int, k: int) -> int:
     return -1 if len(visited) < n else max(delay[1:])
 
 
-assert network_delay(times=[[1, 2, 1], [2, 3, 7], [1, 3, 4], [2, 1, 2]], n=3, k=2) == 6
-assert network_delay(times=[[2, 1, 1], [2, 3, 1], [3, 4, 1]], n=4, k=2) == 2
-assert network_delay(times=[[1, 2, 1]], n=2, k=1) == 1
-assert network_delay(times=[[1, 2, 1]], n=2, k=2) == -1
+test_cases = [([(1, 2, 1), (2, 3, 7), (1, 3, 4), (2, 1, 2)], 3, 2, 6),
+              ([(2, 1, 1), (2, 3, 1), (3, 4, 1)], 4, 2, 2),
+              ([(1, 2, 1)], 2, 1, 1),
+              ([(1, 2, 1)], 2, 2, -1),
+              (
+                  [(3, 5, 78), (2, 1, 1), (1, 3, 0), (4, 3, 59), (5, 3, 85), (5, 2, 22), (2, 4, 23), (1, 4, 43),
+                   (4, 5, 75),
+                   (5, 1, 15), (1, 5, 91), (4, 1, 16), (3, 2, 98), (3, 4, 22), (5, 4, 31), (1, 2, 0), (2, 5, 4),
+                   (4, 2, 51),
+                   (3, 1, 36), (2, 3, 59)], 5, 5, 31), ]
+for test_network_delay, test_n, test_k, expected_output in test_cases:
+    assert network_delay(test_network_delay, test_n, test_k) == expected_output

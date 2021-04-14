@@ -42,7 +42,6 @@ test_cases = [([1, 3, 2, 5, 3, None, 9], 4),
               ([1, 3, None, 5, 3, None, None], 2),
               ([1, 3, 2, 5, None, None, None], 2),
               ([1, 3, 2, 5, None, None, 9, 6, None, None, 7, None, None, None, None], 8)]
-
 for tree_list, expected_out in test_cases:
     test_tree = ConstructTree.build_tree_leetcode(tree_list)
     assert width_of_binary_tree(test_tree.root) == expected_out

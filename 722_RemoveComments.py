@@ -7,9 +7,9 @@ from typing import List
 
 def remove_comments(source: List[str]) -> List[str]:
     """
-    :param source: an array where source[i] is the i-th line of the source code. This represents the result of splitting
-     the original source code string by the newline character \n.
-    :return: After removing the comments from the source code, return the source code in the same format
+    :param source: an array where source[i] is the i-th line of the C++ source code. This represents the result of
+    splitting the original source code string by the newline character \n.
+    :return: After removing the comments from the C++ source code, return the C++ source code in the same format
     """
     return_list = []
     inside_block, new_line = False, None
@@ -46,6 +46,5 @@ test_cases = [
     (["struct Node{", "    /*/ declare members;/**/", "    int size;", "    /**/int val;", "};"],
      ['struct Node{', '    ', '    int size;', '    int val;', '};']),
 ]
-
 for input_source, output_string in test_cases:
     assert remove_comments(input_source) == output_string

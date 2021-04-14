@@ -4,7 +4,7 @@ or may not pass through the root.
 
 The length of path between two nodes is represented by the number of edges between them.
 """
-from _Binary_Tree import TreeNode
+from _Binary_Tree import TreeNode, ConstructTree
 
 
 class Solution:
@@ -23,6 +23,7 @@ class Solution:
 
     def longest_uni_value_path_end_at_node(self, node: TreeNode) -> int:
         """
+        :param node: a TreeNode in binary tree
         :return: longest uni_value path that ends at node
         """
         if not node or not (node.left or node.right):
@@ -43,8 +44,6 @@ class Solution:
 
         return max(len_through_left_child, len_through_right_child)
 
-
-from _Binary_Tree import ConstructTree
 
 test_cases = [(ConstructTree.build_tree_leetcode([5, 4, 5, 1, 1, None, 5]), 2),
               (ConstructTree.build_tree_leetcode([1, 4, 5, 4, 4, None, 5]), 2),

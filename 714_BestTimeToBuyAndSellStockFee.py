@@ -13,6 +13,9 @@ from typing import List
 def max_profit(prices: List[int], fee: int) -> int:
     """
     hold up to 1 share of stock at any given moment
+
+    :param prices: stock prices in the market
+    :param fee: transaction fee for buying and selling stock
     :return: maximum profit from trading in the market, post-fee
     """
     no_hold = 0  # maximum profit if end the day with no share

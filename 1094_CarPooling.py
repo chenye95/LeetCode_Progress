@@ -8,12 +8,12 @@ locations are given as the number of kilometers due east from your vehicle's ini
 
 Return true if and only if it is possible to pick up and drop off all passengers for all the given trips.
 """
-from typing import List
+from typing import List, Tuple
 
 
-def car_pooling(trips: List[List[int]], capacity: int) -> bool:
+def car_pooling(trips: List[Tuple[int, int, int]], capacity: int) -> bool:
     """
-    :param trips: trip[i] = [num_passengers, start_location, end_location] contains information about the i-th trip
+    :param trips: trip[i] = (num_passengers, start_location, end_location) contains information about the i-th trip
     :param capacity: empty seats initially available for passengers
     :return: whether it can pick up and drop off all passengers for all the given trips.
     """
@@ -26,7 +26,9 @@ def car_pooling(trips: List[List[int]], capacity: int) -> bool:
     return True
 
 
-assert car_pooling(trips=[[2, 1, 5], [3, 3, 7]], capacity=4) is False
-assert car_pooling(trips=[[2, 1, 5], [3, 3, 7]], capacity=5) is True
-assert car_pooling(trips=[[2, 1, 5], [3, 5, 7]], capacity=3) is True
-assert car_pooling(trips=[[3, 2, 7], [3, 7, 9], [8, 3, 9]], capacity=11) is True
+test_cases = [([(2, 1, 5), (3, 3, 7)], 4, False),
+              ([(2, 1, 5), (3, 3, 7)], 5, True),
+              ([(2, 1, 5), (3, 5, 7)], 3, True),
+              ([(3, 2, 7), (3, 7, 9), (8, 3, 9)], 11, True), ]
+for test_trips, test_capacity, expected_output in test_cases:
+    assert car_pooling(trips=test_trips, capacity=test_capacity) is expected_output

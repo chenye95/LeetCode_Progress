@@ -29,5 +29,7 @@ def daily_temperatures(temperature_list: List[int]) -> List[int]:
     return return_result
 
 
-assert daily_temperatures(temperature_list=[89, 62, 70, 58, 47, 47, 46, 76, 100, 70]) == [8, 1, 5, 4, 3, 2, 1, 1, 0, 0]
-assert daily_temperatures(temperature_list=[73, 74, 75, 71, 69, 72, 76, 73]) == [1, 1, 4, 2, 1, 1, 0, 0]
+test_cases = [([89, 62, 70, 58, 47, 47, 46, 76, 100, 70], [8, 1, 5, 4, 3, 2, 1, 1, 0, 0]),
+              ([73, 74, 75, 71, 69, 72, 76, 73], [1, 1, 4, 2, 1, 1, 0, 0]), ]
+for test_temperature, expected_output in test_cases:
+    assert daily_temperatures(test_temperature) == expected_output

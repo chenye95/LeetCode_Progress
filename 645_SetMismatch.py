@@ -5,10 +5,10 @@ of another number.
 You are given an integer array nums representing the data status of this set after the error.
 Find the number that occurs twice and the number that is missing and return them in the form of an array.
 """
-from typing import List
+from typing import List, Tuple
 
 
-def find_error_nums(nums: List[int]) -> List[int]:
+def find_error_nums(nums: List[int]) -> Tuple[int, int]:
     """
     only 1 missing_num from sequence 1, ..., n, 1 duplicate_num
 
@@ -29,12 +29,12 @@ def find_error_nums(nums: List[int]) -> List[int]:
 
         last_saw = n_i
 
-    return [duplicate_num, missing_num] if missing_num is not None else [duplicate_num, len(nums)]
+    return (duplicate_num, missing_num) if missing_num is not None else (duplicate_num, len(nums))
 
 
-test_cases = [([2, 2], [2, 1]),
-              ([1, 2, 2, 4], [2, 3]),
-              ([1, 1], [1, 2]),
-              ([3, 2, 3, 4, 6, 5], [3, 1]), ]
+test_cases = [([2, 2], (2, 1)),
+              ([1, 2, 2, 4], (2, 3)),
+              ([1, 1], (1, 2)),
+              ([3, 2, 3, 4, 6, 5], (3, 1)), ]
 for test_input, expected_output in test_cases:
     assert find_error_nums(test_input) == expected_output

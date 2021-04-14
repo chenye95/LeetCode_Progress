@@ -14,12 +14,18 @@ The squares are infinitely sticky on their bottom edge, and will remain fixed to
 Return a list ans of heights. Each height ans[i] represents the current highest height of any square we have dropped,
 after dropping squares represented by positions[0], positions[1], ..., positions[i].
 """
-from typing import List
+from datetime import datetime, timedelta
+from random import randint
+from typing import List, Tuple
 
 from _Range_Query import LazyQueryRange
 
 
-def falling_squares_two(positions: List[List[int]]) -> List[int]:
+def falling_squares_two(positions: List[Tuple[int, int]]) -> List[int]:
+    """
+    :param positions: list of (left_point, side_length) represents the list of square block that drop from the sky
+    :return: list of tallest point after dropping each block
+    """
     # Lazy Range Query Approach
 
     # Coordinates Compression
@@ -45,14 +51,11 @@ def falling_squares_two(positions: List[List[int]]) -> List[int]:
     return ans
 
 
-test_cases = [([[1, 2], [2, 3], [6, 1]], [2, 5, 5]),
-              ([[100, 100], [200, 100]], [100, 100]),
-              ([[7, 1], [3, 3], [7, 5]], [1, 3, 6])]
+test_cases = [([(1, 2), (2, 3), (6, 1)], [2, 5, 5]),
+              ([(100, 100), (200, 100)], [100, 100]),
+              ([(7, 1), (3, 3), (7, 5)], [1, 3, 6]), ]
 for test_input, expected_output in test_cases:
     assert falling_squares_two(test_input) == expected_output
-
-from random import randint
-from datetime import datetime, timedelta
 
 total_runs = 1000
 cumulative_time = timedelta()
@@ -62,7 +65,7 @@ for i in range(total_runs):
     N = randint(1, 1000)
     test_input = []
     for _ in range(N):
-        test_input.append([randint(1, 10 ** 8), randint(1, 10 ** 6)])
+        test_input.append((randint(1, 10 ** 8), randint(1, 10 ** 6)))
     start_time = datetime.now()
     falling_squares_two(test_input)
     cumulative_time += (datetime.now() - start_time)

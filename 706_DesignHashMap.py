@@ -29,6 +29,10 @@ class MyHashMap:
         self.buckets: List[Optional[MyHashNode]] = [None] * self.bucket_count
 
     def put(self, key: int, value: int) -> None:
+        """
+        :param key: put an association {key: value} into HashMap
+        :param value: put an association {key: value} into HashMap
+        """
         bucket_id = self.get_bucket_id(key)
         if self.buckets[bucket_id] is None:
             self.buckets[bucket_id] = MyHashNode(key, value)
@@ -49,7 +53,9 @@ class MyHashMap:
 
     def get(self, key: int) -> int:
         """
-        :return: the value to which the specified key is mapped, or -1 if this map contains no mapping for the key
+        :param key: query key: retrieve value associated with key
+        :return: the value to which the specified key is mapped, or not_in_map if this map contains no mapping for the
+         key
         """
         bucket_id = self.get_bucket_id(key)
 
@@ -63,7 +69,7 @@ class MyHashMap:
 
     def remove(self, key: int) -> None:
         """
-        Removes the mapping of the specified value key if this map contains a mapping for the key
+        :param key: removes the mapping of the specified value key if this map contains a mapping for the key
         """
         bucket_id = self.get_bucket_id(key)
         if self.buckets[bucket_id] is None:
