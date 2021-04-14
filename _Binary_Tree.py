@@ -282,6 +282,31 @@ class BinaryTree:
 
         self.root = _trim_boundary_helper(self.root)
 
+    def max_width(self) -> int:
+        """
+        :return: maximum width in the tree
+        """
+        if self.root is None:
+            return 0
+
+        current_level = deque([(self.root, 0)])  # (node, node_id)
+        max_width = 0
+
+        while current_level:
+            current_level_node_count = len(current_level)
+            start_id = current_id = current_level[0][1]
+            for _ in range(current_level_node_count):
+                current_node, current_id = current_level.popleft()
+                if current_node.left:
+                    current_level.append((current_node.left, 2 * current_id))
+                if current_node.right:
+                    current_level.append((current_node.right, 2 * current_id + 1))
+
+            end_id = current_id
+            max_width = max(max_width, end_id - start_id + 1)
+
+        return max_width
+
 
 class ConstructTree:
     """
