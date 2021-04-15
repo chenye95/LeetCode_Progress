@@ -30,6 +30,16 @@ class ListNode:
             point_to = point_to.next
         return point_to
 
+    def count_to_last(self) -> int:
+        """
+        :return: n nodes until last node, including itself
+        """
+        i, point_to = 1, self
+        while point_to.next:
+            point_to = point_to.next
+            i += 1
+        return i
+
 
 class LinkedList:
     def __init__(self, head: ListNode) -> None:
@@ -82,6 +92,12 @@ class LinkedList:
             fast_pointer = fast_pointer.next
             slow_pointer = slow_pointer.next
         return slow_pointer
+
+    def __len__(self) -> int:
+        """
+        :return: length of the linked list
+        """
+        return self.head.count_to_last()
 
 
 class PrintableListNode(ListNode):

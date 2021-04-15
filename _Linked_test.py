@@ -5,11 +5,19 @@ from _Linked_List import LinkedList, PrintableLinkedList, ListNode
 
 test_node = ListNode(0)
 assert test_node.last_node().val == 0
+assert test_node.count_to_last() == 1
 
 node_list = [1, 2, 3, 4, 5]
 linked_list = LinkedList.create_linked_list(node_list)
 assert node_list == linked_list.head.list_from_node()
 assert linked_list.head.last_node().val == 5
+assert len(linked_list) == len(node_list)
+point_to = linked_list.head
+expected_len = len(node_list)
+while point_to:
+    assert point_to.count_to_last() == expected_len
+    point_to = point_to.next
+    expected_len -= 1
 
 assert LinkedList.create_linked_list([]).midpoint_of_list() == (0, None)
 for list_len in range(1, 8):
@@ -21,6 +29,13 @@ printable_list = PrintableLinkedList.create_linked_list(node_list)
 separator = ', '
 expected_output = separator.join([str(val) for val in node_list])
 assert str(printable_list) == expected_output
+assert len(printable_list) == len(node_list)
+expected_len = len(node_list)
+point_to = printable_list.head
+while point_to:
+    assert point_to.count_to_last() == expected_len
+    point_to = point_to.next
+    expected_len -= 1
 
 list1 = list(range(1, 7))
 list2 = list(range(7, 11))
