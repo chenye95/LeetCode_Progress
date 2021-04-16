@@ -12,6 +12,7 @@ from typing import List
 def find_max_value_of_equation(points: List[List[int]], k: int) -> int:
     """
     Since x_i < x_j, y_i + y_j + |x_i - x_j| = (y_i - x_i) + (y_j + x_j)
+
     :param points: list of (x_i, y_i)
     :param k: max difference between |xi - xj| <= k
     :return: max value of y_i + y_j + |x_i - x_j|
@@ -29,5 +30,7 @@ def find_max_value_of_equation(points: List[List[int]], k: int) -> int:
     return return_val
 
 
-assert find_max_value_of_equation(points=[[1, 3], [2, 0], [5, 10], [6, -10]], k=1) == 4
-assert find_max_value_of_equation(points=[[0, 0], [3, 0], [9, 2]], k=3) == 3
+test_cases = [([[1, 3], [2, 0], [5, 10], [6, -10]], 1, 4),
+              ([[0, 0], [3, 0], [9, 2]], 3, 3), ]
+for test_points, test_k, expected_output in test_cases:
+    assert find_max_value_of_equation(test_points, test_k) == expected_output

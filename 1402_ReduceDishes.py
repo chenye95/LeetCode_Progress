@@ -16,6 +16,7 @@ def max_satisfaction(satisfaction: List[int]) -> int:
     Observation 1: finish dishes, if chosen to cook, in ascending order of satisfaction
     Observation 2: only cook a dish if it increases like-time coefficient
     Observation 3: adding dish i to the list add cumulative satisfaction level of all chosen dishes + satisfaction[i]
+
     :param satisfaction: satisfaction level for n dishes
     :return: like-time coefficient for finished dishes
     """
@@ -29,7 +30,9 @@ def max_satisfaction(satisfaction: List[int]) -> int:
     return max_like_time
 
 
-assert max_satisfaction(satisfaction=[-1, -8, 0, 5, -9]) == 14
-assert max_satisfaction(satisfaction=[4, 3, 2]) == 20
-assert max_satisfaction(satisfaction=[-1, -4, -5]) == 0
-assert max_satisfaction(satisfaction=[-2, 5, -1, 0, 3, -3]) == 35
+test_cases = [([-1, -8, 0, 5, -9], 14),
+              ([4, 3, 2], 20),
+              ([-1, -4, -5], 0),
+              ([-2, 5, -1, 0, 3, -3], 35), ]
+for test_satisfaction, expected_output in test_cases:
+    assert max_satisfaction(test_satisfaction) == expected_output

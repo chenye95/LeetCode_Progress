@@ -15,9 +15,9 @@ def closest_divisors(num: int) -> Tuple[int, int]:
     """
     for a in range(int((num+2) ** 0.5), 0, -1):
         if (num + 1) % a == 0:
-            return (a, (num + 1) // a)
+            return a, (num + 1) // a
         elif (num + 2) % a == 0:
-            return (a, (num + 2) // a)
+            return a, (num + 2) // a
 
 
 test_cases = [(8, (3, 3)), (123, (5, 25)), (999, (25, 40)), ]

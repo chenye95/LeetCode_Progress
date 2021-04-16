@@ -23,26 +23,27 @@ def num_of_minutes(n: int, head_id: int, manager: List[int], inform_time: List[i
     :return: total time to inform all employees
     """
 
-    def query_by_id(employee_id: int) -> int:
+    def query_by_employee_id(employee_id: int) -> int:
         """
         :return: amount of time elapsed until employee_id is informed
         """
         if employee_id == head_id:
             time_to_know[employee_id] = 0
         elif time_to_know[employee_id] == -1:
-            time_to_know[employee_id] = query_by_id(manager[employee_id]) + inform_time[manager[employee_id]]
+            time_to_know[employee_id] = query_by_employee_id(manager[employee_id]) + inform_time[manager[employee_id]]
         return time_to_know[employee_id]
 
     time_to_know = [-1] * n
     for i in range(n):
         if time_to_know[i] == -1:
-            query_by_id(i)
+            query_by_employee_id(i)
 
     return max(time_to_know)
 
 
-assert num_of_minutes(n=6, head_id=2, manager=[2, 2, -1, 2, 2, 2], inform_time=[0, 0, 1, 0, 0, 0]) == 1
-assert num_of_minutes(n=7, head_id=6, manager=[1, 2, 3, 4, 5, 6, -1], inform_time=[0, 6, 5, 4, 3, 2, 1]) == 21
-assert num_of_minutes(n=15, head_id=0, manager=[-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
-                      inform_time=[1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]) == 3
-assert num_of_minutes(n=4, head_id=2, manager=[3, 3, -1, 2], inform_time=[0, 0, 162, 914]) == 1076
+test_cases = [(6, 2, [2, 2, -1, 2, 2, 2], [0, 0, 1, 0, 0, 0], 1),
+              (7, 6, [1, 2, 3, 4, 5, 6, -1], [0, 6, 5, 4, 3, 2, 1], 21),
+              (15, 0, [-1, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6], [1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 3),
+              (4, 2, [3, 3, -1, 2], [0, 0, 162, 914], 1076), ]
+for test_n, test_head_id, test_managers, test_inform_time, expected_output in test_cases:
+    assert num_of_minutes(test_n, test_head_id, test_managers, test_inform_time) == expected_output

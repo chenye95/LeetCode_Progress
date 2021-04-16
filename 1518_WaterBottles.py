@@ -21,4 +21,6 @@ def num_water_bottles(initial_bottles: int, num_exchange: int) -> int:
     return total_count
 
 
-assert 13 == num_water_bottles(9, 3)
+test_cases = [(9, 3, 13), (15, 4, 19), (5, 5, 6), (2, 3, 2), ]
+for test_initial, test_exchange, expected_output in test_cases:
+    assert num_water_bottles(test_initial, test_exchange) == expected_output, expected_output

@@ -16,6 +16,7 @@ def max_prob(n: int, edges: List[List[int]], success_prob: List[float], start: i
     """
     In an undirected weighted graph with n nodes, find the path with maximum probability of success traversal to go
     from start to end
+
     :param n: n nodes in Undirected Weighted Graph
     :param edges: edge[i] = [a, b] connects node a and b
     :param success_prob: success_prob[i] is the weight for edge[i]
@@ -42,6 +43,8 @@ def max_prob(n: int, edges: List[List[int]], success_prob: List[float], start: i
     return path_weight[end]
 
 
-assert max_prob(n=3, edges=[[0, 1], [1, 2], [0, 2]], success_prob=[0.5, 0.5, 0.2], start=0, end=2) == 0.25
-assert max_prob(n=3, edges=[[0, 1], [1, 2], [0, 2]], success_prob=[0.5, 0.5, 0.3], start=0, end=2) == 0.3
-assert max_prob(n=3, edges=[[0, 1]], success_prob=[0.5], start=0, end=2) == 0.0
+test_cases = [(3, [[0, 1], [1, 2], [0, 2]], [0.5, 0.5, 0.2], 0, 2, 0.25),
+              (3, [[0, 1], [1, 2], [0, 2]], [0.5, 0.5, 0.3], 0, 2, 0.3),
+              (3, [[0, 1]], [0.5], 0, 2, 0.0), ]
+for test_n, test_edges, test_success_prob, test_start, test_end, expected_output in test_cases:
+    assert max_prob(test_n, test_edges, test_success_prob, test_start, test_end) == expected_output

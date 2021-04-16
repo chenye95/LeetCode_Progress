@@ -5,6 +5,7 @@ class CustomStack:
         """
         CustomStack(int maxSize) Initializes the object with maxSize which is the maximum number of elements in the
         stack or do nothing if the stack reached the maxSize.
+
         :param max_size: maximum number of elements in the stack
         """
         self.top_pointer = -1
@@ -16,7 +17,7 @@ class CustomStack:
 
     def push(self, x: int) -> None:
         """
-        Adds x to the top of the stack if the stack hasn't reached the maxSize.
+        :param x: adds x to the top of the stack if the stack hasn't reached the maxSize.
         """
         if self.top_pointer < self.max_size - 1:
             self.top_pointer += 1
@@ -25,7 +26,7 @@ class CustomStack:
 
     def pop(self) -> int:
         """
-        Pops and returns the top of stack or -1 if the stack is empty.
+        :return: pops and returns the top of stack or -1 if the stack is empty.
         """
         if self.top_pointer >= 0:
             i_inc = self.increment_value[self.top_pointer]

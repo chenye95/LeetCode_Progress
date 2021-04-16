@@ -41,11 +41,11 @@ def largest_multiple_of_three(digits: List[int]) -> str:
         return ''
 
 
-test_cases = [([0,0,0,0,0,0], '0'),
-              ([8,1,9], '981'),
+test_cases = [([0, 0, 0, 0, 0, 0], '0'),
+              ([8, 1, 9], '981'),
               ([1], ''),
-              ([8,6,7,1,0], '8760'),
-              ([5,8], ''),
-              ([1,1,1,2], '111')]
-for input, output in test_cases:
-    assert largest_multiple_of_three(input) == output
+              ([8, 6, 7, 1, 0], '8760'),
+              ([5, 8], ''),
+              ([1, 1, 1, 2], '111'), ]
+for test_digits, expected_output in test_cases:
+    assert largest_multiple_of_three(test_digits) == expected_output

@@ -13,6 +13,7 @@ from typing import List
 def max_dot_product(nums1: List[int], nums2: List[int]) -> int:
     """
     Dynamic Programming approach, loop through nums[:i] and find dot product against sub sequence of nums2
+
     :return: maximum dot product between non-empty subsequences of nums1 and nums2 of the same length
     """
     m, n = len(nums1), len(nums2)
@@ -31,7 +32,9 @@ def max_dot_product(nums1: List[int], nums2: List[int]) -> int:
     return previous_iterations[-1]
 
 
-assert max_dot_product(nums1=[2, 1, -2, 5], nums2=[3, 0, -6]) == 18
-assert max_dot_product(nums1=[3, -2], nums2=[2, -6, 7]) == 21
-assert max_dot_product(nums1=[-1, -1], nums2=[1, 1]) == -1
-assert max_dot_product(nums1=[2, 1, -2, 5], nums2=[3, 0, -6]) == 18
+test_cases = [([2, 1, -2, 5], [3, 0, -6], 18),
+              ([3, -2], [2, -6, 7], 21),
+              ([-1, -1], [1, 1], -1),
+              ([2, 1, -2, 5], [3, 0, -6], 18), ]
+for test_nums_1, test_nums_2, expected_output in test_cases:
+    assert max_dot_product(test_nums_1, test_nums_2) == expected_output

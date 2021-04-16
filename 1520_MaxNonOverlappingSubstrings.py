@@ -14,6 +14,7 @@ from typing import List, Dict
 def max_num_of_substrings(s: str) -> List[str]:
     """
     Greedy Algorithm
+
     :param s: string to find non-overlapping substrings among
     :return: maximum number of substrings that meet conditions
     """
@@ -61,5 +62,7 @@ def max_num_of_substrings(s: str) -> List[str]:
     return return_list
 
 
-assert {"e", "f", "ccc"} == set(max_num_of_substrings(s="adefaddaccc"))
-assert {"d", "bb", "cc"} == set(max_num_of_substrings(s="abbaccd"))
+test_cases = [("adefaddaccc", {"e", "f", "ccc"}),
+              ("abbaccd", {"d", "bb", "cc"}), ]
+for test_s, expected_output in test_cases:
+    assert set(max_num_of_substrings(test_s)) == expected_output

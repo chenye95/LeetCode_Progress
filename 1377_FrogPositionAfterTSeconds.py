@@ -50,12 +50,11 @@ def frog_position(n: int, edges: List[List[int]], t: int, target: int) -> float:
 
 
 epsilon = 1e-10
-assert abs(frog_position(n=3, edges=[[2, 1], [3, 2]], t=1, target=2) - 1.0) < epsilon
-assert abs(
-    frog_position(n=7, edges=[[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], t=2, target=4) - 1.0 / 6) < epsilon
-assert abs(
-    frog_position(n=7, edges=[[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], t=1, target=7) - 1.0 / 3) < epsilon
-assert abs(
-    frog_position(n=7, edges=[[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], t=20, target=6) - 1.0 / 6) < epsilon
-assert abs(frog_position(n=4, edges=[[2, 1], [3, 2], [4, 1]], t=4, target=1) - 0) < epsilon
-assert abs(frog_position(n=1, edges=[], t=1, target=1) - 1) < epsilon
+test_cases = [(3, [[2, 1], [3, 2]], 1, 2, 1.0),
+              (7, [[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], 2, 4, 1.0 / 6),
+              (7, [[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], 1, 7, 1.0 / 3),
+              (7, [[1, 2], [1, 3], [1, 7], [2, 4], [2, 6], [3, 5]], 20, 6, 1.0 / 6),
+              (4, [[2, 1], [3, 2], [4, 1]], 4, 1, 0),
+              (1, [], 1, 1, 1), ]
+for test_n, test_edges, test_t, test_target, expected_output in test_cases:
+    assert abs(frog_position(test_n, test_edges, test_t, test_target) - expected_output) < epsilon

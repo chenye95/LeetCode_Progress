@@ -16,9 +16,6 @@ def angle_clock(hour: int, minutes: int) -> float:
     return angle_difference if angle_difference <= 180 else 360 - angle_difference
 
 
-assert angle_clock(hour=12, minutes=30) == 165
-assert angle_clock(hour=3, minutes=30) == 75
-assert angle_clock(hour=3, minutes=15) == 7.5
-assert angle_clock(hour=4, minutes=50) == 155
-assert angle_clock(hour=12, minutes=0) == 0
-assert angle_clock(hour=1, minutes=57) == 76.5
+test_cases = [(12, 30, 165), (3, 30, 75), (3, 15, 7.5), (4, 50, 155), (12, 0, 0), (1, 57, 76.5), ]
+for test_hour, test_minutes, expected_angle in test_cases:
+    assert angle_clock(test_hour, test_minutes) == expected_angle

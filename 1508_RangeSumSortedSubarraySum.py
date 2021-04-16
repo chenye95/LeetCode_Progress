@@ -30,6 +30,8 @@ def range_sum_sorted_sum(nums: List[int], n: int, left: int, right: int) -> int:
     return range_sum % 1_000_000_007
 
 
-assert 13 == range_sum_sorted_sum(nums=[1, 2, 3, 4], n=4, left=1, right=5)
-assert 6 == range_sum_sorted_sum(nums=[1, 2, 3, 4], n=4, left=3, right=4)
-assert 50 == range_sum_sorted_sum(nums=[1, 2, 3, 4], n=4, left=1, right=10)
+test_cases = [([1, 2, 3, 4], 4, 1, 5, 13),
+              ([1, 2, 3, 4], 4, 3, 4, 6),
+              ([1, 2, 3, 4], 4, 1, 10, 50), ]
+for test_nums, test_n, test_left, test_right, expected_output in test_cases:
+    assert range_sum_sorted_sum(test_nums, test_n, test_left, test_right) == expected_output

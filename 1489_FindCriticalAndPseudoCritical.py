@@ -21,17 +21,19 @@ def find_critical_and_pseudo_critical_edges(n: int, edges: List[List[int]]) -> L
     Progressively add edges, ranked in reverse order of edge weight
     Collapse original union_graph into union_graph of Unions after adding each batch of edges
     Run DFS algorithm to find critical connections in the Union Graph
+
     :param n: number of nodes in the original union_graph
     :param edges: list of edges in the original Weighted Undirected union_graph
     :return: [edges_critical, edges_pseudos]
     """
 
-    DFS_NOT_VISITED = -1
+    _dfs_not_visited = -1
 
-    def find_critical_connection(current_node: int, level: int = 0, previous_node: int = DFS_NOT_VISITED) -> int:
+    def find_critical_connection(current_node: int, level: int = 0, previous_node: int = _dfs_not_visited) -> int:
         """
         Find critical connections in an union graph, among edges out of current_node by searching for cycles.
         Those not part of a cycle will be marked as critical
+
         :param current_node: finding critical edge out of current_node
         :param level: levels through DFS, used to find cycle
         :param previous_node: used to remember incoming path. Do NOT traverse the edge <previous_node, current_node>
@@ -42,7 +44,7 @@ def find_critical_and_pseudo_critical_edges(n: int, edges: List[List[int]]) -> L
             if child == previous_node:
                 # do not go back from the incoming path
                 continue
-            elif levels[child] == DFS_NOT_VISITED:
+            elif levels[child] == _dfs_not_visited:
                 levels[current_node] = min(levels[current_node],
                                            find_critical_connection(child, level + 1, current_node))
             else:
@@ -98,9 +100,9 @@ def find_critical_and_pseudo_critical_edges(n: int, edges: List[List[int]]) -> L
             union_set.unify(union_u, union_v)
 
         # run find_critical_connection to mark all critical w_edges
-        levels = [DFS_NOT_VISITED] * n
+        levels = [_dfs_not_visited] * n
         for u, v, i in w_edges:
-            if levels[u] == DFS_NOT_VISITED:
+            if levels[u] == _dfs_not_visited:
                 find_critical_connection(u)
 
         # the edges in w_edges cycles are pseudo-critical
@@ -112,12 +114,10 @@ def find_critical_and_pseudo_critical_edges(n: int, edges: List[List[int]]) -> L
 
 
 test_cases = [
-    (5, [[0, 1, 1], [1, 2, 1], [2, 3, 2], [0, 3, 2], [0, 4, 3], [3, 4, 3], [1, 4, 6]], [[0, 1], [2, 3, 4, 5]]),
-    (4, [[0, 1, 1], [1, 2, 1], [2, 3, 1], [0, 3, 1]], [[], [0, 1, 2, 3]]),
-    (6, [[0, 1, 1], [1, 2, 1], [0, 2, 1], [2, 3, 4], [3, 4, 2], [3, 5, 2], [4, 5, 2]], [[3], [0, 1, 2, 4, 5, 6]])
-]
-for test_case in test_cases:
-    n, edges, output = test_case
-    expected_critical, expected_pseudo = output
-    got_critical, got_pseudo = find_critical_and_pseudo_critical_edges(n, edges)
+    (5, [[0, 1, 1], [1, 2, 1], [2, 3, 2], [0, 3, 2], [0, 4, 3], [3, 4, 3], [1, 4, 6]], ([0, 1], [2, 3, 4, 5])),
+    (4, [[0, 1, 1], [1, 2, 1], [2, 3, 1], [0, 3, 1]], ([], [0, 1, 2, 3])),
+    (6, [[0, 1, 1], [1, 2, 1], [0, 2, 1], [2, 3, 4], [3, 4, 2], [3, 5, 2], [4, 5, 2]], ([3], [0, 1, 2, 4, 5, 6])), ]
+for test_n, test_edges, expected_output in test_cases:
+    expected_critical, expected_pseudo = expected_output
+    got_critical, got_pseudo = find_critical_and_pseudo_critical_edges(test_n, test_edges)
     assert got_critical == expected_critical and got_pseudo == expected_pseudo

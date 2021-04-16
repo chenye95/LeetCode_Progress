@@ -46,7 +46,7 @@ class UndergroundSystem:
 
     def get_average_time(self, start_station: str, end_station: str) -> float:
         """
-        :return: return average travel time from start_station to end_station among completed, direct trips
+        :return: average travel time from start_station to end_station among completed, direct trips
         """
         total_time, total_count = self.completed_trip[(start_station, end_station)]
         return float(total_time) / total_count

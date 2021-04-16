@@ -31,8 +31,10 @@ def get_folder_names(names: List[str]) -> List[str]:
     return return_list
 
 
-assert get_folder_names(["wano", "wano", "wano", "wano"]) == ["wano", "wano(1)", "wano(2)", "wano(3)"]
-assert get_folder_names(["pes", "fifa", "gta", "pes(2019)"]) == ["pes", "fifa", "gta", "pes(2019)"]
-assert get_folder_names(["gta", "gta(1)", "gta", "avalon"]) == ["gta", "gta(1)", "gta(2)", "avalon"]
-assert get_folder_names(["onepiece", "onepiece(1)", "onepiece(2)", "onepiece(3)", "onepiece"]) == \
-       ["onepiece", "onepiece(1)", "onepiece(2)", "onepiece(3)", "onepiece(4)"]
+test_cases = [(["wano", "wano", "wano", "wano"], ["wano", "wano(1)", "wano(2)", "wano(3)"]),
+              (["pes", "fifa", "gta", "pes(2019)"], ["pes", "fifa", "gta", "pes(2019)"]),
+              (["gta", "gta(1)", "gta", "avalon"], ["gta", "gta(1)", "gta(2)", "avalon"]),
+              (["onepiece", "onepiece(1)", "onepiece(2)", "onepiece(3)", "onepiece"],
+               ["onepiece", "onepiece(1)", "onepiece(2)", "onepiece(3)", "onepiece(4)"])]
+for test_names, expected_output in test_cases:
+    assert get_folder_names(names=test_names) == expected_output

@@ -16,6 +16,11 @@ from typing import List
 
 
 def build_array(target: List[int], n: int) -> List[str]:
+    """
+    :param target: target array that we want to build
+    :param n: target list consists of numbers 1, 2, 3, ..., n
+    :return: list of operations of "Push" and "Pop"
+    """
     target_i = 0
     i = 1
     return_result = []
@@ -29,7 +34,9 @@ def build_array(target: List[int], n: int) -> List[str]:
     return return_result if target_i == len(target) else []
 
 
-assert build_array(target=[1, 3], n=3) == ["Push", "Push", "Pop", "Push"]
-assert build_array(target=[1, 2, 3], n=3) == ["Push", "Push", "Push"]
-assert build_array(target=[1, 2], n=4) == ["Push", "Push"]
-assert build_array(target=[2, 3, 4], n=4) == ["Push", "Pop", "Push", "Push", "Push"]
+test_cases = [([1, 3], 3, ["Push", "Push", "Pop", "Push"]),
+              ([1, 2, 3], 3, ["Push", "Push", "Push"]),
+              ([1, 2], 4, ["Push", "Push"]),
+              ([2, 3, 4], 4, ["Push", "Pop", "Push", "Push", "Push"]), ]
+for test_target, test_n, expected_output in test_cases:
+    assert build_array(test_target, test_n) == expected_output

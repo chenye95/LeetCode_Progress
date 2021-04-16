@@ -6,6 +6,11 @@ Return True if every binary code of length k is a substring of s. Otherwise, ret
 
 
 def has_all_codes_set(s: str, k: int) -> bool:
+    """
+    :param s: binary string of 0 and 1
+    :param k: scanning for binary code of length k
+    :return: whether every binary code of length k is a substring of s
+    """
     if len(s) - k + 1 < 1 << k:
         return False
 
@@ -14,6 +19,11 @@ def has_all_codes_set(s: str, k: int) -> bool:
 
 
 def has_all_codes_bits(s: str, k: int) -> bool:
+    """
+    :param s: binary string of 0 and 1
+    :param k: scanning for binary code of length k
+    :return: whether every binary code of length k is a substring of s
+    """
     if len(s) - k + 1 < 1 << k:
         return False
 

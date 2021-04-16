@@ -17,6 +17,7 @@ class TreeAncestor:
     def __init__(self, n: int, parent: List[int]):
         """
         Binary Lifting: pre-compute 2^0 = 1, 2^1 = 2, 2^2 = 4, 2^3 = 8th ... level ancestor of node i
+
         :param n: n nodes numbered 0 to n-1
         :param parent: parent[i] is the parent of node i
         """
@@ -47,6 +48,7 @@ class TreeAncestor:
         """
         break down k into binaries of 1,0 and use jump_map for look up
             e.g. 5th (1001) ancestor = 1st ancestor of 4th ancestor of node
+
         :param: node such that 0 <= node < n, 1 <= n <= 5*10^4
         :param: 1 <= k <= 5*10^4
         :return: k-th ancestor of node if exists or else -1

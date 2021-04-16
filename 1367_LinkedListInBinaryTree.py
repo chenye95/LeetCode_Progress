@@ -43,6 +43,5 @@ test_cases = [([4, 2, 8], [1, 4, 4, None, 2, 2, None, 1, None, 6, 8, None, None,
               ([1, 4, 2, 6], [1, 4, 4, None, 2, 2, None, 1, None, 6, 8, None, None, None, None, 1, 3], True),
               ([1, 4, 2, 6, 8], [1, 4, 4, None, 2, 2, None, 1, None, 6, 8, None, None, None, None, 1, 3], False)]
 for build_list, build_tree, expected_output in test_cases:
-    test_list = LinkedList.create_linked_list(build_list)
-    test_tree = ConstructTree.build_tree_leetcode(build_tree)
-    assert is_sub_path(test_list.head, test_tree.root) is expected_output
+    assert is_sub_path(LinkedList.create_linked_list(build_list).head,
+                       ConstructTree.build_tree_leetcode(build_tree).root) is expected_output
