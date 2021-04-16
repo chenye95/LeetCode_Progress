@@ -66,7 +66,7 @@ test_cases = [([7, 2, 4, 3], [5, 6, 4], [7, 8, 0, 7]),
               ([9, 9, 3], [1], [9, 9, 4]),
               ([9, 9, 3], [7], [1, 0, 0, 0]),
               ([5, 5, 5], [4, 9, 5], [1, 0, 5, 0]), ]
-for add_two_numbers in [add_two_numbers_stack]:
+for add_two_numbers in [add_two_numbers_stack, add_two_numbers_int]:
     for test_l1_list, test_l2_list, expected_output in test_cases:
         assert add_two_numbers(LinkedList.create_linked_list(test_l1_list).head,
                                LinkedList.create_linked_list(test_l2_list).head).list_from_node() == expected_output
