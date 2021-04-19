@@ -14,6 +14,7 @@ def remove_nth_node(head: ListNode, n: int) -> Optional[ListNode]:
     """
     dummy_node = probe_node = proceeding_node = ListNode(0, next=head)
     for _ in range(n):
+        # 1 <= n <= length of list guaranteed; does not need to check for boundary condition
         probe_node = probe_node.next
 
     while probe_node.next:
