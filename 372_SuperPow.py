@@ -8,7 +8,7 @@ from typing import List
 def super_pow(a: int, b: List[int]) -> int:
     """
     :param a: base of the exponentiation
-    :param b: power of exponentiation, extremely large given in the form of an array
+    :param b: power of exponentiation, extremely large given in the form of an array of digits
     :return: a^b mod 1337
     """
     mod_int = 1337
