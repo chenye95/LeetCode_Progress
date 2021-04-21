@@ -19,7 +19,7 @@ from typing import List, Tuple
 def get_order(tasks: List[Tuple[int, int]]) -> List[int]:
     """
     :param tasks: list of n tasks [(enqueue_time_i, processing_time_i)]
-    :return: order the CPU will process the tasks
+    :return: order in which the CPU will process the tasks
     """
     tasks = sorted((task_info[0], task_info[1], task_i) for task_i, task_info in enumerate(tasks))
     i = 0

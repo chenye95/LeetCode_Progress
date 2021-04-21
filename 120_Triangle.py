@@ -4,6 +4,7 @@ Given a triangle array, return the minimum path sum from top to bottom.
 For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current
  row, you may move to either index i or index i + 1 on the next row.
 """
+from copy import deepcopy
 from typing import List
 
 
@@ -34,7 +35,7 @@ def minimum_total_bottom_up(triangle: List[List[int]]) -> int:
     :return: minimum path sum from top to bottom such that you can move to index i or i + 1 on the next row from index i
         on the current row
     """
-    next_level_min = triangle[-1]
+    next_level_min = deepcopy(triangle[-1])
     for i in range(len(triangle) - 2, -1, -1):
         current_level_val = triangle[i]
         for j in range(i + 1):

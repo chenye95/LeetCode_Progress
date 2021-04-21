@@ -27,6 +27,7 @@ def count_different_subsequence_gcd(nums: List[int]) -> int:
     for x in range(1, search_upper_bound):
         # validate if x is a gcd of some subsequences of nums
         if x in nums:
+            # x is the gcd of [x, ]
             distinct_count += 1
         else:
             g = 0  # Note: gcd(0, y) = y
