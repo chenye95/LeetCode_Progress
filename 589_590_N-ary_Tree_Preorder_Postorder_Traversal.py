@@ -15,10 +15,10 @@ class Node:
         :param children: if not provided, children will be set to an empty list
         """
         self.val = val
-        self.children = children if children else []
+        self.children: List[Node] = children if children else []
 
 
-def construct_tree(construct_list: List[Optional[int]]) -> Optional[Node]:
+def construct_tree(construct_list: List) -> Optional[Node]:
     """
     Helper function to construct N-ary tree according to Leetcode rule
 
@@ -43,7 +43,7 @@ def construct_tree(construct_list: List[Optional[int]]) -> Optional[Node]:
     return root
 
 
-def pre_order(root: Node) -> List[int]:
+def pre_order(root: Node) -> List:
     """
     :param root: root of the N-ary tree
     :return: pre order traversal of the tree
@@ -61,7 +61,7 @@ def pre_order(root: Node) -> List[int]:
     return pre_order_traversal
 
 
-def post_order(root: Node) -> List[int]:
+def post_order(root: Node) -> List:
     """
     :param root: root of the N-ary tree
     :return: post order traversal of the tree
@@ -87,7 +87,9 @@ test_cases = [([1, None, 3, 2, 4, None, 5, 6], [1, 3, 5, 6, 2, 4], [5, 6, 3, 2, 
               ([], [], []),
               ([1, None, 2, 3, 4, 5, None, None, 6, 7, None, 8, None, 9, 10, None, None, 11, None, 12, None, 13, None,
                 None, 14], [1, 2, 3, 6, 7, 11, 14, 4, 8, 12, 5, 9, 13, 10],
-               [2, 6, 14, 11, 7, 3, 12, 8, 4, 13, 9, 10, 5, 1]), ]
+               [2, 6, 14, 11, 7, 3, 12, 8, 4, 13, 9, 10, 5, 1]),
+              ([1], [1], [1]),
+              ([1, None], [1], [1]), ]
 for test_input, expected_pre, expected_post in test_cases:
     test_root = construct_tree(test_input)
     assert pre_order(test_root) == expected_pre

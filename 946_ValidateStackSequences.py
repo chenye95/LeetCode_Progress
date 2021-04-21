@@ -23,5 +23,9 @@ def validate_stack_sequences(pushed: List[int], popped: List[int]) -> bool:
     return valid_until == len(popped)
 
 
-assert validate_stack_sequences(pushed=[1, 2, 3, 4, 5], popped=[4, 5, 3, 2, 1]) is True
-assert validate_stack_sequences(pushed=[1, 2, 3, 4, 5], popped=[4, 3, 5, 1, 2]) is False
+test_cases = [([1, 2, 3, 4, 5], [4, 5, 3, 2, 1], True),
+              ([1, 2, 3, 4, 5], [4, 3, 5, 1, 2], False),
+              ([10, 4, 11, 14, 3, 7, 0, 6, 12, 5, 1, 2, 8, 13, 9],
+               [10, 3, 14, 7, 11, 4, 6, 12, 1, 8, 2, 5, 0, 9, 13], True), ]
+for test_push, test_pop, expected_output in test_cases:
+    assert validate_stack_sequences(test_push, test_pop) is expected_output

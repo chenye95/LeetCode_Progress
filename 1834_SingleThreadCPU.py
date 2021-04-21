@@ -33,9 +33,9 @@ def get_order(tasks: List[Tuple[int, int]]) -> List[int]:
             process_order.append(task_i)
             i += 1
         else:
-            task_j_time, task_j = heappop(eligible_tasks)
-            current_time += task_j_time
-            process_order.append(task_j)
+            processing_time_i, task_i = heappop(eligible_tasks)
+            current_time += processing_time_i
+            process_order.append(task_i)
         while i < len(tasks) and tasks[i][0] <= current_time:
             heappush(eligible_tasks, (tasks[i][1], tasks[i][2]))
             i += 1
