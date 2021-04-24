@@ -12,8 +12,8 @@ from typing import List
 
 def critical_connections(n: int, connections: List[List[int]]) -> List[List[int]]:
     """
-    Tarjan’s algorithm
-    find critical connections in a undirected graph with n nodes
+    Tarjan’s algorithm: find critical connections in a undirected graph with n nodes
+
     :param n: n nodes
     :param connections: list of connections [[a, b]] such that a and b are connected
     :return: list of critical connections in a graph
@@ -50,4 +50,7 @@ def critical_connections(n: int, connections: List[List[int]]) -> List[List[int]
     return return_result
 
 
-assert critical_connections(n=4, connections=[[0, 1], [1, 2], [2, 0], [1, 3]]) == [[1, 3], ]
+test_cases = [(4, [[0, 1], [1, 2], [2, 0], [1, 3]], [[1, 3], ]),
+              (6, [[0, 1], [1, 2], [2, 0], [1, 3], [3, 4], [4, 5], [5, 3]], [[1, 3], ]), ]
+for test_n, test_connections, expected_output in test_cases:
+    assert critical_connections(test_n, test_connections) == expected_output
