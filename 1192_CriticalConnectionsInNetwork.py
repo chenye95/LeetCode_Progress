@@ -7,16 +7,16 @@ A critical connection is a connection that, if removed, will make some server un
 
 Return all critical connections in the network in any order.
 """
-from typing import List
+from typing import List, Tuple
 
 
-def critical_connections(n: int, connections: List[List[int]]) -> List[List[int]]:
+def critical_connections(n: int, connections: List[Tuple[int, int]]) -> List[Tuple[int, int]]:
     """
     Tarjan’s algorithm: find critical connections in a undirected graph with n nodes
 
     :param n: n nodes
-    :param connections: list of connections [[a, b]] such that a and b are connected
-    :return: list of critical connections in a graph
+    :param connections: list of connections [(a, b)] such that a and b are connected
+    :return: list of critical connections in a graph, (a, b) such that a < b
     """
     graph = [[] for _ in range(n)]  # vertex i ==> [neighbors]
     # lowest_rank[i] initialized to current DFS level.
@@ -43,14 +43,17 @@ def critical_connections(n: int, connections: List[List[int]]) -> List[List[int]
             lowest_rank[current_node] = min(lowest_rank[current_node], lowest_rank[next_neighbor])
             if lowest_rank[next_neighbor] > current_level:
                 # no cycle pointing back to current_node
-                return_result.append([current_node, next_neighbor])
+                if current_node < next_neighbor:
+                    return_result.append((current_node, next_neighbor))
+                else:
+                    return_result.append((next_neighbor, current_node))
 
     return_result = []
     _dfs(current_level=0, current_node=0, previous_node=-1)
     return return_result
 
 
-test_cases = [(4, [[0, 1], [1, 2], [2, 0], [1, 3]], [[1, 3], ]),
-              (6, [[0, 1], [1, 2], [2, 0], [1, 3], [3, 4], [4, 5], [5, 3]], [[1, 3], ]), ]
+test_cases = [(4, [(0, 1), (1, 2), (2, 0), (1, 3)], {(1, 3), }),
+              (6, [(0, 1), (1, 2), (2, 0), (1, 3), (3, 4), (4, 5), (5, 3)], {(1, 3), }), ]
 for test_n, test_connections, expected_output in test_cases:
-    assert critical_connections(test_n, test_connections) == expected_output
+    assert set(critical_connections(test_n, test_connections)) == expected_output
