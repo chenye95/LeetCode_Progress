@@ -7,6 +7,10 @@ Given a balanced parentheses string S, compute the score of the string based on 
 
 
 def score_of_parentheses_stack(s: str) -> int:
+    """
+    :param s: a balanced parentheses string, consists of only ( and )
+    :return:  score of the parentheses string
+    """
     parentheses_stack = [0]
 
     for s_i in s:
@@ -20,6 +24,10 @@ def score_of_parentheses_stack(s: str) -> int:
 
 
 def score_of_parentheses_bit(s: str) -> int:
+    """
+    :param s: a balanced parentheses string, consists of only ( and )
+    :return:  score of the parentheses string
+    """
     if not s:
         return 0
 

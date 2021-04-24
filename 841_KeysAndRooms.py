@@ -15,6 +15,10 @@ from typing import List
 
 
 def can_visit_all_rooms_set(rooms: List[List[int]]) -> bool:
+    """
+    :param rooms: keys stored in each room, where rooms[i] is a subset of [0, 1, ..., N-1]
+    :return: if we can enter every room
+    """
     to_visit = set(range(1, len(rooms)))
     opening = {0}
     while to_visit and opening:
@@ -28,6 +32,10 @@ def can_visit_all_rooms_set(rooms: List[List[int]]) -> bool:
 
 
 def can_visit_all_rooms_stack(rooms: List[List[int]]) -> bool:
+    """
+    :param rooms: keys stored in each room, where rooms[i] is a subset of [0, 1, ..., N-1]
+    :return: if we can enter every room
+    """
     visited = set()
     to_open = [0]
     while to_open:
