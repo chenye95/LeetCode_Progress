@@ -27,10 +27,10 @@ def num_of_islands(grid: List[List[str]]) -> int:
         return 0
 
     island_count = 0
-    for i in range(len(grid)):
-        for j in range(len(grid[0])):
-            if grid[i][j] == '1':
-                dfs_explore_island(grid, i, j)
+    for row_i in range(len(grid)):
+        for col_j in range(len(grid[0])):
+            if grid[row_i][col_j] == '1':
+                dfs_explore_island(grid, row_i, col_j)
                 island_count += 1
     return island_count
 

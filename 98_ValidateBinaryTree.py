@@ -21,6 +21,10 @@ def is_valid_BST(root: TreeNode) -> bool:
     _invalid_bst_lower, _invalid_bst_upper = 1, 0
 
     def BST_checker(current_node: TreeNode) -> Tuple[int, int]:
+        """
+        :param current_node: scanning the sub tree beneath current_node
+        :return: the smallest and the largest value in the sub tree
+        """
         if current_node.left:
             left_lower, left_upper = BST_checker(current_node.left)
             # Left tree contains nodes with keys strictly less than node's key

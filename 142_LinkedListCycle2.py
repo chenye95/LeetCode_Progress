@@ -2,8 +2,8 @@
 Given a linked list, return the node where the cycle begins. If there is no cycle, return null.
 
 There is a cycle in a linked list if there is some node in the list that can be reached again by continuously following
-the next pointer. Internally, test_pos is used to denote the index of the node that tail's next pointer is connected to. Note
- that test_pos is not passed as a parameter.
+the next pointer. Internally, test_pos is used to denote the index of the node that tail's next pointer is connected to.
+Note that test_pos is not passed as a parameter.
 
 Notice that you should not modify the linked list.
 """
@@ -70,8 +70,8 @@ for test_node_values, test_pos in test_cases:
     # test implementation of test_create_test_cases()
     test_head_list: List[Optional[ListNode]] = [None] * len(test_node_values)
     current_node = test_head
-    for i in range(len(test_node_values)):
-        test_head_list[i] = current_node
+    for pos_i in range(len(test_node_values)):
+        test_head_list[pos_i] = current_node
         current_node = current_node.next
     assert [test_node.val for test_node in test_head_list] == test_node_values
     assert (test_pos != -1 and current_node is test_head_list[test_pos]) or (test_pos == -1 and current_node is None)

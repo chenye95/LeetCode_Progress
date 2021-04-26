@@ -53,8 +53,8 @@ for test_node_values, test_pos in test_cases:
     # test implementation of test_create_test_cases()
     test_head_list = [None] * len(test_node_values)
     current_node = test_head
-    for i in range(len(test_node_values)):
-        test_head_list[i] = current_node.val
+    for pos_i in range(len(test_node_values)):
+        test_head_list[pos_i] = current_node.val
         current_node = current_node.next
     assert test_head_list == test_node_values
     assert (test_pos != -1 and current_node.val == test_node_values[test_pos]) or \

@@ -20,8 +20,8 @@ def column_to_number(column_name: str) -> int:
     """
     return_row = 0
     ord_base = ord('A') - 1
-    for i in range(len(column_name)):
-        return_row = 26 * return_row + ord(column_name[i]) - ord_base
+    for c_i in column_name:
+        return_row = 26 * return_row + ord(c_i) - ord_base
     return return_row
 
 

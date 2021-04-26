@@ -21,6 +21,7 @@ def word_break(s: str, word_dict: List[str]) -> List[str]:
     def split_into_sentences(start_at: int) -> List[str]:
         """
         Depth First Search with Memorization
+
         :return split s[start_at:] into list of words
         """
         nonlocal memory, beginning_letters
@@ -37,6 +38,9 @@ def word_break(s: str, word_dict: List[str]) -> List[str]:
     return split_into_sentences(0)
 
 
-test_cases = [("catsanddog", ["cat", "cats", "and", "sand", "dog"], {'cat sand dog', 'cats and dog'}), ]
+test_cases = [("catsanddog", ["cat", "cats", "and", "sand", "dog"], {'cat sand dog', 'cats and dog'}),
+              ("pineapplepenapple", ["apple", "pen", "applepen", "pine", "pineapple"],
+               {"pine apple pen apple", "pineapple pen apple", "pine applepen apple"}),
+              ("catsandog", ["cats", "dog", "sand", "and", "cat"], set()), ]
 for test_s, test_dict, expected_output in test_cases:
     assert set(word_break(s=test_s, word_dict=test_dict)) == expected_output
