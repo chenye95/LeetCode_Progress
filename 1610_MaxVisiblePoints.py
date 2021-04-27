@@ -66,4 +66,4 @@ test_cases = [([(2, 1), (2, 2), (3, 3)], 90, (1, 1), 3),
               ([(1, 0), (2, 1)], 13, (1, 1), 1),
               ([(1, 1), (2, 2), (1, 2), (2, 1)], 0, (1, 1), 2), ]
 for test_points, test_angle, test_position, expected_output in test_cases:
-    assert visible_points(test_points, test_angle, test_position) == expected_output
+    assert visible_points(test_points, test_angle, test_position) == expected_output, test_points

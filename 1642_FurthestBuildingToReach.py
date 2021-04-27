@@ -20,7 +20,7 @@ def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
     :param heights: list representing the height of buildings, 1 <= len(heights) <= 10**5
     :param bricks: can use up to n bricks to the bridge the height gap, 0 <= bricks <= 10**9
     :param ladders: can use m ladders to jump from one building to the next, 0 <= ladders <= heights.length
-    :return: furthest building one can reach with n bricks and m ladders
+    :return: 0-indexed, furthest building one can reach with n bricks and m ladders
     """
     replace_with_ladder = [0] * ladders
     building_i = ladder_j = 0
@@ -49,7 +49,12 @@ def furthest_building(heights: List[int], bricks: int, ladders: int) -> int:
     return building_i
 
 
-test_cases = [([4, 2, 7, 6, 9, 14, 12], 5, 1, 4),
+test_cases = [([1, 2, 3, 4, 5], 5, 0, 4),
+              ([1, 2, 3, 4, 5], 0, 5, 4),
+              ([1, 2, 3, 4, 5], 0, 4, 4),
+              ([1, 2, 3, 4, 5], 0, 3, 3),
+              ([1, 2, 3, 4, 5], 1, 3, 4),
+              ([4, 2, 7, 6, 9, 14, 12], 5, 1, 4),
               ([4, 12, 2, 7, 3, 18, 20, 3, 19], 10, 2, 7),
               ([14, 3, 19, 3], 17, 0, 3),
               ([253710, 459585, 71981, 223232, 977918, 148680, 123527, 250812, 260416, 554767, 473621, 88538, 966794,

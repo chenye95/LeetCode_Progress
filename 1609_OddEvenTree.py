@@ -9,7 +9,6 @@ A binary tree is named Even-Odd if it meets the following conditions:
 
 Given the root of a binary tree, return true if the binary tree is Even-Odd, otherwise return false.
 """
-from typing import Optional
 
 from _Binary_Tree import TreeNode, ConstructTree
 
@@ -24,7 +23,7 @@ def is_even_odd_tree(root: TreeNode):
 
     while next_level:
         is_even_level = not is_even_level
-        previous_node: Optional[TreeNode] = None
+        previous_val = None
         current_level = next_level
         next_level = []
 
@@ -33,8 +32,8 @@ def is_even_odd_tree(root: TreeNode):
                 # Even rows have only odd node values, while odd rows have only even node values
                 return False
 
-            if previous_node and ((is_even_level and previous_node.val >= current_node.val) or
-                                  (not is_even_level and previous_node.val <= current_node.val)):
+            if previous_val and ((is_even_level and previous_val >= current_node.val) or
+                                 (not is_even_level and previous_val <= current_node.val)):
                 # Even rows are strictly increasing while odd rows are strictly decreasing
                 return False
 
@@ -43,7 +42,7 @@ def is_even_odd_tree(root: TreeNode):
             if current_node.right:
                 next_level.append(current_node.right)
 
-            previous_node = current_node
+            previous_val = current_node.val
 
     return True
 

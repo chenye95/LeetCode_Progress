@@ -1,6 +1,5 @@
 """
 Return the largest possible k such that there exists a_1, a_2, ..., a_k such that:
-
 - Each a_i is a non-empty string;
 - Their concatenation a_1 + a_2 + ... + a_k is equal to text;
 - For all 1 <= i <= k,  a_i = a_{k-i+1}.
@@ -8,6 +7,10 @@ Return the largest possible k such that there exists a_1, a_2, ..., a_k such tha
 
 
 def longest_decomposition(text: str) -> int:
+    """
+    :param text: string to be decomposed into k parts such that a_1 + ... + a_k = text and each pair a_i = a_{k-i+1}
+    :return: largest possible value for integer k
+    """
     if not text:
         return 0
     elif len(text) <= 1:
@@ -20,7 +23,6 @@ def longest_decomposition(text: str) -> int:
 
 test_cases = [("ghiabcdefhelloadamhelloabcdefghi", 7),
               ("merchant", 1),
-              ("antaprezatepzapreanta", 11),
-              ]
+              ("antaprezatepzapreanta", 11), ]
 for test_input, expected_output in test_cases:
     assert longest_decomposition(test_input) == expected_output
