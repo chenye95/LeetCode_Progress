@@ -7,6 +7,10 @@ parentheses string is valid and return any valid string.
 
 
 def min_remove_to_make_valid(s: str) -> str:
+    """
+    :param s: string of '(', ')' and lowercase English letters
+    :return: remove minimum number of parentheses so that the resulting string is valid, return any valid strings
+    """
     s_list = list(s)
     open_parentheses = []
     for i, s_i in enumerate(s):
@@ -23,7 +27,9 @@ def min_remove_to_make_valid(s: str) -> str:
     return ''.join(s_list)
 
 
-assert min_remove_to_make_valid("lee(t(c)o)de)") == "lee(t(c)o)de"
-assert min_remove_to_make_valid("a)b(c)d") == "ab(c)d"
-assert min_remove_to_make_valid("))((") == ""
-assert min_remove_to_make_valid("(a(b(c)d)") == "a(b(c)d)"
+test_cases = [("lee(t(c)o)de)", {"lee(t(c)o)de", "lee(t(co)de)", "lee(t(c)ode)"}),
+              ("a)b(c)d", {"ab(c)d"}),
+              ("))((", {""}),
+              ("(a(b(c)d)", {"a(b(c)d)", "a(bc)d", "(abc)d"}), ]
+for test_s, expected_output in test_cases:
+    assert min_remove_to_make_valid(test_s) in expected_output, test_s
