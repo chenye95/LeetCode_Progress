@@ -12,6 +12,10 @@ from typing import List
 
 
 def orange_rotting(grid: List[List[int]]) -> int:
+    """
+    :param grid: a grid of 3 values (0 empty cell, 1 fresh orange, 2 rotten orange)
+    :return: min number of minutes that must elapse until no fresh orange left in the grid
+    """
     if not grid:
         return -1
 
@@ -31,6 +35,18 @@ def orange_rotting(grid: List[List[int]]) -> int:
     return minutes_passed
 
 
-assert orange_rotting([[2, 1, 1], [1, 1, 0], [0, 1, 1]]) == 4
-assert orange_rotting([[2, 1, 1], [0, 1, 1], [1, 0, 1]]) == -1
-assert orange_rotting([[0, 2]]) == 0
+test_cases = [([[2, 1, 1], [1, 1, 0], [0, 1, 1]], 4),
+              ([[2, 1, 1], [0, 1, 1], [1, 0, 1]], -1),
+              ([[0, 2]], 0),
+              ([[2, 0, 1, 1, 1, 1, 1, 1, 1, 1],
+                [1, 0, 1, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 1, 0, 1, 1, 1, 1, 0, 1],
+                [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+                [1, 0, 1, 0, 1, 0, 0, 1, 0, 1],
+                [1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
+                [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
+                [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]], 58), ]
+for test_grid, expected_output in test_cases:
+    assert orange_rotting(test_grid) == expected_output

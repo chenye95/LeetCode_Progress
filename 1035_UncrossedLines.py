@@ -15,6 +15,9 @@ from typing import List
 def max_uncrossed_lines(list_a: List[int], list_b: List[int]) -> int:
     """
     Dynamic Programming method
+
+    :param list_a: write integers in order in list_a on the top line
+    :param list_b: write integers in order in list_b on the bottom line
     :return: maximum number of connecting lines between list_a[i] == list_b[j]
     """
     m, n = len(list_a), len(list_b)
@@ -30,7 +33,11 @@ def max_uncrossed_lines(list_a: List[int], list_b: List[int]) -> int:
     return list_a_til_i_1[-1]
 
 
-assert max_uncrossed_lines(list_a=[1, 4, 2], list_b=[1, 2, 4]) == 2
-assert max_uncrossed_lines(list_a=[2, 5, 1, 2, 5], list_b=[10, 5, 2, 1, 5, 2]) == 3
-assert max_uncrossed_lines(list_a=[1, 3, 7, 1, 7, 5], list_b=[1, 9, 2, 5, 1]) == 2
-assert max_uncrossed_lines(list_a=[3, 2], list_b=[2, 2, 2, 3]) == 1
+test_cases = [([1, 4, 2], [1, 2, 4], 2),
+              ([2, 5, 1, 2, 5], [10, 5, 2, 1, 5, 2], 3),
+              ([1, 3, 7, 1, 7, 5], [1, 9, 2, 5, 1], 2),
+              ([3, 2], [2, 2, 2, 3], 1),
+              ([2, 3, 1, 2, 5, 1, 3, 1, 3, 2, 3, 1, 2, 2, 3, 3, 3, 1, 3, 4, 4, 3, 4, 3, 4, 5, 4, 4, 1, 3],
+               [5, 4, 5, 1, 1, 3, 4, 3, 2, 3], 7), ]
+for test_a, test_b, expected_output in test_cases:
+    assert max_uncrossed_lines(test_a, test_b) == expected_output
