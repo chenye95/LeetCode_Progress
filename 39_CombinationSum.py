@@ -13,7 +13,7 @@ from typing import List
 
 def combination_sum(candidates: List[int], target: int) -> List[List[int]]:
     """
-    :param candidates: array of distinct integers
+    :param candidates: array of distinct positive integers 1 <= candidates[i] <= 200
     :param target: integer value
     :return: list of all unique combinations of candidates that add to target
     """

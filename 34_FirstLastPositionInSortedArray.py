@@ -37,8 +37,10 @@ def search_range_two_pass(nums: List[int], target: int) -> Tuple[int, int]:
     :param target: -10^9 <= target <= 10^9
     :return: (First_Occurrence, Last_Occurrence) of target in nums, if target in nums, else (-1, -1)
     """
+    _not_found = -1, -1
+
     if not nums:
-        return -1, -1
+        return _not_found
 
     if nums[0] == target:
         left_bound_minus_one = -1
@@ -67,7 +69,7 @@ def search_range_two_pass(nums: List[int], target: int) -> Tuple[int, int]:
     if left_bound_minus_one < right_bound_plus_one:
         return left_bound_minus_one + 1, right_bound_plus_one - 1
     else:
-        return -1, -1
+        return _not_found
 
 
 def search_range_bisect(nums: List[int], target: int) -> Tuple[int, int]:
@@ -87,6 +89,10 @@ def search_range_bisect(nums: List[int], target: int) -> Tuple[int, int]:
 
 
 test_cases = [([5, 7, 7, 8, 8, 10], 8, 3, 4),
+              ([0, 0, 0, 0, 0], 0, 0, 4),
+              ([0, 0, 0, 0, 1], 0, 0, 3),
+              ([0, 1, 1, 1, 1], 1, 1, 4),
+              ([5, 7, 7, 8, 8, 10], 8, 3, 4),
               ([0, 0, 0, 2], 0, 0, 2),
               ([0, 0, 0, 2], 1, -1, -1),
               ([5, 7, 7, 8, 8, 10], 6, -1, -1),
@@ -124,6 +130,6 @@ test_cases = [([5, 7, 7, 8, 8, 10], 8, 3, 4),
               ([0, 0, 0, 2], 3, -1, -1),
               ([2, 2], 3, -1, -1),
               ([1], 1, 0, 0), ]
-for search_range in [search_range_bisect, ]:  # search_range_single_pass, search_range_two_pass, ]:
+for search_range in [search_range_two_pass, search_range_bisect, search_range_single_pass, ]:
     for test_nums, test_target, expected_low, expected_high in test_cases:
         assert search_range(test_nums, test_target) == (expected_low, expected_high), search_range.__name__
