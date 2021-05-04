@@ -38,14 +38,11 @@ test_cases = [[[1, 2, 3],
                [3, 2, 1]],
               [[1, 1, 5],
                [1, 5, 1],
-               [5, 1, 1]], ]
+               [5, 1, 1]],
+              [[1]], ]
 for case_i in test_cases:
     for permutation_j in range(len(case_i)):
-        test_nums = deepcopy(case_i[permutation_j])
+        test_nums = deepcopy(case_i[permutation_j - 1])
         # print(test_nums)
         next_permutation(nums=test_nums)
-        if permutation_j < len(case_i) - 1:
-            assert test_nums == case_i[permutation_j + 1]
-        else:
-            assert test_nums == case_i[0]
-    # print()
+        assert test_nums == case_i[permutation_j]
