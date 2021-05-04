@@ -18,8 +18,8 @@ def powerful_integers(x: int, y: int, bound: int) -> List[int]:
     :return: number of integers in range [1, bound] that can be expresses as x**i + y**j for some non-negative integers
         i and j
     """
-    i_bound = 1 if x == 1 else int(log(bound, x))
-    j_bound = 1 if y == 1 else int(log(bound, y))
+    i_bound = 0 if x == 1 else int(log(bound, x))
+    j_bound = 0 if y == 1 else int(log(bound, y))
 
     return_values = set()
 
@@ -34,7 +34,8 @@ def powerful_integers(x: int, y: int, bound: int) -> List[int]:
     return list(return_values)
 
 
-test_cases = [(2, 3, 10, {2, 3, 4, 5, 7, 9, 10}),
+test_cases = [(1, 1, 1000, {2}),
+              (2, 3, 10, {2, 3, 4, 5, 7, 9, 10}),
               (3, 5, 15, {2, 4, 6, 8, 10, 14}),
               (2, 1, 10, {2, 3, 5, 9}),
               (2, 91, 996, {2, 3, 5, 9, 17, 33, 65, 92, 93, 95, 99, 107, 123, 129, 155, 219, 257, 347, 513, 603}),
