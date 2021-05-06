@@ -10,8 +10,6 @@ from typing import List
 
 def jump(nums: List[int]) -> int:
     """
-    Jump from first index of the array
-
     :param nums: array of non-negative integers, representing maximum jump length from that position
     :return: minimum number of jumps to reach last index
     """
