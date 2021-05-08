@@ -1,7 +1,7 @@
 from typing import List, Union, Optional
 
 from _Binary_Tree import BinaryTree, TreeNode
-from _Linked_List import LinkedList
+from _Linked_List import LinkedList, ListNode
 
 BST_NODE_TYPE = Union[chr, int, chr, float]
 
@@ -35,8 +35,7 @@ def construct_bst_from_linked_list(linked_list: LinkedList) -> Optional[TreeNode
     :return: root node of BST
     """
 
-    def construct_bst_helper(list_start) -> Optional[TreeNode]:
-        nonlocal linked_list
+    def construct_bst_helper(list_start: Optional[ListNode]) -> Optional[TreeNode]:
         if list_start is None:
             return None
         slow_ptr = list_start
