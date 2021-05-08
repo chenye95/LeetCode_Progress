@@ -21,12 +21,16 @@ def merge_k_lists(lists: List[ListNode]) -> Optional[ListNode]:
 
     heapq.heapify(current_heap)
     dummy_head = current_node = ListNode(0)
-    while current_heap:
+    while len(current_heap) > 1:
         _, next_i, next_node = heapq.heappop(current_heap)
         current_node.next = next_node
         current_node = current_node.next
         if next_node.next:
             heapq.heappush(current_heap, (next_node.next.val, next_i, next_node.next))
+
+    _, _, next_node = heapq.heappop(current_heap)
+    current_node.next = next_node
+
     return dummy_head.next
 
 
