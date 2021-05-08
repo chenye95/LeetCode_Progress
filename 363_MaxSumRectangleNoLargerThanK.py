@@ -94,7 +94,14 @@ test_cases = [([[1, 0, 1], [0, -2, 3]], 2, 2),
                 [-10, 6, -9, 0, -9, -8],
                 [9, -6, -6, -2, 7, -10],
                 [4, 3, -4, 7, 4, 4],
-                [-4, 7, -10, 8, 8, -3]], 10, 10), ]
+                [-4, 7, -10, 8, 8, -3]], 10, 10),
+              ([[7, 7, 4, -6, -10],
+                [-7, -3, -9, -1, -7],
+                [9, 6, -3, -7, 7],
+                [-4, 1, 4, -3, -8],
+                [-7, -4, -4, 6, -10],
+                [1, 3, -2, 3, -10],
+                [8, -2, 1, 1, -8]], 12, 12), ]
 # do not change order of functions
 for max_sub_matrix_no_greater_k in [max_sub_matrix_no_greater_k_on_the_fly, max_sub_matrix_no_greater_k_precompute]:
     for test_matrix, test_k, expected_output in test_cases:
