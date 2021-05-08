@@ -240,7 +240,7 @@ class ComplexLinkedList:
     def flatten_structure(self) -> None:
         """
         Flatten the Multilevel Complex List into Double Linked list, with no child reference
-        method described in Leet Code 430 https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/
+        method described in Leetcode 430 https://leetcode.com/problems/flatten-a-multilevel-doubly-linked-list/
         insert Linked List stem from Child node right after current node
         i.e. 1 -> 2
                -> 3 -> 4

@@ -17,9 +17,9 @@ class FenwickTree:
         self.bit_array_len = len(init_frequencies) + 1
         # bit_array has a leading zero from index computation purposes
         # need to shift user index +1 in code
-        self.bit_array = [0] * (self.bit_array_len)
-        for i in range(len(init_frequencies)):
-            self.__update(i + 1, init_frequencies[i])
+        self.bit_array = [0] * self.bit_array_len
+        for i, num_i in enumerate(init_frequencies):
+            self.__update(i + 1, num_i)
 
     def range_sum(self, start_idx: int = 0, end_idx: int = -1) -> NUMBER_TYPE:
         """
@@ -39,11 +39,11 @@ class FenwickTree:
         """
         assert tree_idx < self.bit_array_len, "Out of Bound, this Binary Indexed Tree only contains %d elements" % \
                                               (self.bit_array_len - 1)
-        sum = 0
+        cumulative_sum = 0
         while tree_idx > 0:
-            sum += self.bit_array[tree_idx]
+            cumulative_sum += self.bit_array[tree_idx]
             tree_idx -= (tree_idx & -tree_idx)
-        return sum
+        return cumulative_sum
 
     def __update(self, tree_idx: int, val: NUMBER_TYPE) -> None:
         """

@@ -2,6 +2,7 @@ from typing import List, Union
 
 NodeType = Union[int, str, chr]
 
+
 class UnionFind:
     ELEMENT_NOT_FOUND = -1
 
@@ -160,7 +161,8 @@ class UnionFindArray:
         root_q = self.find(q, self.use_recursion)
 
         # If elements p and q already belong to the same component, return
-        if root_p == root_q: return
+        if root_p == root_q:
+            return
 
         # Merge smaller component into the larger one
         (small_root, large_root) = (root_p, root_q) if self.union_size[root_p] < self.union_size[root_q] \

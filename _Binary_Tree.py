@@ -31,7 +31,8 @@ class BinaryTree:
         """
         :return: whether a BinaryTree is identical to another. Structure and value wise
         """
-        if not other: return False
+        if not other:
+            return False
         if not isinstance(other, BinaryTree):
             return False
         if self.root is None and other.root is None:
@@ -161,7 +162,7 @@ class BinaryTree:
             current_node = traverse_stack[-1]
             if (not prev_node or prev_node.left == current_node or prev_node.right == current_node) and \
                     (current_node.left or current_node.right):  # traversing down and not at leaf node
-                if current_node.left: # visit left kid first
+                if current_node.left:  # visit left kid first
                     traverse_stack.append(current_node.left)
                 else:  # current node only has right kid
                     traverse_stack.append(current_node.right)

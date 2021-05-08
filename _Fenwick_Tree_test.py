@@ -37,7 +37,7 @@ for i in range(1, len(num_array)):
         "Scale Function"
 
 """Cumulative Sum Test"""
-num_array=[1, 0, 2, 1, 1, 4, 0, 3, 2, 5, 2, 2, 3, 1, 0, 2]
+num_array = [1, 0, 2, 1, 1, 4, 0, 3, 2, 5, 2, 2, 3, 1, 0, 2]
 new_tree = FenwickTree(num_array)
 cumulative_sum = [sum(num_array[:i]) for i in range(len(num_array))]
 assert new_tree.bit_array == [0, 1, 1, 2, 4, 1, 5, 0, 12, 2, 7, 2, 11, 3, 4, 0, 29]

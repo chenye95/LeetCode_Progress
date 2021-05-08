@@ -44,7 +44,7 @@ class SkipList:
         :param split_threshold: create another level if the bottom level reaches the split_threshold
         :param proceed_threshold: with probability proceed_threshold, a reference node will be created in the next level
         """
-        self.lists = [[SkipListNode(), 0] for i in range(initial_levels)]
+        self.lists = [[SkipListNode(), 0] for _ in range(initial_levels)]
         for current_head, next_head in zip(self.lists[:-1], self.lists[1:]):
             next_head[0].down = current_head[0]
         self.split_threshold = split_threshold
