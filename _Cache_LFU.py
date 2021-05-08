@@ -4,7 +4,7 @@ from typing import Optional, Any
 from _Cache_Interface import Cache, CacheNode
 
 
-class LFUCache_LinkedList:
+class LFUCacheLinkedList:
     def __init__(self):
         self.head = CacheNode(-1, None, True)
         self.tail = CacheNode(-1, None, True)
@@ -48,13 +48,14 @@ class LFUCache(Cache):
     Data structure for Least Frequently Used (LFU) cache.
     Per interface requirements, it support operations get() and put() as well as constant NOT_FOUND
     When at capacity, invalidate the least frequently used item before inserting a new item.
-    When there is a tie (i.e., two or more keys that have the same frequency), the least recently used key would be evicted.
+    When there is a tie (i.e., two or more keys that have the same frequency), the least recently used key would be
+     evicted.
     """
 
     def __init__(self, capacity: int):
         super().__init__(capacity=capacity)
         self.lookup_table = {}
-        self.freq_table = defaultdict(LFUCache_LinkedList)
+        self.freq_table = defaultdict(LFUCacheLinkedList)
         self.min_freq = 0
 
     def _update_freq(self, node: CacheNode) -> None:

@@ -245,21 +245,22 @@ class BST(BinaryTree):
         """
         :return: whether the BST is balanced. Call hard_re_balance() if need to re-balance BST
         """
-        UNBALANCED = -1
+        _marker_is_unbalanced = -1
 
         def check_below_node(current_node: TreeNode) -> int:
-            # UNBALANCED to mark unbalanced subtree, else return height
+            # _marker_is_unbalanced to mark unbalanced subtree, else return height
             if current_node is None:
                 return 0
             left_height = check_below_node(current_node.left)
             right_height = check_below_node(current_node.right)
-            if left_height == UNBALANCED or right_height == UNBALANCED or abs(left_height - right_height) > 1:
-                return UNBALANCED
+            if left_height == _marker_is_unbalanced or right_height == _marker_is_unbalanced or \
+                    abs(left_height - right_height) > 1:
+                return _marker_is_unbalanced
             else:
                 return 1 + max(left_height, right_height)
 
         assert self.root, "Empty Tree"
-        return check_below_node(self.root) != UNBALANCED
+        return check_below_node(self.root) != _marker_is_unbalanced
 
     def kthSmallest(self, k: int) -> Optional[BST_NODE_TYPE]:
         """

@@ -2,11 +2,11 @@ from typing import Any
 
 
 class CacheNode:
-    def __init__(self, key: int, val: Any, is_LFU: bool = False):
+    def __init__(self, key: int, val: Any, is_lfu: bool = False):
         self.key = key
         self.val = val
         self.prev = self.next = None
-        if is_LFU:
+        if is_lfu:
             self.freq = 1
 
 

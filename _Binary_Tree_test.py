@@ -67,15 +67,16 @@ for layer in range(len(print_array)):
 preorder = ['F', 'B', 'A', 'D', 'C', 'E', 'G', 'I', 'H']
 inorder = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I']
 postorder = ['A', 'C', 'E', 'D', 'B', 'H', 'I', 'G', 'F']
-layeroder = ['F', 'B', 'G', 'A', 'D', 'I', 'C', 'E', 'H']
-layerorder_by_layer = [['F'], ['B', 'G'], ['A', 'D', 'I'], ['C', 'E', 'H']]
-leetcodeorder = ['F', 'B', 'G', 'A', 'D', None, 'I', None, None, 'C', 'E', 'H', None, None, None, None, None, None, None]
+layer_order = ['F', 'B', 'G', 'A', 'D', 'I', 'C', 'E', 'H']
+layer_order_by_layer = [['F'], ['B', 'G'], ['A', 'D', 'I'], ['C', 'E', 'H']]
+leetcode_order = ['F', 'B', 'G', 'A', 'D', None, 'I', None, None, 'C', 'E', 'H', None, None, None, None, None, None,
+                  None]
 
 assert preorder == reference_tree.preorder_traversal()
 assert inorder == reference_tree.inorder_traversal()
 assert postorder == reference_tree.postorder_traversal()
-assert leetcodeorder == reference_tree.leetcode_traversal(), reference_tree.leetcode_traversal()
-assert layerorder_by_layer == reference_tree.layer_traversal_by_layer()
+assert leetcode_order == reference_tree.leetcode_traversal(), reference_tree.leetcode_traversal()
+assert layer_order_by_layer == reference_tree.layer_traversal_by_layer()
 
 assert reference_tree.right_side_view() == ['F', 'G', 'I', 'H']
 assert reference_tree.left_side_view() == ['F', 'B', 'A', 'C']
@@ -85,22 +86,22 @@ built_tree = ConstructTree.build_tree_pre_in(preorder=preorder, inorder=inorder)
 assert built_tree == reference_tree
 assert preorder == built_tree.preorder_traversal()
 assert inorder == built_tree.inorder_traversal()
-assert layeroder == built_tree.layer_traversal()
-assert layerorder_by_layer == built_tree.layer_traversal_by_layer()
+assert layer_order == built_tree.layer_traversal()
+assert layer_order_by_layer == built_tree.layer_traversal_by_layer()
 
 built_tree = ConstructTree.build_tree_in_post(inorder=inorder, postorder=postorder)
 assert built_tree == reference_tree
 assert preorder == built_tree.preorder_traversal()
 assert inorder == built_tree.inorder_traversal()
-assert layeroder == built_tree.layer_traversal()
-assert layerorder_by_layer == built_tree.layer_traversal_by_layer()
+assert layer_order == built_tree.layer_traversal()
+assert layer_order_by_layer == built_tree.layer_traversal_by_layer()
 
 built_tree = ConstructTree.build_tree_leetcode(['F', 'B', 'G', 'A', 'D', None, 'I', None, None, 'C', 'E', 'H'])
 assert built_tree == reference_tree
 assert preorder == built_tree.preorder_traversal()
 assert inorder == built_tree.inorder_traversal()
-assert layeroder == built_tree.layer_traversal()
-assert layerorder_by_layer == built_tree.layer_traversal_by_layer()
+assert layer_order == built_tree.layer_traversal()
+assert layer_order_by_layer == built_tree.layer_traversal_by_layer()
 
 built_tree = ConstructTree.build_tree_leetcode(reference_tree.leetcode_traversal())
 assert built_tree == reference_tree
@@ -109,7 +110,7 @@ built_tree = ConstructTree.build_tree_leetcode([-1, 0, 1])
 assert built_tree.leetcode_traversal() == [-1, 0, 1, None, None, None, None]
 
 built_tree = BinaryTree(TreeNode(0))
-print(built_tree.print_tree())
+# print(built_tree.print_tree())
 
 test_tree_1 = ConstructTree.build_tree_leetcode([2, None, 4])
 test_tree_2 = ConstructTree.build_tree_leetcode([2, 3, 4])
