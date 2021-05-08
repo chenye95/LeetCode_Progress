@@ -4,18 +4,23 @@ Given the head of a linked list and a value x, partition it such that all nodes 
 
 You should preserve the original relative order of the nodes in each of the two partitions.
 """
+from typing import Optional
+
 from _Linked_List import ListNode, LinkedList
 
 
-def partition(head: ListNode, x: int) -> ListNode:
+def partition(head: Optional[ListNode], x: int) -> Optional[ListNode]:
     """
     :param head: head of a linked list; operation will destruct the linked list
     :param x: all nodes less than x come before nodes greater or equal to x
     :return: head of updated list
     """
+    if head is None:
+        return None
+
     # Two dummy nodes to separate less than and greater than sub lists
-    less_dummy = less_current = ListNode(val=None)
-    greater_dummy = greater_current = ListNode(val=None)
+    less_dummy = less_current = ListNode(0)
+    greater_dummy = greater_current = ListNode(0)
 
     while head:
         # use head pointer to iterate through original list
@@ -34,7 +39,9 @@ def partition(head: ListNode, x: int) -> ListNode:
     return less_dummy.next
 
 
-test_cases = [([1, 4, 3, 2, 5, 2], 3), ([2, 1], 2),
+test_cases = [([1, 4, 3, 2, 5, 2], 3),
+              ([2, 1], 2),
+              ([-4, -4, -6, 8, 3, 7, -5, -8, 0, -3, -5, 5, -1, -3, -4, 3, 4, 0, -3, -6, 9, 4, -7, -6, -8], 9),
               ([-21, -59, 4, -99, 84, -65, -32, -80, 12, -45, 17, -52, 72, -51, -64, -37, -34, -28, 85, -3, -22, 1, 4,
                 -2, 12, -70, -83, 48, -99, 31, -87, -19, 24, 18, -66, 8, 5, 2, -20, -83, 10, 49, -35, -66, 99, -46, -3,
                 -83, -22, -65, 14, 8, -12, 71, -94, -100, -99, 75, 48, -98, -42, 62, -65, 82, -68, -78, -58, 37, -24,

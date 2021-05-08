@@ -26,11 +26,9 @@ def remove_elements(head: Optional[ListNode], val: int) -> Optional[ListNode]:
     return head
 
 
-N, l = 100, 300
+N, l = 1000, 300
 a, b = -100, 100
 for i in range(N):
-    if i % 10 == 0:
-        print('Test Case %d' % i)
     test_target = randint(a, b)
     test_input_list = [test_target] + [randint(a, b) for _ in range(l)]
     test_output_list = list(filter(lambda x: x != test_target, test_input_list))
