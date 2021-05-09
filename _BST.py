@@ -13,16 +13,15 @@ def construct_bst_from_list(values: List[BST_NODE_TYPE]) -> Optional[TreeNode]:
     """
 
     def construct_bst_helper(left_bound: int, right_bound: int) -> Optional[TreeNode]:
-        nonlocal values
         if left_bound > right_bound:
             return None
-        mid_point = int((left_bound + right_bound) / 2)
+        mid_point = (left_bound + right_bound) // 2
         root_node = TreeNode(values[mid_point])
         root_node.left = construct_bst_helper(left_bound, mid_point - 1)
         root_node.right = construct_bst_helper(mid_point + 1, right_bound)
         return root_node
 
-    if len(values) == 0:
+    if not values:
         return None
     else:
         return construct_bst_helper(0, len(values) - 1)
@@ -31,6 +30,7 @@ def construct_bst_from_list(values: List[BST_NODE_TYPE]) -> Optional[TreeNode]:
 def construct_bst_from_linked_list(linked_list: LinkedList) -> Optional[TreeNode]:
     """
     Please note that this method will destruct the linked list, please make a deep copy if you want to preserve the list
+
     :param linked_list: Sorted linked list
     :return: root node of BST
     """
@@ -59,6 +59,7 @@ class BST(BinaryTree):
     def __init__(self, values: Union[List[BST_NODE_TYPE], LinkedList]):
         """
         Note: if pass in a linked list, the linked list will be destructed
+
         :param values: supports either an array of values or a LinkedList of values
         """
         assert (isinstance(values, list) or isinstance(values, LinkedList)), \
@@ -84,7 +85,6 @@ class BST(BinaryTree):
         """
 
         def traverse_range_boundary(root_node: TreeNode) -> List[BST_NODE_TYPE]:
-            nonlocal val_low_bound, val_up_bound
             return_list = []
             if root_node.val > val_low_bound and root_node.left:
                 return_list.extend(traverse_range_boundary(root_node.left))
@@ -223,6 +223,7 @@ class BST(BinaryTree):
         For all nodes:
             node.left.val < node.val
             node.right.val >= node.val
+
         :return: whether the BST is a valid BST
         """
         assert self.root, "Empty Tree"

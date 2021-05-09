@@ -78,6 +78,7 @@ class LinkedList:
 
     def k_to_last(self, k: int) -> Optional[ListNode]:
         """
+        :param k: the node k nodes apart from list end
         :return: the node k nodes apart from list end,
         i.e. the kth node in the list counting backwards
         i.e. index -k-1,

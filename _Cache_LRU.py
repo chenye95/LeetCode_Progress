@@ -29,7 +29,7 @@ class LRUCache(Cache):
         else:
             return self.NOT_FOUND
 
-    def put(self, key: int, value: int) -> None:
+    def put(self, key: int, value: Any) -> None:
         if key in self.lookup_table:
             node = self.lookup_table[key]
             node.val = value
@@ -48,9 +48,9 @@ class LRUCache(Cache):
             self.lookup_table[key] = node
             self._insert_node(node)
 
-    def _insert_node(self, node: CacheNode) -> Any:
+    def _insert_node(self, node: CacheNode) -> None:
         """
-        Insert to the end of the list, before the INSERT_END
+        :param node:iInsert to the end of the list, before the INSERT_END
         """
         self.insert_end.prev.next = node
         node.prev = self.insert_end.prev

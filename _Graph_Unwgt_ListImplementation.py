@@ -62,6 +62,7 @@ class UnweightedGraph:
     def find_path(self, start: NODE, end: NODE) -> List[List[NODE]]:
         """
         Cannot reuse node or path
+
         :return: list[list[node]] each is a valid path from start to end
         """
         pass
@@ -69,6 +70,7 @@ class UnweightedGraph:
     def cycles(self) -> List[List[NODE]]:
         """
         Cannot reuse node or path
+
         :return: list[list[node]] all cycles in the graph
         """
         pass
