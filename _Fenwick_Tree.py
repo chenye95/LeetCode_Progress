@@ -35,6 +35,8 @@ class FenwickTree:
     def __read(self, tree_idx: int) -> NUMBER_TYPE:
         """
         Helper function
+
+        :param tree_idx: wants to calculate cumulative sum from the start till tree_idx
         :return: cumulative sum from the start till tree_idx
         """
         assert tree_idx < self.bit_array_len, "Out of Bound, this Binary Indexed Tree only contains %d elements" % \
@@ -48,7 +50,9 @@ class FenwickTree:
     def __update(self, tree_idx: int, val: NUMBER_TYPE) -> None:
         """
         Helper function
-        set frequency at tree_idx position to val
+
+        :param tree_idx: Update frequency at tree_idx position to val
+        :param val: Update frequency at tree_idx position to val
         """
         while tree_idx < self.bit_array_len:
             self.bit_array[tree_idx] += val
@@ -56,7 +60,7 @@ class FenwickTree:
 
     def at_idx_i(self, idx: int) -> NUMBER_TYPE:
         """
-        :return: return frequencies of index idx
+        :return: return frequency of index idx
         """
         tree_idx = idx + 1
         assert tree_idx < self.bit_array_len, "Out of Bound, this Binary Indexed Tree only contains %d elements" % \
@@ -71,14 +75,15 @@ class FenwickTree:
 
     def scale(self, c: NUMBER_TYPE) -> None:
         """
-        scale all frequencies by a factor of 1/c
+        :param c: scale all frequencies by a factor of 1/c
         """
         for i in range(self.bit_array_len):
             self.bit_array[i] /= float(c)
 
     def increment_at_i(self, idx: int, by_val: NUMBER_TYPE) -> None:
         """
-        Increment frequencies at idx position +by_val
+        :param idx: increment frequency at idx position +by_val
+        :param by_val: increment frequency at idx position +by_val
         """
         tree_idx = idx + 1
         while tree_idx < self.bit_array_len:
@@ -87,13 +92,16 @@ class FenwickTree:
 
     def set_at_i(self, i: int, old_val: NUMBER_TYPE, new_val: NUMBER_TYPE) -> None:
         """
-        Replace frequencies at idx position by new_val
+        :param i: Replace frequency at idx position by new_val
+        :param old_val: Old frequency at idx
+        :param new_val: Replace frequency at idx position by new_val
         """
         self.increment_at_i(i, new_val - old_val)
 
     def find_cumulative_sum(self, cumulative_sum: NUMBER_TYPE) -> int:
         """
         Only use this function when all elements in the init_frequencies is non-negative
+
         :param cumulative_sum: target cumulative sum (from start) to find
         :return: the largest index till which the cumulative sum from beginning equals to target, -1 if not found
         """

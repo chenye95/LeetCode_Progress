@@ -119,7 +119,7 @@ class DoubleLinkedList:
 
     def delete_at_head(self) -> None:
         """
-        Remove tail node
+        Remove head node
         """
         if self.list_len > 1:
             self.head.next.prev = None

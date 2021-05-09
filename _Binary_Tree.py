@@ -6,7 +6,11 @@ from typing import Union, List, Optional
 TREE_NODE_TYPE = Union[str, int, chr, float]
 
 
-def get_height(current_node: TreeNode):
+def get_height(current_node: TreeNode) -> int:
+    """
+    :param current_node: evaluating the subtree beneath current_node
+    :return: height of the subtree, i.e. max level of any descendant of current_node
+    """
     if current_node is None:
         return 0
     else:
@@ -85,12 +89,11 @@ class BinaryTree:
         :return: 2D representation of the binary tree
         """
 
-        def fill(current_node: TreeNode, layer: int, left: int, right: int):
-            nonlocal print_array
+        def fill(current_node: TreeNode, layer: int, left: int, right: int) -> None:
             if not current_node:
                 return
-            midpoint = int((left + right) / 2)
-            right_tree_left_bound = int((left + right + 1) / 2)
+            midpoint = (left + right) // 2
+            right_tree_left_bound = (left + right + 1) // 2
             if current_node.val is not None:
                 print_array[layer][midpoint] = current_node.val
             fill(current_node.left, layer + 1, left, midpoint)
@@ -160,13 +163,13 @@ class BinaryTree:
         prev_node = None
         while traverse_stack:
             current_node = traverse_stack[-1]
-            if (not prev_node or prev_node.left == current_node or prev_node.right == current_node) and \
+            if (not prev_node or prev_node.left is current_node or prev_node.right is current_node) and \
                     (current_node.left or current_node.right):  # traversing down and not at leaf node
                 if current_node.left:  # visit left kid first
                     traverse_stack.append(current_node.left)
                 else:  # current node only has right kid
                     traverse_stack.append(current_node.right)
-            elif current_node.left == prev_node and current_node.right:  # traversing up from left and has right kid
+            elif current_node.left is prev_node and current_node.right:  # traversing up from left and has right kid
                 traverse_stack.append(current_node.right)
             else:  # (1) leaf (2) no right kid and left kid visited (3) traversing up from right
                 result_order.append(traverse_stack.pop().val)
@@ -229,8 +232,8 @@ class BinaryTree:
         """
         :return: list of the right most nodes per layer
         """
-        def right_view_add_new_depth(node: TreeNode, depth: int):
-            nonlocal right_view
+
+        def right_view_add_new_depth(node: TreeNode, depth: int) -> None:
             if node:
                 if depth == len(right_view):
                     right_view.append(node.val)
@@ -245,8 +248,8 @@ class BinaryTree:
         """
         :return: list of the left most nodes per layer
         """
-        def left_view_add_new_layer(node: TreeNode, depth: int):
-            nonlocal left_view
+
+        def left_view_add_new_layer(node: TreeNode, depth: int) -> None:
             if node:
                 if depth == len(left_view):
                     left_view.append(node.val)
@@ -322,8 +325,7 @@ class ConstructTree:
         :return: BinaryTree object of the tree; or None if the lists are empty
         """
 
-        def build_tree_helper(preorder_s: int, preorder_e: int, inorder_s: int, inorder_e: int):
-            nonlocal preorder, inorder
+        def build_tree_helper(preorder_s: int, preorder_e: int, inorder_s: int, inorder_e: int) -> TreeNode:
             current_x = preorder[preorder_s]
             current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)
@@ -350,8 +352,7 @@ class ConstructTree:
         :return: BinaryTree object of the tree; or None if the lists are empty
         """
 
-        def build_tree_helper(inorder_s: int, inorder_e: int, postorder_s: int, postorder_e: int):
-            nonlocal inorder, postorder
+        def build_tree_helper(inorder_s: int, inorder_e: int, postorder_s: int, postorder_e: int) -> TreeNode:
             current_x = postorder[postorder_e]
             current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)

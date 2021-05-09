@@ -4,7 +4,7 @@ from typing import Optional, Any
 from _Cache_Interface import Cache, CacheNode
 
 
-class LFUCacheLinkedList:
+class _LFUCacheLinkedList:
     def __init__(self):
         self.head = CacheNode(-1, None, True)
         self.tail = CacheNode(-1, None, True)
@@ -17,7 +17,7 @@ class LFUCacheLinkedList:
 
     def insert(self, node: CacheNode):
         """
-        Insert to the front of Double Linked List
+        :param node: insert node to the front of the Double Linked List
         """
         node.next = self.head.next
         node.prev = self.head
@@ -25,10 +25,14 @@ class LFUCacheLinkedList:
         self.head.next = node
         self.size += 1
 
-    def pop(self, node: CacheNode = None) -> Optional[CacheNode]:
+    def pop(self, node: Optional[CacheNode] = None) -> Optional[CacheNode]:
         """
         Server tie between Node and its predecessors and successors, and decrease the list size by 1
         If Node is None, pop the last node in the linked list
+
+        :param node: node to be removed from the double linked list, i.e. server tie between node and its prev and next.
+            If node is None, short end for removing the last node of the linked list
+        :return: CacheNode that is removed from the linked list. None if the list is empty
         """
         if self.size == 0:
             return None
@@ -55,7 +59,7 @@ class LFUCache(Cache):
     def __init__(self, capacity: int):
         super().__init__(capacity=capacity)
         self.lookup_table = {}
-        self.freq_table = defaultdict(LFUCacheLinkedList)
+        self.freq_table = defaultdict(_LFUCacheLinkedList)
         self.min_freq = 0
 
     def _update_freq(self, node: CacheNode) -> None:
@@ -63,6 +67,8 @@ class LFUCache(Cache):
         * Increment frequency of node by 1
         * Move node from freq list to freq + 1 list and insert to the front
         * Update min_freq when needed
+
+        :param node: increment frequency of node by 1
         """
         freq = node.freq
         self.freq_table[freq].pop(node)
