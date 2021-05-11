@@ -16,38 +16,42 @@ def check_inclusion(s1: str, s2: str) -> bool:
     s2_sliding_window = Counter(s2[:len(s1)])
 
     # keep track # of characters in s1 that has not been satisfied
-    mismatch_count = sum([1 if s1_counter[c] != s2_sliding_window.get(c, 0) else 0 for c in s1_counter])
-    if mismatch_count == 0:
+    no_chr_unsatisfied = sum([1 if s1_counter[c] != s2_sliding_window.get(c, 0) else 0 for c in s1_counter])
+    if no_chr_unsatisfied == 0:
         return True
 
     window_count = len(s2) - len(s1)
-    for c1, c2 in zip(s2[:window_count], s2[len(s1):]):
-        if c1 != c2:
-            # Drop c1 and add c2
-            if c1 in s1_counter:
-                if s2_sliding_window[c1] == s1_counter[c1]:
-                    # Drop c1 will create a new mismatch
-                    mismatch_count += 1
-                elif s2_sliding_window[c1] == s1_counter[c1] + 1:
-                    # Drop c1 will remove an existing mismatch
-                    mismatch_count -= 1
-            s2_sliding_window[c1] -= 1
+    for drop_c, add_c in zip(s2[:window_count], s2[len(s1):]):
+        if drop_c != add_c:
+            # Drop drop_c and add add_c
+            if drop_c in s1_counter:
+                if s2_sliding_window[drop_c] == s1_counter[drop_c]:
+                    # Drop drop_c will create a new mismatch
+                    no_chr_unsatisfied += 1
+                elif s2_sliding_window[drop_c] == s1_counter[drop_c] + 1:
+                    # Drop drop_c will remove an existing mismatch
+                    no_chr_unsatisfied -= 1
+            s2_sliding_window[drop_c] -= 1
 
-            if c2 in s1_counter:
-                if s2_sliding_window[c2] == s1_counter[c2]:
-                    # Add c2 will create a new mismatch
-                    mismatch_count += 1
-                elif s2_sliding_window[c2] == s1_counter[c2] - 1:
-                    # Add c2 will remove an existing mismatch
-                    mismatch_count -= 1
-            s2_sliding_window[c2] += 1
+            if add_c in s1_counter:
+                if s2_sliding_window[add_c] == s1_counter[add_c]:
+                    # Add add_c will create a new mismatch
+                    no_chr_unsatisfied += 1
+                elif s2_sliding_window[add_c] == s1_counter[add_c] - 1:
+                    # Add add_c will remove an existing mismatch
+                    no_chr_unsatisfied -= 1
+            s2_sliding_window[add_c] += 1
 
-            if mismatch_count == 0:
+            if no_chr_unsatisfied == 0:
                 return True
 
     return False
 
 
-test_cases = [("adc", "dcda", True), ("ab", "eidbaooo", True), ("ab", "eidboaoo", False), ]
+test_cases = [("adc", "dcda", True), ("ab", "eidbaooo", True), ("ab", "eidboaoo", False),
+              ("osmzg", "diyhaywtgpzosgmuxvidndouo", True),
+              ("trinitrophenylmethylnitramine", "dinitrophenylhydrazinetrinitrophenylmethylnitramine", True),
+              ("hello", "ooolleoooleh", False),
+              ("dinitrophenylhydrazine", "acetylphenylhydrazine", False), ]
 for test_s1, test_s2, expected_output in test_cases:
     assert check_inclusion(s1=test_s1, s2=test_s2) is expected_output

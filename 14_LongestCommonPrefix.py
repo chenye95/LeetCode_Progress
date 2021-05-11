@@ -16,20 +16,21 @@ def longest_common_prefix(str_list: List[str]) -> str:
     if len(str_list) == 1:
         return str_list[0]
 
-    longest_prefix_list = []
+    longest_prefix = ""
     s_0 = str_list[0]
     for i in range(min(len(s_i) for s_i in str_list)):
         if all(s_i[i] == s_0[i] for s_i in str_list[1:]):
-            longest_prefix_list.append(s_0[i])
+            longest_prefix += s_0[i]
         else:
             break
 
-    return ''.join(longest_prefix_list)
+    return longest_prefix
 
 
 test_cases = [(["", "b"], ""),
               (["flower", "flow", "flight"], "fl"),
               (["dog", "racecar", "car"], ""),
-              (["you"], "you"), ]
+              (["you"], "you"),
+              (["flower", "flower", "flower", "flower"], "flower"), ]
 for test_str_list, expected_output in test_cases:
     assert longest_common_prefix(str_list=test_str_list) == expected_output
