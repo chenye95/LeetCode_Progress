@@ -30,6 +30,11 @@ def move_to_stamp_backward(stamp: str, target: str) -> List[int]:
     :param target: desired string after all stamping
     :return: positions of stamping, in sequence, to get target string
     """
+    if stamp[0] != target[0] or stamp[-1] != target[-1]:
+        # stamp[0] has to match target[0]
+        # stamp[-1] has to match target[-1]
+        return []
+
     len_stamp, len_target = len(stamp), len(target)
 
     removal_character = deque()
@@ -133,6 +138,7 @@ def move_to_stamp_dfs(stamp: str, target: str) -> List[int]:
 
     if stamp[0] != target[0] or stamp[-1] != target[-1]:
         # stamp[0] has to match target[0]
+        # stamp[-1] has to match target[-1]
         return []
 
     return depth_first_search(0, 0, [0])

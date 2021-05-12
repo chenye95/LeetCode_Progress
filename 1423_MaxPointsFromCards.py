@@ -17,9 +17,9 @@ def max_score(card_points: List[int], k: int) -> int:
     :param k: need to take k cards from the deck
     :return: max points you can get from the deck
     """
-    not_in_window = len(card_points) - k
-    min_sliding = sliding_window_sum = sum(card_points[:not_in_window])
-    for add_card, drop_card in zip(card_points[not_in_window:], card_points[:-not_in_window]):
+    cards_left_in_deck = len(card_points) - k
+    min_sliding = sliding_window_sum = sum(card_points[:cards_left_in_deck])
+    for add_card, drop_card in zip(card_points[cards_left_in_deck:], card_points[:-cards_left_in_deck]):
         sliding_window_sum += (add_card - drop_card)
         if min_sliding > sliding_window_sum:
             min_sliding = sliding_window_sum

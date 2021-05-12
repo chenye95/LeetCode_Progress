@@ -1,5 +1,6 @@
 """
-Given two sorted arrays short_list and long_list of size m and n respectively, return the median of the two sorted arrays.
+Given two sorted arrays short_list and long_list of size m and n respectively, return the median of the two sorted
+ arrays.
 """
 from typing import List
 

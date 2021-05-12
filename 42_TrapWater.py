@@ -45,17 +45,22 @@ def trap_two_pointer(height: List[int]) -> int:
         if height[left] < height[right]:
             # right to height[left] exits taller height >= height[right]
             if height[left] > left_max:
+                # left_max < height[left] < height[right]
                 left_max = height[left]
             else:
-                # left_max < height[left] < height[right]
+                # height[left] <= left_max
+                # height[left] < height[right] <= right_max
                 total_volume += (left_max - height[left])
             left += 1
         else:
+            # height[right] <= height[left]
             # left to height[right] exits taller height >= height[left]
             if height[right] > right_max:
+                # right_max < height[right] <= height[left]
                 right_max = height[right]
             else:
-                # right_max < height[right] < height[left]
+                # height[right] <= right_max
+                # height[right] <= height[left] <= left_max
                 total_volume += (right_max - height[right])
             right -= 1
 
@@ -71,18 +76,22 @@ def trap_stack(height: List[int]) -> int:
     :return: how much water the hills can trap
     """
     total_volume = 0
-    height_stack = []
+    height_non_increasing_stack = []
 
     for i in range(len(height)):
-        while height_stack and height[i] > height[height_stack[-1]]:
-            shorter_to_left = height_stack.pop()
-            if not height_stack:
+        while height_non_increasing_stack and height[i] > height[height_non_increasing_stack[-1]]:
+            shorter_to_left = height_non_increasing_stack.pop()
+            if not height_non_increasing_stack:
                 break
-            # shorter_to_left is bounded by height_stack[-1] to the left and i to the right
-            distance = (i - height_stack[-1] - 1)
-            bounded_height = min(height[i], height[height_stack[-1]]) - height[shorter_to_left]
+            # shorter_to_left is bounded by height_non_increasing_stack[-1] to the left and i to the right
+            # * heights[shorter_to_left] <= height[height_non_increasing_stack[-1]]
+            # * heights[shorter_to_left] <= height[i]
+            # * height_non_increasing_stack[-1] <= shorter_to_left <= i
+            distance = (i - height_non_increasing_stack[-1] - 1)
+            bounded_height = min(height[i], height[height_non_increasing_stack[-1]]) - height[shorter_to_left]
             total_volume += distance * bounded_height
-        height_stack.append(i)
+        # height[i] <= height[height_non_increasing_stack[-1]]
+        height_non_increasing_stack.append(i)
 
     return total_volume
 

@@ -69,7 +69,7 @@ def longest_valid_parentheses_two_scan(s: str) -> int:
             else:
                 right_count += 1
             if left_count == right_count:
-                max_len = max(max_len, 2 * right_count)
+                max_len = max(max_len, left_count + left_count)
             elif reset_condition(left_count, right_count):
                 # invalid substring, reset counters to restart
                 left_count = right_count = 0

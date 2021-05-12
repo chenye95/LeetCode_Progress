@@ -12,6 +12,10 @@ def is_valid(s: str) -> bool:
     :param s: string of characters '(', ')', '{', '}', '[' and ']'
     :return: whether s is a valid parentheses string
     """
+    if len(s) % 2:
+        # len of s has to be an even number
+        return False
+
     open_stack = [None]
     pair_map = {')': '(', ']': '[', '}': '{'}
     for c in s:

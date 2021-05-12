@@ -23,7 +23,7 @@ def unique_paths_with_obstacles(obstacle_grid: List[List[int]]) -> int:
     path_count[0][0] = 1
     for i in range(m):
         for j in range(n):
-            if not obstacle_grid[i][j] and (i + j > 0):
+            if not obstacle_grid[i][j] and i + j > 0:
                 up_path = 0 if i == 0 else path_count[i - 1][j]
                 left_path = 0 if j == 0 else path_count[i][j - 1]
                 path_count[i][j] = up_path + left_path
