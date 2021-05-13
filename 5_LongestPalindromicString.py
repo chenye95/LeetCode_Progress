@@ -60,8 +60,8 @@ def longest_palindromic_construction(s: str) -> str:
 
     return_str_start, return_str_end, return_str_len = 0, 0, 1
     for i in range(len(s)):
-        option_odd_len = expand_around_center(i, i)  # mirror around position i
-        option_even_len = expand_around_center(i, i + 1)  # mirror around position i, i + 1
+        option_odd_len = expand_around_center(i, i)  # mirror around position i - s[i: i + 1]
+        option_even_len = expand_around_center(i, i + 1)  # mirror around position i, i + 1 - s[i: i + 2]
         i_len, new_left, new_right = max(option_odd_len, option_even_len)
         if i_len > return_str_len:
             return_str_len, return_str_start, return_str_end = i_len, new_left, new_right
