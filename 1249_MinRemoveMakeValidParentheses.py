@@ -30,6 +30,8 @@ def min_remove_to_make_valid(s: str) -> str:
 test_cases = [("lee(t(c)o)de)", {"lee(t(c)o)de", "lee(t(co)de)", "lee(t(c)ode)"}),
               ("a)b(c)d", {"ab(c)d"}),
               ("))((", {""}),
-              ("(a(b(c)d)", {"a(b(c)d)", "a(bc)d", "(abc)d"}), ]
+              ("(a(b(c)d)", {"a(b(c)d)", "a(bc)d", "(abc)d"}),
+              ("))()qc)(())))))a)()s)()((xh()()t(()))(((()((((r()())))((((())(((((()())()(())((())())((r(()())(())))",
+               {"()qc(())a()s()(xh()()t(()))()(((r()())))(())(()())()(())((())())((r(()())(())))", }), ]
 for test_s, expected_output in test_cases:
     assert min_remove_to_make_valid(test_s) in expected_output, test_s

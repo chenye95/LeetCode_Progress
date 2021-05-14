@@ -66,4 +66,4 @@ for move_zeroes in [move_zeroes_all_swap, move_zeroes_append_zeroes, ]:
     for test_input, test_output in test_cases:
         input_parameters = deepcopy(test_input)
         move_zeroes(input_parameters)
-        assert input_parameters == test_output
+        assert input_parameters == test_output, move_zeroes.__name__

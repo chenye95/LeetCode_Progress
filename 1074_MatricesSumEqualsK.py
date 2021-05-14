@@ -6,6 +6,7 @@ A sub matrix x1, y1, x2, y2 is the set of all cells matrix[x][y] with x1 <= x <=
 Two sub matrices (x1, y1, x2, y2) and (x1', y1', x2', y2') are different if they have some coordinate that is different:
  for example, if x1 != x1'.
 """
+from copy import deepcopy
 from typing import List
 
 
@@ -372,4 +373,5 @@ test_cases = [([[0, 1, 0], [1, 1, 1], [0, 1, 0]], 0, 4),
 # do not change the order of functions
 for num_sub_matrix_sum_target in [num_sub_matrix_sum_target_on_the_fly, num_sub_matrix_sum_target_precompute, ]:
     for test_matrix, test_target, expected_count in test_cases:
-        assert num_sub_matrix_sum_target(test_matrix, test_target) == expected_count, num_sub_matrix_sum_target.__name__
+        assert num_sub_matrix_sum_target(deepcopy(test_matrix), test_target) == expected_count, \
+            num_sub_matrix_sum_target.__name__
