@@ -80,8 +80,8 @@ assert not new_bst.is_valid()
 new_bst = BST([1, 3, 4])
 new_bst.root.left.right = TreeNode(2)
 for i in range(1, 5):
-    assert new_bst.kthSmallest(i) == i, "Expecting %d got %d" % (i, new_bst.kthSmallest(i))
-assert new_bst.kthSmallest(5) is None
+    assert new_bst.kth_smallest_element(i) == i, "Expecting %d got %d" % (i, new_bst.kth_smallest_element(i))
+assert new_bst.kth_smallest_element(5) is None
 
 new_bst = BST([5, 3, 6])
 new_bst.insert(2)
