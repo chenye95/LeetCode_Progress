@@ -9,30 +9,35 @@ Validate if a given string can be interpreted as a decimal number.
 
 def is_number(s: str) -> bool:
     """
-    :return: whether s is a valid decimal number
+    :return: whether number_s is a valid decimal number
     """
 
-    def is_number_helper(s: str, can_have_decimal: bool = True, allow_empty_after_decimal: bool = True) -> bool:
-        if len(s) == 0:
+    def is_number_helper(number_s: str, can_have_decimal: bool = True, allow_empty_after_decimal: bool = True) -> bool:
+        if len(number_s) == 0:
             return False
-        if s[0] == '+' or s[0] == '-':
-            s = s[1:]
-        if can_have_decimal and '.' in s:
-            sub_s = s.split('.')
-            if sub_s[0] or sub_s[1]:
-                return len(sub_s) == 2 \
-                       and (not sub_s[0] or sub_s[0].isdigit()) \
-                       and (allow_empty_after_decimal and not sub_s[1] or sub_s[1].isdigit())
+        if number_s[0] == '+' or number_s[0] == '-':
+            number_s = number_s[1:]
+        if can_have_decimal and '.' in number_s:
+            sub_decimal_s = number_s.split('.')
+            if not len(sub_decimal_s) == 2:
+                return False
+            else:
+                pre_decimal, after_decimal = sub_decimal_s
+            if pre_decimal or after_decimal:
+                return (not pre_decimal or pre_decimal.isdigit()) \
+                       and (allow_empty_after_decimal and not after_decimal or after_decimal.isdigit())
             else:
                 return False
         else:
-            return s.isdigit()
+            return number_s.isdigit()
 
     s = s.strip()
     if 'e' in s:
         sub_s = s.split('e')
-        return len(sub_s) == 2 and is_number_helper(sub_s[0], allow_empty_after_decimal=False) \
-               and is_number_helper(sub_s[1], can_have_decimal=False)
+        return len(sub_s) == 2 and is_number_helper(sub_s[0]) and is_number_helper(sub_s[1], can_have_decimal=False)
+    elif 'E' in s:
+        sub_s = s.split('E')
+        return len(sub_s) == 2 and is_number_helper(sub_s[0]) and is_number_helper(sub_s[1], can_have_decimal=False)
     else:
         return is_number_helper(s)
 
@@ -54,6 +59,8 @@ test_cases = [("0", True),
               (".1", True),
               ("3.", True),
               (".", False),
-              ("46.e3", False), ]
+              ("2.2.", False),
+              ("46.e3", True),
+              ("1E9", True), ]
 for test_input, expected_output in test_cases:
     assert is_number(test_input) is expected_output
