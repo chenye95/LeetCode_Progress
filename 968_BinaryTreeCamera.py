@@ -50,7 +50,6 @@ def min_camera_cover_greedy(root: TreeNode) -> int:
     :param root: root of a non empty binary tree with 1 <= # of nodes <= 1000
     :return: minimum number of cameras needed to monitor all nodes in the binary tree
     """
-
     covered_nodes = {None}
 
     def cover_sub_tree(current_node: TreeNode, parent_node: TreeNode = None) -> int:
