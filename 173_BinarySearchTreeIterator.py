@@ -24,7 +24,7 @@ class BinaryTreeIterator:
         self.root = root
         self.current_node = root
 
-    def next(self) -> TREE_NODE_TYPE:
+    def next(self) -> Optional[TREE_NODE_TYPE]:
         """
         :return: moves the pointer to the right, then returns the value at the pointer
         """
@@ -80,7 +80,7 @@ class BSTIteratorMorrisTraversal(BinaryTreeIterator):
     def has_next(self) -> bool:
         return self.current_node is not None
 
-    def next(self) -> TREE_NODE_TYPE:
+    def next(self) -> Optional[TREE_NODE_TYPE]:
         """
         This call will not destruct the tree structure
 
