@@ -88,18 +88,45 @@ class BST(BinaryTree):
         :return: inorder traversal of BST for all val_low_bound <= node.val <= val_up_bound
         """
 
-        def traverse_range_boundary(root_node: TreeNode) -> List[TREE_NODE_TYPE]:
+        def traverse_range_boundary(current_node: TreeNode) -> List[TREE_NODE_TYPE]:
+            """
+            :param current_node: Inspecting subtree beneath current_node
+            :return: inorder range traversal within the sub tree
+            """
             return_list = []
-            if root_node.val > val_low_bound and root_node.left:
-                return_list.extend(traverse_range_boundary(root_node.left))
-            if val_low_bound <= root_node.val <= val_up_bound:
-                return_list.append(root_node.val)
-            if root_node.val <= val_up_bound and root_node.right:
-                return_list.extend(traverse_range_boundary(root_node.right))
+            if current_node.val > val_low_bound and current_node.left:
+                return_list.extend(traverse_range_boundary(current_node.left))
+            if val_low_bound <= current_node.val <= val_up_bound:
+                return_list.append(current_node.val)
+            if current_node.val <= val_up_bound and current_node.right:
+                return_list.extend(traverse_range_boundary(current_node.right))
             return return_list
 
         assert self.root is not None, "Empty Tree"
         return traverse_range_boundary(self.root)
+
+    def range_accumulate(self, val_low_bound: TREE_NODE_TYPE, val_up_bound: TREE_NODE_TYPE) -> TREE_NODE_TYPE:
+        """
+        :return: return sum or concatenation of nodes in BST for all val_low_bound <= node.val <= val_up_bound
+        """
+
+        def accumulate_range_boundary(current_node: TreeNode) -> TREE_NODE_TYPE:
+            """
+            :param current_node: Inspecting subtree beneath current_node
+            :return: sum or concatenation of nodes in sub tree for all val_low_bound <= node.val <= val_up_bound
+            """
+            return_val = "" if is_str else 0
+            if current_node.val > val_low_bound and current_node.left:
+                return_val += accumulate_range_boundary(current_node.left)
+            if val_low_bound <= current_node.val <= val_up_bound:
+                return_val += current_node.val
+            if current_node.val <= val_up_bound and current_node.right:
+                return_val += accumulate_range_boundary(current_node.right)
+            return return_val
+
+        assert self.root is not None, "Empty Tree"
+        is_str = isinstance(self.root.val, str)
+        return accumulate_range_boundary(self.root)
 
     def balance_factor(self) -> int:
         """
