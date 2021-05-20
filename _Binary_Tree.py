@@ -182,9 +182,8 @@ class BinaryTree:
         """
         if self.root is None:
             return []
-        traverse_queue = deque()
+        traverse_queue = deque([self.root])
         result_order = []
-        traverse_queue.append(self.root)
         while traverse_queue:
             current_node = traverse_queue.popleft()
             result_order.append(current_node.val)
@@ -200,11 +199,18 @@ class BinaryTree:
         """
         if self.root is None:
             return []
-        return_list, current_level = [], [self.root]
-        while current_level:
-            return_list.append([node.val for node in current_level])
-            next_level_tmp = [(node.left, node.right) for node in current_level]
-            current_level = [leaf for lr_pair in next_level_tmp for leaf in lr_pair if leaf]
+        return_list, traversal_queue = [], deque([self.root])
+        while traversal_queue:
+            current_level = []
+            for _ in range(len(traversal_queue)):
+                current_node = traversal_queue.popleft()
+                current_level.append(current_node.val)
+                if current_node.left:
+                    traversal_queue.append(current_node.left)
+                if current_node.right:
+                    traversal_queue.append(current_node.right)
+            return_list.append(current_level)
+
         return return_list
 
     def leetcode_traversal(self) -> List[TREE_NODE_TYPE]:
