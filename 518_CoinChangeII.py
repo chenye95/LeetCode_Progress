@@ -20,6 +20,6 @@ def change_coin(amount: int, coins: List[int]) -> int:
     return combo_count[-1]
 
 
-test_cases = [(5, [1, 2, 5], 4), (3, [2], 0), (10, [10], 1), ]
+test_cases = [(5, [1, 2, 5], 4), (3, [2], 0), (10, [10], 1), (5, [2, 5, 1], 4), ]
 for test_amount, test_coins, expected_output in test_cases:
     assert change_coin(amount=test_amount, coins=test_coins) == expected_output
