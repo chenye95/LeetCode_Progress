@@ -1,100 +1,50 @@
-"""There are a total of n courses you have to take, labeled from 0 to n-1.
+"""
+There are a total of n courses you have to take, labeled from 0 to n-1.
 
 Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed
-as a pair: [0,1]
-Given the total number of courses and a list of prerequisite pairs, return the ordering of courses you should take to
-finish all courses.
+as a pair: [0, 1]
 
-There may be multiple correct orders, you just need to return one of them. If it is impossible to finish all courses,
-return an empty array.
+Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
 """
 from collections import deque
-from typing import List, Tuple, Deque
+from typing import List, Deque, Tuple
 
 
-def find_order(num_courses: int, prerequisites: List[Tuple[int, int]]) -> List[int]:
-    """
-    BFS - Topological Sort algorithm
+def can_finish(num_courses: int, prerequisites: List[Tuple[int, int]]) -> bool:
+ """
+ Topological sort approach
 
-    :param num_courses: total number of courses labeled from 0 to n-1
-    :param prerequisites: prerequisites to take each course, list of (course_to_take, course_depend_on)
-    :return: the ordering of courses you should take to finish all courses, or [] if not possible
-    """
-    # Topological Sort
-    enable_courses: List[List[int]] = [[] for _ in range(num_courses)]
-    unfinished_prerequisites: List[int] = [0] * num_courses
+ :param num_courses: total number of courses labeled from 0 to n-1
+ :param prerequisites: prerequisites to take each course, list of (course_to_take, course_depend_on)
+ :return: if it is possible to finish all courses
+ """
+ # Topological Sort
+ enable_courses: List[List[int]] = [[] for _ in range(num_courses)]
+ unfinished_prerequisites: List[int] = [0] * num_courses
 
-    for course_to_take, course_depend_on in prerequisites:
-        unfinished_prerequisites[course_to_take] += 1
-        enable_courses[course_depend_on].append(course_to_take)
+ for course_to_take, course_depend_on in prerequisites:
+  unfinished_prerequisites[course_to_take] += 1
+  enable_courses[course_depend_on].append(course_to_take)
 
-    running_deque: Deque[int] = deque()
-    class_order: List[int] = []
-    for next_course in range(num_courses):
-        if unfinished_prerequisites[next_course] == 0:
-            running_deque.append(next_course)
+ running_deque: Deque[int] = deque()
+ for next_course in range(num_courses):
+  if unfinished_prerequisites[next_course] == 0:
+   running_deque.append(next_course)
 
-    while running_deque:
-        completed = running_deque.popleft()
-        class_order.append(completed)
-        for new_course in enable_courses[completed]:
-            unfinished_prerequisites[new_course] -= 1
-            if unfinished_prerequisites[new_course] == 0:
-                running_deque.append(new_course)
+ can_do = 0
+ while running_deque:
+  completed = running_deque.popleft()
+  can_do += 1
+  for new_course in enable_courses[completed]:
+   unfinished_prerequisites[new_course] -= 1
+   if unfinished_prerequisites[new_course] == 0:
+    running_deque.append(new_course)
 
-    return class_order if len(class_order) == num_courses else []
-
-
-def validate_can_finish(num_courses: int, prerequisites: List[Tuple[int, int]]) -> bool:
-    """
-    Topological sort approach
-
-    :param num_courses: total number of courses labeled from 0 to n-1
-    :param prerequisites: prerequisites to take each course, list of (course_to_take, course_depend_on)
-    :return: if it is possible to finish all courses
-    """
-    # Topological Sort
-    enable_courses: List[List[int]] = [[] for _ in range(num_courses)]
-    unfinished_prerequisites: List[int] = [0] * num_courses
-
-    for course_to_take, course_depend_on in prerequisites:
-        unfinished_prerequisites[course_to_take] += 1
-        enable_courses[course_depend_on].append(course_to_take)
-
-    running_deque: Deque[int] = deque()
-    for next_course in range(num_courses):
-        if unfinished_prerequisites[next_course] == 0:
-            running_deque.append(next_course)
-
-    can_do = 0
-    while running_deque:
-        completed = running_deque.popleft()
-        can_do += 1
-        for new_course in enable_courses[completed]:
-            unfinished_prerequisites[new_course] -= 1
-            if unfinished_prerequisites[new_course] == 0:
-                running_deque.append(new_course)
-
-    return can_do == num_courses
+ return can_do == num_courses
 
 
-def validate_order(num_courses: int, prerequisites: List[Tuple[int, int]], course_order: List[int]) -> bool:
-    """
-    :param num_courses: total number of courses labeled from 0 to n-1
-    :param prerequisites: prerequisites to take each course, list of (course_to_take, course_depend_on)
-    :param course_order: the proposed order to take the courses
-    :return: whether the proposed course_order satisfies the prerequisites requirements
-    """
-    course_order_map = {course_id: order_id for order_id, course_id in enumerate(course_order)}
-    return len(course_order_map) == num_courses and \
-           all(course_order_map[course_to_take] > course_order_map[course_depend_on]
-               for course_to_take, course_depend_on in prerequisites)
-
-
-test_cases = [(2, [(1, 0)]),
-              (2, [(1, 0), (0, 1)]),
-              (4, [(1, 0), (2, 0), (3, 1), (3, 2)]),
-              (1, []),
+test_cases = [(2, [(1, 0)], True),
+              (2, [(1, 0), (0, 1)], False),
               (800,
                [(695, 229), (199, 149), (443, 397), (258, 247), (781, 667), (350, 160), (678, 629), (467, 166),
                 (500, 450), (477, 107), (483, 151), (792, 785), (752, 368), (659, 623), (316, 224), (487, 268),
@@ -214,9 +164,22 @@ test_cases = [(2, [(1, 0)]),
                 (714, 701), (643, 71), (357, 69), (649, 459), (789, 541), (626, 5), (752, 619), (711, 267), (639, 12),
                 (750, 364), (620, 249), (769, 721), (636, 97), (233, 15), (171, 72), (488, 421), (251, 139), (750, 98),
                 (199, 64), (768, 344), (759, 537), (435, 154), (425, 185), (336, 221), (418, 395), (390, 136),
-                (618, 603)]), ]
-for test_course_count, test_prerequisites in test_cases:
-    get_order = find_order(num_courses=test_course_count, prerequisites=test_prerequisites)
-    can_finish_courses = validate_can_finish(test_course_count, test_prerequisites)
-    assert (can_finish_courses and validate_order(test_course_count, test_prerequisites, get_order)) or \
-           (not can_finish_courses and get_order == [])
+                (618, 603)], True),
+              (100,
+               [(6, 27), (83, 9), (10, 95), (48, 67), (5, 71), (18, 72), (7, 10), (92, 4), (68, 84), (6, 41), (82, 41),
+                (18, 54), (0, 2), (1, 2), (8, 65), (47, 85), (39, 51), (13, 78), (77, 50), (70, 56), (5, 61), (26, 56),
+                (18, 19), (35, 49), (79, 53), (40, 22), (8, 19), (60, 56), (48, 50), (20, 70), (35, 12), (99, 85),
+                (12, 75), (2, 36), (36, 22), (21, 15), (98, 1), (34, 94), (25, 41), (65, 17), (1, 56), (43, 96),
+                (74, 57), (19, 62), (62, 78), (50, 86), (46, 22), (10, 13), (47, 18), (20, 66), (83, 66), (51, 47),
+                (23, 66), (87, 42), (25, 81), (60, 81), (25, 93), (35, 89), (65, 92), (87, 39), (12, 43), (75, 73),
+                (28, 96), (47, 55), (18, 11), (29, 58), (78, 61), (62, 75), (60, 77), (13, 46), (97, 92), (4, 64),
+                (91, 47), (58, 66), (72, 74), (28, 17), (29, 98), (53, 66), (37, 5), (38, 12), (44, 98), (24, 31),
+                (68, 23), (86, 52), (79, 49), (32, 25), (90, 18), (16, 57), (60, 74), (81, 73), (26, 10), (54, 26),
+                (57, 58), (46, 47), (66, 54), (52, 25), (62, 91), (6, 72), (81, 72), (50, 35), (59, 87), (21, 3),
+                (4, 92), (70, 12), (48, 4), (9, 23), (52, 55), (43, 59), (49, 26), (25, 90), (52, 0), (55, 8), (7, 23),
+                (97, 41), (0, 40), (69, 47), (73, 68), (10, 6), (47, 9), (64, 24), (95, 93), (79, 66), (77, 21),
+                (80, 69), (85, 5), (24, 48), (74, 31), (80, 76), (81, 27), (71, 94), (47, 82), (3, 24), (66, 61),
+                (52, 13), (18, 38), (1, 35), (32, 78), (7, 58), (26, 58), (64, 47), (60, 6), (62, 5), (5, 22), (60, 54),
+                (49, 40), (11, 56), (19, 85), (65, 58), (88, 44), (86, 58)], False), ]
+for test_num_courses, test_prerequisites, expected_out in test_cases:
+ assert can_finish(test_num_courses, test_prerequisites) is expected_out
