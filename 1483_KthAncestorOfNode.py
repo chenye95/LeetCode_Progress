@@ -7,7 +7,7 @@ such ancestor, return -1.
 
 The k-th ancestor of a tree node is the k-th node in the path from that node to the root.
 """
-from typing import List
+from typing import List, Tuple
 
 
 class TreeAncestor:
@@ -16,32 +16,29 @@ class TreeAncestor:
 
     def __init__(self, n: int, parent: List[int]):
         """
-        Binary Lifting: pre-compute 2^0 = 1, 2^1 = 2, 2^2 = 4, 2^3 = 8th ... level ancestor of node i
+        Binary Lifting: pre-compute 2^0 = 1, 2^1 = 2, 2^2 = 4, 2^3 = 8th ... level ancestor of node child_node
 
         :param n: n nodes numbered 0 to n-1
-        :param parent: parent[i] is the parent of node i
+        :param parent: parent[child_node] is the parent of node child_node
         """
-        # current_jump_ancestor is 2^current_jump-th ancestor
-        # initialize to current_jump = 0 and current_jump_ancestor is 1st ancestor
-        current_jump = 0
+        # current_jump_ancestor is 2^current_jump_count-th ancestor
+        # initialize to current_jump_count = 0 and current_jump_ancestor is 1st ancestor
+        current_jump_count = 0
         current_jump_ancestors = {i: parent_i for i, parent_i in enumerate(parent)}
         jump_map = [current_jump_ancestors]
-        has_next_jump = True
 
-        while current_jump < self.PRE_COMPUTE_MAX_JUMP and has_next_jump:
-            has_next_jump = False
-            # next_jump_ancestor is 2^(current_jump+1)-th ancestor
-            next_jump_ancestor = {}
-            for i in current_jump_ancestors:
-                if current_jump_ancestors.get(current_jump_ancestors[i], self.NONE_EXISTENCE) != self.NONE_EXISTENCE:
+        while current_jump_count < self.PRE_COMPUTE_MAX_JUMP and current_jump_ancestors:
+            # next_jump_ancestors is 2^(current_jump_count+1)-th ancestor
+            next_jump_ancestors = {}
+            for child_node in current_jump_ancestors:
+                if current_jump_ancestors[child_node] in current_jump_ancestors:
                     # Exists next jump node
-                    next_jump_ancestor[i] = current_jump_ancestors[current_jump_ancestors[i]]
-                    has_next_jump = True
-            current_jump_ancestors = next_jump_ancestor
+                    next_jump_ancestors[child_node] = current_jump_ancestors[current_jump_ancestors[child_node]]
+            current_jump_ancestors = next_jump_ancestors
             jump_map.append(current_jump_ancestors)
-            current_jump += 1
+            current_jump_count += 1
 
-        self.PRE_COMPUTE_MAX_JUMP = current_jump
+        self.PRE_COMPUTE_MAX_JUMP = current_jump_count
         self.jump_map = jump_map
 
     def get_kth_ancestor(self, node: int, k: int) -> int:
@@ -55,7 +52,7 @@ class TreeAncestor:
         """
         jump = self.PRE_COMPUTE_MAX_JUMP
         while k > 0 and node >= 0:
-            # find the leading 1 in binary representation of node
+            # find the leading 1 in binary representation of k
             if k >= 1 << jump:
                 node = self.jump_map[jump].get(node, self.NONE_EXISTENCE)
                 if node == self.NONE_EXISTENCE:
@@ -66,17 +63,22 @@ class TreeAncestor:
         return node
 
 
+def generate_test_cases(n: int, parent_list: List[int], parameters: List[Tuple[int, int]], expected_output: List[int]):
+    assert len(parameters) == len(expected_output)
+    test_obj = TreeAncestor(n, parent_list)
+    for node_id_k, expected_node in zip(parameters, expected_output):
+        test_node, test_k = node_id_k
+        if expected_node == -1:
+            assert test_obj.get_kth_ancestor(test_node, test_k) == test_obj.NONE_EXISTENCE
+        else:
+            assert test_obj.get_kth_ancestor(test_node, test_k) == expected_node
+
+
 # Your TreeAncestor object will be instantiated and called as such:
 # obj = TreeAncestor(n, parent)
 # param_1 = obj.get_kth_ancestor(node,k)
-test_obj = TreeAncestor(7, [-1, 0, 0, 1, 1, 2, 2])
-assert test_obj.get_kth_ancestor(3, 1) == 1
-assert test_obj.get_kth_ancestor(5, 2) == 0
-assert test_obj.get_kth_ancestor(6, 3) == test_obj.NONE_EXISTENCE
-
-test_obj = TreeAncestor(5, [-1, 0, 0, 0, 3])
-assert test_obj.get_kth_ancestor(1, 5) == test_obj.NONE_EXISTENCE
-assert test_obj.get_kth_ancestor(3, 2) == test_obj.NONE_EXISTENCE
-assert test_obj.get_kth_ancestor(0, 1) == test_obj.NONE_EXISTENCE
-assert test_obj.get_kth_ancestor(3, 1) == 0
-assert test_obj.get_kth_ancestor(3, 5) == test_obj.NONE_EXISTENCE
+test_cases = [(7, [-1, 0, 0, 1, 1, 2, 2], [(3, 1), (5, 2), (6, 3)], [1, 0, -1]),
+              (5, [-1, 0, 0, 0, 3], [(1, 5), (3, 2), (0, 1), (3, 1), (3, 5)], [-1, -1, -1, 0, -1]),
+              (50000, [-1] + list(range(49999)), [(43495, 41615), ], [43495 - 41615, ])]
+for test_n, test_parent_list, test_parameters, expected_list in test_cases:
+    generate_test_cases(test_n, test_parent_list, test_parameters, expected_list)
