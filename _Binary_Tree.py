@@ -407,3 +407,24 @@ class ConstructTree:
                 current_node.right = new_node
                 current_node_counter += 1
         return BinaryTree(root=root)
+
+
+class CompareTree:
+    @staticmethod
+    def compare_leetcode_traversal(tree_traversal: List[TREE_NODE_TYPE],
+                                   expected_traversal: List[TREE_NODE_TYPE]) -> bool:
+        return len(tree_traversal) >= len(expected_traversal) and \
+               tree_traversal[:len(expected_traversal)] == expected_traversal and \
+               tree_traversal[len(expected_traversal):] == [None] * (len(tree_traversal) - len(expected_traversal))
+
+    @staticmethod
+    def compare_binary_tree(this_tree: Optional[BinaryTree], that_tree: Optional[BinaryTree]) -> bool:
+        if this_tree is None or that_tree is None:
+            return this_tree is that_tree
+        return this_tree == that_tree
+
+    @staticmethod
+    def compare_tree_node(this_tree_node: Optional[TreeNode], that_tree_node: Optional[TreeNode]) -> bool:
+        if this_tree_node is None or that_tree_node is None:
+            return this_tree_node is that_tree_node
+        return BinaryTree(this_tree_node) == BinaryTree(that_tree_node)
