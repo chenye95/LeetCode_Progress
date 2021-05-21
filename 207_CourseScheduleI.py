@@ -11,36 +11,36 @@ from typing import List, Deque, Tuple
 
 
 def can_finish(num_courses: int, prerequisites: List[Tuple[int, int]]) -> bool:
- """
- Topological sort approach
+    """
+    Topological sort approach
 
- :param num_courses: total number of courses labeled from 0 to n-1
- :param prerequisites: prerequisites to take each course, list of (course_to_take, course_depend_on)
- :return: if it is possible to finish all courses
- """
- # Topological Sort
- enable_courses: List[List[int]] = [[] for _ in range(num_courses)]
- unfinished_prerequisites: List[int] = [0] * num_courses
+    :param num_courses: total number of courses labeled from 0 to n-1
+    :param prerequisites: prerequisites to take each course, list of (course_to_take, course_depend_on)
+    :return: if it is possible to finish all courses
+    """
+    # Topological Sort
+    enable_courses: List[List[int]] = [[] for _ in range(num_courses)]
+    unfinished_prerequisites: List[int] = [0] * num_courses
 
- for course_to_take, course_depend_on in prerequisites:
-  unfinished_prerequisites[course_to_take] += 1
-  enable_courses[course_depend_on].append(course_to_take)
+    for course_to_take, course_depend_on in prerequisites:
+        unfinished_prerequisites[course_to_take] += 1
+        enable_courses[course_depend_on].append(course_to_take)
 
- running_deque: Deque[int] = deque()
- for next_course in range(num_courses):
-  if unfinished_prerequisites[next_course] == 0:
-   running_deque.append(next_course)
+    running_deque: Deque[int] = deque()
+    for next_course in range(num_courses):
+        if unfinished_prerequisites[next_course] == 0:
+            running_deque.append(next_course)
 
- can_do = 0
- while running_deque:
-  completed = running_deque.popleft()
-  can_do += 1
-  for new_course in enable_courses[completed]:
-   unfinished_prerequisites[new_course] -= 1
-   if unfinished_prerequisites[new_course] == 0:
-    running_deque.append(new_course)
+    can_do = 0
+    while running_deque:
+        completed = running_deque.popleft()
+        can_do += 1
+        for new_course in enable_courses[completed]:
+            unfinished_prerequisites[new_course] -= 1
+            if unfinished_prerequisites[new_course] == 0:
+                running_deque.append(new_course)
 
- return can_do == num_courses
+    return can_do == num_courses
 
 
 test_cases = [(2, [(1, 0)], True),
@@ -182,4 +182,4 @@ test_cases = [(2, [(1, 0)], True),
                 (52, 13), (18, 38), (1, 35), (32, 78), (7, 58), (26, 58), (64, 47), (60, 6), (62, 5), (5, 22), (60, 54),
                 (49, 40), (11, 56), (19, 85), (65, 58), (88, 44), (86, 58)], False), ]
 for test_num_courses, test_prerequisites, expected_out in test_cases:
- assert can_finish(test_num_courses, test_prerequisites) is expected_out
+    assert can_finish(test_num_courses, test_prerequisites) is expected_out

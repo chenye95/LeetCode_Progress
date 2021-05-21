@@ -58,8 +58,8 @@ def min_camera_cover_greedy(root: TreeNode) -> int:
         :param parent_node: parent node of current_node
         :return: min number of cameras needed to cover sub tree
         """
-        camera_count = (cover_sub_tree(current_node.left, current_node) if current_node.left else 0) \
-                       + (cover_sub_tree(current_node.right, current_node) if current_node.right else 0)
+        camera_count = (cover_sub_tree(current_node.left, current_node) if current_node.left else 0) + \
+                       (cover_sub_tree(current_node.right, current_node) if current_node.right else 0)
         """
         - if a node has children that is not covered by camera, place a camera
         - if a node has no parent and itself is not covered, place a camera
