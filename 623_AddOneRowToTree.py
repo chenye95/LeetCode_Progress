@@ -8,7 +8,7 @@ The adding rule is: given a positive integer depth d, for each NOT null tree nod
  depth d is 1 that means there is no depth d-1 at all, then create a tree node with value v as the new root of the whole
  original tree, and the original tree is the new root's left subtree.
 """
-from _Binary_Tree import TreeNode, ConstructTree, BinaryTree
+from _Binary_Tree import TreeNode, BinaryTree, ConstructTree, CompareTree
 
 
 def add_one_row(root: TreeNode, value: int, depth: int) -> TreeNode:
@@ -226,7 +226,5 @@ test_cases = [([], 99, 1, [99]),
                 None, None, None, 8, None, None, None, None, None, None, None, None, None, None, 0, 5, None, 1, 1]), ]
 for test_tree_list, test_value, test_depth, expected_output in test_cases:
     get_tree = BinaryTree(add_one_row((ConstructTree.build_tree_leetcode(test_tree_list).root if test_tree_list
-                                       else None), test_value, test_depth))
-    output_traversal = get_tree.leetcode_traversal()
-    assert output_traversal[:len(expected_output)] == expected_output
-    assert output_traversal[len(expected_output):] == [None] * (len(output_traversal) - len(expected_output))
+                                       else None), test_value, test_depth)).leetcode_traversal()
+    assert CompareTree.compare_leetcode_traversal(get_tree, expected_output)

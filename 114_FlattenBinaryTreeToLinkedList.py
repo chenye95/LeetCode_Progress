@@ -6,7 +6,7 @@ Given the root of a binary tree, flatten the tree into a "linked list":
 """
 from typing import Optional
 
-from _Binary_Tree import TreeNode, ConstructTree
+from _Binary_Tree import TreeNode, ConstructTree, CompareTree
 
 
 def flatten(root: Optional[TreeNode]) -> None:
@@ -46,6 +46,4 @@ for test_tree_list, expected_tree_list in test_cases:
     if test_tree_list:
         test_tree = ConstructTree.build_tree_leetcode(test_tree_list)
         flatten(test_tree.root)
-        new_tree_list = test_tree.leetcode_traversal()
-        assert new_tree_list[:len(expected_tree_list)] == expected_tree_list
-        assert new_tree_list[len(expected_tree_list):] == [None] * (len(new_tree_list) - len(expected_tree_list))
+        assert CompareTree.compare_leetcode_traversal(test_tree.leetcode_traversal(), expected_tree_list)

@@ -11,7 +11,7 @@ Note: This question is the same as 1123: https://leetcode.com/problems/lowest-co
 """
 from typing import Tuple, Optional
 
-from _Binary_Tree import BinaryTree, TreeNode, ConstructTree
+from _Binary_Tree import BinaryTree, TreeNode, ConstructTree, CompareTree
 
 
 def sub_tree_with_all_deepest_nodes(root: TreeNode) -> TreeNode:
@@ -20,13 +20,13 @@ def sub_tree_with_all_deepest_nodes(root: TreeNode) -> TreeNode:
     :return: root of the smallest sub tree with all deepest nodes
     """
 
-    def solve_beneath(current_node: TreeNode) -> Tuple[int, Optional[TreeNode]]:
+    def solve_sub_problem(current_node: TreeNode) -> Tuple[int, Optional[TreeNode]]:
         """
         :param current_node: solve the problem within sub tree beneath current_node
         :return: deepest depth (with the sub tree), and root of the smallest sub tree (within the sub tree)
         """
-        left_depth, left_node = solve_beneath(current_node.left) if current_node.left else (0, None)
-        right_depth, right_node = solve_beneath(current_node.right) if current_node.right else (0, None)
+        left_depth, left_node = solve_sub_problem(current_node.left) if current_node.left else (0, None)
+        right_depth, right_node = solve_sub_problem(current_node.right) if current_node.right else (0, None)
         if left_depth > right_depth:
             # left child has deeper sub tree
             return 1 + left_depth, left_node
@@ -37,7 +37,7 @@ def sub_tree_with_all_deepest_nodes(root: TreeNode) -> TreeNode:
             # two sides have equally deep tree nodes
             return 1 + left_depth, current_node
 
-    return solve_beneath(root)[1]
+    return solve_sub_problem(root)[1]
 
 
 test_cases = [([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4], [2, 7, 4]),
@@ -103,7 +103,5 @@ test_cases = [([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4], [2, 7, 4]),
                 None, 491, None, None, None, None, None, None, None, 460, 275, 224, None, None, None, None, None, None,
                 None, None, 322, 239, 463], [463]), ]
 for test_tree_list, expected_list in test_cases:
-    get_root = sub_tree_with_all_deepest_nodes(ConstructTree.build_tree_leetcode(test_tree_list).root)
-    get_tree = BinaryTree(get_root).leetcode_traversal()
-    assert get_tree[:len(expected_list)] == expected_list
-    assert get_tree[len(expected_list):] == [None] * (len(get_tree) - len(expected_list))
+    got_tree = BinaryTree(sub_tree_with_all_deepest_nodes(ConstructTree.build_tree_leetcode(test_tree_list).root))
+    assert CompareTree.compare_leetcode_traversal(got_tree.leetcode_traversal(), expected_list)

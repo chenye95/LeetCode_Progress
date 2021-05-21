@@ -9,7 +9,7 @@ Write a data structure CBTInserter that is initialized with a complete binary tr
     complete, and returns the value of the parent of the inserted TreeNode;
 - CBTInserter.get_root() will return the head node of the tree.
 """
-from _Binary_Tree import TreeNode, TREE_NODE_TYPE, ConstructTree, BinaryTree
+from _Binary_Tree import TreeNode, TREE_NODE_TYPE, BinaryTree, ConstructTree, CompareTree
 
 
 class CBTInserter:
@@ -68,5 +68,4 @@ for test_input in test_cases:
     for test_add_val, test_parent_val in test_input[1: -1]:
         assert test_object.insert(test_add_val) == test_parent_val
     get_tree = BinaryTree(test_object.get_root()).leetcode_traversal()
-    assert get_tree[:len(test_input[-1])] == test_input[-1]
-    assert get_tree[len(test_input[-1]):] == [None] * (len(get_tree) - len(test_input[-1]))
+    assert CompareTree.compare_leetcode_traversal(get_tree, test_input[-1])

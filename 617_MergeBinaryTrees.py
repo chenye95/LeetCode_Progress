@@ -12,7 +12,7 @@ Note: The merging process must start from the root nodes of both trees.
 """
 from typing import Optional
 
-from _Binary_Tree import TreeNode, ConstructTree, BinaryTree
+from _Binary_Tree import TreeNode, ConstructTree, BinaryTree, CompareTree
 
 
 def merge_trees(root1: Optional[TreeNode], root2: Optional[TreeNode]) -> Optional[TreeNode]:
@@ -261,5 +261,4 @@ for test_tree_1, test_tree_2, expected_tree in test_cases:
     get_tree = BinaryTree(merge_trees((ConstructTree.build_tree_leetcode(test_tree_1).root if test_tree_1 else None),
                                       (ConstructTree.build_tree_leetcode(test_tree_2).root if test_tree_2 else None)))
     get_tree_traversal = get_tree.leetcode_traversal()
-    assert get_tree_traversal[:len(expected_tree)] == expected_tree
-    assert get_tree_traversal[len(expected_tree):] == [None] * (len(get_tree_traversal) - len(expected_tree))
+    assert CompareTree.compare_leetcode_traversal(get_tree_traversal, expected_tree)
