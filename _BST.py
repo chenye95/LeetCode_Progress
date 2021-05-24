@@ -311,3 +311,29 @@ class BST(BinaryTree):
                 return current_node.val
             current_node = current_node.right
         return None
+
+    def trim_boundary(self, low_val: TREE_NODE_TYPE, high_val: TREE_NODE_TYPE) -> None:
+        """
+        Recursively remove all nodes whose values that are out of [low_val, high_val]
+
+        :param low_val: remove all nodes that are strictly less than low_val
+        :param high_val: remove all nodes that are strictly greater than low_val
+        :return: in place update; may replace the root of binary_tree
+        """
+
+        def _trim_boundary_helper(current_node: TreeNode) -> TreeNode:
+            if not current_node:
+                return current_node
+
+            if current_node.val < low_val:
+                # root and its left tree will be dropped
+                return _trim_boundary_helper(current_node.right)
+            elif current_node.val > high_val:
+                # root and its right tree will be dropped
+                return _trim_boundary_helper(current_node.left)
+
+            current_node.left = _trim_boundary_helper(current_node.left)
+            current_node.right = _trim_boundary_helper(current_node.right)
+            return current_node
+
+        self.root = _trim_boundary_helper(self.root)

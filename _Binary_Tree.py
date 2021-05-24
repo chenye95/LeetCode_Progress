@@ -266,32 +266,6 @@ class BinaryTree:
         left_view_add_new_layer(self.root, 0)
         return left_view
 
-    def trim_boundary(self, low_val: TREE_NODE_TYPE, high_val: TREE_NODE_TYPE) -> None:
-        """
-        Recursively remove all nodes whose values that are out of [low_val, high_val]
-
-        :param low_val: remove all nodes that are strictly less than low_val
-        :param high_val: remove all nodes that are strictly greater than low_val
-        :return: in place update; may replace the root of binary_tree
-        """
-
-        def _trim_boundary_helper(current_node: TreeNode) -> TreeNode:
-            if not current_node:
-                return current_node
-
-            if current_node.val < low_val:
-                # root and its left tree will be dropped
-                return _trim_boundary_helper(current_node.right)
-            elif current_node.val > high_val:
-                # root and its right tree will be dropped
-                return _trim_boundary_helper(current_node.left)
-
-            current_node.left = _trim_boundary_helper(current_node.left)
-            current_node.right = _trim_boundary_helper(current_node.right)
-            return current_node
-
-        self.root = _trim_boundary_helper(self.root)
-
     def max_width(self) -> int:
         """
         :return: maximum width in the tree
@@ -319,13 +293,12 @@ class BinaryTree:
 
 
 class ConstructTree:
-    """
-    Assuming TreeNodes Contain Unique Values
-    """
 
     @staticmethod
     def build_tree_pre_in(preorder: List[TREE_NODE_TYPE], inorder: List[TREE_NODE_TYPE]) -> Optional[BinaryTree]:
         """
+        Assuming TreeNodes Contain Unique Values
+
         :parameter preorder: preorder representation of the tree
         :parameter inorder: inorder representation of the tree
         :return: BinaryTree object of the tree; or None if the lists are empty
@@ -353,6 +326,8 @@ class ConstructTree:
     @staticmethod
     def build_tree_in_post(inorder: List[TREE_NODE_TYPE], postorder: List[TREE_NODE_TYPE]) -> Optional[BinaryTree]:
         """
+        Assuming TreeNodes Contain Unique Values
+
         :parameter inorder: inorder representation of the tree
         :parameter postorder: postorder representation of the tree
         :return: BinaryTree object of the tree; or None if the lists are empty
@@ -410,6 +385,10 @@ class ConstructTree:
 
 
 class CompareTree:
+    """
+    Compare both tree structure and tree node values
+    """
+
     @staticmethod
     def compare_leetcode_traversal(tree_traversal: List[TREE_NODE_TYPE],
                                    expected_traversal: List[TREE_NODE_TYPE]) -> bool:
