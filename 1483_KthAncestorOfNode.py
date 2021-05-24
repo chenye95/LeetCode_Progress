@@ -63,15 +63,13 @@ class TreeAncestor:
         return node
 
 
-def generate_test_cases(n: int, parent_list: List[int], parameters: List[Tuple[int, int]], expected_output: List[int]):
+def run_test_case(n: int, parent_list: List[int], parameters: List[Tuple[int, int]], expected_output: List[int]):
     assert len(parameters) == len(expected_output)
     test_obj = TreeAncestor(n, parent_list)
     for node_id_k, expected_node in zip(parameters, expected_output):
         test_node, test_k = node_id_k
-        if expected_node == -1:
-            assert test_obj.get_kth_ancestor(test_node, test_k) == test_obj.NONE_EXISTENCE
-        else:
-            assert test_obj.get_kth_ancestor(test_node, test_k) == expected_node
+        assert test_obj.get_kth_ancestor(test_node, test_k) == (expected_node if expected_node != -1
+                                                                else test_obj.NONE_EXISTENCE)
 
 
 # Your TreeAncestor object will be instantiated and called as such:
@@ -81,4 +79,4 @@ test_cases = [(7, [-1, 0, 0, 1, 1, 2, 2], [(3, 1), (5, 2), (6, 3)], [1, 0, -1]),
               (5, [-1, 0, 0, 0, 3], [(1, 5), (3, 2), (0, 1), (3, 1), (3, 5)], [-1, -1, -1, 0, -1]),
               (50000, [-1] + list(range(49999)), [(43495, 41615), ], [43495 - 41615, ])]
 for test_n, test_parent_list, test_parameters, expected_list in test_cases:
-    generate_test_cases(test_n, test_parent_list, test_parameters, expected_list)
+    run_test_case(test_n, test_parent_list, test_parameters, expected_list)
