@@ -1,7 +1,7 @@
 from copy import deepcopy
 
 from _BST import BST
-from _Binary_Tree import TreeNode, ConstructTree
+from _Binary_Tree import TreeNode, ConstructTree, CompareTree
 from _Linked_List import LinkedList
 
 values = list(range(1, 19, 2))
@@ -170,3 +170,15 @@ test_cases = [([10, 5, 15, 3, 7, None, 18], 7, 15, 32),
 for test_tree_list, test_low, test_high, expected_output in test_cases:
     assert BST(ConstructTree.build_tree_leetcode(test_tree_list).root).range_accumulate(test_low,
                                                                                         test_high) == expected_output
+
+
+# Test Binary Tree Trim Boundary
+test_cases = [([1, 0, 2], 1, 2, [1, None, 2]),
+              ([3, 0, 4, None, 2, None, None, 1], 1, 3, [3, 2, None, 1]),
+              ([1], 1, 2, [1]),
+              ([1, None, 2], 1, 3, [1, None, 2]),
+              ([1, None, 2], 2, 4, [2]), ]
+for tree_input, low_input, high_input, expected_output in test_cases:
+    test_tree = BST(ConstructTree.build_tree_leetcode(tree_input).root)
+    test_tree.trim_boundary(low_input, high_input)
+    assert CompareTree.compare_leetcode_traversal(test_tree.leetcode_traversal(), expected_output)
