@@ -29,10 +29,10 @@ class LRUCache(Cache):
         else:
             return self.NOT_FOUND
 
-    def put(self, key: int, value: Any) -> None:
+    def put(self, key: int, val: Any) -> None:
         if key in self.lookup_table:
             node = self.lookup_table[key]
-            node.val = value
+            node.val = val
             if self.insert_end.prev != node:
                 node.prev.next = node.next
                 node.next.prev = node.prev
@@ -44,13 +44,13 @@ class LRUCache(Cache):
                 node_evict.next.prev = self.delete_end
                 del self.lookup_table[node_evict.key]
                 del node_evict
-            node = CacheNode(key, value)
+            node = CacheNode(key, val)
             self.lookup_table[key] = node
             self._insert_node(node)
 
     def _insert_node(self, node: CacheNode) -> None:
         """
-        :param node:iInsert to the end of the list, before the INSERT_END
+        :param node: insert to the end of the list, before the INSERT_END
         """
         self.insert_end.prev.next = node
         node.prev = self.insert_end.prev

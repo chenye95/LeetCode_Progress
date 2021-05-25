@@ -44,9 +44,9 @@ class UnweightedGraph:
 
     def find_path_generator(self, start: NODE, end: NODE) -> GeneratorType:
         """
-        :return: list[list] each list is a valid path from start to end
+        :return: list[list] each list is a valid path from start to end.
         Note: no re-visiting nodes allowed in the path.
-        Only exception is start == end, idx.e finding cycles
+        Only exception is start == end, i.e. finding cycles
         """
         fringe = [(start, [start])]
         while fringe:
@@ -94,10 +94,6 @@ class UndirectedUnweightedGraph(UnweightedGraph):
             return [path for path in self.find_path_generator(start, end) if len(path) != 3]
 
     def cycles(self) -> List[List[NODE]]:
-        """
-        Cannot reuse node or path
-        :return: list of cycles in the graph
-        """
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v) if len(cycle_v) != 3]
 
 
@@ -115,7 +111,7 @@ class DirectedUnweightedGraph(UnweightedGraph):
     def cycles(self) -> List[List[NODE]]:
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v)]
 
-    def topological_order(self) -> (bool, List[NODE]):
+    def topological_order(self) -> Tuple[bool, List[NODE]]:
         """
         :return: a tuple of (bool, list)
             True, list representing topological order of the directed graph, topological order exists
