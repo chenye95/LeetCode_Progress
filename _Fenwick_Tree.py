@@ -1,5 +1,5 @@
 from math import log2
-from typing import List, Union
+from typing import List, Union, Optional
 
 
 class FenwickTree:
@@ -90,13 +90,16 @@ class FenwickTree:
             self.bit_array[tree_idx] += by_val
             tree_idx += (tree_idx & -tree_idx)
 
-    def set_at_i(self, i: int, old_val: NUMBER_TYPE, new_val: NUMBER_TYPE) -> None:
+    def set_at_i(self, i: int, old_val: Optional[NUMBER_TYPE] = None, new_val: NUMBER_TYPE = 0) -> None:
         """
         :param i: Replace frequency at idx position by new_val
-        :param old_val: Old frequency at idx
+        :param old_val: Old frequency at idx; can use None to stand in for old_val
         :param new_val: Replace frequency at idx position by new_val
         """
-        self.increment_at_i(i, new_val - old_val)
+        if old_val is not None:
+            self.increment_at_i(i, new_val - old_val)
+        else:
+            self.increment_at_i(i, new_val - self.at_idx_i(i))
 
     def find_cumulative_sum(self, cumulative_sum: NUMBER_TYPE) -> int:
         """

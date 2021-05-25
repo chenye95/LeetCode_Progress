@@ -22,6 +22,7 @@ class SkipListNode:
                  down: SkipListNode = None):
         """
         Compress duplicate nodes under one nodes and keep track of duplicate count
+
         :param value: value of SkipListNode, needs to be comparable
         :param count: duplicate count
         :param next: SkipListNode: point to next neighbor in the current level
@@ -68,8 +69,7 @@ class SkipList:
 
     def add(self, value: SkipList_Value_Type) -> None:
         """
-        if value exists in SkipList, increase count by 1
-        if doesn't exist yet, create a node for value
+        :param value: If value exists in SkipList, increase count by 1. If doesn't exist yet, create a node for value
         """
         current_node = self.lists[-1][0]
         current_level = len(self.lists) - 1
@@ -101,9 +101,9 @@ class SkipList:
             current_level += 1
 
         if self.lists[-1][1] > self.split_threshold:
-            self.add_new_level()
+            self._add_new_level()
 
-    def add_new_level(self) -> None:
+    def _add_new_level(self) -> None:
         """
         Helper function to create a new level for faster lookup
         """
@@ -123,8 +123,8 @@ class SkipList:
 
     def erase(self, num: SkipList_Value_Type) -> bool:
         """
-        if value exists in SkipList, decreases count by 1
-        if drops to zero, remove the node
+        :param num: If value exists in SkipList, decreases count by 1. If drops to zero, remove the node
+        :return: num previously exists in the Skip List
         """
         erased = remove_node = False
         current_node, current_level = self.lists[-1][0], len(self.lists) - 1

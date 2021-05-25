@@ -73,6 +73,7 @@ class WeightedGraph:
     def cycles(self) -> List[List[NODE_TYPE]]:
         """
         Cannot reuse node or path
+
         :return: list[list[node]] each is a cycle in the graph
         """
         pass
@@ -81,8 +82,9 @@ class WeightedGraph:
                      path_update_function: Callable[[float, float], float],
                      path_selection_function: Callable[[float, float], bool]) -> Dict[NODE_TYPE, float]:
         """
-        Implements Bellman Fort algorithm to compute weight path from start_node
+        Implements Bellman Fort algorithm to compute weight path from start_node.
         Supports negative weight in Directed Acyclic Graph
+
         :param start_node: start node to compute path from
         :param start_node_value: value for path from start_node to start_node
         :param path_initial_value: initial value for path start at start_node
@@ -118,6 +120,9 @@ class UndirectedWeightedGraph(WeightedGraph):
             self.Edge[v][u] = weight
 
     def set_edge_weight(self, u: NODE_TYPE, v: NODE_TYPE, weight: float) -> None:
+        """
+        Undirected graph, both <u, v> and <v, u> will be updated to weight
+        """
         assert u in self.Vertex and v in self.Vertex
         self.Edge[u][v] = weight
         if u != v:
@@ -134,9 +139,6 @@ class UndirectedWeightedGraph(WeightedGraph):
             return [path for path in self.find_path_generator(start, end) if len(path) != 3]
 
     def cycles(self) -> List[List[NODE_TYPE]]:
-        """
-        Cannot reuse node or path
-        """
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v) if len(cycle_v) != 3]
 
     def edge_list(self) -> List[Tuple[NODE_TYPE, NODE_TYPE, float]]:
@@ -146,6 +148,7 @@ class UndirectedWeightedGraph(WeightedGraph):
         """
         Run Kruskal's algorithm to generate one Minimum Spanning Tree from the Undirected Weighted Graph
         please note that MST may not be unique
+
         :return: weight of MST and list of edges in MST
         """
         total_weight, mst_edges = 0, []
@@ -166,6 +169,7 @@ class UndirectedWeightedGraph(WeightedGraph):
         remove edges from the tree so that the remaining graph is a Minimum Spanning Tree
         MST found through Kruskal methods
         please note that the result is a MST, not necessarily the unique MST
+
         :return: weight of MST
         """
         total_weight = 0
@@ -184,10 +188,16 @@ class UndirectedWeightedGraph(WeightedGraph):
 
 class DirectedWeightedGraph(WeightedGraph):
     def add_edge(self, u: NODE_TYPE, v: NODE_TYPE, weight: float) -> None:
+        """
+        Directed graph, only add <u, v>
+        """
         assert u in self.Vertex and v in self.Vertex
         self.Edge[u][v] = weight
 
     def set_edge_weight(self, u: NODE_TYPE, v: NODE_TYPE, weight: float) -> None:
+        """
+        Directed graph, only weight of <u, v> will be updated
+        """
         assert u in self.Vertex and v in self.Vertex
         self.Edge[u][v] = weight
 
@@ -195,9 +205,6 @@ class DirectedWeightedGraph(WeightedGraph):
         return [path for path in self.find_path_generator(start, end)]
 
     def cycles(self) -> List[List[NODE_TYPE]]:
-        """
-        Cannot reuse node or path
-        """
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v)]
 
     def topological_order(self) -> (bool, List[NODE_TYPE]):

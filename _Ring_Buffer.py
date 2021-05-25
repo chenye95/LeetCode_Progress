@@ -68,18 +68,10 @@ class RingBuffer:
 
 class RingBufferList(RingBuffer):
     def __init__(self, k: int):
-        """
-        :param k: initializes the object with the size of the queue to be k
-        """
         super().__init__(k)
         self.queue_list: List[Any] = []
 
     def enqueue(self, value: Any) -> bool:
-        """
-        Inserts an element into the circular queue.
-
-        :return: whether the operation is successful
-        """
         if len(self.queue_list) >= self.queue_capacity:
             return False
         else:
@@ -87,11 +79,6 @@ class RingBufferList(RingBuffer):
             return True
 
     def dequeue(self) -> bool:
-        """
-        Delete an element from the circular queue.
-
-        :return: whether the operation is
-        """
         if not self.queue_list:
             return False
         else:
@@ -99,39 +86,20 @@ class RingBufferList(RingBuffer):
             return True
 
     def front(self) -> Any:
-        """
-        Operation does not pop the first element from the queue
-
-        :return: the first item from the queue. return NONE_VALUE if queue is empty
-        """
         return self.queue_list[0] if self.queue_list else self.NONE_VALUE
 
     def rear(self) -> Any:
-        """
-        Operation does not pop the last element from the queue
-
-        :return: the last item from the queue. return NONE_VALUE if queue is empty
-        """
         return self.queue_list[-1] if self.queue_list else self.NONE_VALUE
 
     def is_empty(self) -> bool:
-        """
-        :return: whether the circular queue is empty
-        """
         return not self.queue_list
 
     def is_full(self) -> bool:
-        """
-        :return: whether the circular queue is full.
-        """
         return len(self.queue_list) >= self.queue_capacity
 
 
 class RingBufferTwoPointer(RingBuffer):
     def __init__(self, k: int):
-        """
-        :param k: initializes the object with the size of the queue to be k
-        """
         super().__init__(k)
         self.queue_list: List[Any] = [self.NONE_VALUE] * k
         self.queue_head: int = 0
@@ -139,11 +107,6 @@ class RingBufferTwoPointer(RingBuffer):
         self.queue_count: int = 0
 
     def enqueue(self, value: Any) -> bool:
-        """
-        Inserts an element into the circular queue.
-
-        :return: whether the operation is successful
-        """
         if self.queue_count >= self.queue_capacity:
             return False
         else:
@@ -153,11 +116,6 @@ class RingBufferTwoPointer(RingBuffer):
             return True
 
     def dequeue(self) -> bool:
-        """
-        Delete an element from the circular queue.
-
-        :return: whether the operation is
-        """
         if self.queue_count == 0:
             return False
         else:
@@ -166,29 +124,13 @@ class RingBufferTwoPointer(RingBuffer):
             return True
 
     def front(self) -> Any:
-        """
-        Operation does not pop the first element from the queue
-
-        :return: the first item from the queue. return NONE_VALUE if queue is empty
-        """
         return self.NONE_VALUE if self.queue_count == 0 else self.queue_list[self.queue_head]
 
     def rear(self) -> Any:
-        """
-        Operation does not pop the last element from the queue
-
-        :return: the last item from the queue. return NONE_VALUE if queue is empty
-        """
         return self.NONE_VALUE if self.queue_count == 0 else self.queue_list[self.queue_tail]
 
     def is_empty(self) -> bool:
-        """
-        :return: whether the circular queue is empty
-        """
         return self.queue_count == 0
 
     def is_full(self) -> bool:
-        """
-        :return: whether the circular queue is full.
-        """
         return self.queue_count >= self.queue_capacity

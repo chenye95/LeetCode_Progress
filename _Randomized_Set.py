@@ -12,8 +12,8 @@ class RandomizedSet:
 
     def insert(self, val: Any) -> bool:
         """
-        Inserts a value to the set
-        :return if the set did not already contain the specified element.
+        :param val: inserts a value to the set
+        :return: if the set did not already contain the specified element.
         """
         if val in self.pos_to_obj_lookup:
             return False
@@ -24,7 +24,7 @@ class RandomizedSet:
 
     def remove(self, val: Any) -> bool:
         """
-        Removes a value from the set
+        :param val: removes a value from the set
         :return if the set contained the specified element.
         """
         if val not in self.pos_to_obj_lookup:
@@ -36,7 +36,7 @@ class RandomizedSet:
         del self.pos_to_obj_lookup[val]
         return True
 
-    def getRandom(self) -> Any:
+    def get_random(self) -> Any:
         """
         Get a unweighted random element from the set
         :return an object if the collection is not empty or None otherwise

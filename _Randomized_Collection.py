@@ -14,8 +14,9 @@ class RandomizedCollection:
     def insert(self, val: Any) -> bool:
         """
         Inserts a value to the collection or increment its weight by 1
-        :parameter val needs to be hashable
-        :return whether the collection did not already contain the specified element.
+
+        :parameter val: needs to be hashable
+        :return: whether the collection did not already contain the specified element.
         """
         flag_new_obj = val not in self.values_in_collections
         if flag_new_obj:
@@ -28,8 +29,9 @@ class RandomizedCollection:
     def remove(self, val: Any) -> bool:
         """
         Decrease weight of val by 1 if it exists
-        :parameter val needs to be hashable
-        :return if the collection contained the specified element.
+
+        :parameter val: needs to be hashable
+        :return: if the collection contained the specified element.
         """
         if val not in self.values_in_collections:
             return False
@@ -47,7 +49,7 @@ class RandomizedCollection:
         self.total_counter -= 1
         return True
 
-    def getRandom(self) -> Any:
+    def get_random(self) -> Any:
         """
         Get a random element from the collection according to its weigh
         """

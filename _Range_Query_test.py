@@ -3,6 +3,8 @@ from operator import add
 from random import randint
 
 from _Range_Query import ActiveRangeQuery, LazyQueryRange
+from _Range_Query import RangeQueryLazyMaxReplacement, RangeQueryLazySumReplacement, RangeQueryLazySumIncrement, \
+    RangeQueryActiveSumReplacement, RangeQueryActiveSumIncrement, RangeQueryActiveMaxReplacement
 
 # Sum Range Query Tree
 starting_arr = [18, 17, 13, 19, 15, 11, 20, 12, 33, 25]
@@ -22,6 +24,26 @@ randint_a, randint_b = -15, 50
 print("Testing Active Range Query Sum Increment")
 arr = deepcopy(starting_arr)
 tester = ActiveRangeQuery(arr, merge_function=add, update_function=add)
+assert tester.range_query_tree == expected_sum_range_tree
+for i in range(len(arr)):
+    for j in range(i, len(arr)):
+        assert tester.query_segment_tree(i, j) == sum(arr[i:j + 1])
+
+arr_update_fn, arr_eval_fn = add, sum
+for at_i in range(len(arr)):
+    inc_i = randint(randint_a, randint_b)
+    arr[at_i] = arr_update_fn(arr[at_i], inc_i)
+    assert tester.update_segment_tree(at_index=at_i, value=inc_i)
+    for i in range(len(arr)):
+        for j in range(i, len(arr)):
+            expected_value = arr_eval_fn(arr[i:j + 1])
+            got_value = tester.query_segment_tree(i, j)
+            assert expected_value == got_value, '%d with Increment %d, Expected %d Got %d' % (at_i, inc_i,
+                                                                                              expected_value, got_value)
+
+print("\tTesting Active Range Query Sum Increment Class")
+arr = deepcopy(starting_arr)
+tester = RangeQueryActiveSumIncrement(arr)
 assert tester.range_query_tree == expected_sum_range_tree
 for i in range(len(arr)):
     for j in range(i, len(arr)):
@@ -59,9 +81,49 @@ for at_i in range(len(arr)):
             assert expected_value == got_value, '%d with New Value %d, Expected %d Got %d' % (at_i, new_value,
                                                                                               expected_value, got_value)
 
+print("\tTesting Active Range Query Sum Replacement Class")
+arr = deepcopy(starting_arr)
+tester = RangeQueryActiveSumReplacement(arr)
+assert tester.range_query_tree == expected_sum_range_tree
+for i in range(len(arr)):
+    for j in range(i, len(arr)):
+        assert tester.query_segment_tree(i, j) == sum(arr[i:j + 1])
+
+arr_update_fn, arr_eval_fn = lambda old_value, to_new_value: to_new_value, sum
+for at_i in range(len(arr)):
+    new_value = randint(randint_a, randint_b)
+    arr[at_i] = arr_update_fn(arr[at_i], new_value)
+    assert tester.update_segment_tree(at_index=at_i, value=new_value)
+    for i in range(len(arr)):
+        for j in range(i, len(arr)):
+            expected_value = arr_eval_fn(arr[i:j + 1])
+            got_value = tester.query_segment_tree(i, j)
+            assert expected_value == got_value, '%d with New Value %d, Expected %d Got %d' % (at_i, new_value,
+                                                                                              expected_value, got_value)
+
 print("Testing Active Range Query Max Replacement")
 arr = deepcopy(starting_arr)
 tester = ActiveRangeQuery(arr, merge_function=max, update_function=lambda old_value, to_new_value: to_new_value)
+assert tester.range_query_tree == expected_max_range_tree
+for i in range(len(arr)):
+    for j in range(i, len(arr)):
+        assert tester.query_segment_tree(i, j) == max(arr[i:j + 1])
+
+arr_update_fn, arr_eval_fn = lambda old_value, to_new_value: to_new_value, max
+for at_i in range(len(arr)):
+    new_value = randint(randint_a, randint_b)
+    arr[at_i] = arr_update_fn(arr[at_i], new_value)
+    assert tester.update_segment_tree(at_index=at_i, value=new_value)
+    for i in range(len(arr)):
+        for j in range(i, len(arr)):
+            expected_value = arr_eval_fn(arr[i:j + 1])
+            got_value = tester.query_segment_tree(i, j)
+            assert expected_value == got_value, '%d with New Value %d, Expected %d Got %d' % (at_i, new_value,
+                                                                                              expected_value, got_value)
+
+print("\tTesting Active Range Query Max Replacement Class")
+arr = deepcopy(starting_arr)
+tester = RangeQueryActiveMaxReplacement(arr)
 assert tester.range_query_tree == expected_max_range_tree
 for i in range(len(arr)):
     for j in range(i, len(arr)):
@@ -99,6 +161,25 @@ for start in range(len(arr)):
         expected = arr_eval_fn(arr[start:end + 1])
         assert got == expected, '%d-%d with inc %d, Expected %d Got %d' % (start, end, inc_i, expected, got)
 
+print("\tTesting Lazy Range Query Sum Increment Class")
+arr = deepcopy(starting_arr)
+tester = RangeQueryLazySumIncrement(arr)
+assert tester.range_query_tree == expected_sum_range_tree
+for i in range(len(arr)):
+    for j in range(i, len(arr)):
+        assert tester.query_segment_tree(i, j) == sum(arr[i:j + 1])
+
+arr_update_fn, arr_eval_fn = add, sum
+for start in range(len(arr)):
+    for end in range(start, len(arr)):
+        inc_i = randint(randint_a, randint_b)
+        for i in range(start, end + 1):
+            arr[i] = arr_update_fn(arr[i], inc_i)
+        tester.range_update(start, end, inc_i)
+        got = tester.query_segment_tree(start, end)
+        expected = arr_eval_fn(arr[start:end + 1])
+        assert got == expected, '%d-%d with inc %d, Expected %d Got %d' % (start, end, inc_i, expected, got)
+
 print("Testing Lazy Range Query Sum Replacement")
 arr = deepcopy(starting_arr)
 tester = LazyQueryRange(arr, merge_function=add,
@@ -119,10 +200,48 @@ for start in range(len(arr)):
         expected = arr_eval_fn(arr[start:end + 1])
         assert got == expected, '%d-%d with New Value %d, Expected %d Got %d' % (start, end, new_value, expected, got)
 
+print("\tTesting Lazy Range Query Sum Replacement Class")
+arr = deepcopy(starting_arr)
+tester = RangeQueryLazySumReplacement(arr)
+assert tester.range_query_tree == expected_sum_range_tree
+for i in range(len(arr)):
+    for j in range(i, len(arr)):
+        assert tester.query_segment_tree(i, j) == sum(arr[i:j + 1])
+
+arr_update_fn, arr_eval_fn = lambda old_value, to_new_value: to_new_value, sum
+for start in range(len(arr)):
+    for end in range(start, len(arr)):
+        new_value = randint(randint_a, randint_b)
+        for i in range(start, end + 1):
+            arr[i] = arr_update_fn(arr[i], new_value)
+        tester.range_update(start, end, new_value)
+        got = tester.query_segment_tree(start, end)
+        expected = arr_eval_fn(arr[start:end + 1])
+        assert got == expected, '%d-%d with New Value %d, Expected %d Got %d' % (start, end, new_value, expected, got)
+
 print("Testing Lazy Range Query Max Replacement")
 arr = deepcopy(starting_arr)
 tester = LazyQueryRange(arr, merge_function=max,
                         range_update_function=lambda old_value, lo, hi, to_new_value: to_new_value)
+assert tester.range_query_tree == expected_max_range_tree
+for i in range(len(arr)):
+    for j in range(i, len(arr)):
+        assert tester.query_segment_tree(i, j) == max(arr[i:j + 1])
+
+arr_update_fn, arr_eval_fn = lambda old_value, to_new_value: to_new_value, max
+for start in range(len(arr)):
+    for end in range(start, len(arr)):
+        new_value = randint(randint_a, randint_b)
+        for i in range(start, end + 1):
+            arr[i] = arr_update_fn(arr[i], new_value)
+        tester.range_update(start, end, new_value)
+        got = tester.query_segment_tree(start, end)
+        expected = arr_eval_fn(arr[start:end + 1])
+        assert got == expected, '%d-%d with New Value %d, Expected %d Got %d' % (start, end, new_value, expected, got)
+
+print("\tTesting Lazy Range Query Max Replacement Class")
+arr = deepcopy(starting_arr)
+tester = RangeQueryLazyMaxReplacement(arr)
 assert tester.range_query_tree == expected_max_range_tree
 for i in range(len(arr)):
     for j in range(i, len(arr)):
