@@ -23,8 +23,10 @@ class TreeAncestor:
         """
         # current_jump_ancestor is 2^current_jump_count-th ancestor
         # initialize to current_jump_count = 0 and current_jump_ancestor is 1st ancestor
+        assert len(parent) == n
+
         current_jump_count = 0
-        current_jump_ancestors = {i: parent_i for i, parent_i in enumerate(parent)}
+        current_jump_ancestors = {i: parent_i for i, parent_i in enumerate(parent) if not parent_i < 0}
         jump_map = [current_jump_ancestors]
 
         while current_jump_count < self.PRE_COMPUTE_MAX_JUMP and current_jump_ancestors:
@@ -66,15 +68,11 @@ class TreeAncestor:
 def run_test_case(n: int, parent_list: List[int], parameters: List[Tuple[int, int]], expected_output: List[int]):
     assert len(parameters) == len(expected_output)
     test_obj = TreeAncestor(n, parent_list)
-    for node_id_k, expected_node in zip(parameters, expected_output):
-        test_node, test_k = node_id_k
+    for (test_node, test_k), expected_node in zip(parameters, expected_output):
         assert test_obj.get_kth_ancestor(test_node, test_k) == (expected_node if expected_node != -1
                                                                 else test_obj.NONE_EXISTENCE)
 
 
-# Your TreeAncestor object will be instantiated and called as such:
-# obj = TreeAncestor(n, parent)
-# param_1 = obj.get_kth_ancestor(node,k)
 test_cases = [(7, [-1, 0, 0, 1, 1, 2, 2], [(3, 1), (5, 2), (6, 3)], [1, 0, -1]),
               (5, [-1, 0, 0, 0, 3], [(1, 5), (3, 2), (0, 1), (3, 1), (3, 5)], [-1, -1, -1, 0, -1]),
               (50000, [-1] + list(range(49999)), [(43495, 41615), ], [43495 - 41615, ])]
