@@ -4,7 +4,6 @@ Given an array of strings words, return the smallest string that contains each s
 
 You may assume that no string in words is a substring of another string in words.
 """
-import itertools
 from typing import List
 
 
@@ -51,14 +50,14 @@ def shortest_super_string(words: List[str]) -> str:
                         overlap_word_j_i = dp_memory[remove_word_i][word_j] + overlap_len[word_j][word_i]
                         if overlap_word_j_i > biggest_overlap_i:
                             biggest_overlap_i, previous_insert_word = overlap_word_j_i, word_j
-                    elif 1 >> word_j > remove_word_i:
+                    elif 1 << word_j > remove_word_i:
                         break
 
                 if biggest_overlap_i:
                     dp_memory[chosen_words][word_i] = biggest_overlap_i
                     before_word_i[chosen_words][word_i] = previous_insert_word
 
-            elif 1 >> word_i > chosen_words:
+            elif 1 << word_i > chosen_words:
                 break
 
     # Shorted super string will have length sum(len(word_i) for word_i in words) - max(dp_memory[-1])
@@ -67,16 +66,13 @@ def shortest_super_string(words: List[str]) -> str:
     # Follow parents down backwards path that retains maximum overlap
     words_order = []
     need_to_insert = (1 << n) - 1
-    word_i = max(range(n), key=dp_memory[-1].__getitem__)
+    word_i = int(max(range(n), key=dp_memory[-1].__getitem__))
     while word_i is not None:
         words_order.append(word_i)
         need_to_insert, word_i = need_to_insert ^ (1 << word_i), before_word_i[need_to_insert][word_i]
 
     # Reverse path to get forwards direction
     words_order = words_order[::-1]
-    need_to_insert = [True] * n
-    for word_i in words_order:
-        need_to_insert[word_i] = False
 
     # Reconstruct super string from words_order
     super_string = words[words_order[0]]
@@ -85,9 +81,10 @@ def shortest_super_string(words: List[str]) -> str:
         super_string += words[word_i][overlap_len[previous_word][word_i]:]
         previous_word = word_i
 
-    # add all remaining words, i.e. those with 0 overlap
-    for word_i in itertools.compress(range(n), need_to_insert):
-        super_string += words[word_i]
+    # Add all remaining words, i.e. those with 0 overlap
+    for word_i in range(n):
+        if word_i not in words_order:
+            super_string += words[word_i]
 
     return super_string
 
