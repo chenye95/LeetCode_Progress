@@ -6,10 +6,10 @@ from _Cache_Interface import Cache, CacheNode
 
 class _LFUCacheLinkedList:
     def __init__(self):
-        self.head = CacheNode(-1, None, True)
-        self.tail = CacheNode(-1, None, True)
-        self.head.next = self.tail
-        self.tail.prev = self.head
+        self.dummy_head = CacheNode(-1, None, True)
+        self.dummy_tail = CacheNode(-1, None, True)
+        self.dummy_head.next = self.dummy_tail
+        self.dummy_tail.prev = self.dummy_head
         self.size = 0
 
     def __len__(self) -> int:
@@ -19,10 +19,10 @@ class _LFUCacheLinkedList:
         """
         :param node: insert node to the front of the Double Linked List
         """
-        node.next = self.head.next
-        node.prev = self.head
+        node.next = self.dummy_head.next
+        node.prev = self.dummy_head
         node.next.prev = node
-        self.head.next = node
+        self.dummy_head.next = node
         self.size += 1
 
     def pop(self, node: Optional[CacheNode] = None) -> Optional[CacheNode]:
@@ -31,14 +31,14 @@ class _LFUCacheLinkedList:
         If Node is None, pop the last node in the linked list
 
         :param node: node to be removed from the double linked list, i.e. server tie between node and its prev and next.
-            If node is None, short end for removing the last node of the linked list
+            If node is None, short hand for removing the last node of the linked list
         :return: CacheNode that is removed from the linked list. None if the list is empty
         """
         if self.size == 0:
             return None
 
         if node is None:
-            node = self.tail.prev
+            node = self.dummy_tail.prev
 
         node.prev.next = node.next
         node.next.prev = node.prev
