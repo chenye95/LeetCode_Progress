@@ -6,8 +6,7 @@ as a pair: [0, 1]
 
 Given the total number of courses and a list of prerequisite pairs, is it possible for you to finish all courses?
 """
-from collections import deque
-from typing import List, Deque, Tuple
+from typing import List, Tuple
 
 
 def can_finish(num_courses: int, prerequisites: List[Tuple[int, int]]) -> bool:
@@ -26,14 +25,14 @@ def can_finish(num_courses: int, prerequisites: List[Tuple[int, int]]) -> bool:
         unfinished_prerequisites[course_to_take] += 1
         enable_courses[course_depend_on].append(course_to_take)
 
-    running_deque: Deque[int] = deque()
+    running_deque: List[int] = []
     for next_course in range(num_courses):
         if unfinished_prerequisites[next_course] == 0:
             running_deque.append(next_course)
 
     can_do = 0
     while running_deque:
-        completed = running_deque.popleft()
+        completed = running_deque.pop(0)
         can_do += 1
         for new_course in enable_courses[completed]:
             unfinished_prerequisites[new_course] -= 1

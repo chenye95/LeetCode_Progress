@@ -8,8 +8,7 @@ finish all courses.
 There may be multiple correct orders, you just need to return one of them. If it is impossible to finish all courses,
 return an empty array.
 """
-from collections import deque
-from typing import List, Tuple, Deque
+from typing import List, Tuple
 
 
 def find_order(num_courses: int, prerequisites: List[Tuple[int, int]]) -> List[int]:
@@ -28,14 +27,14 @@ def find_order(num_courses: int, prerequisites: List[Tuple[int, int]]) -> List[i
         unfinished_prerequisites[course_to_take] += 1
         enable_courses[course_depend_on].append(course_to_take)
 
-    running_deque: Deque[int] = deque()
+    running_deque: List[int] = []
     class_order: List[int] = []
     for next_course in range(num_courses):
         if unfinished_prerequisites[next_course] == 0:
             running_deque.append(next_course)
 
     while running_deque:
-        completed = running_deque.popleft()
+        completed = running_deque.pop(0)
         class_order.append(completed)
         for new_course in enable_courses[completed]:
             unfinished_prerequisites[new_course] -= 1
@@ -61,14 +60,14 @@ def validate_can_finish(num_courses: int, prerequisites: List[Tuple[int, int]]) 
         unfinished_prerequisites[course_to_take] += 1
         enable_courses[course_depend_on].append(course_to_take)
 
-    running_deque: Deque[int] = deque()
+    running_deque: List[int] = []
     for next_course in range(num_courses):
         if unfinished_prerequisites[next_course] == 0:
             running_deque.append(next_course)
 
     can_do = 0
     while running_deque:
-        completed = running_deque.popleft()
+        completed = running_deque.pop(0)
         can_do += 1
         for new_course in enable_courses[completed]:
             unfinished_prerequisites[new_course] -= 1

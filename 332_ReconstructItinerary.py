@@ -21,15 +21,16 @@ def find_itinerary(tickets: List[Tuple[str, str]]) -> List[str]:
     :return: itinerary for the person who departs from JFK; return smallest lexical order if multiple valid ones exist
     """
     connection_map = defaultdict(list)
+    # reversed lexical order
     for from_city, to_city in sorted(tickets, reverse=True):
         connection_map[from_city] += [to_city]
 
-    route, stack = [], ['JFK']
+    reversed_route, stack = [], ['JFK']
     while stack:
         while connection_map[stack[-1]]:
             stack.append(connection_map[stack[-1]].pop()),
-        route.append(stack.pop())
-    return route[::-1]
+        reversed_route.append(stack.pop())
+    return reversed_route[::-1]
 
 
 test_cases = [([("ATL", "BOS"), ("BOS", "ZRH"), ("JFK", "ATL"), ("ZRH", "BOS"), ("BOS", "JFK")],

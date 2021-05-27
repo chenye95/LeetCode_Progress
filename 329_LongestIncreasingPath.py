@@ -12,11 +12,16 @@ def longest_increasing_path(matrix: List[List[int]]) -> int:
     DFS with memorization
 
     :param matrix: 2D integer matrix where user can move left, right, up or down (not diagonally or wrap around the
-    boundary)
+        boundary)
     :return: length of the longest increasing path
     """
 
     def dfs_recurse(i: int, j: int) -> int:
+        """
+        :param i: 0 <= i < len(matrix)
+        :param j: 0 <= j < len(matrix[0])
+        :return: length of the longest increasing path, starting from (i, j)
+        """
         if not dp_memory[i][j]:
             current_val = matrix[i][j]
             dp_memory[i][j] = 1 + max(
