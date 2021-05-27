@@ -73,6 +73,9 @@ def letter_combinations_product(digits: str) -> List[str]:
 
 test_cases = [("23", ["ad", "ae", "af", "bd", "be", "bf", "cd", "ce", "cf"]),
               ("", []),
+              ("234",
+               ["adg", "adh", "adi", "aeg", "aeh", "aei", "afg", "afh", "afi", "bdg", "bdh", "bdi", "beg", "beh", "bei",
+                "bfg", "bfh", "bfi", "cdg", "cdh", "cdi", "ceg", "ceh", "cei", "cfg", "cfh", "cfi"]),
               ("2", ["a", "b", "c"]),
               ("5678",
                ["jmpt", "jmpu", "jmpv", "jmqt", "jmqu", "jmqv", "jmrt", "jmru", "jmrv", "jmst", "jmsu", "jmsv", "jnpt",
