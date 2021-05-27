@@ -46,4 +46,4 @@ test_cases = [("32", 3),
                "55757557577555557557577575557557775575777575555577755557757757777757555555557575777577775577777555757" +
                "755755777775777775", 7), ]
 for test_n, expected_count in test_cases:
-    assert min_partitions(test_n) == expected_count
+    assert min_partitions(test_n) == expected_count, test_n
