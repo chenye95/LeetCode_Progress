@@ -5,7 +5,7 @@ AllOne() Initializes the object of the data structure.
 - decrement(String key) Decrements the count of the string key by 1. If the count of key is 0 after the decrement,
     remove it from the data structure. It is guaranteed that key exists in the data structure before the decrement.
 - get_max_key() Returns one of the keys with the maximal count. If no element exists, return an empty string "".
-- getMinKey() Returns one of the keys with the minimum count. If no element exists, return an empty string "".
+- get_min_key() Returns one of the keys with the minimum count. If no element exists, return an empty string "".
 """
 from typing import Dict, Set, List, Optional
 
