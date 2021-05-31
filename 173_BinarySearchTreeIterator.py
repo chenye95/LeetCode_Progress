@@ -52,7 +52,7 @@ class BSTIteratorStack(BinaryTreeIterator):
 
     def next(self) -> Optional[TREE_NODE_TYPE]:
         """
-        This call will not destruct the tree structure
+        Stack approach: this call will not destruct the tree structure
 
         :return: moves the pointer to the right, then returns the value at the pointer
         """
@@ -82,7 +82,7 @@ class BSTIteratorMorrisTraversal(BinaryTreeIterator):
 
     def next(self) -> Optional[TREE_NODE_TYPE]:
         """
-        This call will not destruct the tree structure
+        Morris traversal: this call will destruct the tree structure, temporarily
 
         :return: moves the pointer to the right, then returns the value at the pointer
         """

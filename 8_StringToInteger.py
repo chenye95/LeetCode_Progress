@@ -25,7 +25,7 @@ def my_atoi(s: str) -> int:
     :param s: string that we want to convert to integer
     :return: clamped to 32 bit signed int if s is an integer, or zero otherwise
     """
-    i, sign = 0, 1
+    i, positive_number = 0, True
     return_result = 0
 
     int_max, int_min = (1 << 31) - 1, -(1 << 31)
@@ -39,17 +39,18 @@ def my_atoi(s: str) -> int:
 
     # Check if optional sign if it exists
     if i < len(s) and (s[i] == '+' or s[i] == '-'):
-        sign = -1 if (s[i] == '-') else 1
+        if s[i] == '-':
+            positive_number = False
         i += 1
 
     # Build result:
     while i < len(s) and '0' <= s[i] <= '9':
         if return_result > int_max // 10 or (return_result == int_max // 10 and ord(s[i]) - ord('0') > int_max % 10):
-            return int_max if sign == 1 else int_min
+            return int_max if positive_number else int_min
         return_result = return_result * 10 + ord(s[i]) - ord('0')
         i += 1
 
-    return return_result * sign
+    return return_result if positive_number else -return_result
 
 
 test_cases = [("42", 42),

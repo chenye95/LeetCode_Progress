@@ -1,8 +1,6 @@
 """
 Given the root of a binary tree, check whether it is a mirror of itself (i.e., symmetric around its center).
 """
-from collections import deque
-
 from _Binary_Tree import TreeNode, ConstructTree
 
 
@@ -11,10 +9,10 @@ def is_symmetric(root: TreeNode) -> bool:
     :param root: root a non empty binary tree
     :return: whether the tree mirror around the center line
     """
-    tree_node_queue = deque([root.left, root.right])
+    tree_node_queue = [root.left, root.right]
     while tree_node_queue:
-        left_tree_node = tree_node_queue.popleft()
-        right_tree_node = tree_node_queue.popleft()
+        left_tree_node = tree_node_queue.pop(0)
+        right_tree_node = tree_node_queue.pop(0)
         if left_tree_node is None and right_tree_node is None:
             continue
         if left_tree_node is None or right_tree_node is None or left_tree_node.val != right_tree_node.val:

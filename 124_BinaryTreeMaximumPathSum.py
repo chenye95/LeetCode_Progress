@@ -18,14 +18,14 @@ def max_path_sum(root: TreeNode) -> int:
         :return: max value of the path ends at node. return 0 if the max path is negative
         """
         nonlocal global_max
-        if not node:
-            return 0
-        left_max = max_path_end_at_node(node.left)
-        right_max = max_path_end_at_node(node.right)
+        left_max = max_path_end_at_node(node.left) if node.left else 0
+        right_max = max_path_end_at_node(node.right) if node.right else 0
         global_max = max(global_max, left_max + node.val + right_max)
         return max(node.val + max(left_max, right_max), 0)
 
     global_max = -2 ** 31 + 1
+    if not root:
+        return 0
     max_path_end_at_node(root)
     return global_max
 

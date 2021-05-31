@@ -11,7 +11,7 @@ def combination_sum_iv(nums: List[int], target: int) -> int:
     """
     Dynamic Programming Approach
 
-    :param nums: array of distinct integers, may be negative
+    :param nums: array of distinct integers, 1 <= nums[i] <= 1000 and 1 <= len(nums) <= 200
     :param target: find combinations of nums (repeatable) that add up to target
     :return: number of possible combinations that add up to target
     """

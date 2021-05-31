@@ -34,8 +34,7 @@ class MinStack:
         :return: pop from top the stack, or None if stack is empty
         """
         if self.internal_stack:
-            return_val, _ = self.internal_stack.pop()
-            return return_val
+            return self.internal_stack.pop()[0]
         else:
             return None
 

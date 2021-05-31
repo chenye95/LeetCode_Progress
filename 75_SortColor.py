@@ -38,7 +38,7 @@ def sort_color(nums: List[int]) -> None:
 
 
 for i in range(100):
-    if i % 10 == 0:
+    if i % 20 == 0:
         print('Testing case %d' % i)
     test_case_input = [randint(0, 2) for _ in range(10000)]
     test_case_output = sorted(test_case_input)

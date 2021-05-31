@@ -15,7 +15,7 @@ def num_distinct(s: str, t: str) -> int:
         return 0
 
     # Sub problem with t[:t_i] and s[:s_i] if t[t_i] is matched up with s[s_i]
-    dp = [[0] * (len(s)) for _ in range(len(t))]
+    dp = [[0] * len(s) for _ in range(len(t))]
 
     for t_i in range(len(t)):
         for s_i in range(len(s)):
@@ -25,6 +25,9 @@ def num_distinct(s: str, t: str) -> int:
 
 
 test_cases = [("BABGBAG", "BAG", 5),
-              ("rabbbit", "rabbit", 3), ]
+              ("rabbbit", "rabbit", 3),
+              ("anacondastreetracecar", "contra", 6),
+              ("aabdbaabeeadcbbdedacbbeecbabebaeeecaeabaedadcbdbcdaabebdadbbaeabdadeaabbabbecebbebcaddaacccebeaeedaba" +
+               "bedeacdeaaaeeaecbe", "bddabdcae", 10582116), ]
 for test_s, test_t, expected_output in test_cases:
     assert num_distinct(s=test_s, t=test_t) == expected_output

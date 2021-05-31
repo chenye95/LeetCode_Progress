@@ -16,40 +16,40 @@ def add_binary(a: str, b: str) -> str:
     elif b == '0':
         return a
 
-    singe_bit_lookup_map = {('0', '0'): 0,
-                            ('0', '1'): 1,
-                            ('1', '0'): 1,
-                            ('1', '1'): 2}
+    singe_bit_lookup_map = {('0', '0', 0): ('0', 0),
+                            ('0', '1', 0): ('1', 0),
+                            ('1', '0', 0): ('1', 0),
+                            ('1', '1', 0): ('0', 1),
+                            ('0', '0', 1): ('1', 0),
+                            ('0', '1', 1): ('0', 1),
+                            ('1', '0', 1): ('0', 1),
+                            ('1', '1', 1): ('1', 1), }
 
     # Ensure the two strings of same length
-    len_diff = len(a) - len(b)
-    if len_diff > 0:
-        b = '0' * len_diff + b
-    else:
-        a = '0' * (-len_diff) + a
+    short_str, long_str = (a[::-1], b[::-1]) if len(a) < len(b) else (b[::-1], a[::-1])
 
-    result = ['0'] * len(a)
-
+    result = ['0'] * len(long_str)
     carry_bit = 0
-    l = len(a) - 1
-    while l >= 0:
-        s = singe_bit_lookup_map[(a[l], b[l])] + carry_bit
-        if s >= 2:
-            carry_bit = 1
-            if s == 3:
-                result[l] = '1'
-        else:
-            carry_bit = 0
-            if s == 1:
-                result[l] = '1'
-        l -= 1
-    if carry_bit:
-        return '1' + ''.join(result)
+
+    bit_i = 0
+    while bit_i < len(short_str):
+        result[bit_i], carry_bit = singe_bit_lookup_map[(short_str[bit_i], long_str[bit_i], carry_bit)]
+        bit_i += 1
+
+    while bit_i < len(long_str) and carry_bit:
+        result[bit_i], carry_bit = singe_bit_lookup_map[('0', long_str[bit_i], carry_bit)]
+        bit_i += 1
+
+    if bit_i < len(long_str):
+        return ''.join(long_str[bit_i:])[::-1] + ''.join(result[:bit_i])[::-1]
+    elif carry_bit:
+        return '1' + ''.join(result[:bit_i])[::-1]
     else:
-        return ''.join(result)
+        return ''.join(result[:bit_i])[::-1]
 
 
 test_cases = [("1010", "1011", "10101"),
-              ("11", "1", "100"), ]
+              ("11", "1", "100"),
+              ("100", "110010", "110110"), ]
 for test_a, test_b, expected_c in test_cases:
     assert add_binary(a=test_a, b=test_b) == expected_c

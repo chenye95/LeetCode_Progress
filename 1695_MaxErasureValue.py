@@ -34,6 +34,7 @@ def max_unique_sub_array(nums: List[int]) -> int:
         else:
             window_values.add(num_window_end)
             window_sum += num_window_end
+            # since num_window_end is guaranteed to be positive, do NOT need to update max_value every time
 
     return max(max_value, window_sum)
 
