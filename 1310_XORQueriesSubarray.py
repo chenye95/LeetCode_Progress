@@ -7,17 +7,17 @@ from typing import List, Tuple
 
 
 def xorQueries(arr: List[int], queries: List[Tuple[int, int]]) -> List[int]:
-    """
-    :param arr: array of positive integers
-    :param queries: list of queries of form [Li, Ri]
-    :return: return arr[Li] xor arr[Li+1] xor .... xor arr[Ri]
-    """
-    # pre_compute[i] = arr[0] ^ ... ^ arr[i - 1]
-    # and pre_compute[0] = 0
-    pre_compute = [0] * (len(arr) + 1)
-    for i in range(len(arr)):
-        pre_compute[i + 1] = pre_compute[i] ^ arr[i]
-    return [pre_compute[Ri + 1] ^ pre_compute[Li] for Li, Ri in queries]
+ """
+ :param arr: array of positive integers
+ :param queries: list of queries of form [Li, Ri]
+ :return: return arr[Li] xor arr[Li+1] xor .... xor arr[Ri]
+ """
+ # pre_compute[i] = arr[0] ^ ... ^ arr[i - 1]
+ # and pre_compute[0] = 0
+ pre_compute = [0] * (len(arr) + 1)
+ for i, arr_i in enumerate(arr):
+  pre_compute[i + 1] = pre_compute[i] ^ arr_i
+ return [pre_compute[Ri + 1] ^ pre_compute[Li] for Li, Ri in queries]
 
 
 test_cases = [([1, 3, 4, 8], [(0, 1), (1, 2), (0, 3), (3, 3)], [2, 7, 14, 8]),
