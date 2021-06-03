@@ -81,9 +81,11 @@ class Trie:
         def dfs_explore_words(exploring_node: defaultdict, word_so_far: str) -> None:
             for c in sorted(exploring_node.keys()):
                 if c != self.end_of_word:
-                    dfs_explore_words(exploring_node[c], word_so_far + c)
+                    if len(words_list) < max_recommendation:
+                        dfs_explore_words(exploring_node[c], word_so_far + c)
                 else:
                     words_list.append(word_so_far)
+
                 if len(words_list) >= max_recommendation:
                     return
 
