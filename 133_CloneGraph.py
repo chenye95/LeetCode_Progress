@@ -3,18 +3,18 @@ Given a reference of a node in a connected undirected graph.
 
 Return a deep copy (clone) of the graph.
 
-Each node in the graph contains a value (int) and a list (List[Node]) of its neighbors.
+Each node in the graph contains a value (int) and a list (List[GraphNode]) of its neighbors.
 """
 from typing import List, Optional
 
 
-class Node:
-    def __init__(self, val: int = 0, neighbors: Optional[List['Node']] = None):
+class GraphNode:
+    def __init__(self, val: int = 0, neighbors: Optional[List['GraphNode']] = None):
         self.val = val
-        self.neighbors = neighbors if neighbors else []
+        self.neighbors: List[GraphNode] = neighbors if neighbors else []
 
 
-def clone_graph(node: Optional[Node]) -> Optional[Node]:
+def clone_graph(node: Optional[GraphNode]) -> Optional[GraphNode]:
     """
     Graph with 0 to 100 nodes
     - node.val in [1, 100] (1 indexed) unique for each node
@@ -27,23 +27,23 @@ def clone_graph(node: Optional[Node]) -> Optional[Node]:
     if node is None:
         return None
 
-    clone_copy: List[Optional[Node]] = [None] * 101
-    clone_copy[1] = Node(1)
+    clone_copy: List[Optional[GraphNode]] = [None] * 101
+    clone_copy[1] = GraphNode(1)
     visiting_list = [node]
 
     while visiting_list:
-        current_visiting = visiting_list.pop()
-        copy_node_neighbors = clone_copy[current_visiting.val].neighbors
-        for neighbor in current_visiting.neighbors:
-            if not clone_copy[neighbor.val]:
-                clone_copy[neighbor.val] = Node(neighbor.val)
-                visiting_list.append(neighbor)
-            copy_node_neighbors.append(clone_copy[neighbor.val])
+        current_node = visiting_list.pop()
+        copy_node_neighbors = clone_copy[current_node.val].neighbors
+        for neighbor_node in current_node.neighbors:
+            if not clone_copy[neighbor_node.val]:
+                clone_copy[neighbor_node.val] = GraphNode(neighbor_node.val)
+                visiting_list.append(neighbor_node)
+            copy_node_neighbors.append(clone_copy[neighbor_node.val])
 
     return clone_copy[1]
 
 
-def create_test_case(adjacent_list: List[List[int]]) -> Optional[Node]:
+def create_test_case(adjacent_list: List[List[int]]) -> Optional[GraphNode]:
     """
     :param adjacent_list: 0 <= len(adjacent_list) <= 100
     :return: first node in the graph
@@ -51,14 +51,14 @@ def create_test_case(adjacent_list: List[List[int]]) -> Optional[Node]:
     if not adjacent_list:
         return None
 
-    node_list = [Node(i + 1) for i in range(len(adjacent_list))]
-    for node_i, i_neighbors in zip(node_list, adjacent_list):
-        node_i.neighbors = [node_list[node_j - 1] for node_j in i_neighbors]
+    node_list = [GraphNode(i) for i in range(len(adjacent_list) + 1)]
+    for node_i, i_neighbors in zip(node_list[1:], adjacent_list):
+        node_i.neighbors = [node_list[node_j] for node_j in i_neighbors]
 
-    return node_list[0]
+    return node_list[1]
 
 
-def create_adjacent_list(cloned_node: Optional[Node]) -> List[List[int]]:
+def create_adjacent_list(cloned_node: Optional[GraphNode]) -> List[List[int]]:
     """
     :param cloned_node: cloned node of the first node in the graph
     :return: adjacency list for the cloned graph
@@ -77,7 +77,7 @@ def create_adjacent_list(cloned_node: Optional[Node]) -> List[List[int]]:
                 visiting_list.append(neighbor)
                 not_explored_list[neighbor.val] = False
 
-    return [adjacent_node_i[i + 1] for i in range(len(adjacent_node_i))]
+    return [adjacent_node_i[i] for i in range(1, len(adjacent_node_i) + 1)]
 
 
 test_cases = [[[2, 4], [1, 3], [2, 4], [1, 3]], [[]], [], [[2], [1]],
