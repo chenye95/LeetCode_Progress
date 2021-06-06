@@ -13,22 +13,19 @@ def total_n_queens_solutions(n: int) -> int:
     """
 
     def place_one_queen_on_row(current_row: int,
-                               column_attack: List[bool], diagonal_attack: List[bool], anti_diagonal_attack: List[bool],
-                               chessboard_state: List[List[bool]]) -> int:
+                               column_attack: List[bool],
+                               diagonal_attack: List[bool], anti_diagonal_attack: List[bool]) -> int:
         """
         :param current_row: trying to place a queen on current_row
         :param column_attack: True if a queen already exists on the ith column
         :param diagonal_attack: True if a queen already exists on a diagonal
         :param anti_diagonal_attack: True if a queen already exists on a diagonal
-        :param chessboard_state: current state of the chessboard after placing queens on the first (current_row - 1)
-            rows
         :return: number of solutions given existing placement
         """
         if current_row == n:
             return 1
 
         solution_count = 0
-        this_row = chessboard_state[current_row]
         for choose_col in range(n):
             current_diagonal = current_row - choose_col
             current_anti_diagonal = current_row + choose_col
@@ -38,18 +35,17 @@ def total_n_queens_solutions(n: int) -> int:
                 continue
 
             column_attack[choose_col] = diagonal_attack[current_diagonal] = \
-                anti_diagonal_attack[current_anti_diagonal] = this_row[choose_col] = True
+                anti_diagonal_attack[current_anti_diagonal] = True
 
             solution_count += place_one_queen_on_row(current_row + 1,
-                                                     column_attack, diagonal_attack, anti_diagonal_attack,
-                                                     chessboard_state)
+                                                     column_attack, diagonal_attack, anti_diagonal_attack)
 
             column_attack[choose_col] = diagonal_attack[current_diagonal] = \
-                anti_diagonal_attack[current_anti_diagonal] = this_row[choose_col] = False
+                anti_diagonal_attack[current_anti_diagonal] = False
 
         return solution_count
 
-    return place_one_queen_on_row(0, [False] * n, [False] * (2 * n), [False] * (2 * n), [[False] * n for _ in range(n)])
+    return place_one_queen_on_row(0, [False] * n, [False] * (2 * n), [False] * (2 * n))
 
 
 test_cases = [(1, 1),

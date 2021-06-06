@@ -17,23 +17,26 @@ def min_trio_degree(n: int, edges: List[Tuple[int, int]]) -> int:
     :param edges: list of (u_i, v_i); no self loop and no repeated edges; 1 indexed: 1 <= ui, vi <= n
     :return: minimum degree of a connected trio in the graph
     """
-    max_degrees = 3 * n
+    _trio_not_exist = 3 * n
     graph = {i: set() for i in range(1, n + 1)}
     node_degree = {i: 0 for i in range(1, n + 1)}
 
     for a, b in edges:
         # convert to directed graph, from small node to big node
-        graph[min(a, b)].add(max(a, b))
+        if a < b:
+            graph[a].add(b)
+        else:
+            graph[b].add(a)
         node_degree[a] += 1
         node_degree[b] += 1
 
-    min_degree = max_degrees
+    min_degree = _trio_not_exist
     for node_1 in list(graph):
         for node_2 in graph[node_1]:
             for node_3 in graph[node_1] & graph[node_2]:
                 min_degree = min(min_degree, node_degree[node_1] + node_degree[node_2] + node_degree[node_3] - 6)
 
-    return min_degree if min_degree < max_degrees else -1
+    return min_degree if min_degree < _trio_not_exist else -1
 
 
 test_cases = [(6, [(1, 2), (1, 3), (3, 2), (4, 1), (5, 2), (3, 6)], 3),
@@ -51,6 +54,8 @@ test_cases = [(6, [(1, 2), (1, 3), (3, 2), (4, 1), (5, 2), (3, 6)], 3),
                 [5, 2], [10, 1], [8, 13], [13, 9], [1, 7], [2, 6], [15, 6], [5, 4], [4, 6], [4, 15], [8, 6], [13, 2],
                 [10, 12], [2, 8], [7, 4], [12, 3], [3, 9], [14, 9], [13, 4], [1, 2], [10, 14], [6, 10], [12, 5],
                 [14, 2], [14, 11], [8, 1], [8, 10], [11, 6], [11, 15], [2, 12], [6, 12], [15, 8], [6, 5], [4, 14],
-                [11, 1], [8, 14], [11, 10], [7, 6], [12, 11], [5, 8], [8, 7], [9, 6], [11, 3], [2, 9], [15, 12]], 21), ]
+                [11, 1], [8, 14], [11, 10], [7, 6], [12, 11], [5, 8], [8, 7], [9, 6], [11, 3], [2, 9], [15, 12]], 21),
+              (10, [(i, j) for i in range(1, 11) for j in range(1, i)], 21),
+              ]
 for test_n, test_graph, expected_degree in test_cases:
     assert min_trio_degree(test_n, test_graph) == expected_degree

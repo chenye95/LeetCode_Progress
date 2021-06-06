@@ -34,8 +34,8 @@ def min_number_semesters_bfs(n: int, relations: List[Tuple[int, int]], k: int) -
         """
         enabled_courses = []
         for course_i in range(n):
-            if not ((1 << course_i) & have_taken_mask) and \
-                    (dependencies[course_i] & have_taken_mask == dependencies[course_i]):
+            if not (1 << course_i) & have_taken_mask and \
+                    dependencies[course_i] & have_taken_mask == dependencies[course_i]:
                 enabled_courses.append(1 << course_i)
         return enabled_courses
 
@@ -47,7 +47,7 @@ def min_number_semesters_bfs(n: int, relations: List[Tuple[int, int]], k: int) -
         """
         if have_taken_mask + 1 == 1 << n:
             return 0
-        next_batch = can_take(have_taken_mask)
+        next_batch: List[int] = can_take(have_taken_mask)
         if len(next_batch) <= k:
             return 1 + min_semester_after(have_taken_mask + sum(next_batch))
         else:
@@ -59,7 +59,7 @@ def min_number_semesters_bfs(n: int, relations: List[Tuple[int, int]], k: int) -
     # dependencies is zero-indexed
     dependencies = [0] * n
     for prerequisite, next_course in relations:
-        dependencies[next_course - 1] |= (1 << (prerequisite - 1))
+        dependencies[next_course - 1] |= 1 << (prerequisite - 1)
     return min_semester_after()
 
 

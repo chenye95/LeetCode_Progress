@@ -20,9 +20,7 @@ def count_points_trigonometry(points: List[Tuple[int, int]], queries: List[Tuple
     :return: count of points in the jth circle
     """
     point_count = [0] * len(queries)
-    j = -1
-    for x_j, y_j, r_j in queries:
-        j += 1
+    for j, (x_j, y_j, r_j) in enumerate(queries):
         for x_i, y_i in points:
             if (x_i - x_j) ** 2 + (y_i - y_j) ** 2 <= r_j ** 2:
                 point_count[j] += 1
@@ -48,7 +46,7 @@ test_cases = [([(1, 3), (3, 3), (5, 3), (2, 2)], [(2, 3, 1), (4, 3, 1), (1, 1, 2
                 (105, 191), (83, 117), (114, 35), (0, 111), (22, 53)],
                [(105, 191, 155), (114, 35, 94), (84, 83, 68), (175, 154, 28), (99, 113, 80), (175, 154, 177),
                 (175, 154, 181), (114, 35, 134), (22, 53, 105), (124, 29, 164), (6, 99, 39), (84, 83, 35)],
-               [11, 7, 8, 2, 7, 11, 13, 10, 10, 14, 3, 3])]
-for count_points in [count_points_trigonometry, count_points_complex]:
+               [11, 7, 8, 2, 7, 11, 13, 10, 10, 14, 3, 3]), ]
+for count_points in [count_points_trigonometry, count_points_complex, ]:
     for test_points, test_circles, expected_count in test_cases:
-        assert count_points(test_points, test_circles) == expected_count
+        assert count_points(test_points, test_circles) == expected_count, count_points.__name__
