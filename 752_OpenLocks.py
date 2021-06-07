@@ -40,8 +40,8 @@ def open_lock(dead_ends: List[str], target: str, starting_position: str = "0000"
                       '7': ('8', '6'),
                       '8': ('9', '7'),
                       '9': ('0', '8'), }
-    explore_from_start = {starting_position}
-    explore_from_target = {target}
+    explore_from_start = {starting_position, }
+    explore_from_target = {target, }
 
     turn_count = 0
     while explore_from_start and explore_from_target:
@@ -51,9 +51,6 @@ def open_lock(dead_ends: List[str], target: str, starting_position: str = "0000"
         next_explore_step = set()
 
         for current_position in explore_from_set:
-            if current_position in other_set:
-                return turn_count
-
             for i, c_i in enumerate(current_position):
                 turn_next, turn_before = turn_transform[c_i]
                 for next_position in (current_position[:i] + turn_before + current_position[i + 1:],
