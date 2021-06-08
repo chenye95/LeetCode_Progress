@@ -303,25 +303,22 @@ class ConstructTree:
         :parameter inorder: inorder representation of the tree
         :return: BinaryTree object of the tree; or None if the lists are empty
         """
-
         def build_tree_helper(preorder_s: int, preorder_e: int, inorder_s: int, inorder_e: int) -> TreeNode:
             current_x = preorder[preorder_s]
-            current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)
             left_tree_len = inorder_x - inorder_s
-            if inorder_x > inorder_s:
-                current_root_node.left = build_tree_helper(preorder_s + 1, preorder_s + left_tree_len,
-                                                           inorder_s, inorder_x - 1)
-            if inorder_x < inorder_e:
-                current_root_node.right = build_tree_helper(preorder_s + left_tree_len + 1,
-                                                            preorder_e, inorder_x + 1, inorder_e)
-            return current_root_node
+            return TreeNode(current_x,
+                            left=build_tree_helper(preorder_s + 1, preorder_s + left_tree_len,
+                                                   inorder_s, inorder_x - 1)
+                            if inorder_x > inorder_s else None,
+                            right=build_tree_helper(preorder_s + left_tree_len + 1,
+                                                    preorder_e, inorder_x + 1, inorder_e)
+                            if inorder_x < inorder_e else None)
 
         if not preorder or not inorder:
             return None
         assert len(preorder) == len(inorder)
-        root_node = build_tree_helper(0, len(preorder) - 1, 0, len(inorder) - 1)
-        return BinaryTree(root=root_node)
+        return BinaryTree(root=build_tree_helper(0, len(preorder) - 1, 0, len(inorder) - 1))
 
     @staticmethod
     def build_tree_in_post(inorder: List[TREE_NODE_TYPE], postorder: List[TREE_NODE_TYPE]) -> Optional[BinaryTree]:
@@ -332,25 +329,22 @@ class ConstructTree:
         :parameter postorder: postorder representation of the tree
         :return: BinaryTree object of the tree; or None if the lists are empty
         """
-
         def build_tree_helper(inorder_s: int, inorder_e: int, postorder_s: int, postorder_e: int) -> TreeNode:
             current_x = postorder[postorder_e]
-            current_root_node = TreeNode(current_x)
             inorder_x = inorder.index(current_x)
             left_tree_len = inorder_x - inorder_s
-            if inorder_x > inorder_s:
-                current_root_node.left = build_tree_helper(inorder_s, inorder_x - 1,
-                                                           postorder_s, postorder_s + left_tree_len - 1)
-            if inorder_x < inorder_e:
-                current_root_node.right = build_tree_helper(inorder_x + 1, inorder_e,
-                                                            postorder_s + left_tree_len, postorder_e - 1)
-            return current_root_node
+            return TreeNode(current_x,
+                            left=build_tree_helper(inorder_s, inorder_x - 1,
+                                                   postorder_s, postorder_s + left_tree_len - 1)
+                            if inorder_x > inorder_s else None,
+                            right=build_tree_helper(inorder_x + 1, inorder_e,
+                                                    postorder_s + left_tree_len, postorder_e - 1)
+                            if inorder_x < inorder_e else None)
 
         if not inorder or not postorder:
             return None
         assert len(inorder) == len(postorder)
-        root_node = build_tree_helper(0, len(inorder) - 1, 0, len(postorder) - 1)
-        return BinaryTree(root=root_node)
+        return BinaryTree(root=build_tree_helper(0, len(inorder) - 1, 0, len(postorder) - 1))
 
     @staticmethod
     def build_tree_leetcode(node_list: List[TREE_NODE_TYPE]) -> Optional[BinaryTree]:
