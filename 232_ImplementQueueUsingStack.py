@@ -21,12 +21,14 @@ from typing import List, Optional
 
 
 class MyQueue:
+    EMPTY_QUEUE = None
+
     def __init__(self):
         """
         Initialize your data structure here.
         """
-        self._stack_1 = []
-        self._stack_2 = []
+        self.stack_1 = []
+        self.stack_2 = []
 
     def push(self, x: int) -> None:
         """
@@ -57,93 +59,102 @@ class MyQueueHeavyPush(MyQueue):
     def push(self, x: int) -> None:
         """
         Push element x to the back of queue.
+
+        Complexity: O(n)
         """
-        if not self._stack_1:
-            self._front = x
-        while self._stack_1:
-            self._stack_2.append(self._stack_1.pop())
-        self._stack_1.append(x)
-        while self._stack_2:
-            self._stack_1.append(self._stack_2.pop())
+        while self.stack_1:
+            self.stack_2.append(self.stack_1.pop())
+        self.stack_1.append(x)
+        while self.stack_2:
+            self.stack_1.append(self.stack_2.pop())
 
     def pop(self) -> int:
         """
         Removes the element from in front of queue and returns that element.
+
+        Complexity: O(1)
         """
-        return self._stack_1.pop()
+        return self.stack_1.pop() if self.stack_1 else self.EMPTY_QUEUE
 
     def peek(self) -> int:
         """
         Get the front element.
+
+        Complexity: O(1)
         """
-        return self._stack_1[-1]
+        return self.stack_1[-1] if self.stack_1 else self.EMPTY_QUEUE
 
     def empty(self) -> bool:
         """
         Returns whether the queue is empty.
         """
-        return not self._stack_1
+        return not self.stack_1
 
 
 class MyQueueHeavyPop(MyQueue):
     def __init__(self):
         super().__init__()
-        self._front = None
+        self.front = self.EMPTY_QUEUE
 
     def push(self, x: int) -> None:
         """
         Push element x to the back of queue.
+
         Complexity: O(1)
         """
-        if not self._stack_1:
+        if not self.stack_1:
             self.front = x
-        self._stack_1.append(x)
+        self.stack_1.append(x)
 
     def pop(self) -> int:
         """
         Removes the element from in front of queue and returns that element.
+
         Complexity: Amortized O(1); Worst Case O(n)
         """
-        if not self._stack_2:
-            while self._stack_1:
-                self._stack_2.append(self._stack_1.pop())
-        return self._stack_2.pop()
+        if not self.stack_2:
+            while self.stack_1:
+                self.stack_2.append(self.stack_1.pop())
+            self.front = self.EMPTY_QUEUE
+        return self.stack_2.pop() if self.stack_2 else self.EMPTY_QUEUE
 
     def peek(self) -> int:
         """
         Get the front element.
+
         Complexity: O(1)
         """
-        return self._stack_2[-1] if self._stack_2 else self.front
+        return self.stack_2[-1] if self.stack_2 else self.front
 
     def empty(self) -> bool:
         """
         Returns whether the queue is empty.
         """
-        return not self._stack_1 and not self._stack_2
+        return not self.stack_1 and not self.stack_2
 
 
-def run_simulation(object_class, instructions: List[str], parameters: List[List],
+def run_simulation(test_object: MyQueue, instructions: List[str], parameters: List[List],
                    expected_output: List[Optional[int]]) -> None:
-    test_object = object_class()
     for i in range(1, len(instructions)):
         next_instruction, next_parameter, expected_value = instructions[i], parameters[i], expected_output[i]
         if next_instruction == "push":
             test_object.push(next_parameter[0])
         elif next_instruction == "pop":
-            assert test_object.pop() == expected_value
+            assert test_object.pop() == expected_value, test_object.__class__
         elif next_instruction == "peek":
-            assert test_object.peek() == expected_value
+            assert test_object.peek() == expected_value, test_object.__class__
         else:
-            assert test_object.empty() is expected_value
+            assert test_object.empty() is expected_value, test_object.__class__
 
 
-test_cases = [(["MyQueue", "push", "push", "pop", "push", "push", "pop", "peek"],
-               [[], [1], [2], [], [3], [4], [], []],
-               [None, None, None, 1, None, None, 2, 3]),
-              (["MyQueue", "push", "push", "peek", "pop", "empty"],
-               [[], [1], [2], [], [], []],
-               [None, None, None, 1, 1, False]), ]
-for object_class in [MyQueueHeavyPush, MyQueueHeavyPop, ]:
+test_cases = [(["MyQueue", "push", "push", "pop", "push", "push", "pop", "peek", "pop", "peek", "pop", "peek", "pop"],
+               [[], [1], [2], [], [3], [4], [], [], [], [], [], [], []],
+               [None, None, None, 1, None, None, 2, 3, 3, 4, 4, MyQueue.EMPTY_QUEUE, MyQueue.EMPTY_QUEUE]),
+              (["MyQueue", "push", "push", "peek", "pop", "empty", "peek", "pop", "empty", "peek", "pop", "push",
+                "push", "peek", "pop"],
+               [[], [1], [2], [], [], [], [], [], [], [], [], [10], [9], [], []],
+               [None, None, None, 1, 1, False, 2, 2, True, MyQueue.EMPTY_QUEUE, MyQueue.EMPTY_QUEUE, None, None, 10,
+                10]), ]
+for test_object_class in [MyQueueHeavyPush, MyQueueHeavyPop, ]:
     for test_instructions, test_parameters, test_expected_values in test_cases:
-        run_simulation(object_class, test_instructions, test_parameters, test_expected_values)
+        run_simulation(test_object_class(), test_instructions, test_parameters, test_expected_values)
