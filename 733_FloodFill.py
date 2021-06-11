@@ -6,7 +6,8 @@ Given a coordinate (sr, sc) representing the starting pixel (row and column) of 
  newColor, "flood fill" the image.
 
 To perform a "flood fill", consider the starting pixel, plus any pixels connected 4-directionally to the starting pixel
- of the same color as the starting pixel, plus any pixels connected 4-directionally to those pixels (also with the same color as the starting pixel), and so on. Replace the color of all of the aforementioned pixels with the newColor.
+ of the same color as the starting pixel, plus any pixels connected 4-directionally to those pixels (also with the same
+ color as the starting pixel), and so on. Replace the color of all of the aforementioned pixels with the newColor.
 
 At the end, return the modified image.
 """
@@ -26,8 +27,8 @@ def flood_fill(image: List[List[int]], sr: int, sc: int, new_color: int) -> List
 
     m, n = len(image), len(image[0])
     old_color = image[sr][sc]
-    image[sr][sc] = new_color
 
+    image[sr][sc] = new_color
     flood_fill_list = [(sr, sc), ]
     while flood_fill_list:
         current_r, current_c = flood_fill_list.pop()

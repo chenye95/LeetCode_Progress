@@ -24,7 +24,6 @@ def word_break(s: str, word_dict: List[str]) -> List[str]:
 
         :return split s[start_at:] into list of words
         """
-        nonlocal memory, beginning_letters
         if start_at not in memory:
             if s[start_at] not in beginning_letters:
                 return []
