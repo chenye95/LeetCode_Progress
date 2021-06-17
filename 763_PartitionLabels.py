@@ -33,7 +33,13 @@ test_cases = [("ntswuqqbidunnixxpoxxuuupotaatwdainsotwvpxpsdvdbwvbtdiptwtxnnbtqb
                "yjfmljkzglkklykrjgrmzjyeyzrrkymccefggczrjflykclfhrjjckjlmglrmgfzlkkhffkjrkyfhegyykrzgjzcgjhkzzmzyejyc" +
                "frkkekmhzjgggrmchkeclljlyhjkchmhjlehhejjyccyegzrcrerfzczfelzrlfylzleefgefgmzzlggmejjjygehmrczmkrc",
                [246, 254]),
+              ("jybmxfgseq", [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]),
+              ("eeeeeeeeeeeeeeeeeeelllllllllllllllllllllllllllllllllllluuuuuuuuuuuuuuuuuuuuuuuuuuuuuddddddddddddddddd" +
+               "ddddddddddddddzzzzzzzzzzzzzzzzzzzzbbbbbbbbbbbbbbbbbbbbgggggggggggggggggggggggggggjjjjjjjjjjjjjjjjjjjj" +
+               "ppppppppppppppppppppppppxrxrrrxrxrrxrxrxrrxrrfffffffffffffffffffffffffffffkkkkkkkkkkkkkkkkkkkkwwwwwww" +
+               "wwwwwwwwwwwwwwwwwwwwwwwwwccccccccccccccccccccccccccccmmmmmmmmmmmmmmmmmmmmmvhhhhvhvvvvhvvvhhvvvvhvhnnn" +
+               "nnnnnnnnnnnnnniiiiiiiiiiiiiiiiiiiiiioqqqtqtqtqoooottooqoottqtqqtosassyyyyysaaayyaysayaasayysssaa",
+               [19, 36, 29, 31, 20, 20, 27, 20, 24, 21, 29, 20, 32, 28, 21, 24, 17, 22, 29, 31]),
               ("ababcbacadefegdehijhklij", [9, 7, 8]), ]
 for test_s, expected_output in test_cases:
     assert partition_labels(test_s) == expected_output
-assert partition_labels("ababcbacadefegdehijhklij") == [9, 7, 8]
