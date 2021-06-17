@@ -21,7 +21,7 @@ def can_complete_circle(gas: List[int], cost: List[int]) -> int:
     # if sum(gas) < sum(cost) no solution exist
     total_gas = total_cost = 0
     current_leg_gas_remain = 0
-    current_station = 0
+    start_station = 0
 
     i = -1
     for gas_i, cost_i in zip(gas, cost):
@@ -32,11 +32,11 @@ def can_complete_circle(gas: List[int], cost: List[int]) -> int:
 
         if current_leg_gas_remain < 0:
             # try starting from the next station
-            current_station = i + 1
+            start_station = i + 1
             current_leg_gas_remain = 0
 
     # Guaranteed by set up that solution, if exists, will be unique
-    return -1 if total_gas < total_cost else current_station
+    return -1 if total_gas < total_cost else start_station
 
 
 test_cases = [([1, 2, 3, 4, 5], [3, 4, 5, 1, 2], 3),

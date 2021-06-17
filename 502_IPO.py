@@ -17,10 +17,11 @@ from typing import List
 
 def find_maximized_capital(k: int, w: int, profits: List[int], capital: List[int]) -> int:
     """
-    :param k: can take at most k distinct projects from given projects to maximize final capital
-    :param w: initial working capital
-    :param profits: profits from each project
-    :param capital: working capital required to work on each project
+    :param k: can take at most k distinct projects from given projects to maximize final capital, 1 <= k <= 1e5
+    :param w: initial working capital, 0 <= w <= 1e9
+    :param profits: profits from each project, 1 <= len(profits) == len(capital) <= 1e5, 0 <= profits[i] <= 1e4
+    :param capital: working capital required to work on each project, 1 <= len(profits) == len(capital) <= 1e5,
+    0 <= capital[i] <= 1e9
     :return: final maximized capital
     """
     working_capital = w
@@ -43,6 +44,7 @@ def find_maximized_capital(k: int, w: int, profits: List[int], capital: List[int
 
 
 test_cases = [(2, 0, [1, 2, 3], [0, 1, 1], 4),
+              (3, 0, [1, 2, 3], [0, 1, 2], 6),
               (111, 12,
                [319, 178, 37, 756, 152, 763, 481, 1055, 594, 825, 759, 494, 1087, 696, 717, 358,
                 1091, 1145, 1043, 245, 779, 957, 3, 1060, 1141, 926, 226, 657, 869, 740, 1170,
