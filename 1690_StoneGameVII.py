@@ -23,19 +23,19 @@ def stone_game_vii(stones: List[int]) -> int:
     # optimal strategies for Bob and Alice if playing sub game stones[i: j + 1]
     # score difference marked as Alice Score - Bob Score
     # note Alice maximizing the score difference = Bob minimizing (the negative of) the score difference
-    memory = [[0] * len(stones) for _ in range(len(stones))]
+    sub_game = [[0] * len(stones) for _ in range(len(stones))]
     # acc_sum[i] = sum(stones[:i])
     acc_sum = [0] + list(accumulate(stones))
     for i in range(len(stones) - 2, -1, -1):
         for j in range(i + 1, len(stones)):
             # sum(stones[i: j + 1]
             sum_i_j = acc_sum[j + 1] - acc_sum[i]
-            # take left i and get sum(stones[i + 1: j + 1]) = sum_i_j - stones[i] + memory[i + 1][j]
-            # take right j and get sum(stones[i: j]) = sum_i_j - stones[j] + memory[i][j - 1]
-            memory[i][j] = max(sum_i_j - stones[i] - memory[i + 1][j],
-                               sum_i_j - stones[j] - memory[i][j - 1])
+            # take left i and get sum(stones[i + 1: j + 1]) = sum_i_j - stones[i] + sub_game[i + 1][j]
+            # take right j and get sum(stones[i: j]) = sum_i_j - stones[j] + sub_game[i][j - 1]
+            sub_game[i][j] = max(sum_i_j - stones[i] - sub_game[i + 1][j],
+                                 sum_i_j - stones[j] - sub_game[i][j - 1])
 
-    return memory[0][len(stones) - 1]
+    return sub_game[0][len(stones) - 1]
 
 
 test_cases = [([5, 3, 1, 4, 2], 6),

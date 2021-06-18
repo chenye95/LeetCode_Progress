@@ -44,6 +44,8 @@ test_cases = [("112", 1, "11"),
               ("10", 1, "0"),
               ("1234567890", 10, "0"),
               ("1234567890", 9, "0"),
-              ("43214321", 4, "1321"), ]
+              ("43214321", 4, "1321"),
+              ("22222222222222222222222222222222222222", 20, "222222222222222222"),
+              ]
 for test_num, test_k, expected_output in test_cases:
     assert remove_k_digits(num=test_num, k=test_k) == expected_output

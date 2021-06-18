@@ -6,7 +6,6 @@ Each employee has a list of non-overlapping Intervals, and these intervals are i
 Return the list of finite intervals representing common, positive-length free time for all employees, also in sorted
  order.
 """
-from _operator import attrgetter
 from collections import defaultdict
 from typing import List, NamedTuple, DefaultDict
 
@@ -14,6 +13,9 @@ from typing import List, NamedTuple, DefaultDict
 class Interval(NamedTuple):
     start: int
     end: int
+
+    def __gt__(self, other: 'Interval'):
+        return self.start > other.start or self.start == other.start and self.end > other.end
 
 
 def employee_free_time_sort(schedule: List[List[Interval]]) -> List[Interval]:
@@ -24,7 +26,7 @@ def employee_free_time_sort(schedule: List[List[Interval]]) -> List[Interval]:
     all_intervals: List[Interval] = []
     for schedule_i in schedule:
         all_intervals.extend(schedule_i)
-    all_intervals.sort(key=attrgetter('start'))
+    all_intervals.sort()
 
     cover_until = all_intervals[0].end
     free_time: List[Interval] = []
@@ -56,7 +58,7 @@ def employee_free_time_boundary(schedule: List[List[Interval]]) -> List[Interval
 
     for boundary_i, interval_change in sorted(boundary_count.items()):
         active_interval_count += interval_change
-        if not active_interval_count:
+        if active_interval_count == 0:
             free_interval_start = boundary_i
         elif free_interval_start is not None:
             free_time.append(Interval(free_interval_start, boundary_i))
