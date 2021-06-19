@@ -28,12 +28,13 @@ def is_even_odd_tree(root: TreeNode):
         next_level = []
 
         for current_node in current_level:
-            if (is_even_level and current_node.val % 2 == 0) or (not is_even_level and current_node.val % 2 == 1):
-                # Even rows have only odd node values, while odd rows have only even node values
+            if (current_node.val % 2 == 0) is is_even_level:
+                # Even rows have only even node values
+                # Odd rows have only odd node values
                 return False
 
-            if previous_val and ((is_even_level and previous_val >= current_node.val) or
-                                 (not is_even_level and previous_val <= current_node.val)):
+            if previous_val and ((previous_val >= current_node.val) is is_even_level or
+                                 (previous_val <= current_node.val) is not is_even_level):
                 # Even rows are strictly increasing while odd rows are strictly decreasing
                 return False
 

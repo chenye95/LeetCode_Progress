@@ -11,7 +11,6 @@ Bob found that he will always lose this game (poor Bob, he always loses), so he 
 Given an array of integers stones where stones[i] represents the value of the ith stone from the left, return the
  difference in Alice and Bob's score if they both play optimally.
 """
-from itertools import accumulate
 from typing import List
 
 
@@ -24,16 +23,18 @@ def stone_game_vii(stones: List[int]) -> int:
     # score difference marked as Alice Score - Bob Score
     # note Alice maximizing the score difference = Bob minimizing (the negative of) the score difference
     sub_game = [[0] * len(stones) for _ in range(len(stones))]
-    # acc_sum[i] = sum(stones[:i])
-    acc_sum = [0] + list(accumulate(stones))
     for i in range(len(stones) - 2, -1, -1):
+        # sum_i_j = sum(stones[i:j])
+        sum_i_j = stones[i]
+        # sum_i_plus_one_j = sum(stones[i + 1:j])
+        sum_i_plus_one_j = 0
         for j in range(i + 1, len(stones)):
-            # sum(stones[i: j + 1]
-            sum_i_j = acc_sum[j + 1] - acc_sum[i]
-            # take left i and get sum(stones[i + 1: j + 1]) = sum_i_j - stones[i] + sub_game[i + 1][j]
-            # take right j and get sum(stones[i: j]) = sum_i_j - stones[j] + sub_game[i][j - 1]
-            sub_game[i][j] = max(sum_i_j - stones[i] - sub_game[i + 1][j],
-                                 sum_i_j - stones[j] - sub_game[i][j - 1])
+            # take left i and get sum(stones[i + 1: j + 1]) = sum_i_plus_one_j + stones[j], then sub_game[i + 1][j]
+            # take right j and get sum(stones[i: j]) = sum_i_j, then sub_game[i][j - 1]
+            sub_game[i][j] = max(sum_i_plus_one_j + stones[j] - sub_game[i + 1][j],
+                                 sum_i_j - sub_game[i][j - 1])
+            sum_i_j += stones[j]
+            sum_i_plus_one_j += stones[j]
 
     return sub_game[0][len(stones) - 1]
 
