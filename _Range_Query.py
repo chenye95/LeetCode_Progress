@@ -157,11 +157,16 @@ class LazyQueryRange(RangeQueryBase):
 
     def _range_update_helper(self, tree_index: int, tree_lo: int, tree_hi: int,
                              array_left: int, array_right: int, value: RangeQueryValueType) -> None:
+
+        if tree_lo > tree_hi or tree_lo > array_right or tree_hi < array_left:
+            # current segment out of range
+            return
+
         if self.lazy_changes[tree_index] != 0:
             # Settle Outstanding Changes
             self.range_query_tree[tree_index] = self.range_update_fn(self.range_query_tree[tree_index],
                                                                      tree_lo, tree_hi, self.lazy_changes[tree_index])
-            if tree_lo != tree_hi:
+            if tree_lo < tree_hi:
                 # Push down deferred changes to children node
                 self.lazy_changes[2 * tree_index + 1] = \
                     self.merge_fn(self.lazy_changes[2 * tree_index + 1], self.lazy_changes[tree_index])
@@ -169,14 +174,10 @@ class LazyQueryRange(RangeQueryBase):
                     self.merge_fn(self.lazy_changes[2 * tree_index + 2], self.lazy_changes[tree_index])
             self.lazy_changes[tree_index] = 0
 
-        if tree_lo > tree_hi or tree_lo > array_right or tree_hi < array_left:
-            # current segment out of range
-            return
-
         if array_left <= tree_lo and tree_hi <= array_right:
             self.range_query_tree[tree_index] = self.range_update_fn(self.range_query_tree[tree_index],
                                                                      tree_lo, tree_hi, value)
-            if tree_lo != tree_hi:
+            if tree_lo < tree_hi:
                 # Push down deferred changes to children node
                 self.lazy_changes[2 * tree_index + 1] = self.merge_fn(self.lazy_changes[2 * tree_index + 1], value)
                 self.lazy_changes[2 * tree_index + 2] = self.merge_fn(self.lazy_changes[2 * tree_index + 2], value)
@@ -198,7 +199,7 @@ class LazyQueryRange(RangeQueryBase):
             # Settle Outstanding Changes
             self.range_query_tree[root_idx] = self.range_update_fn(self.range_query_tree[root_idx],
                                                                    tree_lo, tree_hi, self.lazy_changes[root_idx])
-            if tree_lo != tree_hi:
+            if tree_lo < tree_hi:
                 # Push down deferred changes to children node
                 self.lazy_changes[2 * root_idx + 1] = \
                     self.merge_fn(self.lazy_changes[2 * root_idx + 1], self.lazy_changes[root_idx])
