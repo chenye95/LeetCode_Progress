@@ -50,32 +50,32 @@ def can_make_square_simulation(match_sticks: List[int], n_sides: int = 4) -> boo
     n_matches = len(match_sticks)
     memory: Dict[int, bool] = {}
 
-    def build_one_side(used_match_bit: int, side_finished: int, used_length: int) -> bool:
+    def build_one_side(used_match_bit: int, side_finished: int, current_side_len: int) -> bool:
         """
         Build the sides of the shape sequentially, using previously unused matches
 
         :param used_match_bit: binary mask to represent which match is available (1)
         :param side_finished: number of sides finished before placing the last match
-        :param used_length: sum of all matches used previously
+        :param current_side_len: sum of all matches used previously mod side_len
         :return: from current state, whether it's possible to finish the square
         """
-        if used_length % side_len == 0:
+        if current_side_len == 0:
             side_finished += 1
         if side_finished == n_sides - 1:
-            # sum(match_stick) == used_length + side_len
+            # sum(match_stick) == current_side_len + side_len
             # all remaining matches will form the last side
             return True
 
         if used_match_bit not in memory:
             # calculate remaining length on current side
-            c = used_length // side_len
-            remainder = side_len * (c + 1) - used_length
+            remainder = side_len - current_side_len
 
             flag_doable = False
             for i, match_len in enumerate(match_sticks):
                 bit_i = n_matches - 1 - i
                 if match_len <= remainder and used_match_bit & (1 << bit_i):
-                    if build_one_side(used_match_bit ^ (1 << bit_i), side_finished, used_length + match_len):
+                    if build_one_side(used_match_bit ^ (1 << bit_i), side_finished,
+                                      (current_side_len + match_len) % side_len):
                         flag_doable = True
                         break
 
@@ -90,6 +90,8 @@ test_cases = [([1, 1, 2, 2, 2], True),
               ([3, 3, 3, 3, 4], False),
               ([1569462, 2402351, 9513693, 2220521, 7730020, 7930469, 1040519, 5767807, 876240, 350944, 4674663,
                 4809943, 8379742, 3517287, 8034755], False),
+              ([5969561, 8742425, 2513572, 3352059, 9084275, 2194427, 1017540, 2324577, 6810719, 8936380, 7868365,
+                2755770, 9954463, 9912280, 4713511], False),
               ([99, 37, 37, 37, 37, 37, 37, 37, 37, 5], False),
               ([5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3], True)
               ]
