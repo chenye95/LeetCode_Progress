@@ -93,7 +93,7 @@ test_cases = [([1, 1, 2, 2, 2], True),
               ([5969561, 8742425, 2513572, 3352059, 9084275, 2194427, 1017540, 2324577, 6810719, 8936380, 7868365,
                 2755770, 9954463, 9912280, 4713511], False),
               ([99, 37, 37, 37, 37, 37, 37, 37, 37, 5], False),
-              ([5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3], True)
+              ([5, 5, 5, 5, 4, 4, 4, 4, 3, 3, 3, 3], True),
               ]
 for can_make_square in [can_make_square_dfs, can_make_square_simulation, ]:
     for test_match_sticks, expected_value in test_cases:
