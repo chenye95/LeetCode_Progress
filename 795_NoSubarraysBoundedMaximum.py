@@ -27,7 +27,7 @@ def num_sub_array_bounded_max_one(nums: List[int], left: int, right: int) -> int
             i = j
         elif j > 0:
             # a_j < left
-            # a[i: j + 1] to a[i + i_to_last_in_range_count: j + 1] satisfy the conditions
+            # a[i: j + 1] to a[i + i_to_last_in_range_count - 1: j + 1] satisfy the conditions
             sub_array_count += i_to_last_in_range_count
 
     return sub_array_count

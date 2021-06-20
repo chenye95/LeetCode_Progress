@@ -15,7 +15,7 @@ from _Range_Query import RangeQueryActiveSumReplacement
 
 
 def run_simulation(instructions: List[str], parameters: List[List],
-                   expected_output: List[Optional[bool]]) -> None:
+                   expected_output: List[Optional[int]]) -> None:
     test_object = RangeQueryActiveSumReplacement(parameters[0][0])
     for i in range(1, len(instructions)):
         next_instruction, next_parameter, expected_value = instructions[i], parameters[i], expected_output[i]
