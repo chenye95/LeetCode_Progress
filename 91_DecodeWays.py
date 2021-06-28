@@ -33,6 +33,9 @@ def num_decoding(s: str) -> int:
     return one_chr_before
 
 
-test_cases = [('226', 3), ('12', 2), ('0', 0), ('1', 1), ]
+test_cases = [('226', 3), ('12', 2), ('0', 0), ('1', 1),
+              ("10011", 0),
+              ("4757562545844617494555774581341211511296816786586787755257741178599337186486723247528324612117156948",
+               589824), ]
 for test_input, expected_output in test_cases:
     assert num_decoding(s=test_input) == expected_output, test_input

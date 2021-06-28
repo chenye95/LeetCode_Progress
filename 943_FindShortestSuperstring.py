@@ -60,7 +60,7 @@ def shortest_super_string(words: List[str]) -> str:
             elif 1 << word_i > chosen_words:
                 break
 
-    # Shorted super string will have length sum(len(word_i) for word_i in words) - max(dp_memory[-1])
+    # Shortest super string will have length sum(len(word_i) for word_i in words) - max(dp_memory[-1])
     # Reconstruct shortest super string
 
     # Follow parents down backwards path that retains maximum overlap
@@ -97,7 +97,10 @@ test_cases = [(["hello"], "hello"),
                 "fassqjfwarvjcjedq", "ppedxfumcfsngphjyf", "dqtozctcdk"],
                "ooncedefifgstkyxfcuajfassqjfwarvjcjedqtozctcdkzppedxfumcfsngphjyfhhwkqa"),
               (["cgjufdqhfw", "bsrchpiau", "hfwbsrchpi", "sezsorql", "srchpiaues", "rqlmc"],
-               "sezsorqlmcgjufdqhfwbsrchpiaues"), ]
+               "sezsorqlmcgjufdqhfwbsrchpiaues"),
+              (["txvteggrtmylrxxknwub", "lipgamrjnsfcqizch", "teggrtmylrxxknwubv", "uogduurswxthftx", "akwnbruogduursw",
+                "uurswxthftxvteg", "mylrxxknwubvlipga", "ggrtmylrxxknwubvl", "gzeindakwnbruogdu",
+                "thftxvteggrtmylrx"], "gzeindakwnbruogduurswxthftxvteggrtmylrxxknwubvlipgamrjnsfcqizch"), ]
 for test_words, expected_output in test_cases:
     get_super_string = shortest_super_string(test_words)
     assert len(get_super_string) == len(expected_output)
