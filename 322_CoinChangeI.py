@@ -11,7 +11,7 @@ from typing import List
 
 def coin_change_dfs(coins: List[int], amount: int) -> int:
     """
-    DFS implementation
+    DFS implementation, TLE on long coins
 
     :param coins: list of denominations
     :param amount: total amount of money that exchange should add up to
@@ -57,6 +57,7 @@ test_cases = [([1, 2, 5], 11, 3),
               ([2], 3, -1),
               ([1], 0, 0),
               ([186, 419, 83, 408], 6249, 20),
+              ([357, 239, 73, 52], 9832, 35),
               ([411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422], 9864, 24), ]
 for test_coins, test_amount, expected_count in test_cases:
     assert coin_change_dp(deepcopy(test_coins), test_amount) == expected_count
