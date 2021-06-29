@@ -14,11 +14,13 @@ def unique_paths(m: int, n: int) -> int:
     :param n: height of the grid m x n, 1 <= n <= 100
     :return: number of path traversing from top left corner to bottom right corner
     """
-    path_count = [[1] * n for _ in range(m)]
-    for i in range(1, m):
+    previous_row = [1] * n
+    for _ in range(1, m):
+        current_row = [1] * n
         for j in range(1, n):
-            path_count[i][j] = path_count[i][j - 1] + path_count[i - 1][j]
-    return path_count[-1][-1]
+            current_row[j] = current_row[j - 1] + previous_row[j]
+        previous_row = current_row
+    return previous_row[-1]
 
 
 test_cases = [(3, 2, 3), (7, 3, 28), (3, 3, 6), (51, 9, 1916797311), ]

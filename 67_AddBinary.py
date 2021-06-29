@@ -25,7 +25,6 @@ def add_binary(a: str, b: str) -> str:
                             ('1', '0', 1): ('0', 1),
                             ('1', '1', 1): ('1', 1), }
 
-    # Ensure the two strings of same length
     short_str, long_str = (a[::-1], b[::-1]) if len(a) < len(b) else (b[::-1], a[::-1])
 
     result = ['0'] * len(long_str)
