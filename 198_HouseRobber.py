@@ -10,6 +10,10 @@ from typing import List
 
 
 def rob(nums: List[int]) -> int:
+    """
+    :param nums: 1 <= len(nums) <= 100, with 0 <= nums[i] <= 400
+    :return: max profit if cannot rob two consecutive houses
+    """
     rob_house = not_rob_house = 0
     for house_i in nums:
         rob_house, not_rob_house = not_rob_house + house_i, max(not_rob_house, rob_house)

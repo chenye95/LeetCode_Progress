@@ -60,13 +60,11 @@ def length_of_LIS_recurse(nums: List[int]) -> int:
         if current_considering_index == len(nums):
             return 0
 
-        if recurse_memory[prev_taken_index + 1][current_considering_index] >= 0:
-            return recurse_memory[prev_taken_index + 1][current_considering_index]
-
-        take_index = 0 if prev_taken_index >= 0 and nums[current_considering_index] <= nums[prev_taken_index] \
-            else 1 + recurse_LIS(current_considering_index, current_considering_index + 1)
-        not_take_index = recurse_LIS(prev_taken_index, current_considering_index + 1)
-        recurse_memory[prev_taken_index + 1][current_considering_index] = max(take_index, not_take_index)
+        if recurse_memory[prev_taken_index + 1][current_considering_index] < 0:
+            take_index = 0 if prev_taken_index >= 0 and nums[current_considering_index] <= nums[prev_taken_index] \
+                else 1 + recurse_LIS(current_considering_index, current_considering_index + 1)
+            not_take_index = recurse_LIS(prev_taken_index, current_considering_index + 1)
+            recurse_memory[prev_taken_index + 1][current_considering_index] = max(take_index, not_take_index)
 
         return recurse_memory[prev_taken_index + 1][current_considering_index]
 
