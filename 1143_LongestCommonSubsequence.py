@@ -24,6 +24,16 @@ def longest_common_subsequence(text1: str, text2: str) -> int:
     return prev_iteration[-1]
 
 
-assert 3 == longest_common_subsequence(text1="abcde", text2="ace")
-assert 3 == longest_common_subsequence(text1="abc", text2="abc")
-assert 0 == longest_common_subsequence(text1="abc", text2="def")
+test_cases = [("abcde", "ace", 3),
+              ("abc", "abc", 3),
+              ("abc", "def", 0),
+              ("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+               "aaaaaaaa",
+               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa" +
+               "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", 210),
+              ("oxcpqrsvwf", "shmtulqrypy", 2),
+              ("bsbininm", "jmjkbkjkv", 1), ]
+for test_text_1, test_text_2, expected_value in test_cases:
+    assert longest_common_subsequence(test_text_1, test_text_2) == expected_value

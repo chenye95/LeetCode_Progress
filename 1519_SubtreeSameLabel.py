@@ -12,10 +12,10 @@ as node i.
 A subtree of a tree T is the tree consisting of a node in T and all of its descendant nodes.
 """
 from collections import Counter, defaultdict
-from typing import List
+from typing import List, Tuple
 
 
-def count_sub_trees(n: int, edges: List[List[int]], labels: str) -> List[int]:
+def count_sub_trees(n: int, edges: List[Tuple[int, int]], labels: str) -> List[int]:
     """
     :param n: number of nodes in the tree, numbered 0, ..., n-1
     :param edges: list of edges in the tree
@@ -23,13 +23,13 @@ def count_sub_trees(n: int, edges: List[List[int]], labels: str) -> List[int]:
     :return: return_list[i] is the number of nodes in the subtree of the ith node which have the same label as node i
     """
 
-    def depth_first_search_approach(current_node: int, parent_node: int) -> Counter:
+    def depth_first_search_approach(current_node: int, parent_node: int) -> Counter[str, int]:
         """
         :param current_node: root of the sub tree
         :param parent_node: parent node of current_node
         :return: Counter of label within sub tree of current_node
         """
-        node_counter = Counter()
+        node_counter: Counter[str, int] = Counter()
         for child_node in edge_list[current_node]:
             if child_node == parent_node:
                 continue
@@ -47,14 +47,14 @@ def count_sub_trees(n: int, edges: List[List[int]], labels: str) -> List[int]:
     return return_list
 
 
-test_cases = [(7, [[0, 1], [0, 2], [1, 4], [1, 5], [2, 3], [2, 6]], "abaedcd", [2, 1, 1, 1, 1, 1, 1]),
-              (4, [[0, 1], [1, 2], [0, 3]], "bbbb", [4, 2, 1, 1]),
-              (5, [[0, 1], [0, 2], [1, 3], [0, 4]], "aabab", [3, 2, 1, 1, 1]),
-              (6, [[0, 1], [0, 2], [1, 3], [3, 4], [4, 5]], "cbabaa", [1, 2, 1, 1, 2, 1]),
-              (7, [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6]], "aaabaaa", [6, 5, 4, 1, 3, 2, 1]),
-              (25, [[4, 0], [5, 4], [12, 5], [3, 12], [18, 3], [10, 18], [8, 5], [16, 8], [14, 16], [13, 16], [9, 13],
-                    [22, 9], [2, 5], [6, 2], [1, 6], [11, 1], [15, 11], [20, 11], [7, 20], [19, 1], [17, 19], [23, 19],
-                    [24, 2], [21, 24]], "hcheiavadwjctaortvpsflssg",
+test_cases = [(7, [(0, 1), (0, 2), (1, 4), (1, 5), (2, 3), (2, 6)], "abaedcd", [2, 1, 1, 1, 1, 1, 1]),
+              (4, [(0, 1), (1, 2), (0, 3)], "bbbb", [4, 2, 1, 1]),
+              (5, [(0, 1), (0, 2), (1, 3), (0, 4)], "aabab", [3, 2, 1, 1, 1]),
+              (6, [(0, 1), (0, 2), (1, 3), (3, 4), (4, 5)], "cbabaa", [1, 2, 1, 1, 2, 1]),
+              (7, [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6)], "aaabaaa", [6, 5, 4, 1, 3, 2, 1]),
+              (25, [(4, 0), (5, 4), (12, 5), (3, 12), (18, 3), (10, 18), (8, 5), (16, 8), (14, 16), (13, 16), (9, 13),
+                    (22, 9), (2, 5), (6, 2), (1, 6), (11, 1), (15, 11), (20, 11), (7, 20), (19, 1), (17, 19), (23, 19),
+                    (24, 2), (21, 24)], "hcheiavadwjctaortvpsflssg",
                [2, 2, 1, 1, 1, 3, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1]), ]
 for test_n, test_edges, test_labels, expected_output in test_cases:
     assert count_sub_trees(test_n, test_edges, test_labels) == expected_output

@@ -71,8 +71,10 @@ def length_of_LIS_recurse(nums: List[int]) -> int:
     return recurse_LIS(-1, 0)
 
 
-test_cases = [([10, 9, 2, 5, 3, 7, 101, 18], 4),
+test_cases = [([], 0),
+              ([10, 9, 2, 5, 3, 7, 101, 18], 4),
               ([0], 1),
+              ([10, 9, 8, 7, 6, 5, 4, 3, 2, 1], 1),
               (list(range(1, 2501)), 2500), ]
 for length_of_LIS in [length_of_LIS_dp, length_of_LIS_dp_binary_search]:
     for test_nums, expected_value in test_cases:

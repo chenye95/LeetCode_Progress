@@ -30,21 +30,20 @@ def add_binary(a: str, b: str) -> str:
     result = ['0'] * len(long_str)
     carry_bit = 0
 
-    bit_i = 0
-    while bit_i < len(short_str):
+    for bit_i in range(len(short_str)):
         result[bit_i], carry_bit = singe_bit_lookup_map[(short_str[bit_i], long_str[bit_i], carry_bit)]
-        bit_i += 1
 
+    bit_i = len(short_str)
     while bit_i < len(long_str) and carry_bit:
-        result[bit_i], carry_bit = singe_bit_lookup_map[('0', long_str[bit_i], carry_bit)]
+        result[bit_i], carry_bit = singe_bit_lookup_map[('0', long_str[bit_i], 1)]
         bit_i += 1
 
     if bit_i < len(long_str):
-        return ''.join(long_str[bit_i:])[::-1] + ''.join(result[:bit_i])[::-1]
+        return ''.join(long_str[bit_i:][::-1]) + ''.join(result[:bit_i][::-1])
     elif carry_bit:
-        return '1' + ''.join(result[:bit_i])[::-1]
+        return '1' + ''.join(result[::-1])
     else:
-        return ''.join(result[:bit_i])[::-1]
+        return ''.join(result[::-1])
 
 
 test_cases = [("1010", "1011", "10101"),

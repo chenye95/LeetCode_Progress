@@ -25,6 +25,9 @@ def is_symmetric(root: TreeNode) -> bool:
 
 test_cases = [([1, 2, 2, 3, 4, 4, 3], True),
               ([1, 2, 2, None, 3, None, 3], False),
-              ([1, 2, 2, 3, None, None, 3], True), ]
+              ([1, 2, 2, 3, None, None, 3], True),
+              ([1], True),
+              ([1, 2], False),
+              ([1, None, 2], False), ]
 for test_tree_list, expected_output in test_cases:
     assert is_symmetric(ConstructTree.build_tree_leetcode(test_tree_list).root) is expected_output
