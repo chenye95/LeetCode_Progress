@@ -15,19 +15,23 @@ def is_alien_word_list_sorted(words: List[str], order: str) -> bool:
     :return: whether the word list is sorted according to order
     """
     order_map = {c: i for i, c in enumerate(order)}
+    if not words:
+        return True
 
     # sequentially compare lexicographical order of word[i] and word[i + 1]
-    for i in range(len(words) - 1):
-        for j in range(len(words[i])):
-            if j >= len(words[i + 1]):
+    current_word = words[0]
+    for next_word in words[1:]:
+        for position_j in range(len(current_word)):
+            if position_j >= len(next_word):
                 # "apple" and "app"
                 return False
-            if words[i][j] != words[i + 1][j]:
-                if order_map[words[i][j]] > order_map[words[i + 1][j]]:
+            if current_word[position_j] != next_word[position_j]:
+                if order_map[current_word[position_j]] > order_map[next_word[position_j]]:
                     return False
-                # else order_map[words[i][j]] < order_map[words[i + 1][j]]
+                # else order_map[words[i][position_j]] < order_map[words[i + 1][position_j]]
                 # and words[i] is lexicographically smaller than words[i + 1]
                 break
+        current_word = next_word
 
     return True
 
