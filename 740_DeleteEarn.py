@@ -19,7 +19,7 @@ def delete_and_earn(nums: List[int]) -> int:
     previous_k = None
     take_k = not_take_k = 0
     for k in sorted(x_count):
-        if k - 1 != previous_k:
+        if not previous_k or k - 1 > previous_k:
             not_take_k, take_k = max(not_take_k, take_k), k * x_count[k] + max(not_take_k, take_k)
         else:
             not_take_k, take_k = max(not_take_k, take_k), k * x_count[k] + not_take_k

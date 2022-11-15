@@ -6,6 +6,8 @@ If target is not found in the array, return [-1, -1].
 from bisect import bisect_left, bisect_right
 from typing import List, Tuple
 
+_not_found = (-1, -1)
+
 
 def search_range_single_pass(nums: List[int], target: int) -> Tuple[int, int]:
     """
@@ -16,19 +18,17 @@ def search_range_single_pass(nums: List[int], target: int) -> Tuple[int, int]:
     start, end = 0, len(nums) - 1
     while start <= end:
         mid = (start + end) // 2
-        if nums[start] == nums[end] == target:
-            return start, end
-
         if nums[mid] < target:
             start = mid + 1
         elif nums[mid] > target:
             end = mid - 1
         else:  # nums[mid] == target
-            if nums[start] < target:
+            while nums[start] < target:
                 start += 1
-            if nums[end] > target:
+            while nums[end] > target:
                 end -= 1
-    return -1, -1
+            return start, end
+    return _not_found
 
 
 def search_range_two_pass(nums: List[int], target: int) -> Tuple[int, int]:
@@ -37,7 +37,6 @@ def search_range_two_pass(nums: List[int], target: int) -> Tuple[int, int]:
     :param target: -10^9 <= target <= 10^9
     :return: (First_Occurrence, Last_Occurrence) of target in nums, if target in nums, else (-1, -1)
     """
-    _not_found = -1, -1
 
     if not nums:
         return _not_found

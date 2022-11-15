@@ -28,7 +28,7 @@ def find_min(nums: List[int]) -> int:
     # i.e. nums[0] < nums[1] < ... < nums[k-1] > nums[k] < nums[k+1] < .... < nums[-1]
     left, right = 0, len(nums) - 1
     while left <= right:
-        # mid element of sub array left, ..., right
+        # middle element of sub array left, ..., right
         mid = (left + right) // 2
         # evaluate if mid or mid + 1 is the pivot point
         if nums[mid] > nums[mid + 1]:
