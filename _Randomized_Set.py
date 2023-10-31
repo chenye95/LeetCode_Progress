@@ -5,7 +5,7 @@ from typing import Hashable, Optional, List, Dict
 class RandomizedSet:
     def __init__(self):
         """
-        Supports unweighted randomly chooses one elements from the collection
+        Supports unweighted randomly chooses one element from the collection
         """
         self.obj_in_collections: List[Hashable] = []
         self.obj_to_pos_lookup: Dict[Hashable, int] = {}
@@ -32,7 +32,7 @@ class RandomizedSet:
 
         val_index = self.obj_to_pos_lookup[val]
         if val_index != len(self.obj_in_collections) - 1:
-            # move last object in the list to fill the gap of val
+            # move last object in the list to fill the gap left behind
             last_object = self.obj_in_collections[-1]
             self.obj_in_collections[val_index] = last_object
             self.obj_to_pos_lookup[last_object] = val_index
@@ -43,7 +43,7 @@ class RandomizedSet:
 
     def get_random(self) -> Optional[Hashable]:
         """
-        Get a unweighted random element from the set
+        Get an unweighted random element from the set
 
         :return: an object if the collection is not empty or None otherwise
         """

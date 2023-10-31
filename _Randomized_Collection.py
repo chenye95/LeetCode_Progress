@@ -5,7 +5,7 @@ from typing import Hashable, Optional, Dict, Set
 class RandomizedCollection:
     def __init__(self):
         """
-        Supports weighted randomly chooses one elements from the collection
+        Supports weighted randomly chooses one element from the collection
         """
         self.values_in_collections: Dict[Hashable, Set[int]] = {}
         self.position_to_value_lookup: Dict[int, Hashable] = dict()
