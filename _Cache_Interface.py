@@ -31,7 +31,7 @@ class Cache:
     def get(self, key: int) -> Any:
         """
         :param key: query value associated with key
-        :return: value associated associated with key, return Cache.NOT_FOUND if key doesn't exist or have been evicted
+        :return: value associated with key, return Cache.NOT_FOUND if key doesn't exist or have been evicted
         """
         pass
 

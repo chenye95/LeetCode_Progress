@@ -6,7 +6,7 @@ from _Cache_Interface import Cache, CacheNode
 class LRUCache(Cache):
     """
     Data structure for Least Recently Used (LRU) cache.
-    Per interface requirements, it support operations get() and put() as well as constant NOT_FOUND
+    Per interface requirements, it supports operations get() and put() as well as constant NOT_FOUND
     When at capacity, invalidate the least recently used item before inserting a new item.
     """
 

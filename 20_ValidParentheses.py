@@ -5,6 +5,7 @@ An input string is valid if:
 - Open brackets must be closed by the same type of brackets.
 - Open brackets must be closed in the correct order.
 """
+from typing import List
 
 
 def is_valid(s: str) -> bool:
@@ -16,7 +17,7 @@ def is_valid(s: str) -> bool:
         # len of s has to be an even number
         return False
 
-    open_stack = [None]
+    open_stack: List[chr] = ['-']
     pair_map = {')': '(', ']': '[', '}': '{'}
     for c in s:
         if c not in pair_map:

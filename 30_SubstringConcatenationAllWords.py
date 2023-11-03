@@ -77,7 +77,7 @@ def find_substring_group_scan(s: str, words: List[str]) -> List[int]:
                 word_end_list = word_appearance[possible_word]
                 word_end_list.append(substring_end)
                 while word_end_list[0] < substring_start:
-                    # drop all appearances out side of window substring_start: substring_start + substring_len
+                    # drop all appearances outside of window substring_start: substring_start + substring_len
                     word_end_list.popleft()
                 while len(word_end_list) > word_counter[possible_word]:
                     # drop additional repetitions of possible_word

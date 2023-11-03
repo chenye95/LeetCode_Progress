@@ -8,7 +8,7 @@ After converting, each digit should be interpreted as a base 10 number, and the 
 
 def sum_base(n: int, k: int) -> int:
     """
-    :param n: a non negative integer in base 10, 1 <= n <= 100
+    :param n: a non-negative integer in base 10, 1 <= n <= 100
     :param k: 2 <= k <= 10
     :return: sum of digits of n in base 10 (each digit is interpreted as a base 10 number, and sum returned in base 10
     """
