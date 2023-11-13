@@ -46,7 +46,7 @@ def construct_tree(construct_list: List) -> Optional[Node]:
 def pre_order(root: Node) -> List:
     """
     :param root: root of the N-ary tree
-    :return: pre order traversal of the tree
+    :return: pre-order traversal of the tree
     """
     if not root:
         return []
@@ -64,7 +64,7 @@ def pre_order(root: Node) -> List:
 def post_order(root: Node) -> List:
     """
     :param root: root of the N-ary tree
-    :return: post order traversal of the tree
+    :return: post-order traversal of the tree
     """
     if not root:
         return []

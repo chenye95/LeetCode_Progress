@@ -73,7 +73,7 @@ class Trie:
 
     def get_words_start_with(self, prefix: str, max_recommendation: int):
         """
-        :param prefix: string starts with, case sensitive, prefix. Does not support self.chr_match_all_letters
+        :param prefix: string starts with, case-sensitive, prefix. Does not support self.chr_match_all_letters
         :param max_recommendation: max length of the returned list
         :return: list of words, in alphabetical order, that starts with prefix
         """

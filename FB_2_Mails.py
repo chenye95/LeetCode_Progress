@@ -20,7 +20,8 @@ def get_max_profits(N: int, V: List[int], C: int, S: float) -> float:
 
             best_pick_up_schedule[end_of_day] = max(left_on_table - C, best_strategy)
 
-    return max(best_pick_up_schedule)
+    # Special Case: never picking up anything at all
+    return max(max(best_pick_up_schedule), 0.)
 
 
 test_cases = [
@@ -28,6 +29,7 @@ test_cases = [
     ((5, [10, 2, 8, 6, 4], 5, 1.0), 9.),
     ((5, [10, 2, 8, 6, 4], 3, 0.5), 17.),
     ((5, [10, 2, 8, 6, 4], 3, 0.15), 20.10825),
+    ((5, [10, 2, 8, 6, 4], 1000, 0.15), 0.),
 ]
 epsilon = 0.00001
 for (test_N, test_V, test_C, test_S), expected_value in test_cases:

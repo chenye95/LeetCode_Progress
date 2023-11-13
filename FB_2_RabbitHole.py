@@ -44,7 +44,7 @@ def get_max_visitable_webpages(N: int, L: List[int]) -> int:
     cycle_start = {}
 
     # Since every webpage has one outgoing link, there's always going to be a cycle in your longest chain.
-    # Hee, we find the biggest combination of an inbound chain + cycle.
+    # Hence, we find the biggest combination of an inbound chain + cycle.
     max_chain = 0
     for node in range(N):
         if not node_visited[node]:

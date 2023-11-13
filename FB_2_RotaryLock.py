@@ -1,15 +1,19 @@
-from typing import List
+from typing import List, Dict, Tuple
 
 
 def turn_digit_time(N: int, current_position: int, next_position: int) -> int:
+    return min(abs(next_position - current_position), N - abs(next_position - current_position))
+    """
+    # alternatively can use this if branching
     if next_position > current_position:
         return min(next_position - current_position, current_position + N - next_position)
     else:
         return min(current_position - next_position, next_position + N - current_position)
+    """
 
 
 def get_min_code_entry_time(N: int, M: int, C: List[int]) -> int:
-    last_step_time = {(1, 1): 0}
+    last_step_time: Dict[Tuple[int, int], int] = {(1, 1): 0}
 
     for next_position in C:
         current_step_time = {}
