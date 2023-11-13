@@ -31,7 +31,7 @@ def lowest_common_ancestor_recurse(root: TreeNode, p: TreeNode, q: TreeNode) -> 
         current_node_matches = (current_node == p) or (current_node == q)
 
         if left_contains + right_contains + current_node_matches >= 2:
-            # Two of the three flags are true -> found lowest common ancestor
+            # Two of the three flags are true -> found the lowest common ancestor
             lca_node = current_node
 
         return current_node_matches or left_contains or right_contains

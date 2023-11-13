@@ -34,7 +34,7 @@ def rotate_transpose_reflect(matrix: List[List[int]]) -> None:
         for j in range(i):
             matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
 
-    # Flip around the vertical mid point
+    # Flip around the vertical midpoint
     for i in range(n):
         matrix[i].reverse()
 

@@ -23,9 +23,9 @@ def simplify_path(path: str) -> str:
     :return: simplified canonical path
     """
     path_stack = []
-    components = [c_i for c_i in path.split('/') if c_i]
+    components = [c_i for c_i in path.split('/')]
     for c_i in components:
-        if c_i == '.':
+        if not c_i or c_i == '.':
             continue
         elif c_i == '..':
             if path_stack:

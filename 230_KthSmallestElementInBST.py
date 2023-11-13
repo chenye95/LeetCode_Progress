@@ -1,5 +1,5 @@
 """
-Given the root of a binary search tree, and an integer k, return the kth (1-indexed) smallest element in the tree.
+Given the root of a binary search tree, and an integer k, return the kth (1-indexed) the smallest element in the tree.
 """
 from _BST import BST
 from _Binary_Tree import ConstructTree, TreeNode, TREE_NODE_TYPE
@@ -7,7 +7,7 @@ from _Binary_Tree import ConstructTree, TreeNode, TREE_NODE_TYPE
 
 def kth_smallest_element(root: TreeNode, k: int) -> TREE_NODE_TYPE:
     """
-    :param root: root node of a non empty binary search tree, 1 <= # of nodes <= 10000
+    :param root: root node of a non-empty binary search tree, 1 <= # of nodes <= 10000
     :param k: 1 <= k <= # of nodes
     :return: value of the kth smallest element in the binary search tree
     """

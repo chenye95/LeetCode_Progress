@@ -26,19 +26,19 @@ def letter_combinations_recurse(digits: str) -> List[str]:
     :return: all possible letter combinations that the number can represent on a phone
     """
 
-    def letter_combination_helper(prefix: str, ref_digits: str, idx: int) -> None:
-        if idx < len(ref_digits) - 1:
-            for c in num_to_chr[ref_digits[idx]]:
-                letter_combination_helper(prefix + c, ref_digits, idx + 1)
+    def letter_combination_helper(prefix: str, idx: int) -> None:
+        if idx < len(digits) - 1:
+            for c in num_to_chr[digits[idx]]:
+                letter_combination_helper(prefix + c, idx + 1)
         else:
-            for c in num_to_chr[ref_digits[idx]]:
+            for c in num_to_chr[digits[idx]]:
                 return_result.append(prefix + c)
 
     if not digits:
         return []
 
     return_result = []
-    letter_combination_helper('', digits, 0)
+    letter_combination_helper('', 0)
     return return_result
 
 

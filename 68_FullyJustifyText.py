@@ -16,11 +16,11 @@ def fully_justify(words: List[str], max_width: int) -> List[str]:
     current_line_start = 0
     current_line_len = 0
     current_line_count = 0
-    current_blk_count = -1
+    current_blank_count = -1
     while scanner < len(words):
-        if current_line_len + len(words[scanner]) + current_blk_count + 1 <= max_width:  # have room for next word
+        if current_line_len + len(words[scanner]) + current_blank_count + 1 <= max_width:  # have room for next word
             current_line_len += len(words[scanner])
-            current_blk_count += 1
+            current_blank_count += 1
             current_line_count += 1
             scanner += 1
         else:  # construct current line
@@ -39,7 +39,7 @@ def fully_justify(words: List[str], max_width: int) -> List[str]:
             current_line_start = scanner
             current_line_count = 0
             current_line_len = 0
-            current_blk_count = -1
+            current_blank_count = -1
     # Last Line
     if current_line_count > 0:  # still processing last line
         current_line = ' '.join(words[current_line_start:])

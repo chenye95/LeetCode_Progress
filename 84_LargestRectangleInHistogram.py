@@ -8,7 +8,7 @@ from typing import List
 def largest_rectangle_area(heights: List[int]) -> int:
     """
     :param heights: 1 <= len(heights) <= 1e5, and 0 <= heights[i] <= 1e4
-    :return: largest rectangle in the histogram
+    :return: the largest rectangle in the histogram
     """
     heights.append(0)
     i_asc_order = [-1]

@@ -18,17 +18,17 @@ def h_index_my_bisect(citations: List[int]) -> int:
         return 0
     # elif len(citations) == 1:
     #    return 1
-    h_index = 0
+    result_h_index = 0
     n = len(citations)
     start, end = 0, len(citations) - 1
     while start <= end:
         mid = (start + end) // 2
         if citations[mid] >= (n - mid):
-            h_index = max(h_index, n - mid)
+            result_h_index = max(result_h_index, n - mid)
             end = mid - 1
         else:
             start = mid + 1
-    return h_index
+    return result_h_index
 
 
 def h_index_bisect(citations: List[int]) -> int:

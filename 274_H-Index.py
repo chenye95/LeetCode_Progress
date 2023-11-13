@@ -13,17 +13,17 @@ def h_index(citations: List[int]) -> int:
     :param citations: array of citations
     :return: h-index of the researcher
     """
-    h_index = 0
+    result_h_index = 0
     n = len(citations)
     above_h_count = [0] * (n + 1)
     for c in citations:
-        if c >= h_index:
+        if c >= result_h_index:
             above_h_count[min(c, n)] += 1
-            if above_h_count[h_index] > 0:
-                above_h_count[h_index] -= 1
+            if above_h_count[result_h_index] > 0:
+                above_h_count[result_h_index] -= 1
             else:
-                h_index += 1
-    return h_index
+                result_h_index += 1
+    return result_h_index
 
 
 test_cases = [([3, 0, 6, 1, 5], 3),

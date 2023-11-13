@@ -6,7 +6,7 @@ signed 32-bit integer range [-2^31, 2^31 - 1], then return 0.
 
 def reverse(x: int) -> int:
     """
-    :param x: a signed 32 bit integer
+    :param x: a signed 32 bits integer
     :return: x with its digits reversed. If return result go outside bound of a signed 32 bit int, return 0
     """
     if x == 0:

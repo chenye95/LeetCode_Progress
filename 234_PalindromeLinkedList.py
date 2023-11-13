@@ -11,7 +11,7 @@ def is_palindrome(head: ListNode) -> bool:
     :param head: head of a singly linked list
     :return: return whether the linked list is a palindrome
     """
-    # find mid point of the linked list, and reverse the first half the linked list
+    # find midpoint of the linked list, and reverse the first half the linked list
     fast_pointer = slow_pointer = head
     prev_pointer = None
     while fast_pointer and fast_pointer.next:
