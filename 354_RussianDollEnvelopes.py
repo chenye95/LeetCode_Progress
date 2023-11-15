@@ -11,9 +11,9 @@ from typing import List, Tuple
 
 def max_envelopes(envelopes: List[Tuple[int, int]]) -> int:
     """
-    Longest increasing sub sequence algorithm (LISS) similar to 300 Dynamic Programming with Binary Search approach
+    Longest increasing sub-sequence algorithm (LISS) similar to 300 Dynamic Programming with Binary Search approach
     - Sort envelopes by width first, to ensure envelopes later can encompass previous ones at least in width
-    - Then find the length of longest increasing sub sequence in the list of heights
+    - Then find the length of longest increasing sub-sequence in the list of heights
 
     :param envelopes: list of tuples (width, height) of each envelope
     :return: max number of envelopes that can Russian doll (fit one in another)

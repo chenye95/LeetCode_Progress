@@ -8,7 +8,7 @@ def count_primes(n: int) -> int:
     """
     Sieve of Eratosthenes algorithm
 
-    :param n: a non negative integer n
+    :param n: a non-negative integer n
     :return: number of primes less than n
     """
     if n <= 2:

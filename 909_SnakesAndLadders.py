@@ -5,7 +5,7 @@ On an N x N board, the numbers from 1 to N*N are written boustrophedonically sta
 You start on square 1 of the board (which is always in the last row and first column).  Each move, starting from square
  x, consists of the following:
 - You choose a destination square S with number x+1, x+2, x+3, x+4, x+5, or x+6, provided this number is <= N*N.
-    - (This choice simulates the result of a standard 6-sided die roll: ie., there are always at most 6 destinations,
+    - (This choice simulates the result of a standard 6-sided die roll: i.e., there are always at most 6 destinations,
      regardless of the size of the board.)
 - If S has a snake or ladder, you move to the destination of that snake or ladder.  Otherwise, you move to S.
 
@@ -19,6 +19,7 @@ Note that you only take a snake or ladder at most once per move: if the destinat
 
 Return the least number of moves required to reach square N*N.  If it is not possible, return -1.
 """
+from collections import deque
 from typing import List
 
 
@@ -32,10 +33,10 @@ def snakes_and_ladders(board: List[List[int]]) -> int:
 
     visited = [False] * (n * n)
     visited[0] = True
-    visiting = [(1, 0)]
+    visiting = deque([(1, 0)])
 
     while visiting:
-        current_block, current_step = visiting.pop(0)
+        current_block, current_step = visiting.popleft()
         for next_block in range(current_block + 1, current_block + 7):
             x, y = (next_block - 1) // n, (next_block - 1) % n
             # ~i = -i - 1

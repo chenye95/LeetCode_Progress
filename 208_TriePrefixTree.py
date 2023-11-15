@@ -15,7 +15,7 @@ from typing import List, Optional
 from _Trie import Trie
 
 
-# Place holder to run test cases
+# placeholder to run test cases
 def run_simulation(instructions: List[str], parameters: List[List],
                    expected_output: List[Optional[bool]]) -> None:
     test_object = Trie('')

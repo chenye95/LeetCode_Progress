@@ -20,19 +20,20 @@ def num_of_islands(grid: List[List[str]]) -> int:
         ref_grid[i][j] = '#'
         if i > 0 and ref_grid[i - 1][j] == '1':
             dfs_explore_island(ref_grid, i - 1, j)
-        if i + 1 < len(ref_grid) and ref_grid[i + 1][j] == '1':
+        if i + 1 < n_rows and ref_grid[i + 1][j] == '1':
             dfs_explore_island(ref_grid, i + 1, j)
         if j > 0 and ref_grid[i][j - 1] == '1':
             dfs_explore_island(ref_grid, i, j - 1)
-        if j + 1 < len(ref_grid[0]) and ref_grid[i][j + 1] == '1':
+        if j + 1 < n_cols and ref_grid[i][j + 1] == '1':
             dfs_explore_island(ref_grid, i, j + 1)
 
     if not grid:
         return 0
 
+    n_rows, n_cols = len(grid), len(grid[0])
     island_count = 0
-    for row_i in range(len(grid)):
-        for col_j in range(len(grid[0])):
+    for row_i in range(n_rows):
+        for col_j in range(n_cols):
             if grid[row_i][col_j] == '1':
                 dfs_explore_island(grid, row_i, col_j)
                 island_count += 1
