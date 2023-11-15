@@ -15,7 +15,7 @@ def num_of_ways_math(n: int) -> int:
         return value mod 10 ** 9 + 7
     """
     # there are 2 types of pattern for each row: use_three_colors 123, and use_two_colors = 121,
-    # each type have 6 sub types (permutations of RGB 3 colors)
+    # each type have 6 subtypes (permutations of RGB 3 colors)
     # after use_three_colors 123, we have 212, 231, 232, 312 (use_three_colors * 2 + use_two_colors * 2)
     # after use_two_colors 121, we have 212, 213, 232, 312, 313 (use_three_colors * 2 + use_two_colors * 3)
     use_three_colors = use_two_colors = 6

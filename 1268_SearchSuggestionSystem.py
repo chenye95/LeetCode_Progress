@@ -22,7 +22,7 @@ def suggested_products_binary_search(products: List[str], search_word: str,
     :return: List of [list of recommendations], one after typing each character in search_word
     """
     products.sort()
-    return_result = [[] for _ in range(len(search_word))]
+    return_result: List[List[str]] = [[] for _ in range(len(search_word))]
 
     start_index, end_index = 0, len(products)
     prefix = ""

@@ -7,7 +7,7 @@ class H2O:
         self.output_str: str = ''
         self.instruction_count = instruction_count
 
-    def apply_function(self, instruction: chr, wait_time: float) -> None:
+    def apply_function(self, instruction: str, wait_time: float) -> None:
         time.sleep(wait_time)
         if instruction == 'H':
             self.hydrogen()
@@ -103,7 +103,7 @@ class H2O_Lock(H2O):
         self.h1_lock.release()
 
 
-time_factor = .1
+time_factor = .02
 
 for object_class in [H2O_Semaphore, H2O_Condition, H2O_Lock, ]:
     print("Testing", object_class.__name__)

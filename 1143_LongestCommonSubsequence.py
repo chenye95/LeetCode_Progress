@@ -9,7 +9,7 @@ If there is no common subsequence, return 0.
 
 def longest_common_subsequence(text1: str, text2: str) -> int:
     """
-    DP implementation Top Down Approach
+    DP implementation Top-Down Approach
     """
     short_text, long_text = (text1, text2) if len(text1) <= len(text2) else (text2, text1)
     prev_iteration = [0] * (len(short_text) + 1)

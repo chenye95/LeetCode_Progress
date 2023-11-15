@@ -141,7 +141,7 @@ class Foo_Barrier(Foo):
         self.update_list(3)
 
 
-time_factor = .1
+time_factor = .02
 
 for object_class in [Foo_Lock, Foo_Semaphore, Foo_Condition, Foo_Event, Foo_Barrier, ]:
     print("Testing", object_class.__name__)

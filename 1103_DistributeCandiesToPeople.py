@@ -22,13 +22,13 @@ def distribute_candies(candies: int, num_people: int) -> List[int]:
     :return: no. of candies each person gets
     """
     round_no = 0
-    current_round_total = sum(range(1, num_people + 1))
+    current_round_total = (num_people + 1) * num_people // 2  # sum(range(1, num_people + 1))
     while candies >= current_round_total:
         round_no += 1
         candies -= current_round_total
         current_round_total += num_people * num_people
 
-    shared_addition = sum(range(round_no)) * num_people
+    shared_addition = (round_no - 1) * round_no // 2 * num_people  # sum(range(round_no)) * num_people
     candy_distribution = [shared_addition + i * round_no for i in range(1, num_people + 1)]
 
     next_person, next_candy_batch = 0, round_no * num_people + 1
@@ -42,5 +42,9 @@ def distribute_candies(candies: int, num_people: int) -> List[int]:
     return candy_distribution
 
 
-assert distribute_candies(candies=7, num_people=4) == [1, 2, 3, 1]
-assert distribute_candies(candies=10, num_people=3) == [5, 2, 3]
+test_cases = [
+    (7, 4, [1, 2, 3, 1]),
+    (10, 3, [5, 2, 3]),
+]
+for test_c, test_n, expected_value in test_cases:
+    assert distribute_candies(candies=test_c, num_people=test_n) == expected_value

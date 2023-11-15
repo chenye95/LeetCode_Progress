@@ -20,15 +20,13 @@ def max_result_sliding_pointer(nums: List[int], k: int) -> int:
     :param k: 1 <= k <= 1e5
     :return: maximum score traversing through nums
     """
+    if len(nums) == 1:
+        return nums[0]
+
     max_score = [0] * len(nums)
     max_score[0] = nums[0]
 
     current_max, current_max_pointer = max_score[0], 0
-
-    if len(nums) < 1:
-        return 0
-    if len(nums) == 1:
-        return nums[-1]
 
     for i, num_i in enumerate(nums[1:], 1):
         if current_max_pointer >= i - k:

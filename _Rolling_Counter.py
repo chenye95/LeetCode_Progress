@@ -55,5 +55,5 @@ class CountingPennies(RollingCounter):
 
 
 # tester = CountingPennies([25, 100], ["Quarters", "Dollars"], 200)
-tester= CountingPennies([5, 10, 25, 100], ["Nickles", "Dimes", "Quarters", "Dollars"], 200)
+tester = CountingPennies([5, 10, 25, 100], ["Nickles", "Dimes", "Quarters", "Dollars"], 200)
 tester.enumerate()

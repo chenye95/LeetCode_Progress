@@ -16,22 +16,22 @@ from _Binary_Tree import BinaryTree, TreeNode, ConstructTree, CompareTree
 
 def sub_tree_with_all_deepest_nodes(root: TreeNode) -> TreeNode:
     """
-    :param root: root of an non empty binary tree
-    :return: root of the smallest sub tree with all deepest nodes
+    :param root: root of a non-empty binary tree
+    :return: root of the smallest subtree with all deepest nodes
     """
 
     def solve_sub_problem(current_node: TreeNode) -> Tuple[int, Optional[TreeNode]]:
         """
-        :param current_node: solve the problem within sub tree beneath current_node
-        :return: deepest depth (with the sub tree), and root of the smallest sub tree (within the sub tree)
+        :param current_node: solve the problem within subtree beneath current_node
+        :return: the deepest depth (with the subtree), and root of the smallest subtree (within the subtree)
         """
         left_depth, left_node = solve_sub_problem(current_node.left) if current_node.left else (0, None)
         right_depth, right_node = solve_sub_problem(current_node.right) if current_node.right else (0, None)
         if left_depth > right_depth:
-            # left child has deeper sub tree
+            # left child has deeper subtree
             return 1 + left_depth, left_node
         elif left_depth < right_depth:
-            # right child has deeper sub tree
+            # right child has deeper subtree
             return 1 + right_depth, right_node
         else:
             # two sides have equally deep tree nodes

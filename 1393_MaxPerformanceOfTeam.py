@@ -24,7 +24,7 @@ def max_performance(n: int, speed: List[int], efficiency: List[int], k: int) -> 
     # sort engineers by reverse order of efficiency
     engineers = sorted(zip(efficiency, speed), reverse=True)
 
-    # when removing engineers from the team, remove the ones with slowest speed
+    # when removing engineers from the team, remove the ones with the slowest speed
     speed_heap = []
     speed_sum = team_performance = 0
 

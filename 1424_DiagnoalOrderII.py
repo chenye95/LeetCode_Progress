@@ -13,10 +13,10 @@ def find_diagonal_order(nums: List[List[int]]) -> List[int]:
         for j, a_i_j in enumerate(row_i):
             if len(list_int_by_i_plus_j) <= i + j:
                 list_int_by_i_plus_j.append([])
-            list_int_by_i_plus_j[i + j].insert(0, a_i_j)
+            list_int_by_i_plus_j[i + j].append(a_i_j)
     # List in increasing order of i + j
     # List within l_i_j reverse order of i
-    return [a_i_j for l_i_j in list_int_by_i_plus_j for a_i_j in l_i_j]
+    return [a_i_j for l_i_j in list_int_by_i_plus_j for a_i_j in l_i_j[::-1]]
 
 
 test_cases = [([[1, 2, 3], [4, 5, 6], [7, 8, 9]], [1, 4, 2, 7, 5, 3, 8, 6, 9]),
