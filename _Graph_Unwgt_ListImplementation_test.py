@@ -96,7 +96,7 @@ for test_n, test_edge_list, expected_output in test_graphs:
         new_graph.add_vertex(u)
     for u, v in test_edge_list:
         new_graph.add_edge(u, v)
-    get_scc_list = new_graph.strongly_connected_components(use_recursive=False)
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=False, call_number_vertex=True)
     assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
 
     new_graph = DirectedUnweightedGraph()
@@ -104,5 +104,25 @@ for test_n, test_edge_list, expected_output in test_graphs:
         new_graph.add_vertex(u)
     for u, v in test_edge_list:
         new_graph.add_edge(u, v)
-    get_scc_list = new_graph.strongly_connected_components(use_recursive=True)
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=True, call_number_vertex=True)
     assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
+
+# Longest Path in Graph with Weight
+test_cases = [
+    (3, [(1, 0), (2, 1)], [2, 1, 1], 4),
+    (5, [(4, 2), (3, 1), (4, 2), (1, 0), (4, 3), (2, 0)], [1, 1, 1, 1, 1], 4),
+    (5, [(4, 2), (3, 1), (4, 2), (1, 0), (4, 3), (2, 0)], None, 4),
+    (8, [(3, 2), (2, 1), (5, 4), (7, 6), (5, 2)], [1, 1, 1, 1, 1, 3, 1, 1], 5),
+]
+for n_nodes, edge_list_duplicate, node_weights, expected_value in test_cases:
+    new_graph = DirectedUnweightedGraph()
+    for u in range(n_nodes):
+        new_graph.add_vertex(u)
+    for u, v in edge_list_duplicate:
+        new_graph.add_edge(u, v)
+    if node_weights:
+        get_path_len, get_path_list = new_graph.longest_path({node_i: node_weight_i
+                                                              for node_i, node_weight_i in enumerate(node_weights)})
+    else:
+        get_path_len, get_path_list = new_graph.longest_path()
+    assert get_path_len == expected_value
