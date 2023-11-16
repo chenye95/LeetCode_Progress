@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict, deque
 from types import GeneratorType
-from typing import List, Tuple, DefaultDict, Dict, Union, Callable
+from typing import List, Tuple, DefaultDict, Dict, Union
 
 from _Union_Find import UnionFind
 
@@ -78,18 +78,18 @@ class WeightedGraph:
         """
         pass
 
-    def bellman_ford(self, start_node: NODE_TYPE, start_node_value: float, path_initial_value: float,
-                     path_update_function: Callable[[float, float], float],
-                     path_selection_function: Callable[[float, float], bool]) -> Dict[NODE_TYPE, float]:
+    def bellman_ford(self, start_node: NODE_TYPE, start_node_value: float, path_default_value: float,
+                     path_update_function,
+                     path_selection_function) -> Dict[NODE_TYPE, float]:
         """
         Implements Bellman Fort algorithm to compute weight path from start_node.
         Supports negative weight in Directed Acyclic Graph
 
         :param start_node: start node to compute path from
         :param start_node_value: value for path from start_node to start_node
-        :param path_initial_value: initial value for path start at start_node
-        :param path_update_function: function to include one new edge
-        :param path_selection_function: function to choose whether to include a new edge
+        :param path_default_value: initial value for path start at start_node, as well as default value for unknown path
+        :param path_update_function: Callable[[float, float], float], function to include one new edge
+        :param path_selection_function: Callable[[float, float], bool] function to choose whether to include a new edge
         :return: path weight for paths from start_node to all nodes in the graph
         """
         node_queue = deque([start_node])
@@ -99,7 +99,7 @@ class WeightedGraph:
         while node_queue:
             current_node = node_queue.popleft()
             for neighbor_node in self.Edge[current_node]:
-                current_neighbor_path = path_weight.get(neighbor_node, path_initial_value)
+                current_neighbor_path = path_weight.get(neighbor_node, path_default_value)
                 update_neighbor_path = path_update_function(self.Edge[current_node][neighbor_node],
                                                             path_weight[current_node])
                 if path_selection_function(update_neighbor_path, current_neighbor_path):
