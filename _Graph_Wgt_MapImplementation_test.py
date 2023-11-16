@@ -92,20 +92,20 @@ assert set(mst_test_tree.edge_list()) == set(mst_edges)
 # Bellman Ford Algorithm testing - Undirected Graph max prob
 vertex = list(range(3))
 max_prob_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=vertex, edges=[(0, 1, 0.5)])
-weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_initial_value=0,
+weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_default_value=0,
                                         path_update_function=operator.mul,
                                         path_selection_function=operator.gt)
 assert weight_map.get(2, 0.0) == 0.0
 
 max_prob_tree.set_edge_weight(1, 2, 0.5)
 max_prob_tree.set_edge_weight(0, 2, 0.2)
-weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_initial_value=0,
+weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_default_value=0,
                                         path_update_function=operator.mul,
                                         path_selection_function=operator.gt)
 assert weight_map.get(2, 0.0) == 0.25
 
 max_prob_tree.set_edge_weight(0, 2, 0.3)
-weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_initial_value=0,
+weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_default_value=0,
                                         path_update_function=operator.mul,
                                         path_selection_function=operator.gt)
 assert weight_map.get(2, 0.0) == 0.3
@@ -119,7 +119,7 @@ min_weight_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=ve
                                                                             ('B', 'D', 2),
                                                                             ('B', 'E', 10),
                                                                             ('E', 'D', 3)])
-weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_initial_value=float("inf"),
+weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_default_value=float("inf"),
                                           path_update_function=operator.add,
                                           path_selection_function=operator.lt)
 path_expected_weight = [0, 1, 3, 3, 6]
@@ -136,7 +136,7 @@ min_weight_tree = DirectedWeightedGraph.construct_unweighted_graph(vertices=vert
                                                                           ('B', 'E', 2),
                                                                           ('D', 'B', 1),
                                                                           ('E', 'D', -3)])
-weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_initial_value=float("inf"),
+weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_default_value=float("inf"),
                                           path_update_function=operator.add,
                                           path_selection_function=operator.lt)
 path_expected_weight = [0, -1, 2, -2, 1]
