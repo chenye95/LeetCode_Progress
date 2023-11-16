@@ -1,6 +1,6 @@
 from typing import List
 
-from _Graph_Unwgt_ListImplementation import DirectedUnweightedGraph, UndirectedUnweightedGraph, NODE
+from _Graph_Unwgt_ListImplementation import DirectedUnweightedGraph, UndirectedUnweightedGraph, GRAPH_NODE_TYPE
 
 vertices = [1, 2, 3, 4, 5]
 edges = [(1, 2), (1, 3), (1, 5), (2, 1), (3, 1), (4, 2), (5, 2)]
@@ -85,7 +85,7 @@ test_graphs = [
 ]
 
 
-def conversion_for_comparison(scc_list: List[set[NODE]]) -> str:
+def conversion_for_comparison(scc_list: List[set[GRAPH_NODE_TYPE]]) -> str:
     tmp_list = [str(sorted(scc_i)) for scc_i in scc_list]
     return str(sorted(tmp_list))
 

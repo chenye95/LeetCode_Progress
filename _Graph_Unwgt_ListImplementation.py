@@ -1,15 +1,17 @@
 from __future__ import annotations
 
+import abc
 from collections import defaultdict, deque
 from types import GeneratorType
-from typing import List, Tuple, Union
+from typing import List, Tuple
 
-NODE = Union[str, int]
+from _Graph_Shared import GRAPH_NODE_TYPE, DirectedGraph
 
 
-class UnweightedGraph:
+class UnweightedGraph(metaclass=abc.ABCMeta):
     @classmethod
-    def construct_unweighted_graph(cls, vertices: List[NODE], edges: List[Tuple[NODE, NODE]]) -> UnweightedGraph:
+    def construct_unweighted_graph(cls, vertices: List[GRAPH_NODE_TYPE],
+                                   edges: List[Tuple[GRAPH_NODE_TYPE, GRAPH_NODE_TYPE]]) -> UnweightedGraph:
         new_graph = cls()
         for vertex in vertices:
             new_graph.add_vertex(vertex)
@@ -18,25 +20,27 @@ class UnweightedGraph:
         return new_graph
 
     def __init__(self):
-        self.Edge: defaultdict[NODE, set[NODE]] = defaultdict(set)
-        self.Vertex: set[NODE] = set()
+        self.Edge: defaultdict[GRAPH_NODE_TYPE, set[GRAPH_NODE_TYPE]] = defaultdict(set)
+        self.Vertex: set[GRAPH_NODE_TYPE] = set()
 
-    def add_vertex(self, v: NODE) -> None:
+    def add_vertex(self, v: GRAPH_NODE_TYPE) -> None:
         """
         :param v: Vertex, needs to be hashable
         """
         self.Vertex.add(v)
 
-    def add_edge(self, u: NODE, v: NODE, allow_new_vertex: bool = False) -> None:
+    @abc.abstractmethod
+    def add_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE, allow_new_vertex: bool = False) -> None:
         pass
 
-    def check_vertex(self, v: NODE) -> bool:
+    def check_vertex(self, v: GRAPH_NODE_TYPE) -> bool:
         return v in self.Vertex
 
-    def check_edge(self, u: NODE, v: NODE) -> bool:
+    @abc.abstractmethod
+    def check_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE) -> bool:
         pass
 
-    def vertex_no_self_loop(self, v: NODE) -> bool:
+    def vertex_no_self_loop(self, v: GRAPH_NODE_TYPE) -> bool:
         """
         :return: no direct link from v to itself. Doesn't count for cycles of >1 length
         """
@@ -51,7 +55,7 @@ class UnweightedGraph:
         self.Vertex_lookup = {v: i for i, v in enumerate(self.Vertex_list)}
         self.n_nodes = len(self.Vertex)
 
-    def find_path_generator(self, start: NODE, end: NODE) -> GeneratorType:
+    def find_path_generator(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> GeneratorType:
         """
         :return: list[list] each list is a valid path from start to end.
         Note: no re-visiting nodes allowed in the path.
@@ -68,7 +72,8 @@ class UnweightedGraph:
                     continue
                 fringe.append((next_state, path + [next_state]))
 
-    def find_path(self, start: NODE, end: NODE) -> List[List[NODE]]:
+    @abc.abstractmethod
+    def find_path(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> List[List[GRAPH_NODE_TYPE]]:
         """
         Cannot reuse node or path
 
@@ -76,7 +81,8 @@ class UnweightedGraph:
         """
         pass
 
-    def cycles(self) -> List[List[NODE]]:
+    @abc.abstractmethod
+    def cycles(self) -> List[List[GRAPH_NODE_TYPE]]:
         """
         Cannot reuse node or path
 
@@ -84,7 +90,7 @@ class UnweightedGraph:
         """
         pass
 
-    def get_neighbors(self, u: NODE) -> set[NODE]:
+    def get_neighbors(self, u: GRAPH_NODE_TYPE) -> set[GRAPH_NODE_TYPE]:
         return self.Edge[u]
 
     def get_neighbor_by_index(self, u_index: int) -> List[int]:
@@ -97,7 +103,7 @@ class UnweightedGraph:
 
 
 class UndirectedUnweightedGraph(UnweightedGraph):
-    def add_edge(self, u: NODE, v: NODE, allow_new_vertex=False) -> None:
+    def add_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE, allow_new_vertex=False) -> None:
         """
         Undirected graph, add both <u, v> and <v, u>
         """
@@ -110,30 +116,30 @@ class UndirectedUnweightedGraph(UnweightedGraph):
         if u != v:
             self.Edge[v].add(u)
 
-    def find_path(self, start: NODE, end: NODE) -> List[List[NODE]]:
+    def find_path(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> List[List[GRAPH_NODE_TYPE]]:
         if start != end:
             return [path for path in self.find_path_generator(start, end)]
         else:
             # filtering out reusing path
             return [path for path in self.find_path_generator(start, end) if len(path) != 3]
 
-    def cycles(self) -> List[List[NODE]]:
+    def cycles(self) -> List[List[GRAPH_NODE_TYPE]]:
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v) if len(cycle_v) != 3]
 
-    def check_edge(self, u: NODE, v: NODE) -> bool:
+    def check_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE) -> bool:
         return u in self.Vertex and v in self.Vertex and v in self.Edge[u] and u in self.Edge[v]
 
 
-class DirectedUnweightedGraph(UnweightedGraph):
+class DirectedUnweightedGraph(UnweightedGraph, DirectedGraph):
     def __init__(self):
         super().__init__()
         # helper properties, used for some algorithms, such as Tarjan's algorithm
-        self.Vertex_list: List[NODE] = []
-        self.Vertex_lookup: dict[NODE, int] = {}
+        self.Vertex_list: List[GRAPH_NODE_TYPE] = []
+        self.Vertex_lookup: dict[GRAPH_NODE_TYPE, int] = {}
         self.n_nodes: int = 0
         self.timer: int = 0
 
-    def add_edge(self, u: NODE, v: NODE, allow_new_vertex=False) -> None:
+    def add_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE, allow_new_vertex=False) -> None:
         """
         Directed graph, only <u, v> is added
         """
@@ -144,16 +150,16 @@ class DirectedUnweightedGraph(UnweightedGraph):
             self.add_vertex(v)
         self.Edge[u].add(v)
 
-    def check_edge(self, u: NODE, v: NODE) -> bool:
+    def check_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE) -> bool:
         return u in self.Vertex and v in self.Vertex and v in self.Edge[u]
 
-    def find_path(self, start: NODE, end: NODE) -> List[List[NODE]]:
+    def find_path(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> List[List[GRAPH_NODE_TYPE]]:
         return [path for path in self.find_path_generator(start, end)]
 
-    def cycles(self) -> List[List[NODE]]:
+    def cycles(self) -> List[List[GRAPH_NODE_TYPE]]:
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v)]
 
-    def longest_path(self, node_weights: dict[NODE, int] = None) -> Tuple[int, List[NODE]]:
+    def longest_path(self, node_weights: dict[GRAPH_NODE_TYPE, int] = None) -> Tuple[int, List[GRAPH_NODE_TYPE]]:
         """
         return longest path in the graph, where each node is weighted by node_weights[i]
         :param node_weights: node_weights of each vertex. Set to none if all node has weight of 1.
@@ -171,8 +177,9 @@ class DirectedUnweightedGraph(UnweightedGraph):
                 in_degrees[node_dst] += 1
 
         exploring_queue = deque(node for node in self.Vertex if node not in in_degrees)
-        longest_path_ending_at: dict[NODE, Tuple[int, List[NODE]]] = {node_i: (node_weights[node_i], [node_i])
-                                                                      for node_i in self.Vertex}
+        longest_path_ending_at: dict[GRAPH_NODE_TYPE, Tuple[int, List[GRAPH_NODE_TYPE]]] = {
+            node_i: (node_weights[node_i], [node_i])
+            for node_i in self.Vertex}
         while exploring_queue:
             current_node = exploring_queue.popleft()
             current_weight, current_path = longest_path_ending_at[current_node]
@@ -187,7 +194,7 @@ class DirectedUnweightedGraph(UnweightedGraph):
 
         return max(longest_path_ending_at.values())
 
-    def topological_order(self) -> Tuple[bool, List[NODE]]:
+    def topological_order(self) -> Tuple[bool, List[GRAPH_NODE_TYPE]]:
         """
         :return: a tuple of (bool, list)
             True, list representing topological order of the directed graph, topological order exists
@@ -212,7 +219,7 @@ class DirectedUnweightedGraph(UnweightedGraph):
         return (True, topological_order_list) if len(topological_order_list) == len(self.Vertex) else (False, [])
 
     def strongly_connected_components(self, use_recursive: bool = True,
-                                      call_number_vertex: bool = False) -> List[set[NODE]]:
+                                      call_number_vertex: bool = False) -> List[set[GRAPH_NODE_TYPE]]:
         if call_number_vertex:
             self.number_vertex()
         if use_recursive:
@@ -220,7 +227,7 @@ class DirectedUnweightedGraph(UnweightedGraph):
         else:
             return self._strongly_connected_components_iterative()
 
-    def _strongly_connected_components_iterative(self) -> List[set[NODE]]:
+    def _strongly_connected_components_iterative(self) -> List[set[GRAPH_NODE_TYPE]]:
         """
         Using Tarjan's algorithm to find strongly connected components (SCC) of a tree
         See https://leetcode.com/discuss/interview-question/1787518/meta-facebook-recruiting-portal-interview-prep-rabbit-hole
@@ -301,7 +308,7 @@ class DirectedUnweightedGraph(UnweightedGraph):
                     return_scc_index_list.append(current_scc_list)
                 dfs_stack.pop()
 
-    def _strongly_connected_components_recursive(self) -> List[set[NODE]]:
+    def _strongly_connected_components_recursive(self) -> List[set[GRAPH_NODE_TYPE]]:
         """
         Using Tarjan's algorithm to find strongly connected components (SCC) of a tree
         See https://www.geeksforgeeks.org/tarjan-algorithm-find-strongly-connected-components/

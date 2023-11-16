@@ -64,17 +64,17 @@ assert [1, 2, 3, 1] in ug_cycles and [1, 3, 2, 1] in ug_cycles
 assert [2, 2] in ug_cycles and [2, 3, 1, 2] in ug_cycles and [2, 1, 3, 2] in ug_cycles
 assert [3, 1, 2, 3] in ug_cycles and [3, 2, 1, 3] in ug_cycles
 
-new_graph = DirectedWeightedGraph.construct_unweighted_graph([0, 1], [(0, 1, 0)])
+new_graph = DirectedWeightedGraph.construct_weighted_graph([0, 1], [(0, 1, 0)])
 assert isinstance(new_graph, DirectedWeightedGraph)
 assert (True, [0, 1]) == new_graph.topological_order(), new_graph.topological_order()
 new_graph.add_edge(1, 0, 0)
 assert not new_graph.topological_order()[0]
 
-new_graph = DirectedWeightedGraph.construct_unweighted_graph([0, 1, 2, 3], [(0, 1, 0), (0, 2, 0), (1, 3, 0), (2, 3, 0)])
+new_graph = DirectedWeightedGraph.construct_weighted_graph([0, 1, 2, 3], [(0, 1, 0), (0, 2, 0), (1, 3, 0), (2, 3, 0)])
 assert isinstance(new_graph, DirectedWeightedGraph)
 assert new_graph.topological_order()[1] in ([0, 1, 2, 3], [0, 2, 1, 3]), new_graph.topological_order()
 
-new_graph = UndirectedWeightedGraph.construct_unweighted_graph([0, 1], [(0, 1, 0)])
+new_graph = UndirectedWeightedGraph.construct_weighted_graph([0, 1], [(0, 1, 0)])
 assert isinstance(new_graph, UndirectedWeightedGraph)
 assert 0 in new_graph.Edge[1]
 
@@ -83,7 +83,7 @@ vertex = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 edges = [('I', 'J', 0), ('A', 'E', 1), ('C', 'I', 1), ('E', 'F', 1), ('G', 'H', 1), ('B', 'D', 2), ('C', 'J', 2),
          ('D', 'E', 2), ('D', 'H', 2), ('A', 'D', 4), ('B', 'C', 4), ('C', 'H', 4), ('G', 'I', 4), ('A', 'B', 5),
          ('D', 'F', 5), ('H', 'I', 6), ('F', 'G', 7), ('D', 'G', 11)]
-mst_test_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=vertex, edges=edges)
+mst_test_tree = UndirectedWeightedGraph.construct_weighted_graph(vertices=vertex, edges=edges)
 assert mst_test_tree.cycles()
 total_weight, mst_edges = mst_test_tree.mst_edge_kruskal()
 assert mst_test_tree.enforce_mst_kruskal() == total_weight
@@ -91,7 +91,7 @@ assert set(mst_test_tree.edge_list()) == set(mst_edges)
 
 # Bellman Ford Algorithm testing - Undirected Graph max prob
 vertex = list(range(3))
-max_prob_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=vertex, edges=[(0, 1, 0.5)])
+max_prob_tree = UndirectedWeightedGraph.construct_weighted_graph(vertices=vertex, edges=[(0, 1, 0.5)])
 weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_default_value=0,
                                         path_update_function=operator.mul,
                                         path_selection_function=operator.gt)
@@ -112,8 +112,8 @@ assert weight_map.get(2, 0.0) == 0.3
 
 # Bellman Ford Algorithm testing - Undirected Graph min weight
 vertex = ['A', 'B', 'C', 'D', 'E']
-min_weight_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=vertex,
-                                                                     edges=[('A', 'B', 1),
+min_weight_tree = UndirectedWeightedGraph.construct_weighted_graph(vertices=vertex,
+                                                                   edges=[('A', 'B', 1),
                                                                             ('A', 'C', 4),
                                                                             ('B', 'C', 2),
                                                                             ('B', 'D', 2),
@@ -128,8 +128,8 @@ for current_node, current_path in zip(vertex, path_expected_weight):
 
 # Bellman Ford Algorithm testing - Directed Graph min weight
 vertex = ['A', 'B', 'C', 'D', 'E']
-min_weight_tree = DirectedWeightedGraph.construct_unweighted_graph(vertices=vertex,
-                                                                   edges=[('A', 'B', -1),
+min_weight_tree = DirectedWeightedGraph.construct_weighted_graph(vertices=vertex,
+                                                                 edges=[('A', 'B', -1),
                                                                           ('A', 'C', 4),
                                                                           ('B', 'C', 3),
                                                                           ('B', 'D', 2),
