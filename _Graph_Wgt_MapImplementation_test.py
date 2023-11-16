@@ -1,6 +1,5 @@
-from operator import add, mul
+import operator
 from random import randint
-from string import ascii_uppercase
 
 from _Graph_Wgt_MapImplementation import DirectedWeightedGraph, UndirectedWeightedGraph
 
@@ -80,7 +79,7 @@ assert isinstance(new_graph, UndirectedWeightedGraph)
 assert 0 in new_graph.Edge[1]
 
 # Kruskal's MST Algorithm
-vertex = list(ascii_uppercase[:10])
+vertex = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 edges = [('I', 'J', 0), ('A', 'E', 1), ('C', 'I', 1), ('E', 'F', 1), ('G', 'H', 1), ('B', 'D', 2), ('C', 'J', 2),
          ('D', 'E', 2), ('D', 'H', 2), ('A', 'D', 4), ('B', 'C', 4), ('C', 'H', 4), ('G', 'I', 4), ('A', 'B', 5),
          ('D', 'F', 5), ('H', 'I', 6), ('F', 'G', 7), ('D', 'G', 11)]
@@ -94,21 +93,21 @@ assert set(mst_test_tree.edge_list()) == set(mst_edges)
 vertex = list(range(3))
 max_prob_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=vertex, edges=[(0, 1, 0.5)])
 weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_initial_value=0,
-                                        path_update_function=mul,
-                                        path_selection_function=lambda new_value, old_value: new_value > old_value)
+                                        path_update_function=operator.mul,
+                                        path_selection_function=operator.gt)
 assert weight_map.get(2, 0.0) == 0.0
 
 max_prob_tree.set_edge_weight(1, 2, 0.5)
 max_prob_tree.set_edge_weight(0, 2, 0.2)
 weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_initial_value=0,
-                                        path_update_function=mul,
-                                        path_selection_function=lambda new_value, old_value: new_value > old_value)
+                                        path_update_function=operator.mul,
+                                        path_selection_function=operator.gt)
 assert weight_map.get(2, 0.0) == 0.25
 
 max_prob_tree.set_edge_weight(0, 2, 0.3)
 weight_map = max_prob_tree.bellman_ford(start_node=0, start_node_value=1.0, path_initial_value=0,
-                                        path_update_function=mul,
-                                        path_selection_function=lambda new_value, old_value: new_value > old_value)
+                                        path_update_function=operator.mul,
+                                        path_selection_function=operator.gt)
 assert weight_map.get(2, 0.0) == 0.3
 
 # Bellman Ford Algorithm testing - Undirected Graph min weight
@@ -121,8 +120,8 @@ min_weight_tree = UndirectedWeightedGraph.construct_unweighted_graph(vertices=ve
                                                                             ('B', 'E', 10),
                                                                             ('E', 'D', 3)])
 weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_initial_value=float("inf"),
-                                          path_update_function=add,
-                                          path_selection_function=lambda new_value, old_value: new_value < old_value)
+                                          path_update_function=operator.add,
+                                          path_selection_function=operator.lt)
 path_expected_weight = [0, 1, 3, 3, 6]
 for current_node, current_path in zip(vertex, path_expected_weight):
     assert weight_map[current_node] == current_path, current_node
@@ -138,8 +137,8 @@ min_weight_tree = DirectedWeightedGraph.construct_unweighted_graph(vertices=vert
                                                                           ('D', 'B', 1),
                                                                           ('E', 'D', -3)])
 weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_initial_value=float("inf"),
-                                          path_update_function=add,
-                                          path_selection_function=lambda new_value, old_value: new_value < old_value)
+                                          path_update_function=operator.add,
+                                          path_selection_function=operator.lt)
 path_expected_weight = [0, -1, 2, -2, 1]
 for current_node, current_path in zip(vertex, path_expected_weight):
     assert weight_map[current_node] == current_path, current_node
