@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections import defaultdict
+from collections import defaultdict, deque
 from types import GeneratorType
 from typing import List, Tuple, Union
 
@@ -20,11 +20,6 @@ class UnweightedGraph:
     def __init__(self):
         self.Edge: defaultdict[NODE, set[NODE]] = defaultdict(set)
         self.Vertex: set[NODE] = set()
-
-        # helper properties, used for some algorithms, such as Tarjan's algorithm
-        self.Vertex_list: List[NODE] = []
-        self.Vertex_lookup: dict[NODE, int] = {}
-        self.n_nodes: int = 0
 
     def add_vertex(self, v: NODE) -> None:
         """
@@ -132,7 +127,11 @@ class UndirectedUnweightedGraph(UnweightedGraph):
 class DirectedUnweightedGraph(UnweightedGraph):
     def __init__(self):
         super().__init__()
-        self.timer = None
+        # helper properties, used for some algorithms, such as Tarjan's algorithm
+        self.Vertex_list: List[NODE] = []
+        self.Vertex_lookup: dict[NODE, int] = {}
+        self.n_nodes: int = 0
+        self.timer: int = 0
 
     def add_edge(self, u: NODE, v: NODE, allow_new_vertex=False) -> None:
         """
@@ -154,6 +153,40 @@ class DirectedUnweightedGraph(UnweightedGraph):
     def cycles(self) -> List[List[NODE]]:
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v)]
 
+    def longest_path(self, node_weights: dict[NODE, int] = None) -> Tuple[int, List[NODE]]:
+        """
+        return longest path in the graph, where each node is weighted by node_weights[i]
+        :param node_weights: node_weights of each vertex. Set to none if all node has weight of 1.
+                            Order follows self.Vertex_list
+        :return: a tuple, total weight of the longest path, and one of the longest path if tie exists
+        """
+        if not node_weights:
+            node_weights = {node_i: 1 for node_i in self.Vertex}
+        else:
+            assert len(node_weights) == len(self.Vertex)
+
+        in_degrees = defaultdict(int)
+        for node_src in self.Edge:
+            for node_dst in self.Edge[node_src]:
+                in_degrees[node_dst] += 1
+
+        exploring_queue = deque(node for node in self.Vertex if node not in in_degrees)
+        longest_path_ending_at: dict[NODE, Tuple[int, List[NODE]]] = {node_i: (node_weights[node_i], [node_i])
+                                                                      for node_i in self.Vertex}
+        while exploring_queue:
+            current_node = exploring_queue.popleft()
+            current_weight, current_path = longest_path_ending_at[current_node]
+            for next_node in self.get_neighbors(current_node):
+                next_weight, next_path = longest_path_ending_at[next_node]
+                if current_weight + node_weights[next_node] > next_weight:
+                    longest_path_ending_at[next_node] = (current_weight + node_weights[next_node],
+                                                         current_path + [next_node])
+                in_degrees[next_node] -= 1
+                if in_degrees[next_node] == 0:
+                    exploring_queue.append(next_node)
+
+        return max(longest_path_ending_at.values())
+
     def topological_order(self) -> Tuple[bool, List[NODE]]:
         """
         :return: a tuple of (bool, list)
@@ -165,20 +198,23 @@ class DirectedUnweightedGraph(UnweightedGraph):
             for node_dst in self.Edge[node_src]:
                 in_degrees[node_dst] += 1
 
-        zero_in_degree_nodes = [node for node in self.Vertex if node not in in_degrees]
+        exploring_queue = deque([node for node in self.Vertex if node not in in_degrees])
         topological_order_list = []
 
-        while zero_in_degree_nodes:
-            node = zero_in_degree_nodes.pop()
+        while exploring_queue:
+            node = exploring_queue.popleft()
             topological_order_list.append(node)
             for neighbor in self.Edge[node]:
                 in_degrees[neighbor] -= 1
                 if in_degrees[neighbor] == 0:
-                    zero_in_degree_nodes.append(neighbor)
+                    exploring_queue.append(neighbor)
 
         return (True, topological_order_list) if len(topological_order_list) == len(self.Vertex) else (False, [])
 
-    def strongly_connected_components(self, use_recursive: bool = True) -> List[set[NODE]]:
+    def strongly_connected_components(self, use_recursive: bool = True,
+                                      call_number_vertex: bool = False) -> List[set[NODE]]:
+        if call_number_vertex:
+            self.number_vertex()
         if use_recursive:
             return self._strongly_connected_components_recursive()
         else:
@@ -190,7 +226,6 @@ class DirectedUnweightedGraph(UnweightedGraph):
         See https://leetcode.com/discuss/interview-question/1787518/meta-facebook-recruiting-portal-interview-prep-rabbit-hole
         :return: List of strongly connected components in the tree; vertices in each sub list belongs to the same SCC
         """
-        self.number_vertex()
         self.timer: int = 0
 
         # Stores discovery times of visited vertices
@@ -272,7 +307,6 @@ class DirectedUnweightedGraph(UnweightedGraph):
         See https://www.geeksforgeeks.org/tarjan-algorithm-find-strongly-connected-components/
         :return: List of strongly connected components in the tree; vertices in each sub list belongs to the same SCC
         """
-        self.number_vertex()
         self.timer: int = 0
 
         # Stores discovery times of visited vertices
