@@ -9,7 +9,7 @@ class UnionFind:
     def __init__(self, element_list: List[NodeType], use_recursion=False):
         """
         :param element_list: list of elements tracked under UnionFind
-        :param use_recursion: default behavior whether use Recursive Calls to perform Path Compression,
+        :param use_recursion: default behavior whether you use Recursive Calls to perform Path Compression,
             set to True if find is frequent compared to unify
         """
         if not element_list:
@@ -76,7 +76,7 @@ class UnionFindArray:
     def __init__(self, elements_count: int, use_recursion: bool = False):
         """
         :param elements_count: number of elements tracked under UnionFindArray
-        :param use_recursion: default behavior whether use Recursive Calls to perform Path Compression,
+        :param use_recursion: default behavior whether you use Recursive Calls to perform Path Compression,
             set to True if find is frequent compared to unify
         """
         if elements_count <= 0:
@@ -97,7 +97,7 @@ class UnionFindArray:
         """
         Perform path compression to yield amortized constant time
 
-        :param use_recursion: whether uses Recursive Call to compress path, set to True if find() is frequent
+        :param use_recursion: whether it uses Recursive Call to compress path, set to True if find() is frequent
         :param p: element to look up
         :return: component id for which element p belongs to
         """
@@ -120,9 +120,9 @@ class UnionFindArray:
 
             # Perform path compression
             while p != root:
-                next = self.union_id[p]
+                next_p = self.union_id[p]
                 self.union_id[p] = root
-                p = next
+                p = next_p
 
             return root
 

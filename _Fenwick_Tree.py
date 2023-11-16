@@ -16,15 +16,15 @@ class FenwickTree:
         """
         self.bit_array_len = len(init_frequencies) + 1
         # bit_array has a leading zero from index computation purposes
-        # need to shift user index +1 in code
         self.bit_array = [0] * self.bit_array_len
         for i, num_i in enumerate(init_frequencies):
+            # need to shift user index +1 in code, due to the leading zero
             self.__update(i + 1, num_i)
 
     def range_sum(self, start_idx: int = 0, end_idx: int = -1) -> NUMBER_TYPE:
         """
         :param start_idx: start of range sum query, inclusive
-        :param end_idx: end of range sum query, inclusive; set to -1 if want to sum to the end
+        :param end_idx: end of range sum query, inclusive; set to -1 or leave blank, if you want to sum of everything
         :return: inclusive range sum between start_idx and end_idx
         """
         # tree_idx = user_idx + 1 given the leading zero in bit_array

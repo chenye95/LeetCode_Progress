@@ -13,6 +13,7 @@ Implement the Trie class:
     and false otherwise.
 """
 from collections import defaultdict
+from typing import List
 
 
 class Trie:
@@ -71,9 +72,9 @@ class Trie:
 
         return True
 
-    def get_words_start_with(self, prefix: str, max_recommendation: int):
+    def get_words_start_with(self, prefix: str, max_recommendation: int) -> List[str]:
         """
-        :param prefix: string starts with, case sensitive, prefix. Does not support self.chr_match_all_letters
+        :param prefix: string starts with, case-sensitive, prefix. Does not support self.chr_match_all_letters
         :param max_recommendation: max length of the returned list
         :return: list of words, in alphabetical order, that starts with prefix
         """

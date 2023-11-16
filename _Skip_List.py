@@ -21,7 +21,7 @@ class SkipListNode:
                  next: SkipListNode = None,
                  down: SkipListNode = None):
         """
-        Compress duplicate nodes under one nodes and keep track of duplicate count
+        Compress duplicate nodes under one node and keep track of duplicate count
 
         :param value: value of SkipListNode, needs to be comparable
         :param count: duplicate count
