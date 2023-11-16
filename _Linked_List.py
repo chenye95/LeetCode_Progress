@@ -42,11 +42,13 @@ class ListNode:
 
 
 class LinkedList:
+    _node_class = ListNode
+
     def __init__(self, head: ListNode) -> None:
         self.head = head
 
-    @staticmethod
-    def create_linked_list(node_values: List[NodeValueType]) -> LinkedList:
+    @classmethod
+    def create_linked_list(cls, node_values: List[NodeValueType]):
         """
         :param node_values: list of node values
         :return: create a Linked List using the node_values provided
@@ -54,12 +56,12 @@ class LinkedList:
         current_node = head = None
         for node_x in node_values:
             if not current_node:
-                current_node = ListNode(node_x)
+                current_node = cls._node_class(node_x)
                 head = current_node
             else:
-                current_node.next = ListNode(node_x)
+                current_node.next = cls._node_class(node_x)
                 current_node = current_node.next
-        return LinkedList(head=head)
+        return cls(head=head)
 
     def midpoint_of_list(self) -> Tuple[int, ListNode]:
         """
@@ -114,19 +116,7 @@ class PrintableLinkedList(LinkedList):
     """
     Override how Linked List is printed
     """
-
-    @staticmethod
-    def create_linked_list(node_values: List[NodeValueType]) -> PrintableLinkedList:
-        current_node = None
-        head = None
-        for node_x in node_values:
-            if not current_node:
-                current_node = PrintableListNode(node_x)
-                head = current_node
-            else:
-                current_node.next = PrintableListNode(node_x)
-                current_node = current_node.next
-        return PrintableLinkedList(head=head)
+    _node_class = PrintableListNode
 
     def __init__(self, head: PrintableListNode, separator: str = ', '):
         super().__init__(head)

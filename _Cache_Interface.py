@@ -1,3 +1,4 @@
+import abc
 from typing import Any
 
 
@@ -10,7 +11,7 @@ class CacheNode:
             self.freq = 1
 
 
-class Cache:
+class Cache(metaclass=abc.ABCMeta):
     """
     Interface Definition for all Cache implementation
     All implementation supports put() and get(), as well as constant NOT_FOUND
@@ -28,6 +29,7 @@ class Cache:
             "Cache system should hold more than %d items" % self.MIN_CAPACITY_THRESHOLD
         self.capacity = capacity
 
+    @abc.abstractmethod
     def get(self, key: int) -> Any:
         """
         :param key: query value associated with key
@@ -35,6 +37,7 @@ class Cache:
         """
         pass
 
+    @abc.abstractmethod
     def put(self, key: int, val: Any) -> None:
         """
         :param key: put key-val pair into cache object

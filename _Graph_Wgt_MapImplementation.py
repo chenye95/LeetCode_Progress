@@ -1,20 +1,20 @@
 from __future__ import annotations
 
+import abc
 from collections import defaultdict, deque
 from types import GeneratorType
-from typing import List, Tuple, DefaultDict, Dict, Union
+from typing import List, Tuple, DefaultDict, Dict
 
+from _Graph_Shared import GRAPH_NODE_TYPE, DirectedGraph
 from _Union_Find import UnionFind
 
-NODE_TYPE = Union[str, int]
 
-
-class WeightedGraph:
+class WeightedGraph(metaclass=abc.ABCMeta):
     EDGE_NOT_FOUND = -float('inf')
 
     @classmethod
-    def construct_unweighted_graph(cls, vertices: List[NODE_TYPE],
-                                   edges: List[Tuple[NODE_TYPE, NODE_TYPE, float]]) -> WeightedGraph:
+    def construct_weighted_graph(cls, vertices: List[GRAPH_NODE_TYPE],
+                                 edges: List[Tuple[GRAPH_NODE_TYPE, GRAPH_NODE_TYPE, float]]) -> WeightedGraph:
         new_graph = cls()
         for vertex in vertices:
             new_graph.add_vertex(vertex)
@@ -23,37 +23,39 @@ class WeightedGraph:
         return new_graph
 
     def __init__(self):
-        self.Edge: DefaultDict[NODE_TYPE, Dict[NODE_TYPE, float]] = defaultdict(dict)
+        self.Edge: DefaultDict[GRAPH_NODE_TYPE, Dict[GRAPH_NODE_TYPE, float]] = defaultdict(dict)
         self.Vertex = set()
 
-    def add_vertex(self, v: NODE_TYPE) -> None:
+    def add_vertex(self, v: GRAPH_NODE_TYPE) -> None:
         """
         :param v: Vertex, needs to be hashable
         """
         self.Vertex.add(v)
 
-    def add_edge(self, u: NODE_TYPE, v: NODE_TYPE, weight: float) -> None:
+    @abc.abstractmethod
+    def add_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE, weight: float) -> None:
         pass
 
-    def set_edge_weight(self, u: NODE_TYPE, v: NODE_TYPE, weight: float) -> None:
+    @abc.abstractmethod
+    def set_edge_weight(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE, weight: float) -> None:
         pass
 
-    def check_vertex(self, v: NODE_TYPE) -> bool:
+    def check_vertex(self, v: GRAPH_NODE_TYPE) -> bool:
         return v in self.Vertex
 
-    def check_edge(self, u: NODE_TYPE, v: NODE_TYPE) -> bool:
+    def check_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE) -> bool:
         return u in self.Vertex and v in self.Vertex and v in self.Edge[u]
 
-    def get_edge_weight(self, u: NODE_TYPE, v: NODE_TYPE) -> float:
+    def get_edge_weight(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE) -> float:
         if u in self.Vertex and v in self.Vertex and v in self.Edge[u]:
             return self.Edge[u][v]
         else:
             return self.EDGE_NOT_FOUND
 
-    def vertex_no_self_loop(self, v: NODE_TYPE) -> bool:
+    def vertex_no_self_loop(self, v: GRAPH_NODE_TYPE) -> bool:
         return v in self.Vertex and v not in self.Edge[v]
 
-    def find_path_generator(self, start: NODE_TYPE, end: NODE_TYPE) -> GeneratorType:
+    def find_path_generator(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> GeneratorType:
         """
         :return: list[list] each list is a valid path from start to end
         Note: no re-visiting nodes allowed in the path.
@@ -70,7 +72,8 @@ class WeightedGraph:
                     continue
                 fringe.append((next_state, path + [next_state]))
 
-    def cycles(self) -> List[List[NODE_TYPE]]:
+    @abc.abstractmethod
+    def cycles(self) -> List[List[GRAPH_NODE_TYPE]]:
         """
         Cannot reuse node or path
 
@@ -78,9 +81,9 @@ class WeightedGraph:
         """
         pass
 
-    def bellman_ford(self, start_node: NODE_TYPE, start_node_value: float, path_default_value: float,
+    def bellman_ford(self, start_node: GRAPH_NODE_TYPE, start_node_value: float, path_default_value: float,
                      path_update_function,
-                     path_selection_function) -> Dict[NODE_TYPE, float]:
+                     path_selection_function) -> Dict[GRAPH_NODE_TYPE, float]:
         """
         Implements Bellman Fort algorithm to compute weight path from start_node.
         Supports negative weight in Directed Acyclic Graph
@@ -93,7 +96,7 @@ class WeightedGraph:
         :return: path weight for paths from start_node to all nodes in the graph
         """
         node_queue = deque([start_node])
-        path_weight: Dict[NODE_TYPE, float] = dict()
+        path_weight: Dict[GRAPH_NODE_TYPE, float] = dict()
         path_weight[start_node] = start_node_value
 
         while node_queue:
@@ -110,7 +113,7 @@ class WeightedGraph:
 
 
 class UndirectedWeightedGraph(WeightedGraph):
-    def add_edge(self, u: NODE_TYPE, v: NODE_TYPE, weight: float) -> None:
+    def add_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE, weight: float) -> None:
         """
         Undirected graph, both <u, v> and <v, u> are added and set to weight
         """
@@ -119,7 +122,7 @@ class UndirectedWeightedGraph(WeightedGraph):
         if u != v:
             self.Edge[v][u] = weight
 
-    def set_edge_weight(self, u: NODE_TYPE, v: NODE_TYPE, weight: float) -> None:
+    def set_edge_weight(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE, weight: float) -> None:
         """
         Undirected graph, both <u, v> and <v, u> will be updated to weight
         """
@@ -128,7 +131,7 @@ class UndirectedWeightedGraph(WeightedGraph):
         if u != v:
             self.Edge[v][u] = weight
 
-    def find_path(self, start: int, end: int) -> List[List[NODE_TYPE]]:
+    def find_path(self, start: int, end: int) -> List[List[GRAPH_NODE_TYPE]]:
         """
         Cannot reuse node or path
         """
@@ -138,13 +141,13 @@ class UndirectedWeightedGraph(WeightedGraph):
             # filtering out reusing path
             return [path for path in self.find_path_generator(start, end) if len(path) != 3]
 
-    def cycles(self) -> List[List[NODE_TYPE]]:
+    def cycles(self) -> List[List[GRAPH_NODE_TYPE]]:
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v) if len(cycle_v) != 3]
 
-    def edge_list(self) -> List[Tuple[NODE_TYPE, NODE_TYPE, float]]:
+    def edge_list(self) -> List[Tuple[GRAPH_NODE_TYPE, GRAPH_NODE_TYPE, float]]:
         return [(u, v, self.Edge[u][v]) for u in self.Vertex for v in self.Edge[u] if u <= v]
 
-    def mst_edge_kruskal(self) -> Tuple[float, List[Tuple[NODE_TYPE, NODE_TYPE, float]]]:
+    def mst_edge_kruskal(self) -> Tuple[float, List[Tuple[GRAPH_NODE_TYPE, GRAPH_NODE_TYPE, float]]]:
         """
         Run Kruskal's algorithm to generate one Minimum Spanning Tree from the Undirected Weighted Graph
         please note that MST may not be unique
@@ -186,28 +189,28 @@ class UndirectedWeightedGraph(WeightedGraph):
         return total_weight
 
 
-class DirectedWeightedGraph(WeightedGraph):
-    def add_edge(self, u: NODE_TYPE, v: NODE_TYPE, weight: float) -> None:
+class DirectedWeightedGraph(WeightedGraph, DirectedGraph):
+    def add_edge(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE, weight: float) -> None:
         """
         Directed graph, only add <u, v>
         """
         assert u in self.Vertex and v in self.Vertex
         self.Edge[u][v] = weight
 
-    def set_edge_weight(self, u: NODE_TYPE, v: NODE_TYPE, weight: float) -> None:
+    def set_edge_weight(self, u: GRAPH_NODE_TYPE, v: GRAPH_NODE_TYPE, weight: float) -> None:
         """
         Directed graph, only weight of <u, v> will be updated
         """
         assert u in self.Vertex and v in self.Vertex
         self.Edge[u][v] = weight
 
-    def find_path(self, start: NODE_TYPE, end: NODE_TYPE) -> List[List[NODE_TYPE]]:
+    def find_path(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> List[List[GRAPH_NODE_TYPE]]:
         return [path for path in self.find_path_generator(start, end)]
 
-    def cycles(self) -> List[List[NODE_TYPE]]:
+    def cycles(self) -> List[List[GRAPH_NODE_TYPE]]:
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v)]
 
-    def topological_order(self) -> (bool, List[NODE_TYPE]):
+    def topological_order(self) -> (bool, List[GRAPH_NODE_TYPE]):
         """
         :return: a tuple of (bool, list)
             True, list representing topological order of the directed graph, topological order exists
