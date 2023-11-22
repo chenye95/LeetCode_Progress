@@ -9,7 +9,7 @@ from _Binary_Tree import TreeNode, ConstructTree
 
 def max_path_sum(root: TreeNode) -> int:
     """
-    :param root: root of an non-empty binary tree
+    :param root: root of a non-empty binary tree
     :return: maximum path sum in the tree
     """
 

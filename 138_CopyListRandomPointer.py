@@ -11,9 +11,9 @@ list state. None of the pointers in the new list should point to nodes in the or
 
 class Node:
     def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
-        self.val = int(x)
-        self.next = next
-        self.random = random
+        self.val: int = int(x)
+        self.next: Node = next
+        self.random: Node = random
 
 
 def copy_random_list(head: Node) -> Node:
@@ -25,7 +25,7 @@ def copy_random_list(head: Node) -> Node:
         return head
 
     prev_copy = Node(head.val)
-    node_map = {head: prev_copy}
+    node_map: dict[Node, Node] = {head: prev_copy}
     if head.random:
         if head.random != head:
             node_map[head.random] = Node(head.random.val)
@@ -38,15 +38,15 @@ def copy_random_list(head: Node) -> Node:
         current_original = current_original.next
         if current_original not in node_map:
             node_map[current_original] = Node(current_original.val)
-        next_node = node_map[current_original]
-        prev_copy.next = next_node
+        current_node = node_map[current_original]
+        prev_copy.next = current_node
 
         if current_original.random:
             if current_original.random not in node_map:
                 node_map[current_original.random] = Node(current_original.random.val)
-            next_node.random = node_map[current_original.random]
+            current_node.random = node_map[current_original.random]
 
-        prev_copy = next_node
+        prev_copy = current_node
 
     return node_map[head]
 

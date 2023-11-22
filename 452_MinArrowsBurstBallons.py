@@ -16,22 +16,25 @@ from typing import List, Tuple
 def min_arrow_shots(points: List[Tuple[int, int]]) -> int:
     """
     :param points: list of (x_start, x_end)
-    :return:
+    :return: the minimum number of arrows that must be shot to burst all balloons.
     """
     if not points:
         return 0
 
-    # sort by x_start
-    points.sort()
+    # sort by x_end
+    points.sort(key=lambda x: x[1])
     arrow_count = 1
     arrow_shoot_at = points[0][1]
 
     for x_start, x_end in points[1:]:
-        if x_start <= arrow_shoot_at:
-            arrow_shoot_at = min(arrow_shoot_at, x_end)
-        else:
+        # since x_end is sorted
+        # guaranteed that x_end >= arrow_shoot_at
+        if arrow_shoot_at < x_start:
             arrow_count += 1
             arrow_shoot_at = x_end
+        # else:
+        #   x_start <= arrow_shoot_at <= x_end
+        #   covered by previous arrow
 
     return arrow_count
 

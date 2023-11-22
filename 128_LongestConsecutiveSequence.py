@@ -9,7 +9,7 @@ from typing import List
 def longest_consecutive_sort(nums: List[int]) -> int:
     """
     :param nums: 0 <= len(nums) <= 1e5, and -1e9 <= nums[i] <= 1e9, can have repeated values
-    :return: longest consecutive sub sequence in sorted(nums)
+    :return: longest consecutive sub-sequence in sorted(nums)
     """
     if not nums:
         return 0
@@ -33,7 +33,7 @@ def longest_consecutive_sort(nums: List[int]) -> int:
 def longest_consecutive_set(nums: List[int]) -> int:
     """
     :param nums: 0 <= len(nums) <= 1e5, and -1e9 <= nums[i] <= 1e9, can have repeated values
-    :return: longest consecutive sub sequence in sorted(nums)
+    :return: longest consecutive sub-sequence in sorted(nums)
     """
     nums_set = set(nums)
     longest_streak = 0

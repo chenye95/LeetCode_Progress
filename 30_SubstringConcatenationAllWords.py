@@ -21,16 +21,16 @@ def find_substring_sequential_scan(s: str, words: List[str]) -> List[int]:
     word_counter = Counter(words)
     word_len = len(words[0])
     num_word = len(words)
-    substring_len = word_len * num_word
+    expected_substring_len = word_len * num_word
 
     first_letters = {word[0] for word in words}
 
     return_list = []
-    for substring_start in range(len(s) - substring_len + 1):
+    for substring_start in range(len(s) - expected_substring_len + 1):
         if s[substring_start] in first_letters:
             to_be_found = dict(word_counter)
             word_used = 0
-            for word_start in range(substring_start, substring_start + substring_len, word_len):
+            for word_start in range(substring_start, substring_start + expected_substring_len, word_len):
                 if s[word_start] not in first_letters:
                     break
                 possible_word = s[word_start: word_start + word_len]
@@ -59,37 +59,36 @@ def find_substring_group_scan(s: str, words: List[str]) -> List[int]:
     word_counter = Counter(words)
     word_len = len(words[0])
     num_word = len(words)
-    substring_len = word_len * num_word
+    expected_substring_len = word_len * num_word
     s_len = len(s)
 
     return_list = []
 
-    word_appearance = defaultdict(deque)
     for substring_start_mod in range(word_len):
-        substring_start = substring_end = substring_start_mod
-        word_appearance.clear()
-        while substring_start + substring_len <= s_len:
+        scanning_start = scanning_end = substring_start_mod
+        word_appearance: dict[str, deque[int]] = defaultdict(deque)
+        while scanning_start + expected_substring_len <= s_len:
             # extend out one word
-            possible_word = s[substring_end: substring_end + word_len]
-            substring_end += word_len
+            possible_word = s[scanning_end: scanning_end + word_len]
+            scanning_end += word_len
 
             if possible_word in word_counter:
                 word_end_list = word_appearance[possible_word]
-                word_end_list.append(substring_end)
-                while word_end_list[0] < substring_start:
-                    # drop all appearances outside of window substring_start: substring_start + substring_len
+                word_end_list.append(scanning_end)
+                while word_end_list[0] < scanning_start:
+                    # drop all appearances outside of window scanning_start: scanning_start + expected_substring_len
                     word_end_list.popleft()
                 while len(word_end_list) > word_counter[possible_word]:
                     # drop additional repetitions of possible_word
-                    substring_start = word_end_list.popleft()
+                    scanning_start = word_end_list.popleft()
 
-                if substring_start + substring_len == substring_end:
+                if scanning_start + expected_substring_len == scanning_end:
                     # since <= word_counter[word] are enforced for all word
                     # this means concatenation of all words according to word_counter
-                    return_list.append(substring_start)
+                    return_list.append(scanning_start)
             else:
                 # reset scan point to after substring_end
-                substring_start = substring_end
+                scanning_start = scanning_end
 
     return return_list
 
@@ -120,4 +119,4 @@ test_cases = [("barfoothefoobarman", ["foo", "bar"], [0, 9]),
                 "gdcj", "lnle", "sefg", "vimw", "bxcb"], [935]), ]
 for find_substring in [find_substring_group_scan, find_substring_sequential_scan, ]:
     for test_s, test_words, expected_list in test_cases:
-        assert find_substring(test_s, test_words) == expected_list, find_substring.__name__
+        assert sorted(find_substring(test_s, test_words)) == expected_list, find_substring.__name__
