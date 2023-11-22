@@ -31,7 +31,7 @@ class _LFUCacheLinkedList:
         If Node is None, pop the last node in the linked list
 
         :param node: node to be removed from the double linked list, i.e. server tie between node and its prev and next.
-            If node is None, short hand for removing the last node of the linked list
+            If node is None, shorthand for removing the last node of the linked list
         :return: CacheNode that is removed from the linked list. None if the list is empty
         """
         if self.size == 0:
@@ -50,7 +50,7 @@ class _LFUCacheLinkedList:
 class LFUCache(Cache):
     """
     Data structure for Least Frequently Used (LFU) cache.
-    Per interface requirements, it support operations get() and put() as well as constant NOT_FOUND
+    Per interface requirements, it supports operations get() and put() as well as constant NOT_FOUND
     When at capacity, invalidate the least frequently used item before inserting a new item.
     When there is a tie (i.e., two or more keys that have the same frequency), the least recently used key would be
      evicted.

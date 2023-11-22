@@ -114,11 +114,11 @@ assert weight_map.get(2, 0.0) == 0.3
 vertex = ['A', 'B', 'C', 'D', 'E']
 min_weight_tree = UndirectedWeightedGraph.construct_weighted_graph(vertices=vertex,
                                                                    edges=[('A', 'B', 1),
-                                                                            ('A', 'C', 4),
-                                                                            ('B', 'C', 2),
-                                                                            ('B', 'D', 2),
-                                                                            ('B', 'E', 10),
-                                                                            ('E', 'D', 3)])
+                                                                          ('A', 'C', 4),
+                                                                          ('B', 'C', 2),
+                                                                          ('B', 'D', 2),
+                                                                          ('B', 'E', 10),
+                                                                          ('E', 'D', 3)])
 weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_default_value=float("inf"),
                                           path_update_function=operator.add,
                                           path_selection_function=operator.lt)
@@ -130,12 +130,12 @@ for current_node, current_path in zip(vertex, path_expected_weight):
 vertex = ['A', 'B', 'C', 'D', 'E']
 min_weight_tree = DirectedWeightedGraph.construct_weighted_graph(vertices=vertex,
                                                                  edges=[('A', 'B', -1),
-                                                                          ('A', 'C', 4),
-                                                                          ('B', 'C', 3),
-                                                                          ('B', 'D', 2),
-                                                                          ('B', 'E', 2),
-                                                                          ('D', 'B', 1),
-                                                                          ('E', 'D', -3)])
+                                                                        ('A', 'C', 4),
+                                                                        ('B', 'C', 3),
+                                                                        ('B', 'D', 2),
+                                                                        ('B', 'E', 2),
+                                                                        ('D', 'B', 1),
+                                                                        ('E', 'D', -3)])
 weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, path_default_value=float("inf"),
                                           path_update_function=operator.add,
                                           path_selection_function=operator.lt)

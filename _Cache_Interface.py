@@ -19,6 +19,7 @@ class Cache(metaclass=abc.ABCMeta):
     NOT_FOUND = -1
     MIN_CAPACITY_THRESHOLD = 0
 
+    @abc.abstractmethod
     def __init__(self, capacity: int):
         """
         Initialize a cache object of capacity
