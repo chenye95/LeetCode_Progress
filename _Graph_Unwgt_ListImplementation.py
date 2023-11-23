@@ -4,7 +4,7 @@ import abc
 from collections import defaultdict, deque
 from typing import List, Tuple, Generator
 
-from _Graph_Shared import GRAPH_NODE_TYPE, DirectedGraph
+from _Graph_Directed_Interface import GRAPH_NODE_TYPE, DirectedGraph
 
 
 class UnweightedGraph(metaclass=abc.ABCMeta):
