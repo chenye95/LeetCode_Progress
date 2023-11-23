@@ -11,7 +11,7 @@ def get_max_visitable_webpages_1(N: int, M: int, A: List[int], B: List[int]) -> 
     for a_i, b_i in zip(A, B):
         graph_object.add_edge(a_i, b_i)
 
-    scc_list = graph_object.strongly_connected_components(use_recursive=False, call_number_vertex=True)
+    scc_list = graph_object.strongly_connected_components(use_recursive=False, convert_to_list=False)
     new_graph_mapping = {old_id: new_id
                          for new_id, scc_component in enumerate(scc_list)
                          for old_id in scc_component}
@@ -34,7 +34,7 @@ def get_max_visitable_webpages_2(N: int, M: int, A: List[int], B: List[int]) -> 
     for a_i, b_i in zip(A, B):
         graph_object.add_edge(a_i, b_i)
 
-    scc_list = graph_object.strongly_connected_components(use_recursive=False, call_number_vertex=True)
+    scc_list = graph_object.strongly_connected_components(use_recursive=False, convert_to_list=False)
     new_graph_mapping = {old_id: new_id
                          for new_id, scc_component in enumerate(scc_list)
                          for old_id in scc_component}
