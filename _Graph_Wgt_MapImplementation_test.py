@@ -1,6 +1,8 @@
 import operator
 from random import randint
+from typing import List
 
+from _Graph_Directed_Interface import GRAPH_NODE_TYPE
 from _Graph_Wgt_MapImplementation import DirectedWeightedGraph, UndirectedWeightedGraph
 
 vertices = [1, 2, 3, 4, 5]
@@ -142,3 +144,59 @@ weight_map = min_weight_tree.bellman_ford(start_node='A', start_node_value=0, pa
 path_expected_weight = [0, -1, 2, -2, 1]
 for current_node, current_path in zip(vertex, path_expected_weight):
     assert weight_map[current_node] == current_path, current_node
+
+# Tarjan's SCC Algorithm
+test_graphs = [
+    (5, [(1, 0), (0, 2), (2, 1), (0, 3), (3, 4)],
+     [{0, 1, 2}, {3}, {4}]),
+    (4, [(0, 1), (1, 2), (2, 3), ],
+     [{3}, {2}, {1}, {0}]),
+    (7, [(0, 1), (1, 2), (2, 0), (1, 3), (1, 4), (1, 6), (3, 5), (4, 5)], [{5}, {3}, {4}, {6}, {0, 1, 2}]),
+    (11, [(0, 1), (0, 3), (1, 2), (1, 4), (2, 0), (2, 6), (3, 2), (4, 5), (4, 6), (5, 6), (5, 7), (5, 8), (5, 9),
+          (6, 4), (7, 9), (8, 9), (9, 8)],
+     [{8, 9}, {7}, {4, 5, 6}, {0, 1, 2, 3}, {10}]),
+    (5, [(0, 1), (1, 2), (2, 3), (2, 4), (3, 0), (4, 2)],
+     [{0, 1, 2, 3, 4}]),
+]
+
+
+def conversion_for_comparison(scc_list: List[set[GRAPH_NODE_TYPE]]) -> str:
+    tmp_list = [str(sorted(scc_i)) for scc_i in scc_list]
+    return str(sorted(tmp_list))
+
+
+for test_n, test_edge_list, expected_output in test_graphs:
+    new_graph = DirectedWeightedGraph()
+    for u in range(test_n):
+        new_graph.add_vertex(u)
+    for u, v in test_edge_list:
+        new_graph.add_edge(u, v, 1.)
+    vertex_list, vertex_lookup = new_graph.number_vertex()
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=False, convert_to_list=True,
+                                                           vertex_lookup=vertex_lookup, vertex_list=vertex_list)
+    assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
+
+    new_graph = DirectedWeightedGraph()
+    for u in range(test_n):
+        new_graph.add_vertex(u)
+    for u, v in test_edge_list:
+        new_graph.add_edge(u, v, 1.)
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=True, convert_to_list=True,
+                                                           vertex_lookup=vertex_lookup, vertex_list=vertex_list)
+    assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
+
+    new_graph = DirectedWeightedGraph()
+    for u in range(test_n):
+        new_graph.add_vertex(u)
+    for u, v in test_edge_list:
+        new_graph.add_edge(u, v, 1.)
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=False, convert_to_list=False)
+    assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
+
+    new_graph = DirectedWeightedGraph()
+    for u in range(test_n):
+        new_graph.add_vertex(u)
+    for u, v in test_edge_list:
+        new_graph.add_edge(u, v, 1.)
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=True, convert_to_list=False)
+    assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
