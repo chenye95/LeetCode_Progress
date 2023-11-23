@@ -48,6 +48,7 @@ class UnweightedGraph(metaclass=abc.ABCMeta):
 
     def number_vertex(self) -> None:
         """
+        Reserved for graphs with 0-indexed int nodes
         Run after all vertices are all added
         Update self.Vertex_list and self.Vertex_map properly
         """
@@ -93,7 +94,7 @@ class UnweightedGraph(metaclass=abc.ABCMeta):
     def get_neighbors(self, u: GRAPH_NODE_TYPE) -> set[GRAPH_NODE_TYPE]:
         return self.Edge[u]
 
-    def get_neighbor_by_index(self, u_index: int) -> List[int]:
+    def _get_neighbor_by_index(self, u_index: int) -> List[int]:
         """
         Assume self.number_vertex() has been properly called
         :param u_index: index of the node that we are exploring
@@ -132,6 +133,7 @@ class UndirectedUnweightedGraph(UnweightedGraph):
 
 class DirectedUnweightedGraph(UnweightedGraph, DirectedGraph):
     def __init__(self):
+        # Calling into UnweightedGraph.__init__()
         super().__init__()
         # helper properties, used for some algorithms, such as Tarjan's algorithm
         self.Vertex_list: List[GRAPH_NODE_TYPE] = []
@@ -162,7 +164,7 @@ class DirectedUnweightedGraph(UnweightedGraph, DirectedGraph):
     def longest_path(self, node_weights: dict[GRAPH_NODE_TYPE, int] = None) -> Tuple[int, List[GRAPH_NODE_TYPE]]:
         """
         return longest path in the graph, where each node is weighted by node_weights[i]
-        :param node_weights: node_weights of each vertex. Set to none if all node has weight of 1.
+        :param node_weights: non-negative node_weights of each vertex. Set to none if all node has weight of 1.
                             Order follows self.Vertex_list
         :return: a tuple, total weight of the longest path, and one of the longest path if tie exists
         """
@@ -193,30 +195,6 @@ class DirectedUnweightedGraph(UnweightedGraph, DirectedGraph):
                     exploring_queue.append(next_node)
 
         return max(longest_path_ending_at.values())
-
-    def topological_order(self) -> Tuple[bool, List[GRAPH_NODE_TYPE]]:
-        """
-        :return: a tuple of (bool, list)
-            True, list representing topological order of the directed graph, topological order exists
-            False, empty list if graph is cyclic
-        """
-        in_degrees = defaultdict(int)
-        for node_src in self.Edge:
-            for node_dst in self.Edge[node_src]:
-                in_degrees[node_dst] += 1
-
-        exploring_queue = deque([node for node in self.Vertex if node not in in_degrees])
-        topological_order_list = []
-
-        while exploring_queue:
-            node = exploring_queue.popleft()
-            topological_order_list.append(node)
-            for neighbor in self.Edge[node]:
-                in_degrees[neighbor] -= 1
-                if in_degrees[neighbor] == 0:
-                    exploring_queue.append(neighbor)
-
-        return (True, topological_order_list) if len(topological_order_list) == len(self.Vertex) else (False, [])
 
     def strongly_connected_components(self, use_recursive: bool = True,
                                       call_number_vertex: bool = False) -> List[set[GRAPH_NODE_TYPE]]:
@@ -283,7 +261,7 @@ class DirectedUnweightedGraph(UnweightedGraph, DirectedGraph):
                 earliest_visited_vertex[current_node_index] = self.timer
                 self.timer += 1
 
-            for next_node_index in self.get_neighbor_by_index(current_node_index):
+            for next_node_index in self._get_neighbor_by_index(current_node_index):
                 if first_explore_time[next_node_index] == -1 and not is_on_stack[next_node_index]:
                     # has not visited the neighbor node
                     # explore first
@@ -357,7 +335,7 @@ class DirectedUnweightedGraph(UnweightedGraph, DirectedGraph):
         connected_ancestor.append(current_node_index)
 
         # Iterate through all vertices adjacent to this node
-        for next_node_index in self.get_neighbor_by_index(current_node_index):
+        for next_node_index in self._get_neighbor_by_index(current_node_index):
             if first_explore_time[next_node_index] == -1:
                 # If next_node_index has not been visited yet, then recur for it
                 self._scc_recursive_util(next_node_index, earliest_visited_vertex, first_explore_time, is_on_stack,

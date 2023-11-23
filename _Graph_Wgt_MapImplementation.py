@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import abc
+from abc import ABC
 from collections import defaultdict, deque
 from types import GeneratorType
 from typing import List, Tuple, DefaultDict, Dict
@@ -54,6 +55,10 @@ class WeightedGraph(metaclass=abc.ABCMeta):
 
     def vertex_no_self_loop(self, v: GRAPH_NODE_TYPE) -> bool:
         return v in self.Vertex and v not in self.Edge[v]
+
+    @abc.abstractmethod
+    def find_path(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> List[List[GRAPH_NODE_TYPE]]:
+        pass
 
     def find_path_generator(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> GeneratorType:
         """
@@ -131,7 +136,7 @@ class UndirectedWeightedGraph(WeightedGraph):
         if u != v:
             self.Edge[v][u] = weight
 
-    def find_path(self, start: int, end: int) -> List[List[GRAPH_NODE_TYPE]]:
+    def find_path(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> List[List[GRAPH_NODE_TYPE]]:
         """
         Cannot reuse node or path
         """
@@ -144,8 +149,11 @@ class UndirectedWeightedGraph(WeightedGraph):
     def cycles(self) -> List[List[GRAPH_NODE_TYPE]]:
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v) if len(cycle_v) != 3]
 
-    def edge_list(self) -> List[Tuple[GRAPH_NODE_TYPE, GRAPH_NODE_TYPE, float]]:
-        return [(u, v, self.Edge[u][v]) for u in self.Vertex for v in self.Edge[u] if u <= v]
+    def get_edge_list(self, allow_self_loop: bool = True) -> List[Tuple[GRAPH_NODE_TYPE, GRAPH_NODE_TYPE, float]]:
+        if allow_self_loop:
+            return [(u, v, self.Edge[u][v]) for u in self.Vertex for v in self.Edge[u] if u <= v]
+        else:
+            return [(u, v, self.Edge[u][v]) for u in self.Vertex for v in self.Edge[u] if u < v]
 
     def mst_edge_kruskal(self) -> Tuple[float, List[Tuple[GRAPH_NODE_TYPE, GRAPH_NODE_TYPE, float]]]:
         """
@@ -209,27 +217,3 @@ class DirectedWeightedGraph(WeightedGraph, DirectedGraph):
 
     def cycles(self) -> List[List[GRAPH_NODE_TYPE]]:
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v)]
-
-    def topological_order(self) -> (bool, List[GRAPH_NODE_TYPE]):
-        """
-        :return: a tuple of (bool, list)
-            True, list representing topological order of the directed graph, topological order exists
-            False, empty list if graph is cyclic
-        """
-        in_degrees = defaultdict(int)
-        for node_src in self.Edge:
-            for node_dst in self.Edge[node_src]:
-                in_degrees[node_dst] += 1
-
-        zero_in_degree_nodes = [node for node in self.Vertex if node not in in_degrees]
-        topological_order_list = []
-
-        while zero_in_degree_nodes:
-            node = zero_in_degree_nodes.pop()
-            topological_order_list.append(node)
-            for neighbor in self.Edge[node]:
-                in_degrees[neighbor] -= 1
-                if in_degrees[neighbor] == 0:
-                    zero_in_degree_nodes.append(neighbor)
-
-        return (True, topological_order_list) if len(topological_order_list) == len(self.Vertex) else (False, [])

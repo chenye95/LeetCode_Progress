@@ -87,7 +87,7 @@ mst_test_tree = UndirectedWeightedGraph.construct_weighted_graph(vertices=vertex
 assert mst_test_tree.cycles()
 total_weight, mst_edges = mst_test_tree.mst_edge_kruskal()
 assert mst_test_tree.enforce_mst_kruskal() == total_weight
-assert set(mst_test_tree.edge_list()) == set(mst_edges)
+assert set(mst_test_tree.get_edge_list()) == set(mst_edges)
 
 # Bellman Ford Algorithm testing - Undirected Graph max prob
 vertex = list(range(3))
