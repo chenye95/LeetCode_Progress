@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import abc
-from abc import ABC
 from collections import defaultdict, deque
 from types import GeneratorType
 from typing import List, Tuple, DefaultDict, Dict
@@ -55,6 +54,15 @@ class WeightedGraph(metaclass=abc.ABCMeta):
 
     def vertex_no_self_loop(self, v: GRAPH_NODE_TYPE) -> bool:
         return v in self.Vertex and v not in self.Edge[v]
+
+    def number_vertex(self) -> Tuple[List[GRAPH_NODE_TYPE], dict[GRAPH_NODE_TYPE, int]]:
+        """
+        Run after all vertices are all added
+        Update self.Vertex_list and self.Vertex_map properly
+        """
+        vertex_list = [v for v in self.Vertex]
+        vertex_lookup = {v: i for i, v in enumerate(vertex_list)}
+        return vertex_list, vertex_lookup
 
     @abc.abstractmethod
     def find_path(self, start: GRAPH_NODE_TYPE, end: GRAPH_NODE_TYPE) -> List[List[GRAPH_NODE_TYPE]]:

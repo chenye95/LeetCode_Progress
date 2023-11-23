@@ -96,7 +96,9 @@ for test_n, test_edge_list, expected_output in test_graphs:
         new_graph.add_vertex(u)
     for u, v in test_edge_list:
         new_graph.add_edge(u, v)
-    get_scc_list = new_graph.strongly_connected_components(use_recursive=False, call_number_vertex=True)
+    vertex_list, vertex_lookup = new_graph.number_vertex()
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=False, convert_to_list=True,
+                                                           vertex_lookup=vertex_lookup, vertex_list=vertex_list)
     assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
 
     new_graph = DirectedUnweightedGraph()
@@ -104,7 +106,24 @@ for test_n, test_edge_list, expected_output in test_graphs:
         new_graph.add_vertex(u)
     for u, v in test_edge_list:
         new_graph.add_edge(u, v)
-    get_scc_list = new_graph.strongly_connected_components(use_recursive=True, call_number_vertex=True)
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=True, convert_to_list=True,
+                                                           vertex_lookup=vertex_lookup, vertex_list=vertex_list)
+    assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
+
+    new_graph = DirectedUnweightedGraph()
+    for u in range(test_n):
+        new_graph.add_vertex(u)
+    for u, v in test_edge_list:
+        new_graph.add_edge(u, v)
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=False, convert_to_list=False)
+    assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
+
+    new_graph = DirectedUnweightedGraph()
+    for u in range(test_n):
+        new_graph.add_vertex(u)
+    for u, v in test_edge_list:
+        new_graph.add_edge(u, v)
+    get_scc_list = new_graph.strongly_connected_components(use_recursive=True, convert_to_list=False)
     assert conversion_for_comparison(get_scc_list) == conversion_for_comparison(expected_output)
 
 # Longest Path in Graph with Weight
