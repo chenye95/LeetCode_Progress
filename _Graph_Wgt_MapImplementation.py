@@ -150,6 +150,11 @@ class UndirectedWeightedGraph(WeightedGraph):
         return [cycle_v for v in self.Vertex for cycle_v in self.find_path_generator(v, v) if len(cycle_v) != 3]
 
     def get_edge_list(self, allow_self_loop: bool = True) -> List[Tuple[GRAPH_NODE_TYPE, GRAPH_NODE_TYPE, float]]:
+        """
+        :param allow_self_loop: whether to include direct self loop (u->u) in the returned list
+        :return: a list of edge tuples, in the form of (smaller_node, larger_node, edge_weight)
+            note, each node only has one tuple in the list.
+        """
         if allow_self_loop:
             return [(u, v, self.Edge[u][v]) for u in self.Vertex for v in self.Edge[u] if u <= v]
         else:
@@ -164,9 +169,9 @@ class UndirectedWeightedGraph(WeightedGraph):
         """
         total_weight, mst_edges = 0, []
         union_find = UnionFind(list(self.Vertex))
-        edge_list = [(self.Edge[u][v], u, v) for u in self.Vertex for v in self.Edge[u] if u < v]
-        edge_list.sort()
-        for weight, u, v in edge_list:
+        edge_list = self.get_edge_list(allow_self_loop=False)
+        edge_list.sort(key=lambda x: x[2])
+        for u, v, weight in edge_list:
             if not union_find.is_connected(u, v):
                 union_find.unify(u, v)
                 mst_edges.append((u, v, weight))
@@ -185,9 +190,9 @@ class UndirectedWeightedGraph(WeightedGraph):
         """
         total_weight = 0
         union_find = UnionFind(list(self.Vertex))
-        edge_list = [(self.Edge[u][v], u, v) for u in self.Vertex for v in self.Edge[u] if u < v]
-        edge_list.sort()
-        for weight, u, v in edge_list:
+        edge_list = self.get_edge_list(allow_self_loop=False)
+        edge_list.sort(key=lambda x: x[2])
+        for u, v, weight in edge_list:
             if union_find.components_count() > 1 and not union_find.is_connected(u, v):
                 union_find.unify(u, v)
                 total_weight += weight
