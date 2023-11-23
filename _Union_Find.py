@@ -27,7 +27,7 @@ class UnionFind:
 
     def find(self, p: NodeType, use_recursion: bool = None) -> int:
         """
-        :param use_recursion: whether uses Recursive Call to compress path, set to True if find() is frequent
+        :param use_recursion: whether it uses Recursive Call to compress path, set to True if find() is frequent
         :param p: element to look up
         :return: component id for which element p belongs to
         """
